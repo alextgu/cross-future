@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" width="640" height="480">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#2c3a9e"/>
+      <stop offset="1" stop-color="#0d0f1a"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="480" fill="url(#g)"/>
+  <g fill="#e8e8f2" opacity="0.5"><rect x="60" y="120" width="52" height="360"/><rect x="150" y="80" width="52" height="400"/><rect x="240" y="140" width="52" height="340"/><rect x="330" y="60" width="52" height="420"/><rect x="420" y="150" width="52" height="330"/><rect x="510" y="100" width="52" height="380"/></g>
+  <rect width="640" height="480" fill="#0a0a0c" opacity="0.12"/>
+  <text x="20" y="456" font-family="JetBrains Mono, monospace" font-size="15" fill="#fbfbf9" opacity="0.8">ED.01 / PLENARY — PLACEHOLDER</text>
+</svg>

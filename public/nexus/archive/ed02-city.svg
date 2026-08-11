@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" width="640" height="480">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#33408c"/>
+      <stop offset="1" stop-color="#0d1020"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="480" fill="url(#g)"/>
+  <g opacity="0.5"><rect x="40" y="180" width="60" height="300" fill="#dfe2f2"/><rect x="130" y="120" width="70" height="360" fill="#c9cdea"/><rect x="230" y="200" width="55" height="280" fill="#e6e8f5"/><rect x="320" y="90" width="80" height="390" fill="#d3d7ee"/><rect x="430" y="160" width="65" height="320" fill="#e0e3f3"/><rect x="530" y="130" width="70" height="350" fill="#cdd1ec"/></g><circle cx="500" cy="90" r="36" fill="#ffffff" opacity="0.7"/>
+  <rect width="640" height="480" fill="#0a0a0c" opacity="0.12"/>
+  <text x="20" y="456" font-family="JetBrains Mono, monospace" font-size="15" fill="#fbfbf9" opacity="0.8">ED.02 / MONTRÉAL — PLACEHOLDER</text>
+</svg>

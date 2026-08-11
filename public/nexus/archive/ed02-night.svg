@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" width="640" height="480">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#1c2350"/>
+      <stop offset="1" stop-color="#08090f"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="480" fill="url(#g)"/>
+  <path d="M0 340 C160 300 300 380 640 260 L640 480 L0 480 Z" fill="#ffffff" opacity="0.2"/><path d="M0 380 C200 340 360 420 640 320 L640 480 L0 480 Z" fill="#0a0a0c" opacity="0.3"/>
+  <rect width="640" height="480" fill="#0a0a0c" opacity="0.12"/>
+  <text x="20" y="456" font-family="JetBrains Mono, monospace" font-size="15" fill="#fbfbf9" opacity="0.8">ED.02 / NIGHT SESSION — PLACEHOLDER</text>
+</svg>

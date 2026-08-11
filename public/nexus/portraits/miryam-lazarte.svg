@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 520" width="400" height="520">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5266ff"/>
+      <stop offset="1" stop-color="#181428"/>
+    </linearGradient>
+    <radialGradient id="v" cx="0.5" cy="0.35" r="0.9">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.25"/>
+      <stop offset="1" stop-color="#0a0a0c" stop-opacity="0.55"/>
+    </radialGradient>
+  </defs>
+  <rect width="400" height="520" fill="url(#g)"/>
+  <circle cx="200" cy="205" r="86" fill="#0f0f14" opacity="0.82"/>
+  <path d="M52 520 C58 392 130 352 200 352 C270 352 342 392 348 520 Z" fill="#0f0f14" opacity="0.82"/>
+  <rect width="400" height="520" fill="url(#v)"/>
+  <text x="26" y="496" font-family="JetBrains Mono, monospace" font-size="15" fill="#fbfbf9" opacity="0.85">ML · PLACEHOLDER PORTRAIT</text>
+</svg>
