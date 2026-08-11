@@ -1,0 +1,1478 @@
+/* ============================================================
+   Nexus variant — "thin, extra long" broadsheet.
+   Same two-tier token discipline as the default design:
+   primitives first, semantics second, components use semantics.
+   Everything is scoped under .nexus so both designs coexist.
+   ============================================================ */
+
+.nexus {
+  /* --- Tier 1: primitives --- */
+  --nx-paper: #fbfbf9;
+  --nx-ink-900: #121212;
+  --nx-ink-600: #565656;
+  --nx-ink-400: #8b8b86;
+  --nx-blue-500: #3d57ff;
+  --nx-line-200: #e7e7e2;
+  --nx-line-100: #f1f1ec;
+  --nx-white: #ffffff;
+
+  /* --- Tier 2: semantics --- */
+  --nx-bg: var(--nx-paper);
+  --nx-bg-inverse: var(--nx-ink-900);
+  --nx-bg-accent: var(--nx-blue-500);
+  --nx-text: var(--nx-ink-900);
+  --nx-text-soft: var(--nx-ink-600);
+  --nx-text-faint: var(--nx-ink-400);
+  --nx-text-accent: var(--nx-blue-500);
+  --nx-text-inverse: var(--nx-white);
+  --nx-hairline: var(--nx-line-200);
+  --nx-rule: var(--nx-line-100);
+
+  --nx-display: var(--font-nx-display), "Space Grotesk", sans-serif;
+  --nx-body: var(--font-nx-body), "Inter", sans-serif;
+  --nx-mono: var(--font-nx-mono), "JetBrains Mono", monospace;
+
+  --nx-gutter: clamp(1rem, 4.5vw, 4rem);
+  --nx-max: 90rem;
+
+  background: var(--nx-bg);
+  color: var(--nx-text);
+  font-family: var(--nx-body);
+  position: relative;
+  z-index: 0;
+}
+
+/* faint column rules behind the whole page */
+.nexus::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: var(--nx-bg);
+  background-image: repeating-linear-gradient(
+    to right,
+    transparent 0,
+    transparent calc(100% / 9 - 1px),
+    var(--nx-rule) calc(100% / 9 - 1px),
+    var(--nx-rule) calc(100% / 9)
+  );
+}
+
+.nx-container {
+  max-width: var(--nx-max);
+  margin: 0 auto;
+  padding-left: var(--nx-gutter);
+  padding-right: var(--nx-gutter);
+}
+
+.nexus a {
+  color: inherit;
+}
+
+/* mono label utility */
+.nx-mono {
+  font-family: var(--nx-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* section label: § 0x / NAME */
+.nx-seclabel {
+  font-family: var(--nx-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--nx-text-soft);
+}
+
+.nx-h2 {
+  font-family: var(--nx-display);
+  font-size: clamp(2.6rem, 6.5vw, 5.5rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+  margin-top: 1rem;
+}
+
+/* ---------- scroll reveal ---------- */
+.nx-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nx-reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nx-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ---------- nav ---------- */
+.nx-nav {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  background: color-mix(in srgb, var(--nx-paper) 92%, transparent);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--nx-hairline);
+}
+
+.nx-nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 4.2rem;
+  flex-wrap: wrap;
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
+}
+
+.nx-wordmark {
+  font-family: var(--nx-mono);
+  font-size: 0.9rem;
+  letter-spacing: 0.16em;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.nx-nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(0.8rem, 2vw, 2.1rem);
+}
+
+.nx-nav-links a {
+  font-family: var(--nx-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--nx-text-soft);
+  transition: color 160ms ease;
+}
+
+.nx-nav-links a:hover,
+.nx-nav-links a[aria-current="true"] {
+  color: var(--nx-text-accent);
+}
+
+/* ---------- hero ---------- */
+.nx-hero {
+  padding-top: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+.nx-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: start;
+}
+
+@media (min-width: 64rem) {
+  .nx-hero-grid {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  }
+}
+
+.nx-kicker {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--nx-text-soft);
+}
+
+.nx-kicker::before {
+  content: "";
+  width: 2.4rem;
+  height: 1px;
+  background: var(--nx-ink-900);
+}
+
+.nx-hero-title {
+  font-family: var(--nx-display);
+  font-size: clamp(3.6rem, 10.5vw, 9.5rem);
+  font-weight: 500;
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  margin-top: 1.5rem;
+}
+
+.nx-hero-title .accent {
+  color: var(--nx-text-accent);
+}
+
+/* staggered entrance */
+.nx-hero-title span.line {
+  display: block;
+  overflow: hidden;
+}
+
+.nx-hero-title span.line > span {
+  display: block;
+  animation: nx-rise 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.nx-hero-title span.line:nth-child(2) > span {
+  animation-delay: 90ms;
+}
+
+.nx-hero-title span.line:nth-child(3) > span {
+  animation-delay: 180ms;
+}
+
+@keyframes nx-rise {
+  from {
+    transform: translateY(110%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nx-hero-title span.line > span {
+    animation: none;
+  }
+}
+
+.nx-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2.2rem 2rem;
+  margin-top: clamp(2rem, 4vw, 3.5rem);
+  max-width: 36rem;
+}
+
+.nx-fact dt {
+  font-family: var(--nx-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--nx-text-faint);
+  margin-bottom: 0.45rem;
+}
+
+.nx-fact dd {
+  font-family: var(--nx-display);
+  font-size: clamp(1.1rem, 1.9vw, 1.45rem);
+  letter-spacing: -0.01em;
+}
+
+/* FIG card */
+.nx-fig {
+  position: relative;
+  border: 1px solid var(--nx-hairline);
+  padding: 0.75rem;
+  background: var(--nx-white);
+}
+
+.nx-fig img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.nx-fig .tag {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  background: var(--nx-bg-inverse);
+  color: var(--nx-text-inverse);
+  font-family: var(--nx-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  padding: 0.4rem 0.7rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .nx-fig img {
+    animation: nx-fig-in 1200ms ease both;
+  }
+
+  @keyframes nx-fig-in {
+    from {
+      opacity: 0;
+      transform: scale(1.03);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+}
+
+/* hero statement band */
+.nx-statement {
+  border-top: 1px solid var(--nx-hairline);
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  padding: clamp(2rem, 4vw, 3.5rem) 0 clamp(2.5rem, 5vw, 4rem);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (min-width: 60rem) {
+  .nx-statement {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  }
+}
+
+.nx-statement p {
+  font-size: clamp(1.05rem, 1.8vw, 1.35rem);
+  line-height: 1.45;
+  color: var(--nx-text);
+  max-width: 42rem;
+}
+
+.nx-statement .side {
+  display: grid;
+  gap: 2.2rem;
+  justify-items: start;
+}
+
+@media (min-width: 60rem) {
+  .nx-statement .side {
+    justify-items: end;
+  }
+}
+
+.nx-scrollhint {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--nx-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--nx-text-soft);
+  text-decoration: none;
+}
+
+.nx-scrollhint .arrow {
+  display: inline-block;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .nx-scrollhint .arrow {
+    animation: nx-bob 2s ease-in-out infinite;
+  }
+
+  @keyframes nx-bob {
+    0%,
+    100% {
+      transform: translateY(-2px);
+    }
+    50% {
+      transform: translateY(3px);
+    }
+  }
+}
+
+/* ---------- buttons ---------- */
+.nx-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  font-family: var(--nx-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid var(--nx-ink-900);
+  background: var(--nx-bg-inverse);
+  color: var(--nx-text-inverse);
+  padding: 1rem 1.6rem;
+  cursor: pointer;
+  transition: background 180ms ease, color 180ms ease;
+}
+
+.nx-btn .dash {
+  width: 1.6rem;
+  height: 1px;
+  background: currentColor;
+  transition: width 180ms ease;
+}
+
+.nx-btn:hover {
+  background: var(--nx-bg-accent);
+  border-color: var(--nx-bg-accent);
+}
+
+.nx-btn:hover .dash {
+  width: 2.4rem;
+}
+
+.nx-btn.ghost {
+  background: transparent;
+  color: var(--nx-text);
+}
+
+.nx-btn.ghost:hover {
+  background: var(--nx-bg-inverse);
+  color: var(--nx-text-inverse);
+  border-color: var(--nx-ink-900);
+}
+
+/* ---------- section shell ---------- */
+.nx-section {
+  padding: clamp(4.5rem, 11vw, 9rem) 0 clamp(3.5rem, 8vw, 7rem);
+}
+
+.nx-section-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+  align-items: end;
+  margin-bottom: clamp(2rem, 5vw, 4rem);
+}
+
+@media (min-width: 60rem) {
+  .nx-section-head {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+}
+
+.nx-section-hint {
+  font-family: var(--nx-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--nx-text-faint);
+  max-width: 20rem;
+  line-height: 1.7;
+}
+
+/* ---------- manifesto ---------- */
+.nx-manifesto-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2.5rem;
+}
+
+@media (min-width: 60rem) {
+  .nx-manifesto-grid {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
+  }
+}
+
+.nx-manifesto-rail {
+  display: grid;
+  gap: 0.6rem;
+  align-content: start;
+}
+
+@media (min-width: 60rem) {
+  .nx-manifesto-rail {
+    position: sticky;
+    top: 7rem;
+    height: fit-content;
+  }
+}
+
+.nx-thesis {
+  font-family: var(--nx-display);
+  font-size: clamp(1.9rem, 4.6vw, 4rem);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.12;
+  max-width: 60rem;
+}
+
+.nx-thesis .accent {
+  color: var(--nx-text-accent);
+}
+
+.nx-manifesto-cols {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2rem;
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  max-width: 60rem;
+}
+
+@media (min-width: 48rem) {
+  .nx-manifesto-cols {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.nx-manifesto-cols p {
+  color: var(--nx-text-soft);
+  line-height: 1.65;
+  font-size: 0.98rem;
+}
+
+.nx-pillar-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1px;
+  background: var(--nx-hairline);
+  border: 1px solid var(--nx-hairline);
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  max-width: 60rem;
+}
+
+.nx-pillar {
+  background: var(--nx-bg);
+  padding: 1.6rem 1.4rem 2rem;
+  min-height: 12rem;
+  display: grid;
+  align-content: start;
+  gap: 0.9rem;
+  transition: background 200ms ease;
+}
+
+.nx-pillar:hover {
+  background: var(--nx-white);
+}
+
+.nx-pillar .num {
+  font-family: var(--nx-mono);
+  font-size: 0.7rem;
+  color: var(--nx-text-accent);
+}
+
+.nx-pillar h3 {
+  font-family: var(--nx-display);
+  font-size: 1.15rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.nx-pillar p {
+  color: var(--nx-text-soft);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+/* ---------- agenda ---------- */
+.nx-agenda-controls {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.nx-agenda-controls button {
+  width: 3rem;
+  height: 3rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--nx-hairline);
+  background: transparent;
+  color: var(--nx-text);
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 150ms ease, color 150ms ease;
+}
+
+.nx-agenda-controls button:hover,
+.nx-agenda-controls button:active {
+  background: var(--nx-bg-inverse);
+  color: var(--nx-text-inverse);
+  border-color: var(--nx-ink-900);
+}
+
+.nx-agenda-strip {
+  display: flex;
+  gap: 1px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  background: var(--nx-hairline);
+  border-top: 1px solid var(--nx-hairline);
+  border-bottom: 1px solid var(--nx-hairline);
+  scrollbar-width: none;
+  /* full-bleed strip */
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+
+.nx-agenda-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.nx-session {
+  scroll-snap-align: start;
+  flex: 0 0 clamp(18rem, 24vw, 24rem);
+  background: var(--nx-bg);
+  display: grid;
+  grid-template-rows: auto 1fr;
+  transition: flex-basis 350ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nx-session.is-open {
+  flex-basis: clamp(22rem, 36vw, 34rem);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nx-session {
+    transition: none;
+  }
+}
+
+.nx-session-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--nx-hairline);
+}
+
+.nx-session-head .code {
+  font-family: var(--nx-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: var(--nx-text-accent);
+}
+
+.nx-session-head .cat {
+  font-family: var(--nx-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  color: var(--nx-text-soft);
+  text-transform: uppercase;
+}
+
+.nx-session-body {
+  padding: 1.5rem 1.5rem 1.4rem;
+  display: grid;
+  align-content: start;
+  gap: 0.9rem;
+  min-height: 17rem;
+}
+
+.nx-session-body .time {
+  font-family: var(--nx-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  color: var(--nx-text-soft);
+}
+
+.nx-session-body h3 {
+  font-family: var(--nx-display);
+  font-size: clamp(1.35rem, 2.2vw, 1.8rem);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+}
+
+.nx-session-body .speaker {
+  font-family: var(--nx-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--nx-text-faint);
+}
+
+.nx-session-detail {
+  display: grid;
+  gap: 0.9rem;
+  overflow: hidden;
+}
+
+.nx-session-detail p {
+  color: var(--nx-text-soft);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.nx-session-detail .outcomes-label {
+  font-family: var(--nx-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  color: var(--nx-text-faint);
+  text-transform: uppercase;
+}
+
+.nx-session-detail li {
+  display: flex;
+  gap: 0.7rem;
+  align-items: baseline;
+  font-size: 0.92rem;
+  padding: 0.2rem 0;
+}
+
+.nx-session-detail li::before {
+  content: "—";
+  color: var(--nx-text-accent);
+}
+
+.nx-session-toggle {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 0;
+  background: none;
+  padding: 0;
+  font-family: var(--nx-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--nx-text-soft);
+  cursor: pointer;
+  width: fit-content;
+}
+
+.nx-session-toggle:hover {
+  color: var(--nx-text-accent);
+}
+
+/* ---------- faculty ---------- */
+.nx-faculty-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: 1px;
+  background: var(--nx-hairline);
+  border: 1px solid var(--nx-hairline);
+}
+
+.nx-pillar-card {
+  position: relative;
+  background: var(--nx-bg);
+  min-height: 25rem;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: 1.1rem 1.4rem 1.4rem;
+  overflow: hidden;
+}
+
+.nx-pillar-card .meta {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--nx-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.nx-pillar-card .meta .idx {
+  color: var(--nx-text-accent);
+}
+
+.nx-pillar-card .meta .tag {
+  color: var(--nx-text-faint);
+}
+
+/* innovation: an actual portrait behind the monogram */
+.nx-pillar-card .portrait {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 350ms ease;
+}
+
+.nx-pillar-card .portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.05);
+}
+
+.nx-pillar-card .portrait::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(18, 18, 18, 0.82) 0%,
+    rgba(18, 18, 18, 0.25) 45%,
+    rgba(18, 18, 18, 0.05) 100%
+  );
+}
+
+.nx-pillar-card .monogram {
+  place-self: center;
+  font-family: var(--nx-display);
+  font-size: clamp(4rem, 7vw, 6.5rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  z-index: 1;
+  transition: opacity 300ms ease, transform 300ms ease;
+}
+
+.nx-pillar-card .thesis {
+  position: absolute;
+  inset: auto 1.4rem 4.6rem;
+  z-index: 2;
+  font-family: var(--nx-display);
+  font-size: 1.02rem;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--nx-text-inverse);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 300ms ease, transform 300ms ease;
+}
+
+.nx-pillar-card .who {
+  z-index: 2;
+  display: grid;
+  gap: 0.3rem;
+  transition: color 300ms ease;
+}
+
+.nx-pillar-card .who .name {
+  font-family: var(--nx-display);
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+
+.nx-pillar-card .who .org {
+  font-family: var(--nx-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--nx-text-faint);
+}
+
+.nx-pillar-card:hover .portrait,
+.nx-pillar-card:focus-within .portrait {
+  opacity: 1;
+}
+
+.nx-pillar-card:hover .monogram,
+.nx-pillar-card:focus-within .monogram {
+  opacity: 0;
+  transform: scale(0.97);
+}
+
+.nx-pillar-card:hover .thesis,
+.nx-pillar-card:focus-within .thesis {
+  opacity: 1;
+  transform: none;
+}
+
+.nx-pillar-card:hover .who,
+.nx-pillar-card:focus-within .who {
+  color: var(--nx-text-inverse);
+}
+
+.nx-pillar-card:hover .who .org,
+.nx-pillar-card:focus-within .who .org {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nx-pillar-card .portrait,
+  .nx-pillar-card .monogram,
+  .nx-pillar-card .thesis,
+  .nx-pillar-card .who {
+    transition: none;
+  }
+}
+
+/* ---------- interviews ---------- */
+.nx-featured {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1px;
+  background: var(--nx-hairline);
+  border: 1px solid var(--nx-hairline);
+}
+
+@media (min-width: 60rem) {
+  .nx-featured {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  }
+}
+
+.nx-featured-media {
+  position: relative;
+  background: var(--nx-ink-900);
+  min-height: 20rem;
+}
+
+.nx-featured-media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.85;
+}
+
+.nx-featured-media .overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-content: end;
+  gap: 0.6rem;
+  padding: 1.8rem;
+  background: linear-gradient(to top, rgba(10, 10, 12, 0.75), transparent 55%);
+  color: var(--nx-text-inverse);
+}
+
+.nx-featured-media .kicker {
+  font-family: var(--nx-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.nx-featured-media h3 {
+  font-family: var(--nx-display);
+  font-size: clamp(1.5rem, 2.6vw, 2.2rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  max-width: 30rem;
+}
+
+.nx-featured-media .byline {
+  font-family: var(--nx-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+.nx-play {
+  position: absolute;
+  top: 1.6rem;
+  right: 1.6rem;
+  width: 3.6rem;
+  height: 3.6rem;
+  border-radius: 50%;
+  background: rgba(251, 251, 249, 0.92);
+  display: grid;
+  place-items: center;
+  color: var(--nx-ink-900);
+  transition: transform 200ms ease, background 200ms ease;
+}
+
+.nx-featured-media:hover .nx-play {
+  transform: scale(1.08);
+  background: var(--nx-white);
+}
+
+.nx-play::before {
+  content: "";
+  border-style: solid;
+  border-width: 8px 0 8px 13px;
+  border-color: transparent transparent transparent currentColor;
+  margin-left: 3px;
+}
+
+.nx-featured-quote {
+  background: var(--nx-bg);
+  padding: clamp(1.6rem, 3vw, 2.6rem);
+  display: grid;
+  align-content: start;
+  gap: 1.4rem;
+}
+
+.nx-featured-quote .label {
+  font-family: var(--nx-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--nx-text-accent);
+}
+
+.nx-featured-quote blockquote {
+  margin: 0;
+  font-family: var(--nx-display);
+  font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.3;
+}
+
+.nx-underline-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: fit-content;
+  font-family: var(--nx-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--nx-text);
+  border-bottom: 1px solid var(--nx-ink-900);
+  padding-bottom: 0.4rem;
+}
+
+.nx-underline-link:hover {
+  color: var(--nx-text-accent);
+  border-color: var(--nx-blue-500);
+}
+
+.nx-interview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  gap: 1px;
+  background: var(--nx-hairline);
+  border: 1px solid var(--nx-hairline);
+  border-top: 0;
+}
+
+.nx-interview {
+  background: var(--nx-bg);
+  padding: 1.4rem 1.5rem 1.5rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto 1fr auto;
+  gap: 1rem;
+  text-decoration: none;
+  transition: background 200ms ease;
+  min-height: 12rem;
+}
+
+.nx-interview:hover {
+  background: var(--nx-white);
+}
+
+.nx-interview .code {
+  font-family: var(--nx-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: var(--nx-text-accent);
+}
+
+/* innovation: interview rows carry the speaker's portrait */
+.nx-interview .thumb {
+  grid-row: span 2;
+  width: 3.4rem;
+  height: 3.4rem;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid var(--nx-hairline);
+}
+
+.nx-interview .thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1);
+  transition: filter 250ms ease;
+}
+
+.nx-interview:hover .thumb img {
+  filter: grayscale(0);
+}
+
+.nx-interview h3 {
+  font-family: var(--nx-display);
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  border-bottom: 1px solid var(--nx-hairline);
+  padding-bottom: 1rem;
+  align-self: start;
+}
+
+.nx-interview .foot {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--nx-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--nx-text-faint);
+}
+
+/* ---------- archives (photo innovation) ---------- */
+.nx-archive-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.8rem, 1.6vw, 1.4rem);
+}
+
+@media (min-width: 48rem) {
+  .nx-archive-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.nx-photo {
+  display: grid;
+  gap: 0.7rem;
+  margin: 0;
+}
+
+.nx-photo.tall {
+  grid-row: span 2;
+}
+
+.nx-photo .frame {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--nx-hairline);
+  background: var(--nx-white);
+  aspect-ratio: 4 / 3;
+}
+
+.nx-photo.tall .frame {
+  aspect-ratio: 3 / 4.4;
+  height: 100%;
+}
+
+.nx-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(0.9);
+  transition: filter 400ms ease, transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nx-photo:hover img {
+  filter: grayscale(0);
+  transform: scale(1.03);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nx-photo img {
+    transition: none;
+  }
+
+  .nx-photo:hover img {
+    transform: none;
+  }
+}
+
+.nx-photo figcaption {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-family: var(--nx-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--nx-text-faint);
+}
+
+.nx-photo figcaption .ed {
+  color: var(--nx-text-accent);
+  flex-shrink: 0;
+}
+
+/* ---------- register ---------- */
+.nx-register-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 60rem) {
+  .nx-register-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+.nx-register-left {
+  padding-right: clamp(0rem, 4vw, 4rem);
+}
+
+.nx-register-left .nx-h2 {
+  font-size: clamp(2.4rem, 4.8vw, 4.2rem);
+}
+
+.nx-benefits {
+  display: grid;
+  gap: 1.6rem;
+  margin-top: clamp(2rem, 4vw, 3rem);
+  max-width: 30rem;
+}
+
+.nx-benefits li {
+  display: grid;
+  grid-template-columns: 2.2rem minmax(0, 1fr);
+  gap: 0.8rem;
+  align-items: baseline;
+  color: var(--nx-text-soft);
+  line-height: 1.55;
+}
+
+.nx-benefits .num {
+  font-family: var(--nx-mono);
+  font-size: 0.7rem;
+  color: var(--nx-text-accent);
+}
+
+.nx-register-right {
+  position: relative;
+  padding: clamp(1.5rem, 3vw, 3rem);
+  margin-top: 2.5rem;
+}
+
+@media (min-width: 60rem) {
+  .nx-register-right {
+    margin-top: 0;
+  }
+}
+
+.nx-register-right .bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.nx-register-right .bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.35;
+  filter: saturate(0.8);
+}
+
+.nx-register-form {
+  position: relative;
+  z-index: 1;
+  background: color-mix(in srgb, var(--nx-white) 88%, transparent);
+  backdrop-filter: blur(4px);
+  border: 1px solid var(--nx-hairline);
+  padding: clamp(1.4rem, 3vw, 2.4rem);
+  display: grid;
+  gap: 1.5rem;
+  max-width: 30rem;
+}
+
+.nx-register-form .kicker {
+  font-family: var(--nx-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--nx-text-soft);
+}
+
+.nx-register-form h3 {
+  font-family: var(--nx-display);
+  font-size: 1.6rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.nx-field {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.nx-field label {
+  font-family: var(--nx-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--nx-text-soft);
+}
+
+.nx-field input {
+  border: 0;
+  border-bottom: 1px solid var(--nx-hairline);
+  background: transparent;
+  font: inherit;
+  font-size: 1.05rem;
+  padding: 0.5rem 0 0.6rem;
+  border-radius: 0;
+  color: var(--nx-text);
+}
+
+.nx-field input::placeholder {
+  color: var(--nx-text-faint);
+}
+
+.nx-field input:focus-visible {
+  outline: none;
+  border-bottom-color: var(--nx-blue-500);
+  box-shadow: 0 1px 0 var(--nx-blue-500);
+}
+
+.nx-field .error {
+  font-family: var(--nx-mono);
+  font-size: 0.68rem;
+  color: var(--nx-text-accent);
+}
+
+.nx-passtype {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--nx-hairline);
+  border: 1px solid var(--nx-hairline);
+}
+
+.nx-passtype button {
+  font-family: var(--nx-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.85rem 0.4rem;
+  background: var(--nx-white);
+  border: 0;
+  color: var(--nx-text-soft);
+  cursor: pointer;
+  transition: background 150ms ease, color 150ms ease;
+}
+
+.nx-passtype button[aria-pressed="true"] {
+  background: var(--nx-bg-inverse);
+  color: var(--nx-text-inverse);
+}
+
+.nx-form-status {
+  border: 1px solid var(--nx-blue-500);
+  background: color-mix(in srgb, var(--nx-blue-500) 7%, var(--nx-white));
+  padding: 0.9rem 1rem;
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.nx-form-note {
+  font-family: var(--nx-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--nx-text-faint);
+}
+
+.nx-eventgo {
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+/* ---------- footer ---------- */
+.nx-footer-band {
+  position: relative;
+  min-height: 17rem;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  overflow: hidden;
+  border-top: 1px solid var(--nx-hairline);
+}
+
+.nx-footer-band img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.55;
+}
+
+.nx-footer-band .inner {
+  position: relative;
+  display: grid;
+  gap: 0.8rem;
+  padding: 3rem 1rem;
+}
+
+.nx-footer-band .label {
+  font-family: var(--nx-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--nx-text-soft);
+}
+
+.nx-footer-band h2 {
+  font-family: var(--nx-display);
+  font-size: clamp(2.4rem, 6vw, 4.5rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  color: var(--nx-text-inverse);
+  text-shadow: 0 1px 30px rgba(18, 18, 18, 0.4);
+}
+
+.nx-footer-cols {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-top: 1px solid var(--nx-hairline);
+}
+
+@media (min-width: 60rem) {
+  .nx-footer-cols {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.nx-footer-col {
+  padding: 2.2rem 1.6rem 2.6rem;
+  border-right: 1px solid var(--nx-hairline);
+  display: grid;
+  align-content: start;
+  gap: 1.1rem;
+}
+
+.nx-footer-col:last-child {
+  border-right: 0;
+}
+
+.nx-footer-col .head {
+  font-family: var(--nx-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--nx-text-accent);
+}
+
+.nx-footer-col .rows {
+  display: grid;
+  gap: 0.45rem;
+  font-family: var(--nx-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--nx-text-soft);
+}
+
+.nx-footer-col .rows a {
+  text-decoration: none;
+}
+
+.nx-footer-col .rows a:hover {
+  color: var(--nx-text-accent);
+}
+
+.nx-countdown .days {
+  font-family: var(--nx-display);
+  font-size: 2.6rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--nx-text);
+}
+
+.nx-footer-bar {
+  border-top: 1px solid var(--nx-hairline);
+  padding: 1.4rem 0 1.8rem;
+}
+
+.nx-footer-bar .inner {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  font-family: var(--nx-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--nx-text-faint);
+}
+
+/* variant cross-link chip */
+.nx-variant-link {
+  font-family: var(--nx-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--nx-text-faint);
+}
+
+.nx-variant-link:hover {
+  color: var(--nx-text-accent);
+}
