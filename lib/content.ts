@@ -4,6 +4,7 @@
  * that one function (switch on process.env.CONTENT_SOURCE) and nothing else moves.
  */
 import seed from "@/content/seed.json";
+import seedNexus from "@/content/seed-nexus.json";
 
 /* ---------- Types ---------- */
 
@@ -36,6 +37,14 @@ export interface Edition {
   status: EditionStatus;
   isCurrent: boolean;
   seo: { title: string; description: string };
+  /* Optional fields used by the "nexus" variant */
+  editionNumber?: number;
+  format?: string;
+  coordinates?: { lat: number; lng: number };
+  contactEmail?: string;
+  socialLinks?: { label: string; url: string }[];
+  heroFigure?: { imageUrl: string; alt: string; label: string };
+  heroStatement?: string;
 }
 
 export interface Organization {
@@ -76,6 +85,8 @@ export interface Appearance {
   category: AppearanceCategory;
   billing: number;
   featured: boolean;
+  /** Edition-specific one-line thesis (nexus variant, faculty pillar hover). */
+  thesis?: string;
 }
 
 export type ChainStage = "grid-interface" | "network" | "facility" | "scale";
@@ -98,6 +109,12 @@ export interface Session {
   room: string | null;
   speakers: string[]; // person slugs
   status: SessionStatus;
+  /* Optional fields used by the "nexus" variant */
+  code?: string; // S.01…
+  categoryLabel?: string; // OPENING, KEYNOTE…
+  speakerLabel?: string; // display name when speakers[] is empty or joined
+  description?: string;
+  outcomes?: string[];
 }
 
 export interface Partner {
@@ -115,6 +132,33 @@ export interface SummitDocument {
   issuer: string;
 }
 
+export interface ManifestoBlock {
+  sectionLabel: string;
+  sublabel: string;
+  thesisPrefix: string;
+  thesisAccent: string;
+  thesisSuffix: string;
+  paragraphs: string[];
+  pillars: { num: string; title: string; text: string }[];
+}
+
+export interface Interview {
+  code: string;
+  title: string;
+  person: string; // person slug
+  durationMin: number;
+  featured: boolean;
+  pullQuote?: string;
+  image?: { sourceUrl: string; alt: string };
+  url?: string;
+}
+
+export interface ArchiveItem {
+  edition: string; // display label, e.g. "ED.01"
+  caption: string;
+  image: { sourceUrl: string; alt: string };
+}
+
 export interface SummitContent {
   editions: Edition[];
   organizations: Organization[];
@@ -124,17 +168,28 @@ export interface SummitContent {
   sessions: Session[];
   partners: Partner[];
   documents: SummitDocument[];
+  /* Optional collections used by the "nexus" variant */
+  manifesto?: ManifestoBlock;
+  interviews?: Interview[];
+  registerBenefits?: string[];
+  archives?: ArchiveItem[];
+  footerImage?: { sourceUrl: string; alt: string };
 }
 
 /* ---------- The adapter ---------- */
 
+export type ContentVariant = "default" | "nexus";
+
 /**
  * Async so a CMS-backed implementation is a drop-in replacement.
- * CONTENT_SOURCE=local reads the seed file; any other value should be
- * handled by the future implementation.
+ * CONTENT_SOURCE=local reads the seed files; any other value should be
+ * handled by the future implementation. Each design variation is just a
+ * different document set behind the same shape.
  */
-export async function getSummitContent(): Promise<SummitContent> {
-  return seed as SummitContent;
+export async function getSummitContent(
+  variant: ContentVariant = "default"
+): Promise<SummitContent> {
+  return (variant === "nexus" ? seedNexus : seed) as SummitContent;
 }
 
 /* ---------- Derived views (pure functions over SummitContent) ---------- */

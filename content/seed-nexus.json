@@ -1,0 +1,275 @@
+{
+  "editions": [
+    {
+      "slug": "2026-nexus",
+      "year": 2026,
+      "name": "Cross Future AI Summit 2026",
+      "tagline": "Shaping the future of AI, innovating for tomorrow.",
+      "thesis": "We treat information as a structured, living landscape — the summit as the foundational classroom for the next century of intelligence.",
+      "theme": "AI data center power and energy resilience",
+      "startsAt": "2026-07-24T08:30:00-04:00",
+      "endsAt": "2026-07-24T18:00:00-04:00",
+      "timezone": "America/Montreal",
+      "venue": {
+        "name": "Montréal AI Ecosystem Campus",
+        "city": "Montréal",
+        "region": "QC",
+        "country": "Canada"
+      },
+      "registrationUrl": "https://evtgo.com",
+      "status": "registration-open",
+      "isCurrent": true,
+      "editionNumber": 3,
+      "format": "In-Person + VR",
+      "coordinates": { "lat": 45.5019, "lng": -73.5673 },
+      "contactEmail": "contact@cross-future",
+      "socialLinks": [
+        { "label": "LinkedIn", "url": "https://example.com/linkedin" },
+        { "label": "WeChat", "url": "https://example.com/wechat" },
+        { "label": "X / Twitter", "url": "https://example.com/x" }
+      ],
+      "heroFigure": {
+        "imageUrl": "https://media.base44.com/images/public/6a7b8f166740ddcd37caad09/1f5483d8e_generated_22c35823.png/v1/fill/w_896,h_1120,al_c,q_90,usm_0.66_1.00_0.01,enc_webp,quality_auto/1f5483d8e_generated_22c35823.webp",
+        "alt": "Abstract 3D neural cross — frosted glass and light fibers",
+        "label": "FIG. 01 / NEURAL CROSS"
+      },
+      "heroStatement": "Shaping the future of AI, innovating for tomorrow. A focused summit convening leaders from academia and industry on the resilience, infrastructure, and intelligence of the next century of computing.",
+      "seo": {
+        "title": "Cross Future AI Summit 2026 — Montreal",
+        "description": "Cross Future AI Summit, Edition 03 — July 24, 2026, Montréal. The foundational classroom for the next century of intelligence: AI data-center resilience, frontier models, and the low-carbon transition. In-person + VR."
+      }
+    }
+  ],
+  "manifesto": {
+    "sectionLabel": "§ 01 / MANIFESTO",
+    "sublabel": "THE FOUNDATIONAL CLASSROOM",
+    "thesisPrefix": "We treat information as a ",
+    "thesisAccent": "structured, living landscape",
+    "thesisSuffix": " — the summit as the foundational classroom for the next century of intelligence.",
+    "paragraphs": [
+      "Cross Future AI Summit is hosted by Cross Future Hub, a non-profit guiding tech enthusiasts through key trends. As demand for large AI models and high-performance computing accelerates, AI data centers are reshaping the landscape of power infrastructure.",
+      "The integration of ultra-high-density computing loads introduces systemic challenges across grid capacity, power quality, supply reliability, and energy dispatch. This workshop convenes leaders to explore the technical pathways, application scenarios, and collaboration opportunities shaping AI data-center resilience."
+    ],
+    "pillars": [
+      {
+        "num": "01",
+        "title": "Grid Capacity",
+        "text": "Ultra-high-density compute loads are reshaping power infrastructure and the digital grid."
+      },
+      {
+        "num": "02",
+        "title": "Energy Resilience",
+        "text": "Strengthening backup power, storage, and dispatch for secure AI data-center operation."
+      },
+      {
+        "num": "03",
+        "title": "Low-Carbon Transition",
+        "text": "Technical pathways aligning intelligence infrastructure with decarbonization goals."
+      },
+      {
+        "num": "04",
+        "title": "Cross-Disciplinary Bridge",
+        "text": "Academia and industry convening on the application scenarios shaping AIDC resilience."
+      }
+    ]
+  },
+  "organizations": [
+    { "name": "Cross Future Hub", "shortName": "Cross Future Hub", "slug": "cross-future-hub", "type": "nonprofit", "url": "https://example.org/cross-future-hub", "country": "Canada" },
+    { "name": "University of Washington", "shortName": "University of Washington", "slug": "university-of-washington", "type": "academia", "url": "https://example.edu", "country": "USA" },
+    { "name": "Stanford", "shortName": "Stanford", "slug": "stanford", "type": "academia", "url": "https://example.edu", "country": "USA" },
+    { "name": "OSU", "shortName": "OSU", "slug": "osu", "type": "academia", "url": "https://example.edu", "country": "USA" },
+    { "name": "University of Waterloo", "shortName": "University of Waterloo", "slug": "university-of-waterloo", "type": "academia", "url": "https://example.edu", "country": "Canada" },
+    { "name": "ServiceNow Research", "shortName": "ServiceNow Research", "slug": "servicenow-research", "type": "industry", "url": "https://example.com", "country": "USA" },
+    { "name": "NYU", "shortName": "NYU", "slug": "nyu", "type": "academia", "url": "https://example.edu", "country": "USA" },
+    { "name": "Google DeepMind", "shortName": "Google DeepMind", "slug": "google-deepmind", "type": "industry", "url": "https://example.com", "country": "USA" },
+    { "name": "York University", "shortName": "York University", "slug": "york-university", "type": "academia", "url": "https://example.edu", "country": "Canada" },
+    { "name": "Google Cloud AI", "shortName": "Google Cloud AI", "slug": "google-cloud-ai", "type": "industry", "url": "https://example.com", "country": "USA" },
+    { "name": "Industry Faculty", "shortName": "Industry Faculty", "slug": "industry-faculty", "type": "industry", "url": "https://example.com", "country": "Canada" },
+    { "name": "University of Guelph", "shortName": "University of Guelph", "slug": "university-of-guelph", "type": "academia", "url": "https://example.edu", "country": "Canada" }
+  ],
+  "people": [
+    { "firstName": "Shaun", "lastName": "VanWeelden", "slug": "shaun-vanweelden", "headshot": { "sourceUrl": "/nexus/portraits/shaun-vanweelden.svg", "alt": "Portrait placeholder for Shaun VanWeelden", "focalPoint": { "x": 0.5, "y": 0.4 } }, "links": [], "verified": false, "bio": "Opening keynote." },
+    { "firstName": "Shyam", "lastName": "Gollakota", "slug": "shyam-gollakota", "headshot": { "sourceUrl": "/nexus/portraits/shyam-gollakota.svg", "alt": "Portrait placeholder for Shyam Gollakota", "focalPoint": { "x": 0.5, "y": 0.4 } }, "links": [], "verified": false, "bio": "University of Washington." },
+    { "firstName": "Yu", "lastName": "Su", "slug": "yu-su", "headshot": { "sourceUrl": "/nexus/portraits/yu-su.svg", "alt": "Portrait placeholder for Yu Su", "focalPoint": { "x": 0.5, "y": 0.4 } }, "links": [], "verified": false, "bio": "Stanford / OSU." },
+    { "firstName": "WenHu", "lastName": "Chen", "slug": "wenhu-chen", "headshot": { "sourceUrl": "/nexus/portraits/wenhu-chen.svg", "alt": "Portrait placeholder for WenHu Chen", "focalPoint": { "x": 0.5, "y": 0.4 } }, "links": [], "verified": false, "bio": "University of Waterloo." },
+    { "firstName": "Nouha", "lastName": "Dziri", "slug": "nouha-dziri", "headshot": { "sourceUrl": "/nexus/portraits/nouha-dziri.svg", "alt": "Portrait placeholder for Nouha Dziri", "focalPoint": { "x": 0.5, "y": 0.4 } }, "links": [], "verified": false, "bio": "ServiceNow Research." },
+    { "firstName": "Ken", "lastName": "Perlin", "slug": "ken-perlin", "headshot": { "sourceUrl": "/nexus/portraits/ken-perlin.svg", "alt": "Portrait placeholder for Ken Perlin", "focalPoint": { "x": 0.5, "y": 0.4 } }, "links": [], "verified": false, "bio": "NYU." },
+    { "firstName": "Natasha", "lastName": "Jaques", "slug": "natasha-jaques", "headshot": { "sourceUrl": "/nexus/portraits/natasha-jaques.svg", "alt": "Portrait placeholder for Natasha Jaques", "focalPoint": { "x": 0.5, "y": 0.4 } }, "links": [], "verified": false, "bio": "Google DeepMind." },
+    { "firstName": "James", "lastName": "Elder", "slug": "james-elder", "headshot": { "sourceUrl": "/nexus/portraits/james-elder.svg", "alt": "Portrait placeholder for James Elder", "focalPoint": { "x": 0.5, "y": 0.4 } }, "links": [], "verified": false, "bio": "York University." },
+    { "firstName": "Sercan", "lastName": "Arik", "slug": "sercan-arik", "headshot": { "sourceUrl": "/nexus/portraits/sercan-arik.svg", "alt": "Portrait placeholder for Sercan Arik", "focalPoint": { "x": 0.5, "y": 0.4 } }, "links": [], "verified": false, "bio": "Google Cloud AI." },
+    { "firstName": "Chris", "lastName": "Smith", "slug": "chris-smith", "headshot": { "sourceUrl": "/nexus/portraits/chris-smith.svg", "alt": "Portrait placeholder for Chris Smith", "focalPoint": { "x": 0.5, "y": 0.4 } }, "links": [], "verified": false, "bio": "Industry faculty." },
+    { "firstName": "Miryam", "lastName": "Lazarte", "slug": "miryam-lazarte", "headshot": { "sourceUrl": "/nexus/portraits/miryam-lazarte.svg", "alt": "Portrait placeholder for Miryam Lazarte", "focalPoint": { "x": 0.5, "y": 0.4 } }, "links": [], "verified": false, "bio": "Cross Future Hub." },
+    { "firstName": "Simon", "lastName": "Yang", "slug": "simon-yang", "headshot": { "sourceUrl": "/nexus/portraits/simon-yang.svg", "alt": "Portrait placeholder for Simon Yang", "focalPoint": { "x": 0.5, "y": 0.4 } }, "links": [], "verified": false, "bio": "University of Guelph." }
+  ],
+  "appearances": [
+    { "person": "shaun-vanweelden", "edition": "2026-nexus", "organizations": [], "roleTitle": "Opening Keynote", "category": "industry", "billing": 1, "featured": true, "thesis": "Intelligence as infrastructure — the summit as a bridge." },
+    { "person": "shyam-gollakota", "edition": "2026-nexus", "organizations": ["university-of-washington"], "roleTitle": "Faculty", "category": "research", "billing": 2, "featured": true, "thesis": "Computing that lives at the edge of power and perception." },
+    { "person": "yu-su", "edition": "2026-nexus", "organizations": ["stanford", "osu"], "roleTitle": "Faculty", "category": "research", "billing": 3, "featured": false, "thesis": "Structured reasoning over the long tail of world knowledge." },
+    { "person": "wenhu-chen", "edition": "2026-nexus", "organizations": ["university-of-waterloo"], "roleTitle": "Faculty", "category": "research", "billing": 4, "featured": false, "thesis": "Grounding language models in verifiable computation." },
+    { "person": "nouha-dziri", "edition": "2026-nexus", "organizations": ["servicenow-research"], "roleTitle": "Faculty", "category": "research", "billing": 5, "featured": false, "thesis": "Reasoning beyond imitation — the frontier of evaluation." },
+    { "person": "ken-perlin", "edition": "2026-nexus", "organizations": ["nyu"], "roleTitle": "Faculty", "category": "research", "billing": 6, "featured": false, "thesis": "Procedural worlds and the grammar of synthetic experience." },
+    { "person": "natasha-jaques", "edition": "2026-nexus", "organizations": ["google-deepmind"], "roleTitle": "Faculty", "category": "industry", "billing": 7, "featured": false, "thesis": "Multi-agent social learning and shared intelligence." },
+    { "person": "james-elder", "edition": "2026-nexus", "organizations": ["york-university"], "roleTitle": "Faculty", "category": "research", "billing": 8, "featured": false, "thesis": "Vision, resilience, and the geometry of perception." },
+    { "person": "sercan-arik", "edition": "2026-nexus", "organizations": ["google-cloud-ai"], "roleTitle": "Faculty", "category": "industry", "billing": 9, "featured": false, "thesis": "Scalable, reliable foundation models for the enterprise." },
+    { "person": "chris-smith", "edition": "2026-nexus", "organizations": ["industry-faculty"], "roleTitle": "Faculty", "category": "industry", "billing": 10, "featured": false, "thesis": "Bridging research and deployment at production scale." },
+    { "person": "miryam-lazarte", "edition": "2026-nexus", "organizations": ["cross-future-hub"], "roleTitle": "Faculty", "category": "ecosystem", "billing": 11, "featured": false, "thesis": "Ecosystems that connect academia, industry, and policy." },
+    { "person": "simon-yang", "edition": "2026-nexus", "organizations": ["university-of-guelph"], "roleTitle": "Faculty", "category": "research", "billing": 12, "featured": false, "thesis": "Engineering intelligence with biological principles." }
+  ],
+  "tracks": [
+    { "code": "T1", "name": "Grid Interface & Capacity", "description": "Interconnection, utility planning, and siting ultra-high-density campuses.", "chainStage": "grid-interface" },
+    { "code": "T2", "name": "Power Quality & Distribution", "description": "Distribution networks and the load transients of synchronized compute.", "chainStage": "network" },
+    { "code": "T3", "name": "Backup Power & Storage", "description": "UPS, BESS, and ride-through design for facilities that cannot blink.", "chainStage": "facility" },
+    { "code": "T4", "name": "Dispatch at Scale", "description": "Grid-interactive scheduling of compute as a controllable load.", "chainStage": "scale" }
+  ],
+  "sessions": [
+    {
+      "title": "Registration & Cross-Point Coffee",
+      "edition": "2026-nexus",
+      "track": "T1",
+      "code": "S.01",
+      "categoryLabel": "OPENING",
+      "startsAt": "2026-07-24T08:30:00-04:00",
+      "endsAt": "2026-07-24T09:30:00-04:00",
+      "room": null,
+      "speakers": [],
+      "speakerLabel": "Cross Future Hub",
+      "status": "confirmed",
+      "description": "Check-in opens. Attendees receive summit credentials and the day's curriculum map.",
+      "outcomes": ["Networking orientation", "Curriculum map distribution"]
+    },
+    {
+      "title": "The Foundational Classroom",
+      "edition": "2026-nexus",
+      "track": "T1",
+      "code": "S.02",
+      "categoryLabel": "KEYNOTE",
+      "startsAt": "2026-07-24T09:30:00-04:00",
+      "endsAt": "2026-07-24T10:15:00-04:00",
+      "room": null,
+      "speakers": ["shaun-vanweelden"],
+      "speakerLabel": "Shaun VanWeelden",
+      "status": "confirmed",
+      "description": "An opening framing of the summit as the bridge between human intellect and computational evolution.",
+      "outcomes": ["Summit thesis", "Cross-disciplinary framing"]
+    },
+    {
+      "title": "AI Data Centers & The Grid",
+      "edition": "2026-nexus",
+      "track": "T1",
+      "code": "S.03",
+      "categoryLabel": "INFRASTRUCTURE",
+      "startsAt": "2026-07-24T10:15:00-04:00",
+      "endsAt": "2026-07-24T11:30:00-04:00",
+      "room": null,
+      "speakers": ["shyam-gollakota"],
+      "speakerLabel": "Shyam Gollakota",
+      "status": "confirmed",
+      "description": "Ultra-high-density compute loads and their systemic impact on grid capacity, power quality, and supply reliability.",
+      "outcomes": ["Grid capacity modeling", "Power quality frameworks"]
+    },
+    {
+      "title": "Energy Resilience of AIDC",
+      "edition": "2026-nexus",
+      "track": "T3",
+      "code": "S.04",
+      "categoryLabel": "RESILIENCE",
+      "startsAt": "2026-07-24T11:30:00-04:00",
+      "endsAt": "2026-07-24T12:30:00-04:00",
+      "room": null,
+      "speakers": ["james-elder"],
+      "speakerLabel": "James Elder",
+      "status": "confirmed",
+      "description": "Backup power, energy storage, and dispatch strategies for the secure operation of digital infrastructure.",
+      "outcomes": ["Resilience architecture", "Storage and dispatch design"]
+    },
+    {
+      "title": "Reasoning at Scale",
+      "edition": "2026-nexus",
+      "track": "T4",
+      "code": "S.05",
+      "categoryLabel": "MODELS",
+      "startsAt": "2026-07-24T13:30:00-04:00",
+      "endsAt": "2026-07-24T14:45:00-04:00",
+      "room": null,
+      "speakers": ["nouha-dziri"],
+      "speakerLabel": "Nouha Dziri",
+      "status": "confirmed",
+      "description": "Frontier reasoning in large models — capability, evaluation, and the path beyond imitation.",
+      "outcomes": ["Reasoning evaluation", "Beyond-imitation methods"]
+    },
+    {
+      "title": "Generative Worlds",
+      "edition": "2026-nexus",
+      "track": "T4",
+      "code": "S.06",
+      "categoryLabel": "CREATIVE AI",
+      "startsAt": "2026-07-24T14:45:00-04:00",
+      "endsAt": "2026-07-24T16:00:00-04:00",
+      "room": null,
+      "speakers": ["ken-perlin"],
+      "speakerLabel": "Ken Perlin",
+      "status": "confirmed",
+      "description": "VR art exhibitions and procedural worlds as the new medium for synthetic experience and education.",
+      "outcomes": ["VR exhibition tour", "Procedural media literacy"]
+    },
+    {
+      "title": "The Low-Carbon Transition",
+      "edition": "2026-nexus",
+      "track": "T2",
+      "code": "S.07",
+      "categoryLabel": "PANEL",
+      "startsAt": "2026-07-24T16:00:00-04:00",
+      "endsAt": "2026-07-24T17:00:00-04:00",
+      "room": null,
+      "speakers": [],
+      "speakerLabel": "Faculty Panel",
+      "status": "confirmed",
+      "description": "Industry and academia convene on aligning intelligence infrastructure with decarbonization.",
+      "outcomes": ["Policy pathways", "Collaboration roadmap"]
+    }
+  ],
+  "interviews": [
+    {
+      "code": "FEATURED",
+      "title": "Computing at the edge of power and perception",
+      "person": "shyam-gollakota",
+      "durationMin": 24,
+      "featured": true,
+      "pullQuote": "The next decade of intelligence won't be limited by models — it will be limited by the energy and infrastructure we build around them.",
+      "image": {
+        "sourceUrl": "https://media.base44.com/images/public/6a7b8f166740ddcd37caad09/42e823623_generated_b2cc2637.png/v1/fill/w_1379,h_720,al_c,q_90,usm_0.66_1.00_0.01,enc_webp,quality_auto/42e823623_generated_b2cc2637.webp",
+        "alt": "Featured interview visual"
+      },
+      "url": "https://example.com/interviews/featured"
+    },
+    { "code": "I.01", "title": "Reasoning over the long tail of world knowledge", "person": "yu-su", "durationMin": 18, "featured": false, "url": "https://example.com/interviews/i01" },
+    { "code": "I.02", "title": "Grounding language in verifiable computation", "person": "wenhu-chen", "durationMin": 21, "featured": false, "url": "https://example.com/interviews/i02" },
+    { "code": "I.03", "title": "Reasoning beyond imitation", "person": "nouha-dziri", "durationMin": 19, "featured": false, "url": "https://example.com/interviews/i03" },
+    { "code": "I.04", "title": "The grammar of synthetic experience", "person": "ken-perlin", "durationMin": 27, "featured": false, "url": "https://example.com/interviews/i04" },
+    { "code": "I.05", "title": "Multi-agent social learning", "person": "natasha-jaques", "durationMin": 23, "featured": false, "url": "https://example.com/interviews/i05" },
+    { "code": "I.06", "title": "The geometry of perception", "person": "james-elder", "durationMin": 20, "featured": false, "url": "https://example.com/interviews/i06" },
+    { "code": "I.07", "title": "Foundation models at production scale", "person": "sercan-arik", "durationMin": 22, "featured": false, "url": "https://example.com/interviews/i07" }
+  ],
+  "registerBenefits": [
+    "A focused single-day curriculum on AI data-center resilience and frontier intelligence.",
+    "Direct access to faculty from Waterloo, Stanford, Washington, NYU, and Google DeepMind.",
+    "A VR art exhibition and the summit's cross-disciplinary collaboration roadmap.",
+    "Co-located with Montréal's AI ecosystem — July 24, 2026."
+  ],
+  "archives": [
+    { "edition": "ED.01", "caption": "Opening plenary — the first classroom", "image": { "sourceUrl": "/nexus/archive/ed01-plenary.svg", "alt": "Archive photo placeholder: Edition 01 opening plenary hall" } },
+    { "edition": "ED.01", "caption": "Faculty roundtable, hour six", "image": { "sourceUrl": "/nexus/archive/ed01-roundtable.svg", "alt": "Archive photo placeholder: Edition 01 faculty roundtable" } },
+    { "edition": "ED.01", "caption": "The corridor between sessions", "image": { "sourceUrl": "/nexus/archive/ed01-corridor.svg", "alt": "Archive photo placeholder: Edition 01 corridor" } },
+    { "edition": "ED.02", "caption": "VR exhibition — synthetic landscapes", "image": { "sourceUrl": "/nexus/archive/ed02-vr.svg", "alt": "Archive photo placeholder: Edition 02 VR exhibition" } },
+    { "edition": "ED.02", "caption": "Whiteboard session on grid capacity", "image": { "sourceUrl": "/nexus/archive/ed02-whiteboard.svg", "alt": "Archive photo placeholder: Edition 02 whiteboard session" } },
+    { "edition": "ED.02", "caption": "Night session — dispatch economics", "image": { "sourceUrl": "/nexus/archive/ed02-night.svg", "alt": "Archive photo placeholder: Edition 02 night session" } },
+    { "edition": "ED.02", "caption": "The closing cross-point", "image": { "sourceUrl": "/nexus/archive/ed02-closing.svg", "alt": "Archive photo placeholder: Edition 02 closing gathering" } },
+    { "edition": "ED.02", "caption": "Montréal, seen from the venue", "image": { "sourceUrl": "/nexus/archive/ed02-city.svg", "alt": "Archive photo placeholder: Montréal skyline from the venue" } }
+  ],
+  "footerImage": {
+    "sourceUrl": "https://media.base44.com/images/public/6a7b8f166740ddcd37caad09/8fa9145ad_generated_0fe59f5a.png/v1/fill/w_2880,h_512,al_c,q_90,usm_0.66_1.00_0.01,enc_webp,quality_auto/8fa9145ad_generated_0fe59f5a.webp",
+    "alt": "Infinite structured grid of frosted glass pillars"
+  },
+  "partners": [],
+  "documents": []
+}
