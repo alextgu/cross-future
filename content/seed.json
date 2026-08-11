@@ -1,0 +1,276 @@
+{
+  "editions": [
+    {
+      "slug": "2026",
+      "year": 2026,
+      "name": "Cross Future AI Summit 2026",
+      "tagline": "Powering the next order of magnitude.",
+      "thesis": "AI compute is now an energy problem. The next generation of data centers will be built or blocked at the grid interface — and the people who design substations, switchgear, storage, and dispatch must be in the same room as the people who design the racks.",
+      "theme": "AI data center power and energy resilience",
+      "startsAt": "2026-10-08T09:00:00-04:00",
+      "endsAt": "2026-10-08T18:00:00-04:00",
+      "timezone": "America/Montreal",
+      "venue": {
+        "name": "Palais des congrès de Montréal",
+        "city": "Montréal",
+        "region": "Québec",
+        "country": "Canada"
+      },
+      "registrationUrl": "https://example.com/register/cross-future-2026",
+      "status": "announced",
+      "isCurrent": true,
+      "seo": {
+        "title": "Cross Future AI Summit 2026 — AI Data Center Power & Energy Resilience",
+        "description": "A one-day summit in Montréal on powering ultra-high-density AI compute: grid capacity, power quality, backup power, energy storage and dispatch. Hosted by Cross Future Hub, October 8, 2026."
+      }
+    }
+  ],
+  "organizations": [
+    {
+      "name": "Cross Future Hub",
+      "shortName": "CF Hub",
+      "slug": "cross-future-hub",
+      "type": "nonprofit",
+      "url": "https://example.org/cross-future-hub",
+      "country": "Canada"
+    },
+    {
+      "name": "Placeholder University",
+      "shortName": "PU",
+      "slug": "placeholder-university",
+      "type": "academia",
+      "url": "https://example.edu",
+      "country": "Canada"
+    },
+    {
+      "name": "NorthGrid Data Centers",
+      "shortName": "NorthGrid",
+      "slug": "northgrid-data-centers",
+      "type": "industry",
+      "url": "https://example.com/northgrid",
+      "country": "Canada"
+    },
+    {
+      "name": "Boreal Cloud",
+      "shortName": "Boreal",
+      "slug": "boreal-cloud",
+      "type": "industry",
+      "url": "https://example.com/boreal",
+      "country": "Canada"
+    },
+    {
+      "name": "Laurentide Energy Alliance",
+      "shortName": "LEA",
+      "slug": "laurentide-energy-alliance",
+      "type": "ecosystem",
+      "url": "https://example.org/lea",
+      "country": "Canada"
+    }
+  ],
+  "people": [
+    {
+      "firstName": "Amara",
+      "lastName": "Okafor",
+      "slug": "amara-okafor",
+      "headshot": {
+        "sourceUrl": "/headshots/amara-okafor.svg",
+        "alt": "Portrait of Amara Okafor",
+        "focalPoint": {
+          "x": 0.5,
+          "y": 0.4
+        }
+      },
+      "links": [
+        {
+          "type": "website",
+          "url": "https://example.edu/~aokafor"
+        }
+      ],
+      "verified": true,
+      "bio": "Placeholder bio. Researches grid integration of hyperscale loads: interconnection studies, transient stability, and the planning gap between utility timelines and compute demand."
+    },
+    {
+      "firstName": "Jean-Philippe",
+      "lastName": "Tremblay",
+      "slug": "jean-philippe-tremblay",
+      "headshot": {
+        "sourceUrl": "/headshots/jean-philippe-tremblay.svg",
+        "alt": "Portrait of Jean-Philippe Tremblay",
+        "focalPoint": {
+          "x": 0.5,
+          "y": 0.42
+        }
+      },
+      "links": [],
+      "verified": false,
+      "bio": "Placeholder bio. Operates northern-climate data center campuses; works on 2N electrical topologies, medium-voltage distribution, and hydro-backed capacity contracts."
+    },
+    {
+      "firstName": "Priya",
+      "lastName": "Ramanathan",
+      "slug": "priya-ramanathan",
+      "headshot": {
+        "sourceUrl": "/headshots/priya-ramanathan.svg",
+        "alt": "Portrait of Priya Ramanathan",
+        "focalPoint": {
+          "x": 0.5,
+          "y": 0.38
+        }
+      },
+      "links": [
+        {
+          "type": "linkedin",
+          "url": "https://linkedin.com/in/example-priya"
+        }
+      ],
+      "verified": true,
+      "bio": "Placeholder bio. Leads energy strategy for a cloud platform: battery energy storage dispatch, demand response participation, and carbon-aware workload scheduling."
+    },
+    {
+      "firstName": "Marcus",
+      "lastName": "Vogel",
+      "slug": "marcus-vogel",
+      "headshot": {
+        "sourceUrl": "/headshots/marcus-vogel.svg",
+        "alt": "Portrait of Marcus Vogel",
+        "focalPoint": {
+          "x": 0.5,
+          "y": 0.4
+        }
+      },
+      "links": [
+        {
+          "type": "website",
+          "url": "https://example.org/mvogel"
+        }
+      ],
+      "verified": false,
+      "bio": "Placeholder bio. Convenes utilities, regulators and operators on grid-interactive data centers and flexible interconnection frameworks. Link withheld until verified."
+    }
+  ],
+  "appearances": [
+    {
+      "person": "amara-okafor",
+      "edition": "2026",
+      "organizations": [
+        "placeholder-university"
+      ],
+      "roleTitle": "Professor, Power Systems Engineering",
+      "category": "research",
+      "billing": 1,
+      "featured": true
+    },
+    {
+      "person": "jean-philippe-tremblay",
+      "edition": "2026",
+      "organizations": [
+        "northgrid-data-centers"
+      ],
+      "roleTitle": "VP, Critical Infrastructure",
+      "category": "industry",
+      "billing": 2,
+      "featured": true
+    },
+    {
+      "person": "priya-ramanathan",
+      "edition": "2026",
+      "organizations": [
+        "boreal-cloud"
+      ],
+      "roleTitle": "Director of Energy & Storage",
+      "category": "industry",
+      "billing": 3,
+      "featured": false
+    },
+    {
+      "person": "marcus-vogel",
+      "edition": "2026",
+      "organizations": [
+        "laurentide-energy-alliance"
+      ],
+      "roleTitle": "Program Lead, Grid-Interactive Compute",
+      "category": "ecosystem",
+      "billing": 4,
+      "featured": false
+    }
+  ],
+  "tracks": [
+    {
+      "code": "T1",
+      "name": "Grid Interface & Capacity",
+      "description": "Interconnection queues, utility planning horizons, capacity contracts, and siting ultra-high-density campuses on constrained grids.",
+      "chainStage": "grid-interface"
+    },
+    {
+      "code": "T2",
+      "name": "Power Quality & Distribution",
+      "description": "Medium-voltage distribution, harmonics, and the millisecond-scale load transients of synchronized GPU clusters.",
+      "chainStage": "network"
+    },
+    {
+      "code": "T3",
+      "name": "Backup Power & Storage",
+      "description": "UPS topologies, battery energy storage systems, generation, and ride-through design for facilities that cannot blink.",
+      "chainStage": "facility"
+    },
+    {
+      "code": "T4",
+      "name": "Dispatch at Scale",
+      "description": "Demand response, curtailment economics, and grid-interactive scheduling of compute as a controllable load.",
+      "chainStage": "scale"
+    }
+  ],
+  "sessions": [],
+  "partners": [
+    {
+      "name": "Placeholder Utility",
+      "slug": "placeholder-utility",
+      "logo": {
+        "sourceUrl": "/partners/placeholder-utility.svg",
+        "alt": "Placeholder Utility logo"
+      },
+      "url": "https://example.com/utility",
+      "type": "energy"
+    },
+    {
+      "name": null,
+      "slug": "placeholder-infrastructure",
+      "logo": {
+        "sourceUrl": "/partners/placeholder-infrastructure.svg",
+        "alt": "Placeholder infrastructure partner logo"
+      },
+      "url": "https://example.com/infrastructure",
+      "type": "infrastructure"
+    },
+    {
+      "name": "Placeholder Community Org",
+      "slug": "placeholder-community",
+      "logo": {
+        "sourceUrl": "/partners/placeholder-community.svg",
+        "alt": "Placeholder Community Org logo"
+      },
+      "url": "https://example.org/community",
+      "type": "community"
+    }
+  ],
+  "documents": [
+    {
+      "title": "Letter of Support — Placeholder Ministry",
+      "type": "letter",
+      "image": {
+        "sourceUrl": "/documents/letter-of-support.svg",
+        "alt": "Scanned letter of support on official letterhead (placeholder)"
+      },
+      "issuer": "Placeholder Ministry of Innovation"
+    },
+    {
+      "title": "Non-Profit Registration Certificate",
+      "type": "certificate",
+      "image": {
+        "sourceUrl": "/documents/certificate.svg",
+        "alt": "Non-profit registration certificate (placeholder)"
+      },
+      "issuer": "Placeholder Registrar of Enterprises"
+    }
+  ]
+}

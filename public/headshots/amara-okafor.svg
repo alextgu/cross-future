@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <rect width="400" height="400" fill="#ffffff"/>
+  <g stroke="#e4e4e8" stroke-width="1">
+    <path d="M0 50H400M0 100H400M0 150H400M0 200H400M0 250H400M0 300H400M0 350H400"/>
+    <path d="M50 0V400M100 0V400M150 0V400M200 0V400M250 0V400M300 0V400M350 0V400"/>
+  </g>
+  <circle cx="200" cy="150" r="70" fill="#8a5a3b"/>
+  <path d="M60 400 C60 300 140 270 200 270 C260 270 340 300 340 400 Z" fill="#4b47f5"/>
+  <rect x="16" y="16" width="368" height="368" fill="none" stroke="#0a0a0b" stroke-width="2"/>
+  <text x="32" y="372" font-family="IBM Plex Mono, monospace" font-size="28" fill="#4b47f5">A.O.</text>
+  <text x="368" y="44" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="14" fill="#85858f">PLACEHOLDER</text>
+</svg>

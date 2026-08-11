@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 40" width="160" height="40">
+  <rect x="1" y="1" width="38" height="38" fill="#4b47f5"/>
+  <path d="M22 8 L14 22 H20 L18 32 L27 17 H20 L22 8 Z" fill="#ffffff"/>
+  <text x="48" y="26" font-family="IBM Plex Mono, monospace" font-size="13" fill="#0a0a0b">UTILITY CO</text>
+</svg>
