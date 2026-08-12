@@ -44,8 +44,11 @@
   --asm-page: var(--asm-n-050);
 
   --asm-ink: var(--asm-n-900);
-  --asm-ink-2: var(--asm-n-600);
-  --asm-ink-3: var(--asm-n-400);
+  /* ink-2 and ink-3 are set two steps apart and no lighter than n-600: the
+     mono meta labels run at ~11px, which needs 4.5:1 against the MIST card,
+     not just against white. n-400 read fine and failed the audit. */
+  --asm-ink-2: var(--asm-n-700);
+  --asm-ink-3: var(--asm-n-600);
   --asm-ink-inv: var(--asm-n-000);
   --asm-ink-inv-2: color-mix(in srgb, var(--asm-n-000) 66%, transparent);
 
@@ -285,6 +288,12 @@
   color: var(--asm-ink-3);
 }
 
+.assembly .t-deep .asm-meta,
+.assembly .t-accent .asm-meta,
+.assembly .asm-person .asm-meta {
+  color: var(--asm-ink-inv-2);
+}
+
 /* ============================================================
    Cards — the atom of the whole design
    ============================================================ */
@@ -435,6 +444,7 @@
   border-radius: var(--asm-radius-pill);
   background: var(--asm-card-mist);
   cursor: pointer;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
