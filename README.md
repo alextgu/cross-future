@@ -12,9 +12,20 @@ AI data center power and energy resilience, hosted by Cross Future Hub
   with horizontal snap agenda, faculty pillars, interviews, countdown
   footer — plus photo-forward innovations (portrait reveals, interview
   thumbnails, and the § 06 Archives photo wall the reference never renders).
+- **`/assembly` — Design C, "Assembly"**: a tiled card system with a sticky
+  ticket rail, taking its structure from the IT/CONF reference and its type
+  family (Barlow) from the live cross-future.com. Eight routes — home, about,
+  speakers, agenda, media, partners, register, contact — plus an in-design
+  404. Built media-forward: 30+ image slots and a video hero, all routed
+  through one `AsmMedia` component. **Tier 1 of its token block is greyscale
+  on purpose** — the colour pass is a five-line edit, see
+  `COMPONENTS.md` § 6.
 
 Next.js 15 (App Router) · React 19 · TypeScript · plain CSS. No database, no
 CMS, no API keys. Node 20+.
+
+Architecture, the full component inventory and the rules that hold it
+together live in **[COMPONENTS.md](./COMPONENTS.md)** — read that first.
 
 ```bash
 npm install
