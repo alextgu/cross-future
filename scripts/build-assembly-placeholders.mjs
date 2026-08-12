@@ -100,8 +100,10 @@ function portraitSvg(name, path) {
   const W = 600;
   const H = 800;
   const r = rng(path);
-  const bg = GREYS[Math.floor(r() * 3)];
-  const fg = GREYS[3 + Math.floor(r() * 3)];
+  /* Keep the two tones far apart on the ramp: adjacent greys survive the
+     duotone filter as a flat card with no visible figure. */
+  const bg = GREYS[Math.floor(r() * 2)];
+  const fg = GREYS[4 + Math.floor(r() * 2)];
   const initials = name
     .split(" ")
     .filter(Boolean)
@@ -153,7 +155,10 @@ function logoSvg(name, path) {
   }
   if (line.trim()) lines.push(line.trim());
   const shown = lines.slice(0, 3);
-  const size = shown.length > 2 ? 26 : shown.length > 1 ? 32 : 40;
+  /* Scale to the longest line so a long name cannot overrun the box. */
+  const longest = Math.max(...shown.map((l) => l.length), 1);
+  const base = shown.length > 2 ? 26 : shown.length > 1 ? 32 : 40;
+  const size = Math.max(15, Math.min(base, Math.floor((W - 48) / (longest * 0.5))));
   const startY = H / 2 - ((shown.length - 1) * size * 1.12) / 2 + size * 0.34;
 
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="${esc(name)} logo placeholder">
