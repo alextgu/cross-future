@@ -1,0 +1,1406 @@
+/* ============================================================
+   Design C — "Assembly"
+   A tiled card system: every block is a rounded card floating on
+   the page ground with a constant gutter, plus a sticky right rail
+   carrying the agenda teaser and the ticket stub.
+
+   TOKENS ARE IN TWO TIERS.
+   Tier 1 names the value. Tier 2 names the job. Components use
+   ONLY Tier 2. Retheming this design = editing Tier 1 and nothing
+   else. Tier 1 is currently GREYSCALE on purpose — the layout,
+   rhythm and hierarchy are built to work without hue, so colour
+   can be dropped in at the end as a single localised change.
+
+   Every rule is scoped under .assembly so this file cannot leak
+   into Design A or Design B.
+   ============================================================ */
+
+.assembly {
+  /* ---------- Tier 1: primitives (greyscale — swap for hue last) ---------- */
+  --asm-n-000: #ffffff;
+  --asm-n-025: #fafafa;
+  --asm-n-050: #f4f4f3;
+  --asm-n-100: #ebebea;
+  --asm-n-150: #e2e2e0;
+  --asm-n-200: #d6d6d3;
+  --asm-n-300: #bfbfbb;
+  --asm-n-400: #9b9b97;
+  --asm-n-500: #74746f;
+  --asm-n-600: #55554f;
+  --asm-n-700: #3a3a35;
+  --asm-n-800: #262622;
+  --asm-n-900: #161614;
+
+  /* Role hues. Each is one colour today; each becomes a brand colour later.
+     Named for the job they do in the composition, not for what they look
+     like, so the swap is mechanical. */
+  --asm-h-deep: var(--asm-n-900); /* the dark card — the heaviest surface */
+  --asm-h-tint: var(--asm-n-200); /* the secondary card — hero, essentials */
+  --asm-h-mist: var(--asm-n-100); /* the pale card — section headers */
+  --asm-h-accent: var(--asm-n-900); /* display type, primary buttons */
+  --asm-h-accent-ink: var(--asm-n-000); /* text on top of accent */
+
+  /* ---------- Tier 2: semantics ---------- */
+  --asm-page: var(--asm-n-050);
+
+  --asm-ink: var(--asm-n-900);
+  --asm-ink-2: var(--asm-n-600);
+  --asm-ink-3: var(--asm-n-400);
+  --asm-ink-inv: var(--asm-n-000);
+  --asm-ink-inv-2: color-mix(in srgb, var(--asm-n-000) 66%, transparent);
+
+  --asm-card-plain: var(--asm-n-000);
+  --asm-card-mist: var(--asm-h-mist);
+  --asm-card-tint: var(--asm-h-tint);
+  --asm-card-deep: var(--asm-h-deep);
+  --asm-card-accent: var(--asm-h-accent);
+
+  --asm-on-mist: var(--asm-n-900);
+  --asm-on-tint: var(--asm-n-900);
+  --asm-on-deep: var(--asm-n-000);
+  --asm-on-accent: var(--asm-h-accent-ink);
+
+  --asm-accent: var(--asm-h-accent);
+  --asm-hair: color-mix(in srgb, var(--asm-n-900) 12%, transparent);
+  --asm-hair-inv: color-mix(in srgb, var(--asm-n-000) 22%, transparent);
+  --asm-focus: 2px solid var(--asm-n-900);
+  --asm-focus-inv: 2px solid var(--asm-n-000);
+
+  /* Duotone: media is flattened to the palette so photography of wildly
+     different origins reads as one set. Two stops, mapped in a filter. */
+  --asm-duo-shadow: var(--asm-n-900);
+  --asm-duo-light: var(--asm-n-200);
+  --asm-duo-strength: 0.82;
+
+  /* ---------- Metrics ---------- */
+  --asm-gap: 10px;
+  --asm-radius: 22px;
+  --asm-radius-sm: 14px;
+  --asm-radius-pill: 999px;
+  --asm-pad: clamp(20px, 2.6vw, 44px);
+  --asm-pad-tight: clamp(16px, 1.8vw, 28px);
+  --asm-rail: 312px;
+  --asm-max: 1560px;
+  --asm-nav: 62px;
+  --asm-stick: calc(var(--asm-nav) + var(--asm-gap) * 2);
+
+  /* ---------- Type ---------- */
+  --asm-display: var(--font-asm-display), "Barlow Semi Condensed",
+    "Helvetica Neue", Arial, sans-serif;
+  --asm-body: var(--font-asm-body), "Barlow", "Helvetica Neue", Arial, sans-serif;
+  --asm-mono: var(--font-asm-mono), "IBM Plex Mono", ui-monospace, Menlo,
+    monospace;
+
+  --asm-d0: clamp(3.4rem, 11.4vw, 10.5rem);
+  --asm-d1: clamp(2.75rem, 6.6vw, 6rem);
+  --asm-d2: clamp(2.1rem, 4.2vw, 3.9rem);
+  --asm-d3: clamp(1.5rem, 2.4vw, 2.25rem);
+  --asm-d4: clamp(1.15rem, 1.5vw, 1.4rem);
+  --asm-num: clamp(3rem, 6.5vw, 6.5rem);
+
+  min-height: 100dvh;
+  background: var(--asm-page);
+  color: var(--asm-ink);
+  font-family: var(--asm-body);
+  font-size: 1rem;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ============================================================
+   Reset within the scope
+   ============================================================ */
+
+.assembly *,
+.assembly *::before,
+.assembly *::after {
+  box-sizing: border-box;
+}
+
+.assembly h1,
+.assembly h2,
+.assembly h3,
+.assembly h4,
+.assembly p,
+.assembly figure,
+.assembly dl,
+.assembly dd,
+.assembly blockquote {
+  margin: 0;
+}
+
+.assembly ul,
+.assembly ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.assembly img,
+.assembly video,
+.assembly svg {
+  display: block;
+  max-width: 100%;
+}
+
+.assembly a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.assembly button,
+.assembly input,
+.assembly select,
+.assembly textarea {
+  font: inherit;
+  color: inherit;
+}
+
+.assembly :focus-visible {
+  outline: var(--asm-focus);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.assembly .t-deep :focus-visible,
+.assembly .t-accent :focus-visible {
+  outline: var(--asm-focus-inv);
+}
+
+.assembly .asm-skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 200;
+  background: var(--asm-card-deep);
+  color: var(--asm-on-deep);
+  padding: 12px 18px;
+  border-radius: var(--asm-radius-sm);
+}
+
+.assembly .asm-skip:focus {
+  left: var(--asm-gap);
+  top: var(--asm-gap);
+}
+
+.assembly .asm-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ============================================================
+   Typography primitives
+   ============================================================ */
+
+.assembly .asm-display,
+.assembly .asm-d0,
+.assembly .asm-d1,
+.assembly .asm-d2,
+.assembly .asm-d3 {
+  font-family: var(--asm-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 0.86;
+  letter-spacing: -0.005em;
+  text-wrap: balance;
+}
+
+.assembly .asm-d0 {
+  font-size: var(--asm-d0);
+  letter-spacing: -0.015em;
+}
+.assembly .asm-d1 {
+  font-size: var(--asm-d1);
+}
+.assembly .asm-d2 {
+  font-size: var(--asm-d2);
+}
+.assembly .asm-d3 {
+  font-size: var(--asm-d3);
+  line-height: 0.92;
+}
+
+/* Bracketed mono eyebrow — the label vocabulary of the whole site. */
+.assembly .asm-eyebrow {
+  font-family: var(--asm-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--asm-ink-2);
+}
+
+.assembly .t-deep .asm-eyebrow,
+.assembly .t-accent .asm-eyebrow {
+  color: var(--asm-ink-inv-2);
+}
+
+.assembly .asm-eyebrow::before {
+  content: "[";
+}
+.assembly .asm-eyebrow::after {
+  content: "]";
+}
+.assembly .asm-eyebrow.is-bare::before,
+.assembly .asm-eyebrow.is-bare::after {
+  content: none;
+}
+
+.assembly .asm-lede {
+  font-size: clamp(0.95rem, 1.05vw, 1.06rem);
+  line-height: 1.55;
+  color: var(--asm-ink-2);
+  max-width: 42ch;
+}
+
+.assembly .t-deep .asm-lede,
+.assembly .t-accent .asm-lede {
+  color: var(--asm-ink-inv-2);
+}
+
+.assembly .asm-body {
+  color: var(--asm-ink-2);
+  line-height: 1.6;
+  max-width: 62ch;
+}
+
+.assembly .asm-meta {
+  font-family: var(--asm-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--asm-ink-3);
+}
+
+/* ============================================================
+   Cards — the atom of the whole design
+   ============================================================ */
+
+.assembly .asm-card {
+  position: relative;
+  border-radius: var(--asm-radius);
+  background: var(--asm-card-plain);
+  color: var(--asm-ink);
+  overflow: hidden;
+  min-width: 0;
+}
+
+.assembly .asm-card.is-padded {
+  padding: var(--asm-pad);
+}
+.assembly .asm-card.is-padded-tight {
+  padding: var(--asm-pad-tight);
+}
+
+.assembly .t-plain {
+  background: var(--asm-card-plain);
+  color: var(--asm-ink);
+}
+.assembly .t-mist {
+  background: var(--asm-card-mist);
+  color: var(--asm-on-mist);
+}
+.assembly .t-tint {
+  background: var(--asm-card-tint);
+  color: var(--asm-on-tint);
+}
+.assembly .t-deep {
+  background: var(--asm-card-deep);
+  color: var(--asm-on-deep);
+}
+.assembly .t-accent {
+  background: var(--asm-card-accent);
+  color: var(--asm-on-accent);
+}
+.assembly .t-outline {
+  background: transparent;
+  color: var(--asm-ink);
+  box-shadow: inset 0 0 0 1px var(--asm-hair);
+}
+
+/* Card grids. Every section composes from these three. */
+.assembly .asm-stack {
+  display: grid;
+  gap: var(--asm-gap);
+  min-width: 0;
+}
+
+.assembly .asm-row {
+  display: grid;
+  gap: var(--asm-gap);
+  grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr));
+}
+
+.assembly .asm-split {
+  display: grid;
+  gap: var(--asm-gap);
+  grid-template-columns: var(--split, 1fr 1fr);
+}
+
+/* ============================================================
+   Shell — nav, two-column body, sticky rail
+   ============================================================ */
+
+.assembly .asm-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  padding: var(--asm-gap) var(--asm-gap) 0;
+}
+
+.assembly .asm-navbar-inner {
+  max-width: var(--asm-max);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: var(--asm-gap);
+  min-height: var(--asm-nav);
+  padding: 8px 8px 8px 18px;
+  border-radius: var(--asm-radius-pill);
+  background: color-mix(in srgb, var(--asm-card-plain) 88%, transparent);
+  backdrop-filter: blur(14px) saturate(1.2);
+  box-shadow: inset 0 0 0 1px var(--asm-hair);
+}
+
+.assembly .asm-wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--asm-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 1rem;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.assembly .asm-wordmark svg {
+  width: 26px;
+  height: 26px;
+  flex: none;
+}
+
+.assembly .asm-navlinks {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: auto;
+}
+
+.assembly .asm-navlinks a {
+  font-family: var(--asm-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  padding: 9px 14px;
+  border-radius: var(--asm-radius-pill);
+  color: var(--asm-ink-2);
+  transition: background 0.16s ease, color 0.16s ease;
+}
+
+.assembly .asm-navlinks a:hover {
+  background: var(--asm-card-mist);
+  color: var(--asm-ink);
+}
+
+.assembly .asm-navlinks a[aria-current="page"] {
+  background: var(--asm-card-mist);
+  color: var(--asm-ink);
+}
+
+.assembly .asm-navcta {
+  margin-left: 8px;
+}
+
+.assembly .asm-burger {
+  display: none;
+  margin-left: auto;
+  width: 46px;
+  height: 46px;
+  border: 0;
+  border-radius: var(--asm-radius-pill);
+  background: var(--asm-card-mist);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+
+.assembly .asm-burger span {
+  display: block;
+  width: 18px;
+  height: 1.5px;
+  background: var(--asm-ink);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.assembly .asm-burger span + span {
+  margin-top: 4px;
+}
+.assembly .asm-burger[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(5.5px) rotate(45deg);
+}
+.assembly .asm-burger[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+}
+.assembly .asm-burger[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-5.5px) rotate(-45deg);
+}
+
+.assembly .asm-drawer {
+  display: none;
+  max-width: var(--asm-max);
+  margin: var(--asm-gap) auto 0;
+  padding: var(--asm-pad-tight);
+  border-radius: var(--asm-radius);
+  background: var(--asm-card-deep);
+  color: var(--asm-on-deep);
+}
+
+.assembly .asm-drawer.is-open {
+  display: block;
+}
+
+.assembly .asm-drawer a {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 12px 4px;
+  font-family: var(--asm-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 1.7rem;
+  line-height: 1;
+  border-bottom: 1px solid var(--asm-hair-inv);
+}
+
+.assembly .asm-drawer a .n {
+  font-family: var(--asm-mono);
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: var(--asm-ink-inv-2);
+}
+
+.assembly .asm-shell {
+  max-width: var(--asm-max);
+  margin: 0 auto;
+  padding: var(--asm-gap);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--asm-rail);
+  gap: var(--asm-gap);
+  align-items: start;
+}
+
+.assembly .asm-main {
+  display: grid;
+  gap: var(--asm-gap);
+  min-width: 0;
+}
+
+.assembly .asm-railcol {
+  position: sticky;
+  top: var(--asm-stick);
+  display: grid;
+  gap: var(--asm-gap);
+  min-width: 0;
+}
+
+/* ============================================================
+   Buttons & chips
+   ============================================================ */
+
+.assembly .asm-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 22px;
+  border: 0;
+  border-radius: var(--asm-radius-pill);
+  background: var(--asm-card-accent);
+  color: var(--asm-on-accent);
+  font-family: var(--asm-mono);
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.16s ease, opacity 0.16s ease;
+}
+
+.assembly .asm-btn:hover {
+  transform: translateY(-1px);
+  opacity: 0.9;
+}
+
+.assembly .asm-btn .arrow {
+  transition: transform 0.18s ease;
+}
+.assembly .asm-btn:hover .arrow {
+  transform: translate(2px, -2px);
+}
+
+.assembly .asm-btn.is-ghost {
+  background: transparent;
+  color: currentColor;
+  box-shadow: inset 0 0 0 1px var(--asm-hair);
+}
+
+.assembly .t-deep .asm-btn.is-ghost,
+.assembly .t-accent .asm-btn.is-ghost {
+  box-shadow: inset 0 0 0 1px var(--asm-hair-inv);
+}
+
+.assembly .asm-btn.is-inverse {
+  background: var(--asm-card-plain);
+  color: var(--asm-ink);
+}
+
+.assembly .asm-btn.is-block {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.assembly .asm-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.assembly .asm-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 11px;
+  border-radius: var(--asm-radius-pill);
+  background: color-mix(in srgb, currentColor 10%, transparent);
+  font-family: var(--asm-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.assembly .asm-chip.is-solid {
+  background: var(--asm-card-accent);
+  color: var(--asm-on-accent);
+}
+
+/* ============================================================
+   Media — every image and every clip goes through here
+   ============================================================ */
+
+.assembly .asm-media {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: var(--asm-radius-sm);
+  background: var(--asm-card-mist);
+  aspect-ratio: var(--asm-aspect, 16 / 9);
+}
+
+.assembly .asm-media.is-square {
+  border-radius: 0;
+}
+.assembly .asm-media.is-bleed {
+  border-radius: 0;
+  height: 100%;
+}
+
+.assembly .asm-media > img,
+.assembly .asm-media > video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--asm-fp, 50% 50%);
+}
+
+/* Duotone flattens sources of different provenance into one set. */
+.assembly .asm-media.is-duo > img,
+.assembly .asm-media.is-duo > video {
+  filter: grayscale(1) contrast(1.06);
+}
+
+.assembly .asm-media.is-duo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    var(--asm-duo-light),
+    var(--asm-duo-shadow)
+  );
+  mix-blend-mode: multiply;
+  opacity: var(--asm-duo-strength);
+}
+
+.assembly .asm-media.is-scrim::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--asm-n-900) 6%, transparent) 0%,
+    color-mix(in srgb, var(--asm-n-900) 58%, transparent) 100%
+  );
+}
+
+.assembly .asm-media figcaption {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  z-index: 2;
+  font-family: var(--asm-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--asm-ink-inv);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Placeholder marker: visible enough to audit, quiet enough to design with. */
+.assembly .asm-media[data-placeholder="true"]::after {
+  outline: 1px dashed color-mix(in srgb, var(--asm-n-000) 30%, transparent);
+  outline-offset: -6px;
+}
+
+.assembly .asm-videowrap {
+  position: relative;
+}
+
+.assembly .asm-videoplay {
+  position: absolute;
+  z-index: 3;
+  right: 12px;
+  bottom: 12px;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--asm-n-000) 90%, transparent);
+  color: var(--asm-n-900);
+  cursor: pointer;
+}
+
+/* ============================================================
+   Section header card
+   ============================================================ */
+
+.assembly .asm-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.62fr);
+  gap: var(--asm-pad);
+  align-items: end;
+}
+
+.assembly .asm-head.is-solo {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.assembly .asm-head-title {
+  display: grid;
+  gap: 18px;
+  align-content: start;
+}
+
+.assembly .asm-head-aside {
+  display: grid;
+  gap: 18px;
+  justify-items: start;
+  align-content: end;
+}
+
+/* ============================================================
+   Hero
+   ============================================================ */
+
+.assembly .asm-hero {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: clamp(380px, 62vh, 660px);
+  padding: clamp(48px, 8vh, 110px) var(--asm-pad);
+  text-align: center;
+  isolation: isolate;
+}
+
+.assembly .asm-hero .asm-media {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 0;
+  aspect-ratio: auto;
+}
+
+.assembly .asm-hero-inner {
+  display: grid;
+  gap: clamp(18px, 3vh, 34px);
+  justify-items: center;
+  width: 100%;
+}
+
+.assembly .asm-hero-title {
+  display: grid;
+  justify-items: center;
+}
+
+.assembly .asm-hero-title span {
+  display: block;
+}
+
+.assembly .asm-facts {
+  display: grid;
+  gap: var(--asm-gap);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.assembly .asm-fact dt {
+  font-family: var(--asm-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--asm-ink-inv-2);
+  margin-bottom: 10px;
+}
+
+.assembly .asm-fact dd {
+  font-family: var(--asm-display);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: clamp(1.05rem, 1.5vw, 1.35rem);
+  line-height: 1.12;
+}
+
+/* ============================================================
+   Marquee
+   ============================================================ */
+
+.assembly .asm-marquee {
+  overflow: hidden;
+  padding: 16px 0;
+  mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 6%,
+    #000 94%,
+    transparent
+  );
+}
+
+.assembly .asm-marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 42px;
+  animation: asm-marquee 38s linear infinite;
+}
+
+.assembly .asm-marquee-track > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 42px;
+  padding-right: 42px;
+}
+
+.assembly .asm-marquee-track > span > span {
+  font-family: var(--asm-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: clamp(1.1rem, 2vw, 1.7rem);
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 42px;
+}
+
+.assembly .asm-marquee-track > span > span::after {
+  content: "";
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.5;
+}
+
+@keyframes asm-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ============================================================
+   Person card
+   ============================================================ */
+
+.assembly .asm-person {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  border-radius: var(--asm-radius);
+  overflow: hidden;
+  background: var(--asm-card-deep);
+  color: var(--asm-on-deep);
+}
+
+.assembly .asm-person .asm-media {
+  border-radius: 0;
+  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.assembly .asm-person:hover .asm-media {
+  transform: scale(1.03);
+}
+
+.assembly .asm-person-plate {
+  padding: 16px 18px 18px;
+  display: grid;
+  gap: 4px;
+}
+
+.assembly .asm-person-name {
+  font-family: var(--asm-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 1.12rem;
+  line-height: 1.02;
+}
+
+.assembly .asm-person-org {
+  font-size: 0.82rem;
+  line-height: 1.3;
+  color: var(--asm-ink-inv-2);
+}
+
+.assembly .asm-person-role {
+  font-family: var(--asm-mono);
+  font-size: 0.63rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--asm-ink-inv-2);
+}
+
+/* ============================================================
+   Numbered story chapter
+   ============================================================ */
+
+.assembly .asm-chapter {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 28px;
+  min-height: 340px;
+}
+
+.assembly .asm-chapter-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.assembly .asm-chapter-num {
+  font-family: var(--asm-mono);
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+  color: var(--asm-ink-3);
+}
+
+.assembly .asm-glyph {
+  width: clamp(44px, 5vw, 66px);
+  height: auto;
+  color: var(--asm-accent);
+}
+
+.assembly .t-deep .asm-glyph,
+.assembly .t-accent .asm-glyph {
+  color: currentColor;
+}
+
+/* ============================================================
+   Stats
+   ============================================================ */
+
+.assembly .asm-stat {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: clamp(210px, 24vw, 320px);
+}
+
+.assembly .asm-stat-value {
+  font-family: var(--asm-display);
+  font-weight: 400;
+  font-size: var(--asm-num);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+}
+
+.assembly .asm-stat-label {
+  font-family: var(--asm-display);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: clamp(1.05rem, 1.5vw, 1.35rem);
+  line-height: 1.05;
+  grid-row: 3;
+}
+
+/* ============================================================
+   Ticket stub (the rail's second card)
+   ============================================================ */
+
+.assembly .asm-ticket {
+  position: relative;
+  border-radius: var(--asm-radius);
+  background: var(--asm-card-deep);
+  color: var(--asm-on-deep);
+  overflow: hidden;
+}
+
+.assembly .asm-ticket-body {
+  padding: var(--asm-pad-tight);
+  display: grid;
+  gap: 14px;
+}
+
+.assembly .asm-ticket-perf {
+  position: relative;
+  height: 1px;
+  margin: 4px 0;
+  border-top: 1.5px dashed var(--asm-hair-inv);
+}
+
+.assembly .asm-ticket-perf::before,
+.assembly .asm-ticket-perf::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--asm-page);
+  transform: translateY(-50%);
+}
+
+.assembly .asm-ticket-perf::before {
+  left: -9px;
+}
+.assembly .asm-ticket-perf::after {
+  right: -9px;
+}
+
+.assembly .asm-ticket-stub {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  padding: 0 var(--asm-pad-tight) 4px;
+}
+
+.assembly .asm-ticket-stub div {
+  display: grid;
+  gap: 3px;
+}
+
+.assembly .asm-ticket-stub dt {
+  font-family: var(--asm-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--asm-ink-inv-2);
+}
+
+.assembly .asm-ticket-stub dd {
+  font-family: var(--asm-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+.assembly .asm-ticket-foot {
+  padding: var(--asm-pad-tight);
+}
+
+/* Rail feature card: media with the label and CTA sitting on top of it. */
+.assembly .asm-railfeature {
+  position: relative;
+  border-radius: var(--asm-radius);
+  overflow: hidden;
+  color: var(--asm-ink-inv);
+  isolation: isolate;
+}
+
+.assembly .asm-railfeature .asm-media {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 0;
+  aspect-ratio: auto;
+}
+
+.assembly .asm-railfeature-inner {
+  padding: var(--asm-pad-tight);
+  display: grid;
+  gap: 14px;
+  justify-items: start;
+  min-height: 190px;
+  align-content: end;
+}
+
+/* ============================================================
+   Agenda
+   ============================================================ */
+
+.assembly .asm-slot {
+  display: grid;
+  grid-template-columns: 132px 84px minmax(0, 1fr) 150px;
+  gap: 20px;
+  align-items: baseline;
+  padding: 20px var(--asm-pad);
+  border-top: 1px solid var(--asm-hair);
+}
+
+.assembly .asm-slot:first-child {
+  border-top: 0;
+}
+
+.assembly .asm-slot-time {
+  font-family: var(--asm-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+}
+
+.assembly .asm-slot-title {
+  font-family: var(--asm-display);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: clamp(1.05rem, 1.6vw, 1.4rem);
+  line-height: 1.05;
+}
+
+.assembly .asm-slot-meta {
+  font-family: var(--asm-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--asm-ink-3);
+  text-align: right;
+}
+
+/* ============================================================
+   FAQ — native <details>, no JS
+   ============================================================ */
+
+.assembly .asm-faq {
+  border-top: 1px solid var(--asm-hair);
+}
+
+.assembly .asm-faq summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 22px var(--asm-pad);
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--asm-display);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: clamp(1.05rem, 1.7vw, 1.45rem);
+  line-height: 1.1;
+}
+
+.assembly .asm-faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.assembly .asm-faq summary .sign {
+  flex: none;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px var(--asm-hair);
+  font-family: var(--asm-mono);
+  font-size: 0.9rem;
+  transition: transform 0.2s ease;
+}
+
+.assembly .asm-faq[open] summary .sign {
+  transform: rotate(45deg);
+}
+
+.assembly .asm-faq-answer {
+  padding: 0 var(--asm-pad) 24px;
+}
+
+/* ============================================================
+   Forms
+   ============================================================ */
+
+.assembly .asm-form {
+  display: grid;
+  gap: 14px;
+}
+
+.assembly .asm-field {
+  display: grid;
+  gap: 7px;
+}
+
+.assembly .asm-field label {
+  font-family: var(--asm-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--asm-ink-2);
+}
+
+.assembly .t-deep .asm-field label {
+  color: var(--asm-ink-inv-2);
+}
+
+.assembly .asm-field input,
+.assembly .asm-field select,
+.assembly .asm-field textarea {
+  width: 100%;
+  padding: 13px 15px;
+  border: 0;
+  border-radius: var(--asm-radius-sm);
+  background: var(--asm-card-plain);
+  color: var(--asm-n-900);
+  box-shadow: inset 0 0 0 1px var(--asm-hair);
+}
+
+.assembly .asm-field textarea {
+  min-height: 130px;
+  resize: vertical;
+}
+
+.assembly .asm-field .err {
+  font-family: var(--asm-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.assembly .asm-field[data-invalid="true"] input,
+.assembly .asm-field[data-invalid="true"] select,
+.assembly .asm-field[data-invalid="true"] textarea {
+  box-shadow: inset 0 0 0 2px var(--asm-n-700);
+}
+
+.assembly .asm-formnote {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--asm-ink-2);
+}
+
+.assembly .t-deep .asm-formnote {
+  color: var(--asm-ink-inv-2);
+}
+
+/* ============================================================
+   Logo wall
+   ============================================================ */
+
+.assembly .asm-logo {
+  display: grid;
+  place-items: center;
+  min-height: 128px;
+  padding: 22px;
+  border-radius: var(--asm-radius-sm);
+  background: var(--asm-card-plain);
+  transition: transform 0.18s ease;
+}
+
+.assembly .asm-logo:hover {
+  transform: translateY(-2px);
+}
+
+.assembly .asm-logo img {
+  max-height: 52px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* ============================================================
+   Footer
+   ============================================================ */
+
+.assembly .asm-footer {
+  max-width: var(--asm-max);
+  margin: 0 auto;
+  padding: 0 var(--asm-gap) var(--asm-gap);
+  display: grid;
+  gap: var(--asm-gap);
+}
+
+.assembly .asm-footer-band {
+  border-radius: var(--asm-radius);
+  overflow: hidden;
+}
+
+.assembly .asm-footer-cols {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
+  gap: var(--asm-pad);
+}
+
+.assembly .asm-footer-cols h3 {
+  font-family: var(--asm-mono);
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--asm-ink-inv-2);
+  margin-bottom: 16px;
+}
+
+.assembly .asm-footer-cols li + li {
+  margin-top: 9px;
+}
+
+.assembly .asm-footer-cols a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.assembly .asm-colophon {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 26px;
+  justify-content: space-between;
+  padding-top: 22px;
+  margin-top: 30px;
+  border-top: 1px solid var(--asm-hair-inv);
+  font-family: var(--asm-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--asm-ink-inv-2);
+}
+
+/* ============================================================
+   Reveal
+   ============================================================ */
+
+.assembly .asm-reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.62s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.62s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.assembly .asm-reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+
+@media (max-width: 1180px) {
+  .assembly .asm-shell {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .assembly .asm-railcol {
+    position: static;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1024px) {
+  .assembly .asm-navlinks,
+  .assembly .asm-navcta {
+    display: none;
+  }
+  .assembly .asm-burger {
+    display: flex;
+  }
+  .assembly .asm-head {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 26px;
+  }
+  .assembly .asm-row {
+    grid-template-columns: repeat(var(--cols-md, 2), minmax(0, 1fr));
+  }
+  .assembly .asm-split {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .assembly .asm-footer-cols {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  .assembly .asm-slot {
+    grid-template-columns: 116px minmax(0, 1fr);
+    row-gap: 8px;
+  }
+  .assembly .asm-slot-meta {
+    text-align: left;
+    grid-column: 2;
+  }
+}
+
+@media (max-width: 720px) {
+  .assembly {
+    --asm-radius: 18px;
+    --asm-gap: 8px;
+  }
+  .assembly .asm-railcol,
+  .assembly .asm-row,
+  .assembly .asm-facts {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .assembly .asm-footer-cols {
+    grid-template-columns: 1fr;
+  }
+  .assembly .asm-chapter {
+    min-height: 0;
+  }
+}
+
+/* ============================================================
+   Motion & print
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .assembly *,
+  .assembly *::before,
+  .assembly *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .assembly .asm-reveal {
+    opacity: 1;
+    transform: none;
+  }
+  .assembly .asm-marquee-track {
+    animation: none;
+  }
+}
+
+@media print {
+  .assembly .asm-navbar,
+  .assembly .asm-railcol,
+  .assembly .asm-marquee {
+    display: none;
+  }
+  .assembly .asm-shell {
+    grid-template-columns: 1fr;
+  }
+}
