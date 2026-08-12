@@ -1,8 +1,17 @@
 # Cross Future AI Summit 2026
 
-One-page site for the Cross Future AI Summit — a one-day event in Montréal on
+Site for the Cross Future AI Summit — a one-day event in Montréal on
 AI data center power and energy resilience, hosted by Cross Future Hub
-(non-profit).
+(non-profit). Ships with two complete design variations:
+
+- **`/` — Design A, "Technical Broadsheet"**: Inter Tight + IBM Plex Mono,
+  `#4B47F5` accent, FIG. 01 electrical single-line diagram.
+- **`/nexus` — Design B, "Nexus"**: recreation of the
+  cross-future-nexus.base44.app reference — Space Grotesk + Inter +
+  JetBrains Mono, `#3D57FF` accent on `#FBFBF9`, thin extra-long broadsheet
+  with horizontal snap agenda, faculty pillars, interviews, countdown
+  footer — plus photo-forward innovations (portrait reveals, interview
+  thumbnails, and the § 06 Archives photo wall the reference never renders).
 
 Next.js 15 (App Router) · React 19 · TypeScript · plain CSS. No database, no
 CMS, no API keys. Node 20+.
@@ -89,6 +98,19 @@ curriculum row appears and the diagram pins the code under the matching node.
 New chain stage? Extend the `ChainStage` union in `lib/content.ts` and the
 `STAGE_TO_NODE` map in `components/FigureOne.tsx` — the compiler will point
 at the map if you forget.
+
+### A new design variation
+
+Design B is the template: give the variation its own content file
+(`content/seed-<name>.json`), extend `ContentVariant` and the switch in
+`getSummitContent()` in `lib/content.ts`, then add `app/<name>/` (layout with
+its own fonts + scoped CSS, page) and `components/<name>/`. New content
+shapes go into `SummitContent` as optional fields so existing seeds stay
+valid. Components still never import seed files — only the adapter does.
+
+Design B's imagery: the three hero/interview/footer images are remote URLs
+in `seed-nexus.json` (swap for your own hosting); portraits and the archive
+wall are local placeholder SVGs under `public/nexus/` marked PLACEHOLDER.
 
 ### Publishing the schedule
 

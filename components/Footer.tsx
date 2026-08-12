@@ -23,6 +23,9 @@ export default function Footer({
           <p className="footer-meta">
             © {edition.year} {host ? host.name : "Cross Future Hub"}
           </p>
+          <p className="footer-meta">
+            <a href="/nexus">View design B — Nexus</a>
+          </p>
         </div>
         <nav className="footer-nav" aria-label="Footer">
           {SECTIONS.map((s) => (
