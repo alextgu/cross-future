@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" role="img" aria-label="Interview still — Rasoul Yousef">
+<title>PLACEHOLDER — Interview still — Rasoul Yousef</title>
+<rect width="1200" height="750" fill="#e6e6e3"/>
+<rect x="0" y="552" width="1200" height="205" fill="#4a4a46" opacity="0.55"/><rect x="0" y="194" width="1200" height="106" fill="#d9d9d6" opacity="0.55"/><rect x="0" y="135" width="1200" height="235" fill="#adadaa" opacity="0.55"/>
+<circle cx="512" cy="72" r="346" fill="#c6c6c2" opacity="0.5"/><circle cx="410" cy="257" r="142" fill="#6f6f6c" opacity="0.5"/>
+<path d="M601 0 L1351 750 L1231 750 L481 0 Z" fill="#3a3a35" opacity="0.16"/>
+<g font-family="IBM Plex Mono, ui-monospace, monospace" font-size="20" fill="#3a3a35" opacity="0.62">
+<text x="28" y="42">PLACEHOLDER</text>
+<text x="28" y="724">1200×750 · 16 / 10</text>
+</g>
+<rect x="10" y="10" width="1180" height="730" fill="none" stroke="#3a3a35" stroke-opacity="0.3" stroke-dasharray="10 8"/>
+<circle cx="600" cy="375" r="62" fill="#161614" opacity="0.72"/>
+<path d="M582 344 l58 31 -58 31 z" fill="#f4f4f3"/>
+<g font-family="IBM Plex Mono, ui-monospace, monospace" font-size="22" fill="#f4f4f3">
+<rect x="28" y="640" width="102" height="36" rx="18" fill="#161614" opacity="0.72"/>
+<text x="46" y="665">12 MIN</text>
+</g>
+</svg>

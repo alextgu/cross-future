@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" role="img" aria-label="A keynote in progress">
+<title>PLACEHOLDER — A keynote in progress</title>
+<rect width="1200" height="750" fill="#e6e6e3"/>
+<rect x="0" y="736" width="1200" height="160" fill="#4a4a46" opacity="0.55"/><rect x="0" y="120" width="1200" height="146" fill="#8f8f8c" opacity="0.55"/><rect x="0" y="427" width="1200" height="260" fill="#6f6f6c" opacity="0.55"/>
+<circle cx="1015" cy="690" r="316" fill="#8f8f8c" opacity="0.5"/><circle cx="780" cy="615" r="144" fill="#6f6f6c" opacity="0.5"/>
+<path d="M622 0 L1372 750 L1252 750 L502 0 Z" fill="#3a3a35" opacity="0.16"/>
+<g font-family="IBM Plex Mono, ui-monospace, monospace" font-size="20" fill="#3a3a35" opacity="0.62">
+<text x="28" y="42">PLACEHOLDER</text>
+<text x="28" y="724">1200×750 · 16 / 10</text>
+</g>
+<rect x="10" y="10" width="1180" height="730" fill="none" stroke="#3a3a35" stroke-opacity="0.3" stroke-dasharray="10 8"/>
+</svg>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" width="1200" height="1200" role="img" aria-label="A data hall corridor, cabinets receding into the distance">
+<title>PLACEHOLDER — A data hall corridor, cabinets receding into the distance</title>
+<rect width="1200" height="1200" fill="#e6e6e3"/>
+<rect x="0" y="958" width="1200" height="414" fill="#8f8f8c" opacity="0.55"/><rect x="0" y="474" width="1200" height="219" fill="#4a4a46" opacity="0.55"/><rect x="0" y="933" width="1200" height="291" fill="#adadaa" opacity="0.55"/>
+<circle cx="534" cy="1147" r="563" fill="#6f6f6c" opacity="0.5"/><circle cx="335" cy="1173" r="512" fill="#d9d9d6" opacity="0.5"/>
+<path d="M604 0 L1804 1200 L1684 1200 L484 0 Z" fill="#3a3a35" opacity="0.16"/>
+<g font-family="IBM Plex Mono, ui-monospace, monospace" font-size="20" fill="#3a3a35" opacity="0.62">
+<text x="28" y="42">PLACEHOLDER</text>
+<text x="28" y="1174">1200×1200 · 1 / 1</text>
+</g>
+<rect x="10" y="10" width="1180" height="1180" fill="none" stroke="#3a3a35" stroke-opacity="0.3" stroke-dasharray="10 8"/>
+</svg>
