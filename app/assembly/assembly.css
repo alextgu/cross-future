@@ -7,37 +7,51 @@
    TOKENS ARE IN TWO TIERS.
    Tier 1 names the value. Tier 2 names the job. Components use
    ONLY Tier 2. Retheming this design = editing Tier 1 and nothing
-   else. Tier 1 is currently GREYSCALE on purpose — the layout,
-   rhythm and hierarchy are built to work without hue, so colour
-   can be dropped in at the end as a single localised change.
+   else — which is exactly how the Cross Future palette got here:
+   the layout was designed and audited in greyscale first, then Tier 1
+   was swapped in one commit. Keep it that way.
 
    Every rule is scoped under .assembly so this file cannot leak
    into Design A or Design B.
    ============================================================ */
 
 .assembly {
-  /* ---------- Tier 1: primitives (greyscale — swap for hue last) ---------- */
-  --asm-n-000: #ffffff;
-  --asm-n-025: #fafafa;
-  --asm-n-050: #f4f4f3;
-  --asm-n-100: #ebebea;
-  --asm-n-150: #e2e2e0;
-  --asm-n-200: #d6d6d3;
-  --asm-n-300: #bfbfbb;
-  --asm-n-400: #9b9b97;
-  --asm-n-500: #74746f;
-  --asm-n-600: #55554f;
-  --asm-n-700: #3a3a35;
-  --asm-n-800: #262622;
-  --asm-n-900: #161614;
+  /* ---------- Tier 1: primitives ----------
+     The Cross Future palette, taken from the live site: petrol #04373F,
+     sky #3AA2DD, bright blue #116DFF, pale grey-teal #C0CDCF.
 
-  /* Role hues. Each is one colour today; each becomes a brand colour later.
-     Named for the job they do in the composition, not for what they look
-     like, so the swap is mechanical. */
+     Two values are deliberately a step off the source, both for contrast:
+     the sky is lightened to #8CC7E8 so petrol body copy clears 4.5:1 on it
+     (the site's #3AA2DD gives 4.3:1), and the bright blue is deepened to
+     #0B57D0 so white button text clears 4.5:1 (#116DFF gives 4.3:1).
+     The neutral ramp is tinted toward petrol rather than pure grey, so
+     hairlines and secondary ink belong to the same family.
+
+     This block is the whole theme. Nothing below Tier 2 references a
+     literal colour. */
+  --asm-n-000: #ffffff;
+  --asm-n-025: #fbfcfc;
+  --asm-n-050: #f2f5f6;
+  --asm-n-100: #e4edf1;
+  --asm-n-150: #d7e4e9;
+  --asm-n-200: #c0cdcf;
+  --asm-n-300: #9fb2b7;
+  --asm-n-400: #7e969c;
+  --asm-n-500: #61787e;
+  --asm-n-600: #4e6469;
+  --asm-n-700: #2c4a51;
+  --asm-n-800: #12414a;
+  --asm-n-900: #04373f;
+
+  --asm-c-sky: #8cc7e8;
+  --asm-c-blue: #0b57d0;
+
+  /* Role hues. Each names the job it does in the composition, not what it
+     looks like — which is what made the greyscale-to-colour swap mechanical. */
   --asm-h-deep: var(--asm-n-900); /* the dark card — the heaviest surface */
-  --asm-h-tint: var(--asm-n-200); /* the secondary card — hero, essentials */
+  --asm-h-tint: var(--asm-c-sky); /* the secondary card — essentials, aside */
   --asm-h-mist: var(--asm-n-100); /* the pale card — section headers */
-  --asm-h-accent: var(--asm-n-900); /* display type, primary buttons */
+  --asm-h-accent: var(--asm-c-blue); /* display type, primary buttons */
   --asm-h-accent-ink: var(--asm-n-000); /* text on top of accent */
 
   /* ---------- Tier 2: semantics ---------- */
@@ -58,6 +72,9 @@
   --asm-card-deep: var(--asm-h-deep);
   --asm-card-accent: var(--asm-h-accent);
 
+  /* --asm-on-plain is the one ink token a tone MUST NOT redefine: it is what
+     anything drawn on a white chip inside a dark card has to use. */
+  --asm-on-plain: var(--asm-n-900);
   --asm-on-mist: var(--asm-n-900);
   --asm-on-tint: var(--asm-n-900);
   --asm-on-deep: var(--asm-n-000);
@@ -66,14 +83,14 @@
   --asm-accent: var(--asm-h-accent);
   --asm-hair: color-mix(in srgb, var(--asm-n-900) 12%, transparent);
   --asm-hair-inv: color-mix(in srgb, var(--asm-n-000) 22%, transparent);
-  --asm-focus: 2px solid var(--asm-n-900);
+  --asm-focus: 2px solid var(--asm-c-blue);
   --asm-focus-inv: 2px solid var(--asm-n-000);
 
   /* Duotone: media is flattened to the palette so photography of wildly
      different origins reads as one set. Two stops, mapped in a filter. */
   --asm-duo-shadow: var(--asm-n-900);
-  --asm-duo-light: var(--asm-n-200);
-  --asm-duo-strength: 0.82;
+  --asm-duo-light: var(--asm-c-sky);
+  --asm-duo-strength: 0.8;
 
   /* ---------- Metrics ---------- */
   --asm-gap: 10px;
@@ -246,11 +263,6 @@
   color: var(--asm-ink-2);
 }
 
-.assembly .t-deep .asm-eyebrow,
-.assembly .t-accent .asm-eyebrow {
-  color: var(--asm-ink-inv-2);
-}
-
 .assembly .asm-eyebrow::before {
   content: "[";
 }
@@ -269,11 +281,6 @@
   max-width: 42ch;
 }
 
-.assembly .t-deep .asm-lede,
-.assembly .t-accent .asm-lede {
-  color: var(--asm-ink-inv-2);
-}
-
 .assembly .asm-body {
   color: var(--asm-ink-2);
   line-height: 1.6;
@@ -286,12 +293,6 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--asm-ink-3);
-}
-
-.assembly .t-deep .asm-meta,
-.assembly .t-accent .asm-meta,
-.assembly .asm-person .asm-meta {
-  color: var(--asm-ink-inv-2);
 }
 
 /* ============================================================
@@ -314,23 +315,58 @@
   padding: var(--asm-pad-tight);
 }
 
-.assembly .t-plain {
-  background: var(--asm-card-plain);
+/* A tone does not just set two colours — it redefines the ink scale for
+   everything inside it. That is what lets a card declare `t-deep` and have
+   its eyebrow, lede, meta, form labels and focus ring all follow, including
+   when a lighter card is nested inside a darker one. Descendant overrides
+   like `.t-deep .asm-meta` would get that nesting case wrong. */
+.assembly .t-plain,
+.assembly .t-mist {
+  --asm-ink: var(--asm-n-900);
+  --asm-ink-2: var(--asm-n-700);
+  --asm-ink-3: var(--asm-n-600);
   color: var(--asm-ink);
 }
+
+.assembly .t-plain {
+  background: var(--asm-card-plain);
+}
+
 .assembly .t-mist {
   background: var(--asm-card-mist);
-  color: var(--asm-on-mist);
 }
+
+/* The sky tint is light but not white: secondary ink has to step down two
+   more stops to clear 4.5:1 for the ~11px mono labels. */
 .assembly .t-tint {
+  --asm-ink: var(--asm-n-900);
+  --asm-ink-2: var(--asm-n-800);
+  --asm-ink-3: var(--asm-n-700);
   background: var(--asm-card-tint);
-  color: var(--asm-on-tint);
+  color: var(--asm-ink);
 }
+
+.assembly .t-deep,
+.assembly .t-accent,
+.assembly .asm-person,
+.assembly .asm-ticket,
+.assembly .asm-drawer,
+.assembly .asm-railfeature,
+.assembly .asm-hero {
+  --asm-ink: var(--asm-ink-inv);
+  --asm-ink-2: var(--asm-ink-inv-2);
+  --asm-ink-3: var(--asm-ink-inv-2);
+  color: var(--asm-ink-inv);
+}
+
 .assembly .t-deep {
   background: var(--asm-card-deep);
-  color: var(--asm-on-deep);
 }
+
+/* Accent is the most saturated surface, so its secondary ink runs hotter
+   than the 66% used on the near-black deep card. */
 .assembly .t-accent {
+  --asm-ink-inv-2: color-mix(in srgb, var(--asm-n-000) 88%, transparent);
   background: var(--asm-card-accent);
   color: var(--asm-on-accent);
 }
@@ -501,7 +537,7 @@
   font-size: 0.7rem;
   font-weight: 400;
   letter-spacing: 0.1em;
-  color: var(--asm-ink-inv-2);
+  color: var(--asm-ink-2);
 }
 
 .assembly .asm-shell {
@@ -576,7 +612,9 @@
 
 .assembly .asm-btn.is-inverse {
   background: var(--asm-card-plain);
-  color: var(--asm-ink);
+  /* Not --asm-ink: inside a t-deep card that token is white, and a white
+     pill with white text is the failure mode this token exists to prevent. */
+  color: var(--asm-on-plain);
 }
 
 .assembly .asm-btn.is-block {
@@ -720,7 +758,7 @@
   border: 0;
   border-radius: 50%;
   background: color-mix(in srgb, var(--asm-n-000) 90%, transparent);
-  color: var(--asm-n-900);
+  color: var(--asm-on-plain);
   cursor: pointer;
 }
 
@@ -797,11 +835,6 @@
   text-transform: uppercase;
   color: var(--asm-ink-3);
   margin-bottom: 10px;
-}
-
-.assembly .t-deep .asm-fact dt,
-.assembly .t-accent .asm-fact dt {
-  color: var(--asm-ink-inv-2);
 }
 
 .assembly .asm-fact dd {
@@ -908,7 +941,7 @@
 .assembly .asm-person-org {
   font-size: 0.82rem;
   line-height: 1.3;
-  color: var(--asm-ink-inv-2);
+  color: var(--asm-ink-2);
 }
 
 .assembly .asm-person-role {
@@ -916,7 +949,7 @@
   font-size: 0.63rem;
   letter-spacing: 0.09em;
   text-transform: uppercase;
-  color: var(--asm-ink-inv-2);
+  color: var(--asm-ink-2);
 }
 
 /* ============================================================
@@ -951,7 +984,8 @@
 }
 
 .assembly .t-deep .asm-glyph,
-.assembly .t-accent .asm-glyph {
+.assembly .t-accent .asm-glyph,
+.assembly .t-tint .asm-glyph {
   color: currentColor;
 }
 
@@ -1079,7 +1113,7 @@
   font-size: 0.6rem;
   letter-spacing: 0.11em;
   text-transform: uppercase;
-  color: var(--asm-ink-inv-2);
+  color: var(--asm-ink-2);
 }
 
 .assembly .asm-ticket-stub dd {
@@ -1099,7 +1133,6 @@
   position: relative;
   border-radius: var(--asm-radius);
   overflow: hidden;
-  color: var(--asm-ink-inv);
   isolation: isolate;
 }
 
@@ -1230,10 +1263,6 @@
   color: var(--asm-ink-2);
 }
 
-.assembly .t-deep .asm-field label {
-  color: var(--asm-ink-inv-2);
-}
-
 .assembly .asm-field input,
 .assembly .asm-field select,
 .assembly .asm-field textarea {
@@ -1242,7 +1271,7 @@
   border: 0;
   border-radius: var(--asm-radius-sm);
   background: var(--asm-card-plain);
-  color: var(--asm-n-900);
+  color: var(--asm-on-plain);
   box-shadow: inset 0 0 0 1px var(--asm-hair);
 }
 
@@ -1270,15 +1299,12 @@
   color: var(--asm-ink-2);
 }
 
-.assembly .t-deep .asm-formnote {
-  color: var(--asm-ink-inv-2);
-}
-
 /* ============================================================
    Logo wall
    ============================================================ */
 
 .assembly .asm-logo {
+  color: var(--asm-on-plain);
   display: grid;
   place-items: center;
   min-height: 128px;
@@ -1327,7 +1353,7 @@
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--asm-ink-inv-2);
+  color: var(--asm-ink-2);
   margin-bottom: 16px;
 }
 
@@ -1352,7 +1378,7 @@
   font-size: 0.66rem;
   letter-spacing: 0.07em;
   text-transform: uppercase;
-  color: var(--asm-ink-inv-2);
+  color: var(--asm-ink-2);
 }
 
 /* ============================================================
