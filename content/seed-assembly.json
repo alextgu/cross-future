@@ -1,0 +1,2318 @@
+{
+  "editions": [
+    {
+      "slug": "2026-assembly",
+      "year": 2026,
+      "name": "Cross Future AI Summit 2026",
+      "tagline": "Shaping the future of AI, innovating for tomorrow.",
+      "thesis": "Strengthening the energy resilience of AI data centers is essential to the secure operation of digital infrastructure, grid stability, and the low-carbon transition.",
+      "theme": "AI data center power and energy resilience",
+      "startsAt": "2026-07-24T08:30:00-04:00",
+      "endsAt": "2026-07-24T17:30:00-04:00",
+      "timezone": "America/Montreal",
+      "venue": {
+        "name": "Hotel Monville",
+        "city": "Montréal",
+        "region": "QC",
+        "country": "Canada"
+      },
+      "registrationUrl": "https://evtgo.com",
+      "status": "registration-open",
+      "isCurrent": true,
+      "editionNumber": 3,
+      "format": "In-person",
+      "coordinates": {
+        "lat": 45.5065,
+        "lng": -73.5646
+      },
+      "contactEmail": "info@cross-future.com",
+      "socialLinks": [
+        {
+          "label": "LinkedIn",
+          "url": "https://www.linkedin.com"
+        },
+        {
+          "label": "Website",
+          "url": "https://cross-future.com"
+        }
+      ],
+      "heroStatement": "A one-day summit convening leaders from academia and industry on the technical pathways, application scenarios and collaboration opportunities shaping AI data-center resilience.",
+      "seo": {
+        "title": "Cross Future AI Summit 2026 — Montréal, 24 July",
+        "description": "One day in Montréal on AI data center power and energy resilience. Grid capacity, power quality, backup power, energy storage and dispatch — academia and industry in one room. Hosted by Cross Future Hub."
+      }
+    }
+  ],
+  "organizations": [
+    {
+      "name": "Cross Future Hub",
+      "shortName": "Cross Future Hub",
+      "slug": "cross-future-hub",
+      "type": "non-profit",
+      "url": "https://cross-future.com",
+      "country": "Canada"
+    },
+    {
+      "name": "University of Toronto",
+      "shortName": "U of T",
+      "slug": "university-of-toronto",
+      "type": "university",
+      "url": "https://www.utoronto.ca",
+      "country": "Canada"
+    },
+    {
+      "name": "York University",
+      "shortName": "York",
+      "slug": "york-university",
+      "type": "university",
+      "url": "https://www.yorku.ca",
+      "country": "Canada"
+    },
+    {
+      "name": "McGill University",
+      "shortName": "McGill",
+      "slug": "mcgill-university",
+      "type": "university",
+      "url": "https://www.mcgill.ca",
+      "country": "Canada"
+    },
+    {
+      "name": "Université de Montréal",
+      "shortName": "UdeM",
+      "slug": "universite-de-montreal",
+      "type": "university",
+      "url": "https://www.umontreal.ca",
+      "country": "Canada"
+    },
+    {
+      "name": "University of Waterloo",
+      "shortName": "Waterloo",
+      "slug": "university-of-waterloo",
+      "type": "university",
+      "url": "https://uwaterloo.ca",
+      "country": "Canada"
+    },
+    {
+      "name": "University of Guelph",
+      "shortName": "Guelph",
+      "slug": "university-of-guelph",
+      "type": "university",
+      "url": "https://www.uoguelph.ca",
+      "country": "Canada"
+    },
+    {
+      "name": "Toronto Metropolitan University",
+      "shortName": "TMU",
+      "slug": "toronto-metropolitan-university",
+      "type": "university",
+      "url": "https://www.torontomu.ca",
+      "country": "Canada"
+    },
+    {
+      "name": "Concordia University",
+      "shortName": "Concordia",
+      "slug": "concordia-university",
+      "type": "university",
+      "url": "https://www.concordia.ca",
+      "country": "Canada"
+    },
+    {
+      "name": "Memorial University of Newfoundland",
+      "shortName": "Memorial",
+      "slug": "memorial-university",
+      "type": "university",
+      "url": "https://www.mun.ca",
+      "country": "Canada"
+    },
+    {
+      "name": "Mila — Quebec AI Institute",
+      "shortName": "Mila",
+      "slug": "mila",
+      "type": "institute",
+      "url": "https://mila.quebec",
+      "country": "Canada"
+    },
+    {
+      "name": "University of Washington",
+      "shortName": "UW",
+      "slug": "university-of-washington",
+      "type": "university",
+      "url": "https://www.washington.edu",
+      "country": "United States"
+    },
+    {
+      "name": "The Ohio State University",
+      "shortName": "Ohio State",
+      "slug": "ohio-state-university",
+      "type": "university",
+      "url": "https://www.osu.edu",
+      "country": "United States"
+    },
+    {
+      "name": "Columbia University",
+      "shortName": "Columbia",
+      "slug": "columbia-university",
+      "type": "university",
+      "url": "https://www.columbia.edu",
+      "country": "United States"
+    },
+    {
+      "name": "Northwestern University",
+      "shortName": "Northwestern",
+      "slug": "northwestern-university",
+      "type": "university",
+      "url": "https://www.northwestern.edu",
+      "country": "United States"
+    },
+    {
+      "name": "New York University",
+      "shortName": "NYU",
+      "slug": "new-york-university",
+      "type": "university",
+      "url": "https://www.nyu.edu",
+      "country": "United States"
+    },
+    {
+      "name": "Allen Institute for AI",
+      "shortName": "AI2",
+      "slug": "allen-institute-for-ai",
+      "type": "institute",
+      "url": "https://allenai.org",
+      "country": "United States"
+    },
+    {
+      "name": "Google DeepMind",
+      "shortName": "Google DeepMind",
+      "slug": "google-deepmind",
+      "type": "industry",
+      "url": "https://deepmind.google",
+      "country": "United States"
+    },
+    {
+      "name": "Google Cloud",
+      "shortName": "Google Cloud",
+      "slug": "google-cloud",
+      "type": "industry",
+      "url": "https://cloud.google.com",
+      "country": "United States"
+    },
+    {
+      "name": "Advanced Micro Devices",
+      "shortName": "AMD",
+      "slug": "amd",
+      "type": "industry",
+      "url": "https://www.amd.com",
+      "country": "United States"
+    },
+    {
+      "name": "Meta",
+      "shortName": "Meta",
+      "slug": "meta",
+      "type": "industry",
+      "url": "https://about.meta.com",
+      "country": "United States"
+    },
+    {
+      "name": "Mercor",
+      "shortName": "Mercor",
+      "slug": "mercor",
+      "type": "industry",
+      "url": "https://mercor.com",
+      "country": "United States"
+    },
+    {
+      "name": "Waabi",
+      "shortName": "Waabi",
+      "slug": "waabi",
+      "type": "industry",
+      "url": "https://waabi.ai",
+      "country": "Canada"
+    },
+    {
+      "name": "KIRCHHOFF Automotive",
+      "shortName": "KIRCHHOFF",
+      "slug": "kirchhoff-automotive",
+      "type": "industry",
+      "url": "https://www.kirchhoff-automotive.com",
+      "country": "Germany"
+    },
+    {
+      "name": "EY",
+      "shortName": "EY",
+      "slug": "ey",
+      "type": "industry",
+      "url": "https://www.ey.com",
+      "country": "United Kingdom"
+    },
+    {
+      "name": "Elephant AI",
+      "shortName": "Elephant AI",
+      "slug": "elephant-ai",
+      "type": "industry",
+      "url": "",
+      "country": "Canada"
+    },
+    {
+      "name": "DeepTech Strategy",
+      "shortName": "DeepTech Strategy",
+      "slug": "deeptech-strategy",
+      "type": "industry",
+      "url": "",
+      "country": "Canada"
+    },
+    {
+      "name": "ELLA Accelerator",
+      "shortName": "ELLA",
+      "slug": "ella-accelerator",
+      "type": "ecosystem",
+      "url": "",
+      "country": "Canada"
+    }
+  ],
+  "people": [
+    {
+      "firstName": "Reza",
+      "lastName": "Moridi",
+      "slug": "reza-moridi",
+      "headshot": {
+        "sourceUrl": "/assembly/portraits/reza-moridi.svg",
+        "alt": "Portrait of Reza Moridi",
+        "focalPoint": {
+          "x": 50,
+          "y": 35
+        }
+      },
+      "links": [],
+      "verified": false,
+      "bio": "Physicist and former Ontario Minister of Research, Innovation and Science; Senior Fellow at Massey College, University of Toronto."
+    },
+    {
+      "firstName": "Chris",
+      "lastName": "Smith",
+      "slug": "chris-smith",
+      "headshot": {
+        "sourceUrl": "/assembly/portraits/chris-smith.svg",
+        "alt": "Portrait of Chris Smith",
+        "focalPoint": {
+          "x": 50,
+          "y": 35
+        }
+      },
+      "links": [],
+      "verified": false,
+      "bio": "Leads platform software and firmware engineering at AMD, spanning the silicon-to-systems stack that AI data centres are built on."
+    },
+    {
+      "firstName": "James",
+      "lastName": "Elder",
+      "slug": "james-elder",
+      "headshot": {
+        "sourceUrl": "/assembly/portraits/james-elder.svg",
+        "alt": "Portrait of James Elder",
+        "focalPoint": {
+          "x": 50,
+          "y": 35
+        }
+      },
+      "links": [],
+      "verified": false,
+      "bio": "Professor at York University working on computational vision and the perceptual systems that underpin machine understanding of scenes."
+    },
+    {
+      "firstName": "Ken",
+      "lastName": "Perlin",
+      "slug": "ken-perlin",
+      "headshot": {
+        "sourceUrl": "/assembly/portraits/ken-perlin.svg",
+        "alt": "Portrait of Ken Perlin",
+        "focalPoint": {
+          "x": 50,
+          "y": 35
+        }
+      },
+      "links": [],
+      "verified": false,
+      "bio": "Professor at New York University; his work on procedural texture and interactive graphics shaped how synthetic worlds are made."
+    },
+    {
+      "firstName": "Nouha",
+      "lastName": "Dziri",
+      "slug": "nouha-dziri",
+      "headshot": {
+        "sourceUrl": "/assembly/portraits/nouha-dziri.svg",
+        "alt": "Portrait of Nouha Dziri",
+        "focalPoint": {
+          "x": 50,
+          "y": 35
+        }
+      },
+      "links": [],
+      "verified": false,
+      "bio": "Research scientist at the Allen Institute for AI working on the reasoning limits, factuality and safety of large language models."
+    },
+    {
+      "firstName": "WenHu",
+      "lastName": "Chen",
+      "slug": "wenhu-chen",
+      "headshot": {
+        "sourceUrl": "/assembly/portraits/wenhu-chen.svg",
+        "alt": "Portrait of WenHu Chen",
+        "focalPoint": {
+          "x": 50,
+          "y": 35
+        }
+      },
+      "links": [],
+      "verified": false,
+      "bio": "Assistant professor at the University of Waterloo and researcher at Google DeepMind, working on multimodal reasoning and retrieval."
+    },
+    {
+      "firstName": "Natasha",
+      "lastName": "Jaques",
+      "slug": "natasha-jaques",
+      "headshot": {
+        "sourceUrl": "/assembly/portraits/natasha-jaques.svg",
+        "alt": "Portrait of Natasha Jaques",
+        "focalPoint": {
+          "x": 50,
+          "y": 35
+        }
+      },
+      "links": [],
+      "verified": false,
+      "bio": "Assistant professor at the University of Washington and senior research scientist at Google DeepMind, working on social reinforcement learning."
+    },
+    {
+      "firstName": "Yu",
+      "lastName": "Su",
+      "slug": "yu-su",
+      "headshot": {
+        "sourceUrl": "/assembly/portraits/yu-su.svg",
+        "alt": "Portrait of Yu Su",
+        "focalPoint": {
+          "x": 50,
+          "y": 35
+        }
+      },
+      "links": [],
+      "verified": false,
+      "bio": "Associate professor at Ohio State University working on language agents and the grounding of models in real environments."
+    },
+    {
+      "firstName": "Mark",
+      "lastName": "Coates",
+      "slug": "mark-coates",
+      "headshot": {
+        "sourceUrl": "/assembly/portraits/mark-coates.svg",
+        "alt": "Portrait of Mark Coates",
+        "focalPoint": {
+          "x": 50,
+          "y": 35
+        }
+      },
+      "links": [],
+      "verified": false,
+      "bio": "Professor at McGill University and member of Mila, working on graph machine learning and statistical signal processing."
+    },
+    {
+      "firstName": "Bang",
+      "lastName": "Liu",
+      "slug": "bang-liu",
+      "headshot": {
+        "sourceUrl": "/assembly/portraits/bang-liu.svg",
+        "alt": "Portrait of Bang Liu",
+        "focalPoint": {
+          "x": 50,
+          "y": 35
+        }
+      },
+      "links": [],
+      "verified": false,
+      "bio": "Professor at Université de Montréal and member of Mila, working on natural language understanding and knowledge-intensive systems."
+    },
+    {
+      "firstName": "Yunzhu",
+      "lastName": "Li",
+      "slug": "yunzhu-li",
+      "headshot": {
+        "sourceUrl": "/assembly/portraits/yunzhu-li.svg",
+        "alt": "Portrait of Yunzhu Li",
+        "focalPoint": {
+          "x": 50,
+          "y": 35
+        }
+      },
+      "links": [],
+      "verified": false,
+      "bio": "Assistant professor at Columbia University working on robot learning and learned physical models of the world."
+    },
+    {
+      "firstName": "Manling",
+      "lastName": "Li",
+      "slug": "manling-li",
+      "headshot": {
+        "sourceUrl": "/assembly/portraits/manling-li.svg",
+        "alt": "Portrait of Manling Li",
+        "focalPoint": {
+          "x": 50,
+          "y": 35
+        }
+      },
+      "links": [],
+      "verified": false,
+      "bio": "Assistant professor at Northwestern University working on multimodal information extraction and embodied agents."
+    },
+    {
+      "firstName": "Simon",
+      "lastName": "Yang",
+      "slug": "simon-yang",
+      "headshot": {
+        "sourceUrl": "/assembly/portraits/simon-yang.svg",
+        "alt": "Portrait of Simon Yang",
+        "focalPoint": {
+          "x": 50,
+          "y": 35
+        }
+      },
+      "links": [],
+      "verified": false,
+      "bio": "Professor at the University of Guelph and Fellow of the Canadian Academy of Engineering, working on intelligent systems and robotics."
+    },
+    {
+      "firstName": "Shyam",
+      "lastName": "Gollakota",
+      "slug": "shyam-gollakota",
+      "headshot": {
+        "sourceUrl": "/assembly/portraits/shyam-gollakota.svg",
+        "alt": "Portrait of Shyam Gollakota",
+        "focalPoint": {
+          "x": 50,
+          "y": 35
+        }
+      },
+      "links": [],
+      "verified": false,
+      "bio": "Professor at the University of Washington working on wireless sensing, mobile systems and on-device intelligence."
+    },
+    {
+      "firstName": "Abdolreza",
+      "lastName": "Abhari",
+      "slug": "abdolreza-abhari",
+      "headshot": {
+        "sourceUrl": "/assembly/portraits/abdolreza-abhari.svg",
+        "alt": "Portrait of Abdolreza Abhari",
+        "focalPoint": {
+          "x": 50,
+          "y": 35
+        }
+      },
+      "links": [],
+      "verified": false,
+      "bio": "Professor at Toronto Metropolitan University working on distributed systems, data centre modelling and network performance."
+    },
+    {
+      "firstName": "Steven",
+      "lastName": "Wang",
+      "slug": "steven-wang",
+      "headshot": {
+        "sourceUrl": "/assembly/portraits/steven-wang.svg",
+        "alt": "Portrait of Steven Wang",
+        "focalPoint": {
+          "x": 50,
+          "y": 35
+        }
+      },
+      "links": [],
+      "verified": false,
+      "bio": "Full professor at York University working on mathematics and computation."
+    },
+    {
+      "firstName": "Divya",
+      "lastName": "Sharma",
+      "slug": "divya-sharma",
+      "headshot": {
+        "sourceUrl": "/assembly/portraits/divya-sharma.svg",
+        "alt": "Portrait of Divya Sharma",
+        "focalPoint": {
+          "x": 50,
+          "y": 35
+        }
+      },
+      "links": [],
+      "verified": false,
+      "bio": "Assistant professor at York University working on statistical learning and applied data science."
+    },
+    {
+      "firstName": "Yang",
+      "lastName": "Wang",
+      "slug": "yang-wang",
+      "headshot": {
+        "sourceUrl": "/assembly/portraits/yang-wang.svg",
+        "alt": "Portrait of Yang Wang",
+        "focalPoint": {
+          "x": 50,
+          "y": 35
+        }
+      },
+      "links": [],
+      "verified": false,
+      "bio": "Associate professor at Concordia University working on computer vision and machine learning."
+    },
+    {
+      "firstName": "Qiang",
+      "lastName": "Sun",
+      "slug": "qiang-sun",
+      "headshot": {
+        "sourceUrl": "/assembly/portraits/qiang-sun.svg",
+        "alt": "Portrait of Qiang Sun",
+        "focalPoint": {
+          "x": 50,
+          "y": 35
+        }
+      },
+      "links": [],
+      "verified": false,
+      "bio": "Professor at the University of Toronto working on statistics and high-dimensional inference."
+    },
+    {
+      "firstName": "Rasoul",
+      "lastName": "Yousef",
+      "slug": "rasoul-yousef",
+      "headshot": {
+        "sourceUrl": "/assembly/portraits/rasoul-yousef.svg",
+        "alt": "Portrait of Rasoul Yousef",
+        "focalPoint": {
+          "x": 50,
+          "y": 35
+        }
+      },
+      "links": [],
+      "verified": false,
+      "bio": "Associate professor at the University of Toronto."
+    },
+    {
+      "firstName": "Peizhong Peter",
+      "lastName": "Wang",
+      "slug": "peizhong-peter-wang",
+      "headshot": {
+        "sourceUrl": "/assembly/portraits/peizhong-peter-wang.svg",
+        "alt": "Portrait of Peizhong Peter Wang",
+        "focalPoint": {
+          "x": 50,
+          "y": 35
+        }
+      },
+      "links": [],
+      "verified": false,
+      "bio": "Professor of epidemiology at Memorial University and the University of Toronto, working on population health data."
+    },
+    {
+      "firstName": "Ze",
+      "lastName": "Yang",
+      "slug": "ze-yang",
+      "headshot": {
+        "sourceUrl": "/assembly/portraits/ze-yang.svg",
+        "alt": "Portrait of Ze Yang",
+        "focalPoint": {
+          "x": 50,
+          "y": 35
+        }
+      },
+      "links": [],
+      "verified": false,
+      "bio": "Researcher at the University of Toronto and Waabi, working on perception and simulation for autonomous driving."
+    },
+    {
+      "firstName": "Wangsu",
+      "lastName": "Yuchen",
+      "slug": "wangsu-yuchen",
+      "headshot": {
+        "sourceUrl": "/assembly/portraits/wangsu-yuchen.svg",
+        "alt": "Portrait of Wangsu Yuchen",
+        "focalPoint": {
+          "x": 50,
+          "y": 35
+        }
+      },
+      "links": [],
+      "verified": false,
+      "bio": "Researcher at Mila."
+    },
+    {
+      "firstName": "Sercan",
+      "lastName": "Arik",
+      "slug": "sercan-arik",
+      "headshot": {
+        "sourceUrl": "/assembly/portraits/sercan-arik.svg",
+        "alt": "Portrait of Sercan Arik",
+        "focalPoint": {
+          "x": 50,
+          "y": 35
+        }
+      },
+      "links": [],
+      "verified": false,
+      "bio": "Research lead at Google Cloud AI Research, working on tabular learning, time series and trustworthy model deployment."
+    },
+    {
+      "firstName": "Mahmoud",
+      "lastName": "Assran",
+      "slug": "mahmoud-assran",
+      "headshot": {
+        "sourceUrl": "/assembly/portraits/mahmoud-assran.svg",
+        "alt": "Portrait of Mahmoud Assran",
+        "focalPoint": {
+          "x": 50,
+          "y": 35
+        }
+      },
+      "links": [],
+      "verified": false,
+      "bio": "Research scientist at Meta working on self-supervised visual representation learning."
+    },
+    {
+      "firstName": "Shaun",
+      "lastName": "VanWeelden",
+      "slug": "shaun-vanweelden",
+      "headshot": {
+        "sourceUrl": "/assembly/portraits/shaun-vanweelden.svg",
+        "alt": "Portrait of Shaun VanWeelden",
+        "focalPoint": {
+          "x": 50,
+          "y": 35
+        }
+      },
+      "links": [],
+      "verified": false,
+      "bio": "Managing director at Mercor; previously at OpenAI and Scale AI, working on the human data supply chain behind frontier models."
+    },
+    {
+      "firstName": "Cindy",
+      "lastName": "Zhong",
+      "slug": "cindy-zhong",
+      "headshot": {
+        "sourceUrl": "/assembly/portraits/cindy-zhong.svg",
+        "alt": "Portrait of Cindy Zhong",
+        "focalPoint": {
+          "x": 50,
+          "y": 35
+        }
+      },
+      "links": [],
+      "verified": false,
+      "bio": "Engineering leader for Canada Startups at Google Cloud, working with founders scaling AI infrastructure."
+    },
+    {
+      "firstName": "Cheng",
+      "lastName": "Zeng",
+      "slug": "cheng-zeng",
+      "headshot": {
+        "sourceUrl": "/assembly/portraits/cheng-zeng.svg",
+        "alt": "Portrait of Cheng Zeng",
+        "focalPoint": {
+          "x": 50,
+          "y": 35
+        }
+      },
+      "links": [],
+      "verified": false,
+      "bio": "R&D manager at KIRCHHOFF Automotive, working on manufacturing engineering and industrial automation."
+    },
+    {
+      "firstName": "Mehak",
+      "lastName": "Khanna",
+      "slug": "mehak-khanna",
+      "headshot": {
+        "sourceUrl": "/assembly/portraits/mehak-khanna.svg",
+        "alt": "Portrait of Mehak Khanna",
+        "focalPoint": {
+          "x": 50,
+          "y": 35
+        }
+      },
+      "links": [],
+      "verified": false,
+      "bio": "Manager in Technology Assurance at EY, working on technology risk and controls for regulated systems."
+    },
+    {
+      "firstName": "Maria",
+      "lastName": "Parysz",
+      "slug": "maria-parysz",
+      "headshot": {
+        "sourceUrl": "/assembly/portraits/maria-parysz.svg",
+        "alt": "Portrait of Maria Parysz",
+        "focalPoint": {
+          "x": 50,
+          "y": 35
+        }
+      },
+      "links": [],
+      "verified": false,
+      "bio": "Founder and Chief AI Educator Officer at Elephant AI, working on AI literacy and adoption programmes."
+    },
+    {
+      "firstName": "Marc",
+      "lastName": "Lijour",
+      "slug": "marc-lijour",
+      "headshot": {
+        "sourceUrl": "/assembly/portraits/marc-lijour.svg",
+        "alt": "Portrait of Marc Lijour",
+        "focalPoint": {
+          "x": 50,
+          "y": 35
+        }
+      },
+      "links": [],
+      "verified": false,
+      "bio": "Executive at DeepTech Strategy, working on deep-technology commercialization and skills policy."
+    },
+    {
+      "firstName": "Nicole",
+      "lastName": "Troster",
+      "slug": "nicole-troster",
+      "headshot": {
+        "sourceUrl": "/assembly/portraits/nicole-troster.svg",
+        "alt": "Portrait of Nicole Troster",
+        "focalPoint": {
+          "x": 50,
+          "y": 35
+        }
+      },
+      "links": [],
+      "verified": false,
+      "bio": "Founder and manager of the ELLA Accelerator at York University, supporting women-led ventures."
+    },
+    {
+      "firstName": "Miryam",
+      "lastName": "Lazarte",
+      "slug": "miryam-lazarte",
+      "headshot": {
+        "sourceUrl": "/assembly/portraits/miryam-lazarte.svg",
+        "alt": "Portrait of Miryam Lazarte",
+        "focalPoint": {
+          "x": 50,
+          "y": 35
+        }
+      },
+      "links": [],
+      "verified": false,
+      "bio": "Interview guest. Affiliation and biography pending confirmation."
+    },
+    {
+      "firstName": "Joseph",
+      "lastName": "Turcotte",
+      "slug": "joseph-turcotte",
+      "headshot": {
+        "sourceUrl": "/assembly/portraits/joseph-turcotte.svg",
+        "alt": "Portrait of Joseph Turcotte",
+        "focalPoint": {
+          "x": 50,
+          "y": 35
+        }
+      },
+      "links": [],
+      "verified": false,
+      "bio": "Interview guest. Affiliation and biography pending confirmation."
+    },
+    {
+      "firstName": "Pui Sai",
+      "lastName": "Lau",
+      "slug": "pui-sai-lau",
+      "headshot": {
+        "sourceUrl": "/assembly/portraits/pui-sai-lau.svg",
+        "alt": "Portrait of Pui Sai Lau",
+        "focalPoint": {
+          "x": 50,
+          "y": 35
+        }
+      },
+      "links": [],
+      "verified": false,
+      "bio": "Interview guest. Affiliation and biography pending confirmation."
+    }
+  ],
+  "appearances": [
+    {
+      "person": "reza-moridi",
+      "edition": "2026-assembly",
+      "organizations": [
+        "university-of-toronto"
+      ],
+      "roleTitle": "Senior Fellow, Massey College",
+      "category": "research",
+      "billing": 10,
+      "featured": true
+    },
+    {
+      "person": "chris-smith",
+      "edition": "2026-assembly",
+      "organizations": [
+        "amd"
+      ],
+      "roleTitle": "Corporate Vice President, Platform Software & Firmware",
+      "category": "industry",
+      "billing": 20,
+      "featured": true
+    },
+    {
+      "person": "james-elder",
+      "edition": "2026-assembly",
+      "organizations": [
+        "york-university"
+      ],
+      "roleTitle": "Professor",
+      "category": "research",
+      "billing": 30,
+      "featured": true
+    },
+    {
+      "person": "ken-perlin",
+      "edition": "2026-assembly",
+      "organizations": [
+        "new-york-university"
+      ],
+      "roleTitle": "Professor",
+      "category": "research",
+      "billing": 40,
+      "featured": true
+    },
+    {
+      "person": "nouha-dziri",
+      "edition": "2026-assembly",
+      "organizations": [
+        "allen-institute-for-ai"
+      ],
+      "roleTitle": "Research Scientist",
+      "category": "research",
+      "billing": 50,
+      "featured": true
+    },
+    {
+      "person": "wenhu-chen",
+      "edition": "2026-assembly",
+      "organizations": [
+        "university-of-waterloo",
+        "google-deepmind"
+      ],
+      "roleTitle": "Assistant Professor",
+      "category": "research",
+      "billing": 60,
+      "featured": true
+    },
+    {
+      "person": "natasha-jaques",
+      "edition": "2026-assembly",
+      "organizations": [
+        "university-of-washington",
+        "google-deepmind"
+      ],
+      "roleTitle": "Assistant Professor",
+      "category": "research",
+      "billing": 70,
+      "featured": false
+    },
+    {
+      "person": "yu-su",
+      "edition": "2026-assembly",
+      "organizations": [
+        "ohio-state-university"
+      ],
+      "roleTitle": "Associate Professor",
+      "category": "research",
+      "billing": 80,
+      "featured": false
+    },
+    {
+      "person": "mark-coates",
+      "edition": "2026-assembly",
+      "organizations": [
+        "mcgill-university",
+        "mila"
+      ],
+      "roleTitle": "Professor",
+      "category": "research",
+      "billing": 90,
+      "featured": false
+    },
+    {
+      "person": "bang-liu",
+      "edition": "2026-assembly",
+      "organizations": [
+        "universite-de-montreal",
+        "mila"
+      ],
+      "roleTitle": "Professor",
+      "category": "research",
+      "billing": 100,
+      "featured": false
+    },
+    {
+      "person": "yunzhu-li",
+      "edition": "2026-assembly",
+      "organizations": [
+        "columbia-university"
+      ],
+      "roleTitle": "Assistant Professor",
+      "category": "research",
+      "billing": 110,
+      "featured": false
+    },
+    {
+      "person": "manling-li",
+      "edition": "2026-assembly",
+      "organizations": [
+        "northwestern-university"
+      ],
+      "roleTitle": "Assistant Professor",
+      "category": "research",
+      "billing": 120,
+      "featured": false
+    },
+    {
+      "person": "simon-yang",
+      "edition": "2026-assembly",
+      "organizations": [
+        "university-of-guelph"
+      ],
+      "roleTitle": "Professor, Fellow of the Canadian Academy of Engineering",
+      "category": "research",
+      "billing": 130,
+      "featured": false
+    },
+    {
+      "person": "shyam-gollakota",
+      "edition": "2026-assembly",
+      "organizations": [
+        "university-of-washington"
+      ],
+      "roleTitle": "Professor",
+      "category": "research",
+      "billing": 140,
+      "featured": false
+    },
+    {
+      "person": "abdolreza-abhari",
+      "edition": "2026-assembly",
+      "organizations": [
+        "toronto-metropolitan-university"
+      ],
+      "roleTitle": "Professor",
+      "category": "research",
+      "billing": 150,
+      "featured": false
+    },
+    {
+      "person": "steven-wang",
+      "edition": "2026-assembly",
+      "organizations": [
+        "york-university"
+      ],
+      "roleTitle": "Full Professor",
+      "category": "research",
+      "billing": 160,
+      "featured": false
+    },
+    {
+      "person": "divya-sharma",
+      "edition": "2026-assembly",
+      "organizations": [
+        "york-university"
+      ],
+      "roleTitle": "Assistant Professor",
+      "category": "research",
+      "billing": 170,
+      "featured": false
+    },
+    {
+      "person": "yang-wang",
+      "edition": "2026-assembly",
+      "organizations": [
+        "concordia-university"
+      ],
+      "roleTitle": "Associate Professor",
+      "category": "research",
+      "billing": 180,
+      "featured": false
+    },
+    {
+      "person": "qiang-sun",
+      "edition": "2026-assembly",
+      "organizations": [
+        "university-of-toronto"
+      ],
+      "roleTitle": "Professor",
+      "category": "research",
+      "billing": 190,
+      "featured": false
+    },
+    {
+      "person": "rasoul-yousef",
+      "edition": "2026-assembly",
+      "organizations": [
+        "university-of-toronto"
+      ],
+      "roleTitle": "Associate Professor",
+      "category": "research",
+      "billing": 200,
+      "featured": false
+    },
+    {
+      "person": "peizhong-peter-wang",
+      "edition": "2026-assembly",
+      "organizations": [
+        "memorial-university",
+        "university-of-toronto"
+      ],
+      "roleTitle": "Professor, Epidemiology",
+      "category": "research",
+      "billing": 210,
+      "featured": false
+    },
+    {
+      "person": "ze-yang",
+      "edition": "2026-assembly",
+      "organizations": [
+        "university-of-toronto",
+        "waabi"
+      ],
+      "roleTitle": "Researcher",
+      "category": "research",
+      "billing": 220,
+      "featured": false
+    },
+    {
+      "person": "wangsu-yuchen",
+      "edition": "2026-assembly",
+      "organizations": [
+        "mila"
+      ],
+      "roleTitle": "Researcher",
+      "category": "research",
+      "billing": 230,
+      "featured": false
+    },
+    {
+      "person": "sercan-arik",
+      "edition": "2026-assembly",
+      "organizations": [
+        "google-cloud"
+      ],
+      "roleTitle": "Research Lead, Cloud AI Research",
+      "category": "industry",
+      "billing": 240,
+      "featured": false
+    },
+    {
+      "person": "mahmoud-assran",
+      "edition": "2026-assembly",
+      "organizations": [
+        "meta"
+      ],
+      "roleTitle": "Research Scientist",
+      "category": "industry",
+      "billing": 250,
+      "featured": false
+    },
+    {
+      "person": "shaun-vanweelden",
+      "edition": "2026-assembly",
+      "organizations": [
+        "mercor"
+      ],
+      "roleTitle": "Managing Director",
+      "category": "industry",
+      "billing": 260,
+      "featured": false
+    },
+    {
+      "person": "cindy-zhong",
+      "edition": "2026-assembly",
+      "organizations": [
+        "google-cloud"
+      ],
+      "roleTitle": "Engineering Leader, Canada Startups",
+      "category": "industry",
+      "billing": 270,
+      "featured": false
+    },
+    {
+      "person": "cheng-zeng",
+      "edition": "2026-assembly",
+      "organizations": [
+        "kirchhoff-automotive"
+      ],
+      "roleTitle": "Research and Development Manager, P.Eng",
+      "category": "industry",
+      "billing": 280,
+      "featured": false
+    },
+    {
+      "person": "mehak-khanna",
+      "edition": "2026-assembly",
+      "organizations": [
+        "ey"
+      ],
+      "roleTitle": "Manager, Technology Assurance",
+      "category": "industry",
+      "billing": 290,
+      "featured": false
+    },
+    {
+      "person": "maria-parysz",
+      "edition": "2026-assembly",
+      "organizations": [
+        "elephant-ai"
+      ],
+      "roleTitle": "Founder and Chief AI Educator Officer",
+      "category": "ecosystem",
+      "billing": 300,
+      "featured": false
+    },
+    {
+      "person": "marc-lijour",
+      "edition": "2026-assembly",
+      "organizations": [
+        "deeptech-strategy"
+      ],
+      "roleTitle": "Executive",
+      "category": "ecosystem",
+      "billing": 310,
+      "featured": false
+    },
+    {
+      "person": "nicole-troster",
+      "edition": "2026-assembly",
+      "organizations": [
+        "york-university",
+        "ella-accelerator"
+      ],
+      "roleTitle": "Founder and Manager, ELLA Accelerator",
+      "category": "ecosystem",
+      "billing": 320,
+      "featured": false
+    }
+  ],
+  "tracks": [
+    {
+      "code": "T1",
+      "name": "Power Challenges for AI Data Centers",
+      "description": "Ultra-high-density loads, grid capacity and power quality demands.",
+      "chainStage": "grid-interface"
+    },
+    {
+      "code": "T2",
+      "name": "Grid & Microgrid Resilience",
+      "description": "Real-time monitoring, fault diagnostics and adaptive control.",
+      "chainStage": "network"
+    },
+    {
+      "code": "T3",
+      "name": "Data Center Power Architecture",
+      "description": "Distribution topologies, backup power and energy storage.",
+      "chainStage": "facility"
+    },
+    {
+      "code": "T4",
+      "name": "Next-Generation AI Factory Infrastructure",
+      "description": "Digital twins and scalable deployment for AI factories.",
+      "chainStage": "scale"
+    }
+  ],
+  "sessions": [
+    {
+      "code": "S.01",
+      "title": "Registration & coffee",
+      "edition": "2026-assembly",
+      "track": "T1",
+      "startsAt": "2026-07-24T08:30:00-04:00",
+      "endsAt": "2026-07-24T09:15:00-04:00",
+      "room": "Foyer",
+      "speakers": [],
+      "status": "proposed",
+      "categoryLabel": "ARRIVAL",
+      "speakerLabel": "To be announced",
+      "description": "",
+      "outcomes": []
+    },
+    {
+      "code": "S.02",
+      "title": "Opening remarks",
+      "edition": "2026-assembly",
+      "track": "T1",
+      "startsAt": "2026-07-24T09:15:00-04:00",
+      "endsAt": "2026-07-24T09:30:00-04:00",
+      "room": "Main stage",
+      "speakers": [],
+      "status": "proposed",
+      "categoryLabel": "OPENING",
+      "speakerLabel": "To be announced",
+      "description": "",
+      "outcomes": []
+    },
+    {
+      "code": "S.03",
+      "title": "Morning keynote",
+      "edition": "2026-assembly",
+      "track": "T1",
+      "startsAt": "2026-07-24T09:30:00-04:00",
+      "endsAt": "2026-07-24T10:30:00-04:00",
+      "room": "Main stage",
+      "speakers": [],
+      "status": "proposed",
+      "categoryLabel": "KEYNOTE",
+      "speakerLabel": "To be announced",
+      "description": "",
+      "outcomes": []
+    },
+    {
+      "code": "S.04",
+      "title": "Panel — grid capacity and interconnection",
+      "edition": "2026-assembly",
+      "track": "T1",
+      "startsAt": "2026-07-24T10:45:00-04:00",
+      "endsAt": "2026-07-24T12:00:00-04:00",
+      "room": "Main stage",
+      "speakers": [],
+      "status": "proposed",
+      "categoryLabel": "PANEL",
+      "speakerLabel": "To be announced",
+      "description": "",
+      "outcomes": []
+    },
+    {
+      "code": "S.05",
+      "title": "Lunch & networking",
+      "edition": "2026-assembly",
+      "track": "T2",
+      "startsAt": "2026-07-24T12:00:00-04:00",
+      "endsAt": "2026-07-24T13:15:00-04:00",
+      "room": "Foyer",
+      "speakers": [],
+      "status": "proposed",
+      "categoryLabel": "BREAK",
+      "speakerLabel": "To be announced",
+      "description": "",
+      "outcomes": []
+    },
+    {
+      "code": "S.06",
+      "title": "Breakouts — resilience, architecture, dispatch",
+      "edition": "2026-assembly",
+      "track": "T2",
+      "startsAt": "2026-07-24T13:15:00-04:00",
+      "endsAt": "2026-07-24T14:45:00-04:00",
+      "room": "Rooms A–C",
+      "speakers": [],
+      "status": "proposed",
+      "categoryLabel": "BREAKOUT",
+      "speakerLabel": "To be announced",
+      "description": "",
+      "outcomes": []
+    },
+    {
+      "code": "S.07",
+      "title": "Afternoon keynote",
+      "edition": "2026-assembly",
+      "track": "T3",
+      "startsAt": "2026-07-24T15:00:00-04:00",
+      "endsAt": "2026-07-24T16:00:00-04:00",
+      "room": "Main stage",
+      "speakers": [],
+      "status": "proposed",
+      "categoryLabel": "KEYNOTE",
+      "speakerLabel": "To be announced",
+      "description": "",
+      "outcomes": []
+    },
+    {
+      "code": "S.08",
+      "title": "Roundtable — the AI factory in 2030",
+      "edition": "2026-assembly",
+      "track": "T4",
+      "startsAt": "2026-07-24T16:00:00-04:00",
+      "endsAt": "2026-07-24T17:00:00-04:00",
+      "room": "Main stage",
+      "speakers": [],
+      "status": "proposed",
+      "categoryLabel": "ROUNDTABLE",
+      "speakerLabel": "To be announced",
+      "description": "",
+      "outcomes": []
+    },
+    {
+      "code": "S.09",
+      "title": "Closing remarks & reception",
+      "edition": "2026-assembly",
+      "track": "T4",
+      "startsAt": "2026-07-24T17:00:00-04:00",
+      "endsAt": "2026-07-24T17:30:00-04:00",
+      "room": "Foyer",
+      "speakers": [],
+      "status": "proposed",
+      "categoryLabel": "CLOSING",
+      "speakerLabel": "To be announced",
+      "description": "",
+      "outcomes": []
+    }
+  ],
+  "partners": [
+    {
+      "name": "University of Toronto Scarborough — Computer & Mathematical Sciences",
+      "slug": "u-of-t-scarborough",
+      "logo": {
+        "sourceUrl": "/assembly/partners/u-of-t-scarborough.svg",
+        "alt": "University of Toronto Scarborough — Computer & Mathematical Sciences logo"
+      },
+      "url": "https://www.utsc.utoronto.ca",
+      "type": "academic"
+    },
+    {
+      "name": "EVENTGO",
+      "slug": "eventgo",
+      "logo": {
+        "sourceUrl": "/assembly/partners/eventgo.svg",
+        "alt": "EVENTGO logo"
+      },
+      "url": "https://evtgo.com",
+      "type": "ecosystem"
+    },
+    {
+      "name": "AMD",
+      "slug": "amd-partner",
+      "logo": {
+        "sourceUrl": "/assembly/partners/amd-partner.svg",
+        "alt": "AMD logo"
+      },
+      "url": "https://www.amd.com",
+      "type": "industry"
+    },
+    {
+      "name": "Federation of Security Professionals",
+      "slug": "federation-of-security-professionals",
+      "logo": {
+        "sourceUrl": "/assembly/partners/federation-of-security-professionals.svg",
+        "alt": "Federation of Security Professionals logo"
+      },
+      "url": "",
+      "type": "community"
+    },
+    {
+      "name": "Toronto habla español",
+      "slug": "toronto-habla-espanol",
+      "logo": {
+        "sourceUrl": "/assembly/partners/toronto-habla-espanol.svg",
+        "alt": "Toronto habla español logo"
+      },
+      "url": "",
+      "type": "community"
+    },
+    {
+      "name": "Centre for New Immigrant Well-being",
+      "slug": "cniw",
+      "logo": {
+        "sourceUrl": "/assembly/partners/cniw.svg",
+        "alt": "Centre for New Immigrant Well-being logo"
+      },
+      "url": "",
+      "type": "community"
+    },
+    {
+      "name": "Global Startups",
+      "slug": "global-startups",
+      "logo": {
+        "sourceUrl": "/assembly/partners/global-startups.svg",
+        "alt": "Global Startups logo"
+      },
+      "url": "",
+      "type": "ecosystem"
+    },
+    {
+      "name": "Green Ring Stock Insights",
+      "slug": "green-ring",
+      "logo": {
+        "sourceUrl": "/assembly/partners/green-ring.svg",
+        "alt": "Green Ring Stock Insights logo"
+      },
+      "url": "",
+      "type": "ecosystem"
+    },
+    {
+      "name": "The Erindale Academy",
+      "slug": "the-erindale-academy",
+      "logo": {
+        "sourceUrl": "/assembly/partners/the-erindale-academy.svg",
+        "alt": "The Erindale Academy logo"
+      },
+      "url": "",
+      "type": "academic"
+    },
+    {
+      "name": "Women Techmakers",
+      "slug": "women-techmakers",
+      "logo": {
+        "sourceUrl": "/assembly/partners/women-techmakers.svg",
+        "alt": "Women Techmakers logo"
+      },
+      "url": "",
+      "type": "community"
+    },
+    {
+      "name": "TechConnex",
+      "slug": "techconnex",
+      "logo": {
+        "sourceUrl": "/assembly/partners/techconnex.svg",
+        "alt": "TechConnex logo"
+      },
+      "url": "",
+      "type": "ecosystem"
+    },
+    {
+      "name": "Connected Minds",
+      "slug": "connected-minds",
+      "logo": {
+        "sourceUrl": "/assembly/partners/connected-minds.svg",
+        "alt": "Connected Minds logo"
+      },
+      "url": "",
+      "type": "academic"
+    },
+    {
+      "name": "ID8 Ventures",
+      "slug": "id8-ventures",
+      "logo": {
+        "sourceUrl": "/assembly/partners/id8-ventures.svg",
+        "alt": "ID8 Ventures logo"
+      },
+      "url": "",
+      "type": "ecosystem"
+    }
+  ],
+  "documents": [
+    {
+      "title": "Congratulatory letter — Province of Ontario",
+      "type": "letter",
+      "image": {
+        "sourceUrl": "/assembly/documents/ontario-letter.svg",
+        "alt": "Congratulatory letter from the Province of Ontario"
+      },
+      "issuer": "Government of Ontario"
+    },
+    {
+      "title": "Message from the Mayor — City of Toronto",
+      "type": "letter",
+      "image": {
+        "sourceUrl": "/assembly/documents/toronto-mayor-letter.svg",
+        "alt": "Message from the Mayor of the City of Toronto"
+      },
+      "issuer": "Office of the Mayor, City of Toronto"
+    }
+  ],
+  "interviews": [
+    {
+      "code": "IV.01",
+      "title": "The human data supply chain behind frontier models",
+      "person": "shaun-vanweelden",
+      "durationMin": 14,
+      "featured": true,
+      "pullQuote": "The bottleneck stopped being algorithms a while ago.",
+      "image": {
+        "sourceUrl": "/assembly/interviews/shaun-vanweelden.svg",
+        "alt": "Still from the recorded interview with Shaun Vanweelden"
+      }
+    },
+    {
+      "code": "IV.02",
+      "title": "Sensing, wireless systems and intelligence at the edge",
+      "person": "shyam-gollakota",
+      "durationMin": 11,
+      "featured": true,
+      "image": {
+        "sourceUrl": "/assembly/interviews/shyam-gollakota.svg",
+        "alt": "Still from the recorded interview with Shyam Gollakota"
+      }
+    },
+    {
+      "code": "IV.03",
+      "title": "Language agents that actually touch the world",
+      "person": "yu-su",
+      "durationMin": 12,
+      "featured": true,
+      "pullQuote": "An agent that cannot act is a very expensive autocomplete.",
+      "image": {
+        "sourceUrl": "/assembly/interviews/yu-su.svg",
+        "alt": "Still from the recorded interview with Yu Su"
+      }
+    },
+    {
+      "code": "IV.04",
+      "title": "Multimodal reasoning and what retrieval still cannot fix",
+      "person": "wenhu-chen",
+      "durationMin": 13,
+      "featured": false,
+      "image": {
+        "sourceUrl": "/assembly/interviews/wenhu-chen.svg",
+        "alt": "Still from the recorded interview with Wenhu Chen"
+      }
+    },
+    {
+      "code": "IV.05",
+      "title": "Where reasoning breaks, and why benchmarks miss it",
+      "person": "nouha-dziri",
+      "durationMin": 15,
+      "featured": true,
+      "pullQuote": "The failure modes are structural, not statistical.",
+      "image": {
+        "sourceUrl": "/assembly/interviews/nouha-dziri.svg",
+        "alt": "Still from the recorded interview with Nouha Dziri"
+      }
+    },
+    {
+      "code": "IV.06",
+      "title": "Social reinforcement learning between people and models",
+      "person": "natasha-jaques",
+      "durationMin": 12,
+      "featured": false,
+      "image": {
+        "sourceUrl": "/assembly/interviews/natasha-jaques.svg",
+        "alt": "Still from the recorded interview with Natasha Jaques"
+      }
+    },
+    {
+      "code": "IV.07",
+      "title": "What machine vision still gets wrong about scenes",
+      "person": "james-elder",
+      "durationMin": 10,
+      "featured": false,
+      "image": {
+        "sourceUrl": "/assembly/interviews/james-elder.svg",
+        "alt": "Still from the recorded interview with James Elder"
+      }
+    },
+    {
+      "code": "IV.08",
+      "title": "Trustworthy deployment when the data is tabular and messy",
+      "person": "sercan-arik",
+      "durationMin": 11,
+      "featured": false,
+      "image": {
+        "sourceUrl": "/assembly/interviews/sercan-arik.svg",
+        "alt": "Still from the recorded interview with Sercan Arik"
+      }
+    },
+    {
+      "code": "IV.09",
+      "title": "Silicon to systems: the stack under an AI data centre",
+      "person": "chris-smith",
+      "durationMin": 16,
+      "featured": true,
+      "pullQuote": "Every watt you save at the rack is a watt you do not have to interconnect.",
+      "image": {
+        "sourceUrl": "/assembly/interviews/chris-smith.svg",
+        "alt": "Still from the recorded interview with Chris Smith"
+      }
+    },
+    {
+      "code": "IV.10",
+      "title": "Synthetic worlds, forty years in",
+      "person": "ken-perlin",
+      "durationMin": 13,
+      "featured": false,
+      "image": {
+        "sourceUrl": "/assembly/interviews/ken-perlin.svg",
+        "alt": "Still from the recorded interview with Ken Perlin"
+      }
+    },
+    {
+      "code": "IV.11",
+      "title": "Building the ecosystem around the technology",
+      "person": "miryam-lazarte",
+      "durationMin": 9,
+      "featured": false,
+      "image": {
+        "sourceUrl": "/assembly/interviews/miryam-lazarte.svg",
+        "alt": "Still from the recorded interview with Miryam Lazarte"
+      }
+    },
+    {
+      "code": "IV.12",
+      "title": "AI literacy as infrastructure",
+      "person": "maria-parysz",
+      "durationMin": 10,
+      "featured": false,
+      "image": {
+        "sourceUrl": "/assembly/interviews/maria-parysz.svg",
+        "alt": "Still from the recorded interview with Maria Parysz"
+      }
+    },
+    {
+      "code": "IV.13",
+      "title": "Accelerating women-led ventures in deep tech",
+      "person": "nicole-troster",
+      "durationMin": 9,
+      "featured": false,
+      "image": {
+        "sourceUrl": "/assembly/interviews/nicole-troster.svg",
+        "alt": "Still from the recorded interview with Nicole Troster"
+      }
+    },
+    {
+      "code": "IV.14",
+      "title": "Policy, platforms and public interest",
+      "person": "joseph-turcotte",
+      "durationMin": 11,
+      "featured": false,
+      "image": {
+        "sourceUrl": "/assembly/interviews/joseph-turcotte.svg",
+        "alt": "Still from the recorded interview with Joseph Turcotte"
+      }
+    },
+    {
+      "code": "IV.15",
+      "title": "Community access to advanced technology",
+      "person": "pui-sai-lau",
+      "durationMin": 8,
+      "featured": false,
+      "image": {
+        "sourceUrl": "/assembly/interviews/pui-sai-lau.svg",
+        "alt": "Still from the recorded interview with Pui Sai Lau"
+      }
+    },
+    {
+      "code": "IV.16",
+      "title": "Vision models and the compute they assume",
+      "person": "yang-wang",
+      "durationMin": 10,
+      "featured": false,
+      "image": {
+        "sourceUrl": "/assembly/interviews/yang-wang.svg",
+        "alt": "Still from the recorded interview with Yang Wang"
+      }
+    },
+    {
+      "code": "IV.17",
+      "title": "Systems thinking for resilient infrastructure",
+      "person": "rasoul-yousef",
+      "durationMin": 12,
+      "featured": false,
+      "image": {
+        "sourceUrl": "/assembly/interviews/rasoul-yousef.svg",
+        "alt": "Still from the recorded interview with Rasoul Yousef"
+      }
+    },
+    {
+      "code": "IV.18",
+      "title": "Embodied agents and grounded language",
+      "person": "manling-li",
+      "durationMin": 11,
+      "featured": false,
+      "image": {
+        "sourceUrl": "/assembly/interviews/manling-li.svg",
+        "alt": "Still from the recorded interview with Manling Li"
+      }
+    }
+  ],
+  "assembly": {
+    "heroKicker": "Convene / Engineer / Sustain",
+    "heroLines": [
+      "Cross Future",
+      "AI Summit",
+      "07 / 2026"
+    ],
+    "heroMedia": {
+      "kind": "video",
+      "src": "/assembly/video/hero-loop.mp4",
+      "poster": "/assembly/media/hero-poster.svg",
+      "alt": "Montréal skyline at dusk, the venue exterior in motion",
+      "aspect": "16 / 9",
+      "placeholder": true
+    },
+    "facts": [
+      {
+        "label": "When?",
+        "lines": [
+          "Friday 24 July 2026",
+          "08:30 – 17:30 EDT"
+        ]
+      },
+      {
+        "label": "Where?",
+        "lines": [
+          "Montréal, Québec",
+          "Hotel Monville · 1041 Rue de Bleury"
+        ]
+      },
+      {
+        "label": "For who?",
+        "lines": [
+          "Power, grid and AI",
+          "infrastructure engineers"
+        ]
+      }
+    ],
+    "marquee": [
+      "AI DATA CENTER RESILIENCE",
+      "GRID CAPACITY",
+      "POWER QUALITY",
+      "ENERGY STORAGE",
+      "DISPATCH AT SCALE",
+      "LOW-CARBON TRANSITION"
+    ],
+    "rail": {
+      "feature": {
+        "title": "Agenda at a glance",
+        "ctaLabel": "View agenda",
+        "ctaHref": "/assembly/agenda",
+        "media": {
+          "kind": "image",
+          "src": "/assembly/media/rail-agenda.svg",
+          "alt": "Delegates in conversation between sessions",
+          "aspect": "4 / 3",
+          "placeholder": true
+        }
+      },
+      "ticket": {
+        "title": "Ready to be part of it?",
+        "text": "One day, one room, the people actually building the power layer under AI. Registration is handled by our events partner.",
+        "ctaLabel": "Register",
+        "ctaHref": "/assembly/register",
+        "media": {
+          "kind": "image",
+          "src": "/assembly/media/rail-ticket.svg",
+          "alt": "A full auditorium during the closing keynote",
+          "aspect": "16 / 10",
+          "placeholder": true
+        },
+        "stub": [
+          {
+            "label": "Edition",
+            "value": "03"
+          },
+          {
+            "label": "Date",
+            "value": "24.07.26"
+          },
+          {
+            "label": "City",
+            "value": "YUL"
+          }
+        ]
+      }
+    },
+    "story": [
+      {
+        "num": "01",
+        "title": "Our purpose and goals",
+        "glyph": "cross",
+        "text": "Cross Future Hub is a non-profit guiding tech enthusiasts through the trends that matter. The summit exists to put the people who plan grids in the same room as the people who train models — before the two disciplines have to negotiate under pressure.",
+        "media": {
+          "kind": "image",
+          "src": "/assembly/media/story-01.svg",
+          "alt": "A plenary session in progress, delegates seated in the round",
+          "aspect": "4 / 3",
+          "placeholder": true
+        }
+      },
+      {
+        "num": "02",
+        "title": "Discovery and inspiration",
+        "glyph": "node",
+        "text": "Keynotes, panels and working breakouts across one full day. Every track lands on a node of the same electrical chain, from the interconnection queue to the rack, so the day reads as one argument rather than a parade of talks.",
+        "media": {
+          "kind": "image",
+          "src": "/assembly/media/story-02.svg",
+          "alt": "A speaker mid-demonstration under stage lighting",
+          "aspect": "4 / 3",
+          "placeholder": true
+        }
+      },
+      {
+        "num": "03",
+        "title": "Our path to success",
+        "glyph": "wave",
+        "text": "Three editions in, the summit has grown from a Toronto gathering into a cross-border convening of academia, industry and the ecosystem organizations that hold them together. Edition 03 moves to Montréal.",
+        "media": {
+          "kind": "image",
+          "src": "/assembly/media/story-03.svg",
+          "alt": "Delegates networking in the venue foyer",
+          "aspect": "4 / 3",
+          "placeholder": true
+        }
+      }
+    ],
+    "focusAreas": [
+      {
+        "code": "T1",
+        "title": "Power Challenges for AI Data Centers",
+        "text": "Ultra-high-density loads, grid capacity and power quality demands.",
+        "media": {
+          "kind": "image",
+          "src": "/assembly/media/focus-01.svg",
+          "alt": "Power Challenges for AI Data Centers — illustrative figure",
+          "aspect": "3 / 2",
+          "placeholder": true
+        }
+      },
+      {
+        "code": "T2",
+        "title": "Grid & Microgrid Resilience",
+        "text": "Real-time monitoring, fault diagnostics and adaptive control.",
+        "media": {
+          "kind": "image",
+          "src": "/assembly/media/focus-02.svg",
+          "alt": "Grid & Microgrid Resilience — illustrative figure",
+          "aspect": "3 / 2",
+          "placeholder": true
+        }
+      },
+      {
+        "code": "T3",
+        "title": "Data Center Power Architecture",
+        "text": "Distribution topologies, backup power and energy storage.",
+        "media": {
+          "kind": "image",
+          "src": "/assembly/media/focus-03.svg",
+          "alt": "Data Center Power Architecture — illustrative figure",
+          "aspect": "3 / 2",
+          "placeholder": true
+        }
+      },
+      {
+        "code": "T4",
+        "title": "Next-Generation AI Factory Infrastructure",
+        "text": "Digital twins and scalable deployment for AI factories.",
+        "media": {
+          "kind": "image",
+          "src": "/assembly/media/focus-04.svg",
+          "alt": "Next-Generation AI Factory Infrastructure — illustrative figure",
+          "aspect": "3 / 2",
+          "placeholder": true
+        }
+      }
+    ],
+    "focusMedia": {
+      "kind": "image",
+      "src": "/assembly/media/focus-hero.svg",
+      "alt": "A data hall corridor, cabinets receding into the distance",
+      "aspect": "1 / 1",
+      "placeholder": true
+    },
+    "features": [
+      {
+        "glyph": "grid",
+        "title": "Working breakouts",
+        "text": "Small rooms, one track each, chaired so the discussion produces a position rather than a Q&A."
+      },
+      {
+        "glyph": "bolt",
+        "title": "Main stage keynotes",
+        "text": "Two keynotes bracket the day — one framing the problem, one on where the infrastructure has to be by 2030."
+      },
+      {
+        "glyph": "chip",
+        "title": "Recorded interviews",
+        "text": "Every edition we film the faculty. The archive is public and grows through the year, not just on the day."
+      }
+    ],
+    "stats": [
+      {
+        "value": "03",
+        "label": "Edition"
+      },
+      {
+        "value": "01",
+        "label": "Day, single track spine"
+      },
+      {
+        "value": "02",
+        "label": "Cities across three editions"
+      }
+    ],
+    "voices": [
+      {
+        "quote": "Strengthening the energy resilience of AI data centers has become a critical priority — essential to the secure operation of digital infrastructure, grid stability, and the low-carbon transition.",
+        "name": "Cross Future Hub",
+        "role": "Workshop abstract, Edition 03"
+      },
+      {
+        "quote": "This summit offers a platform for academics, industry leaders, startups, and investment communities to gather to discuss innovations in artificial intelligence while fostering multicultural engagement and inclusivity.",
+        "name": "Office of the Mayor",
+        "role": "City of Toronto"
+      },
+      {
+        "quote": "The integration of ultra-high-density computing loads introduces systemic challenges across grid capacity, power quality, supply reliability, backup power, energy storage and dispatch.",
+        "name": "Cross Future Hub",
+        "role": "Key areas of focus"
+      }
+    ],
+    "faq": [
+      {
+        "question": "Who should attend?",
+        "answer": "Engineers and researchers working on power systems, grid planning, data-centre design and large-scale AI infrastructure, plus the policy and investment people who fund them. The room is deliberately mixed."
+      },
+      {
+        "question": "Is the agenda published?",
+        "answer": "Not yet. The shape of the day is fixed — registration, two keynotes, a panel, working breakouts and a closing roundtable — and named sessions are published to registrants first as they are confirmed."
+      },
+      {
+        "question": "What does registration cost?",
+        "answer": "Registration is handled by our events partner and the current rates are shown there. Write to us if cost is a barrier; the summit is run by a non-profit and we hold places for students and community organizations."
+      },
+      {
+        "question": "Will sessions be recorded?",
+        "answer": "Faculty interviews are filmed at every edition and published in the media archive. Whether individual sessions are recorded is decided per session with the speaker."
+      },
+      {
+        "question": "What language is the summit in?",
+        "answer": "English, in Montréal. Ask us in advance if you need materials in French and we will do what we can."
+      },
+      {
+        "question": "Is the venue accessible?",
+        "answer": "The venue is step-free. Tell us what you need when you register — dietary, mobility, captioning, quiet space — and we will confirm arrangements before the day."
+      },
+      {
+        "question": "Can my organization partner or sponsor?",
+        "answer": "Yes. Partners range from universities and industry to community organizations. Write to info@cross-future.com and we will send the current partnership outline."
+      },
+      {
+        "question": "How do I get there?",
+        "answer": "Hotel Monville is at 1041 Rue de Bleury in downtown Montréal, a short walk from Place-des-Arts métro and about 25 minutes from YUL."
+      }
+    ],
+    "journal": [
+      {
+        "slug": "power-is-the-constraint",
+        "date": "2026-05-12",
+        "title": "Power is the constraint, not compute",
+        "excerpt": "As demand for large AI models and high-performance computing accelerates, AI data centers are reshaping the landscape of power infrastructure. The bottleneck has moved.",
+        "readMin": 6,
+        "media": {
+          "kind": "image",
+          "src": "/assembly/media/journal-01.svg",
+          "alt": "Transmission infrastructure at dusk",
+          "aspect": "3 / 2",
+          "placeholder": true
+        }
+      },
+      {
+        "slug": "interconnection-queue",
+        "date": "2026-05-28",
+        "title": "The interconnection queue is the new supply chain",
+        "excerpt": "Ultra-high-density loads do not just need more megawatts. They need grid capacity, power quality and supply reliability arriving together, on a schedule nobody controls alone.",
+        "readMin": 8,
+        "media": {
+          "kind": "image",
+          "src": "/assembly/media/journal-02.svg",
+          "alt": "A substation control room",
+          "aspect": "3 / 2",
+          "placeholder": true
+        }
+      },
+      {
+        "slug": "what-resilience-means",
+        "date": "2026-06-15",
+        "title": "What resilience means for an AI factory",
+        "excerpt": "Backup power, energy storage and dispatch stop being separate procurement lines once the facility is treated as a controllable load on a decarbonizing grid.",
+        "readMin": 5,
+        "media": {
+          "kind": "image",
+          "src": "/assembly/media/journal-03.svg",
+          "alt": "Battery energy storage containers on site",
+          "aspect": "3 / 2",
+          "placeholder": true
+        }
+      }
+    ],
+    "pastEditions": [
+      {
+        "label": "ED.01",
+        "year": 2024,
+        "city": "Toronto",
+        "headline": "The first convening — AI and technology across academia and industry.",
+        "stats": [
+          {
+            "value": "01",
+            "label": "Day"
+          },
+          {
+            "value": "TO",
+            "label": "City"
+          }
+        ],
+        "media": {
+          "kind": "image",
+          "src": "/assembly/media/past-2024.svg",
+          "alt": "Edition 01 plenary, Toronto",
+          "aspect": "16 / 10",
+          "placeholder": true
+        }
+      },
+      {
+        "label": "ED.02",
+        "year": 2025,
+        "city": "Toronto",
+        "headline": "AI and Technology Summit, recognized by the Province of Ontario and the City of Toronto.",
+        "stats": [
+          {
+            "value": "02",
+            "label": "Letters of support"
+          },
+          {
+            "value": "TO",
+            "label": "City"
+          }
+        ],
+        "media": {
+          "kind": "image",
+          "src": "/assembly/media/past-2025.svg",
+          "alt": "Edition 02 audience during the closing keynote",
+          "aspect": "16 / 10",
+          "placeholder": true
+        }
+      },
+      {
+        "label": "ED.03",
+        "year": 2026,
+        "city": "Montréal",
+        "headline": "AI data center power and energy resilience. Four tracks on one electrical chain.",
+        "stats": [
+          {
+            "value": "04",
+            "label": "Tracks"
+          },
+          {
+            "value": "YUL",
+            "label": "City"
+          }
+        ],
+        "media": {
+          "kind": "image",
+          "src": "/assembly/media/past-2026.svg",
+          "alt": "Montréal venue exterior",
+          "aspect": "16 / 10",
+          "placeholder": true
+        }
+      }
+    ],
+    "letters": [
+      {
+        "title": "Congratulatory letter",
+        "issuer": "Government of Ontario",
+        "date": "2025-01-16",
+        "excerpt": "Welcome to the AI and Technology Summit, hosted by the Canada Universal Media Association and Cross Future Hub.",
+        "crest": {
+          "kind": "image",
+          "src": "/assembly/documents/crest-ontario.svg",
+          "alt": "Coat of arms of Ontario",
+          "aspect": "1 / 1",
+          "placeholder": true
+        },
+        "document": {
+          "kind": "image",
+          "src": "/assembly/documents/ontario-letter.svg",
+          "alt": "Congratulatory letter from the Province of Ontario",
+          "aspect": "17 / 22",
+          "placeholder": true
+        }
+      },
+      {
+        "title": "Message from the Mayor",
+        "issuer": "City of Toronto",
+        "date": "2025-01-16",
+        "excerpt": "It is my pleasure to welcome everyone attending the Cross Future AI and Technology Summit, Shaping Future of AI, Innovating for Tomorrow, hosted by Cross Future Hub.",
+        "crest": {
+          "kind": "image",
+          "src": "/assembly/documents/crest-toronto.svg",
+          "alt": "Crest of the City of Toronto",
+          "aspect": "1 / 1",
+          "placeholder": true
+        },
+        "document": {
+          "kind": "image",
+          "src": "/assembly/documents/toronto-mayor-letter.svg",
+          "alt": "Message from the Mayor of the City of Toronto",
+          "aspect": "17 / 22",
+          "placeholder": true
+        }
+      }
+    ],
+    "gallery": [
+      {
+        "kind": "image",
+        "src": "/assembly/media/gallery-01.svg",
+        "alt": "Delegates arriving at registration",
+        "aspect": "4 / 3",
+        "placeholder": true
+      },
+      {
+        "kind": "image",
+        "src": "/assembly/media/gallery-02.svg",
+        "alt": "A keynote in progress",
+        "aspect": "16 / 10",
+        "placeholder": true
+      },
+      {
+        "kind": "image",
+        "src": "/assembly/media/gallery-03.svg",
+        "alt": "Breakout room discussion",
+        "aspect": "1 / 1",
+        "placeholder": true
+      },
+      {
+        "kind": "image",
+        "src": "/assembly/media/gallery-04.svg",
+        "alt": "Interview filming on the mezzanine",
+        "aspect": "3 / 4",
+        "placeholder": true
+      },
+      {
+        "kind": "image",
+        "src": "/assembly/media/gallery-05.svg",
+        "alt": "The partner wall in the foyer",
+        "aspect": "16 / 10",
+        "placeholder": true
+      },
+      {
+        "kind": "image",
+        "src": "/assembly/media/gallery-06.svg",
+        "alt": "Closing reception",
+        "aspect": "4 / 3",
+        "placeholder": true
+      },
+      {
+        "kind": "image",
+        "src": "/assembly/media/gallery-07.svg",
+        "alt": "Whiteboard from the dispatch breakout",
+        "aspect": "3 / 2",
+        "placeholder": true
+      },
+      {
+        "kind": "image",
+        "src": "/assembly/media/gallery-08.svg",
+        "alt": "Montréal at night from the venue",
+        "aspect": "16 / 9",
+        "placeholder": true
+      }
+    ],
+    "registerBenefits": [
+      "The agenda, in full, before it is public",
+      "Access to all four tracks and both keynotes",
+      "Lunch, coffee and the closing reception",
+      "The recorded interview archive as it publishes"
+    ],
+    "contact": {
+      "email": "info@cross-future.com",
+      "note": "If you have any questions please contact us.",
+      "inquiryTypes": [
+        "General information",
+        "Registration and tickets",
+        "Speaking and programme",
+        "Partnership and sponsorship",
+        "Media and press",
+        "Accessibility"
+      ],
+      "social": [
+        {
+          "label": "LinkedIn",
+          "url": "https://www.linkedin.com"
+        },
+        {
+          "label": "Website",
+          "url": "https://cross-future.com"
+        }
+      ]
+    },
+    "footerBand": {
+      "kind": "image",
+      "src": "/assembly/media/footer-band.svg",
+      "alt": "Wide view of the summit floor at capacity",
+      "aspect": "32 / 9",
+      "placeholder": true
+    },
+    "pageIntros": {
+      "about": {
+        "eyebrow": "About",
+        "title": "Behind the summit",
+        "lede": "Cross Future Hub is a non-profit guiding tech enthusiasts through key trends. The summit is its one day a year where the argument gets made in person.",
+        "media": {
+          "kind": "image",
+          "src": "/assembly/media/intro-about.svg",
+          "alt": "The venue main hall before doors open",
+          "aspect": "21 / 9",
+          "placeholder": true
+        }
+      },
+      "speakers": {
+        "eyebrow": "Faculty",
+        "title": "Meet the faculty",
+        "lede": "Researchers, industry engineers and the ecosystem organizations that connect them — the full Edition 03 roster.",
+        "media": {
+          "kind": "image",
+          "src": "/assembly/media/intro-speakers.svg",
+          "alt": "Faculty on stage during a panel",
+          "aspect": "21 / 9",
+          "placeholder": true
+        }
+      },
+      "agenda": {
+        "eyebrow": "Agenda",
+        "title": "Shape of the day",
+        "lede": "One day, 08:30 to 17:30. The structure is fixed; named sessions publish to registrants first.",
+        "media": {
+          "kind": "image",
+          "src": "/assembly/media/intro-agenda.svg",
+          "alt": "The main stage set for the opening",
+          "aspect": "21 / 9",
+          "placeholder": true
+        }
+      },
+      "media": {
+        "eyebrow": "Media",
+        "title": "Voices and archive",
+        "lede": "Recorded interviews with the faculty, and the photographic record of every edition so far.",
+        "media": {
+          "kind": "image",
+          "src": "/assembly/media/intro-media.svg",
+          "alt": "An interview being filmed",
+          "aspect": "21 / 9",
+          "placeholder": true
+        }
+      },
+      "partners": {
+        "eyebrow": "Partners",
+        "title": "Partners in innovation",
+        "lede": "Universities, industry and community organizations. The summit is a non-profit event and runs on their support.",
+        "media": {
+          "kind": "image",
+          "src": "/assembly/media/intro-partners.svg",
+          "alt": "The partner wall in the foyer",
+          "aspect": "21 / 9",
+          "placeholder": true
+        }
+      },
+      "register": {
+        "eyebrow": "Register",
+        "title": "Ready to be part of it?",
+        "lede": "Registration is handled by our events partner. Tell us what you need and we will confirm before the day.",
+        "media": {
+          "kind": "image",
+          "src": "/assembly/media/intro-register.svg",
+          "alt": "Delegates at the registration desk",
+          "aspect": "21 / 9",
+          "placeholder": true
+        }
+      },
+      "contact": {
+        "eyebrow": "Contact",
+        "title": "Connect with us",
+        "lede": "Questions about the programme, partnership, press or access — this reaches the organizing team directly.",
+        "media": {
+          "kind": "image",
+          "src": "/assembly/media/intro-contact.svg",
+          "alt": "The organizing team at the front desk",
+          "aspect": "21 / 9",
+          "placeholder": true
+        }
+      }
+    }
+  }
+}

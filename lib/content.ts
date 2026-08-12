@@ -5,6 +5,7 @@
  */
 import seed from "@/content/seed.json";
 import seedNexus from "@/content/seed-nexus.json";
+import seedAssembly from "@/content/seed-assembly.json";
 
 /* ---------- Types ---------- */
 
@@ -159,6 +160,167 @@ export interface ArchiveItem {
   image: { sourceUrl: string; alt: string };
 }
 
+/* ---------- Media (used by the "assembly" variant) ----------
+ *
+ * One shape for every picture and every clip on the site. The design has a
+ * lot of media slots by intent, so the slot is described in the content —
+ * never guessed by the component. `aspect` reserves the space before the
+ * asset loads, so swapping a placeholder for real media never reflows.
+ */
+
+export type MediaKind = "image" | "video";
+
+export interface MediaAsset {
+  kind: MediaKind;
+  /** Image URL, or video URL when kind === "video". Local or remote. */
+  src: string;
+  /** Still shown before a video plays. Required in practice for kind "video". */
+  poster?: string;
+  alt: string;
+  /** CSS aspect-ratio, e.g. "16 / 9". Defaults per slot in the component. */
+  aspect?: string;
+  /** object-position, 0–100 on each axis. Defaults to dead centre. */
+  focalPoint?: { x: number; y: number };
+  caption?: string;
+  credit?: string;
+  /** True while the asset is a stand-in, so placeholders are auditable. */
+  placeholder?: boolean;
+}
+
+export interface FactCard {
+  label: string;
+  lines: string[];
+}
+
+export interface FocusArea {
+  code: string;
+  title: string;
+  text: string;
+  media?: MediaAsset;
+}
+
+export interface StatItem {
+  value: string;
+  label: string;
+}
+
+export type FeatureGlyph = "chip" | "grid" | "bolt" | "node" | "wave" | "cross";
+
+export interface FeatureItem {
+  glyph: FeatureGlyph;
+  title: string;
+  text: string;
+}
+
+export interface StoryChapter {
+  num: string;
+  title: string;
+  text: string;
+  glyph: FeatureGlyph;
+  media: MediaAsset;
+}
+
+export interface FaqItem {
+  question: string;
+  answer: string;
+}
+
+export interface VoiceItem {
+  quote: string;
+  name: string;
+  role: string;
+  /** Person slug when the speaker is in people[]; used to reuse their portrait. */
+  person?: string;
+  media?: MediaAsset;
+}
+
+export interface JournalPost {
+  slug: string;
+  date: string;
+  title: string;
+  excerpt: string;
+  readMin: number;
+  media: MediaAsset;
+}
+
+export interface PastEdition {
+  label: string;
+  year: number;
+  city: string;
+  headline: string;
+  stats: StatItem[];
+  media: MediaAsset;
+}
+
+export interface LetterItem {
+  title: string;
+  issuer: string;
+  date: string;
+  excerpt: string;
+  crest?: MediaAsset;
+  document: MediaAsset;
+}
+
+/**
+ * The right-hand sticky rail: a media card that links onward, then a ticket
+ * stub. Both live in content so the rail can differ per page without a code
+ * change.
+ */
+export interface RailContent {
+  feature: { title: string; ctaLabel: string; ctaHref: string; media: MediaAsset };
+  ticket: {
+    title: string;
+    text: string;
+    ctaLabel: string;
+    ctaHref: string;
+    media: MediaAsset;
+    stub: { label: string; value: string }[];
+  };
+}
+
+export interface AssemblyPageIntro {
+  eyebrow: string;
+  title: string;
+  lede: string;
+  media?: MediaAsset;
+}
+
+/**
+ * Presentational content specific to the "assembly" variant, namespaced so
+ * it cannot collide with another variant's fields. The core collections
+ * (editions, people, appearances, tracks, sessions, partners, documents)
+ * stay in the shared shape and feed the shared derived views.
+ */
+export interface AssemblyContent {
+  heroMedia: MediaAsset;
+  heroKicker: string;
+  heroLines: string[];
+  facts: FactCard[];
+  marquee: string[];
+  rail: RailContent;
+  story: StoryChapter[];
+  focusAreas: FocusArea[];
+  focusMedia?: MediaAsset;
+  features: FeatureItem[];
+  stats: StatItem[];
+  voices: VoiceItem[];
+  faq: FaqItem[];
+  journal: JournalPost[];
+  pastEditions: PastEdition[];
+  letters: LetterItem[];
+  gallery: MediaAsset[];
+  registerBenefits: string[];
+  contact: {
+    email: string;
+    note: string;
+    inquiryTypes: string[];
+    social: { label: string; url: string }[];
+  };
+  footerBand: MediaAsset;
+  /** Per-page hero intros, keyed by route segment ("about", "speakers", …). */
+  pageIntros: Record<string, AssemblyPageIntro>;
+}
+
 export interface SummitContent {
   editions: Edition[];
   organizations: Organization[];
@@ -174,11 +336,13 @@ export interface SummitContent {
   registerBenefits?: string[];
   archives?: ArchiveItem[];
   footerImage?: { sourceUrl: string; alt: string };
+  /* Optional block used by the "assembly" variant */
+  assembly?: AssemblyContent;
 }
 
 /* ---------- The adapter ---------- */
 
-export type ContentVariant = "default" | "nexus";
+export type ContentVariant = "default" | "nexus" | "assembly";
 
 /**
  * Async so a CMS-backed implementation is a drop-in replacement.
@@ -189,7 +353,27 @@ export type ContentVariant = "default" | "nexus";
 export async function getSummitContent(
   variant: ContentVariant = "default"
 ): Promise<SummitContent> {
-  return (variant === "nexus" ? seedNexus : seed) as SummitContent;
+  switch (variant) {
+    case "nexus":
+      return seedNexus as SummitContent;
+    case "assembly":
+      return seedAssembly as unknown as SummitContent;
+    default:
+      return seed as SummitContent;
+  }
+}
+
+/**
+ * Assembly's presentational block, with a loud failure rather than a page of
+ * empty sections. Every assembly route calls this once.
+ */
+export function getAssembly(content: SummitContent): AssemblyContent {
+  if (!content.assembly) {
+    throw new Error(
+      'seed-assembly.json: missing the "assembly" block required by the assembly variant'
+    );
+  }
+  return content.assembly;
 }
 
 /* ---------- Derived views (pure functions over SummitContent) ---------- */
@@ -260,6 +444,126 @@ export function getConfirmedSessions(
     .sort((a, b) => a.startsAt.localeCompare(b.startsAt));
 }
 
+/**
+ * Sessions that are on the plan but not yet announced. Used by the agenda's
+ * "shape of the day" block, which sits alongside — never instead of — the
+ * designed empty state.
+ */
+export function getProposedSessions(
+  content: SummitContent,
+  editionSlug: string
+): Session[] {
+  return content.sessions
+    .filter((s) => s.edition === editionSlug && s.status === "proposed")
+    .sort((a, b) => a.startsAt.localeCompare(b.startsAt));
+}
+
 export function getHostOrganization(content: SummitContent): Organization | null {
   return content.organizations.find((o) => o.slug === "cross-future-hub") ?? null;
+}
+
+/* ---------- Derived views for the "assembly" variant ---------- */
+
+export const CATEGORY_LABEL: Record<AppearanceCategory, string> = {
+  research: "Research",
+  industry: "Industry",
+  ecosystem: "Ecosystem",
+};
+
+/** Faculty bucketed by category, in the fixed display order, empties dropped. */
+export function getFacultyByCategory(
+  faculty: FacultyMember[]
+): { category: AppearanceCategory; label: string; members: FacultyMember[] }[] {
+  const order: AppearanceCategory[] = ["research", "industry", "ecosystem"];
+  return order
+    .map((category) => ({
+      category,
+      label: CATEGORY_LABEL[category],
+      members: faculty.filter((m) => m.category === category),
+    }))
+    .filter((group) => group.members.length > 0);
+}
+
+/** An interview joined with the person it features. Unknown slugs are dropped. */
+export interface InterviewCard {
+  interview: Interview;
+  person: Person | null;
+  orgLine: string;
+}
+
+export function getInterviewCards(
+  content: SummitContent,
+  faculty: FacultyMember[]
+): InterviewCard[] {
+  const personBySlug = new Map(content.people.map((p) => [p.slug, p]));
+  const orgLineBySlug = new Map(
+    faculty.map((m) => [
+      m.person.slug,
+      m.organizations.length > 0
+        ? m.organizations.map((o) => o.shortName).join(" / ")
+        : m.roleTitle,
+    ])
+  );
+  return (content.interviews ?? []).map((interview) => ({
+    interview,
+    person: personBySlug.get(interview.person) ?? null,
+    orgLine: orgLineBySlug.get(interview.person) ?? "",
+  }));
+}
+
+/** Partners grouped by their `type`, preserving first-seen order. */
+export function getPartnersByType(
+  content: SummitContent
+): { type: string; partners: Partner[] }[] {
+  const groups = new Map<string, Partner[]>();
+  for (const partner of content.partners) {
+    const list = groups.get(partner.type) ?? [];
+    list.push(partner);
+    groups.set(partner.type, list);
+  }
+  return [...groups].map(([type, partners]) => ({ type, partners }));
+}
+
+/* ---------- Formatting (single source of truth for dates) ---------- */
+
+export function formatEditionDate(
+  edition: Edition,
+  options: Intl.DateTimeFormatOptions = { dateStyle: "long" }
+): string {
+  return new Intl.DateTimeFormat("en-CA", {
+    ...options,
+    timeZone: edition.timezone,
+  }).format(new Date(edition.startsAt));
+}
+
+/** "08:30 – 17:30" for the edition's own day. */
+export function formatEditionHours(edition: Edition): string {
+  const fmt = new Intl.DateTimeFormat("en-GB", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+    timeZone: edition.timezone,
+  });
+  return `${fmt.format(new Date(edition.startsAt))} – ${fmt.format(
+    new Date(edition.endsAt)
+  )}`;
+}
+
+export function formatSessionTime(session: Session, timezone: string): string {
+  const fmt = new Intl.DateTimeFormat("en-GB", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+    timeZone: timezone,
+  });
+  return `${fmt.format(new Date(session.startsAt))} – ${fmt.format(
+    new Date(session.endsAt)
+  )}`;
+}
+
+export function sessionDurationMin(session: Session): number {
+  return Math.round(
+    (new Date(session.endsAt).getTime() - new Date(session.startsAt).getTime()) /
+      60000
+  );
 }
