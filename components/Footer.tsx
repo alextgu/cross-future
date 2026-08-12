@@ -26,6 +26,9 @@ export default function Footer({
           <p className="footer-meta">
             <a href="/nexus">View design B — Nexus</a>
           </p>
+          <p className="footer-meta">
+            <a href="/assembly">View design C — Assembly</a>
+          </p>
         </div>
         <nav className="footer-nav" aria-label="Footer">
           {SECTIONS.map((s) => (

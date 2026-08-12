@@ -87,7 +87,10 @@ export default function AsmFooter({
             © {edition.year} {host ? host.name : "Cross Future Hub"}. All rights
             reserved.
           </span>
-          <span>Design C — Assembly</span>
+          <span>
+            Design C — Assembly ·{" "}
+            <a href="/">A</a> · <a href="/nexus">B</a>
+          </span>
           <span>{edition.venue.city}, {edition.venue.region}</span>
         </div>
       </div>

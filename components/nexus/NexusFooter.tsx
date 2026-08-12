@@ -76,6 +76,9 @@ export default function NexusFooter({
           <a className="nx-variant-link" href="/">
             View design A — Technical Broadsheet
           </a>
+          <a className="nx-variant-link" href="/assembly">
+            View design C — Assembly
+          </a>
           <span>Shaping the future of AI, innovating for tomorrow</span>
         </div>
       </div>
