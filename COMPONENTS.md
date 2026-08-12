@@ -279,8 +279,9 @@ past Tier 2 from a component.
 artefacts:
 
 ```bash
-node scripts/build-seed-assembly.mjs          # → content/seed-assembly.json
-node scripts/build-assembly-placeholders.mjs  # → public/assembly/**
+npm run seed:assembly          # → content/seed-assembly.json
+npm run placeholders:assembly  # → public/assembly/**
+npm run generate:assembly      # both, in order
 ```
 
 Edit the script, re-run, commit both. Placeholder composition is deterministic
