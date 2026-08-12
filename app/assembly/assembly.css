@@ -85,11 +85,16 @@
   --asm-stick: calc(var(--asm-nav) + var(--asm-gap) * 2);
 
   /* ---------- Type ---------- */
-  --asm-display: var(--font-asm-display), "Barlow Semi Condensed",
-    "Helvetica Neue", Arial, sans-serif;
-  --asm-body: var(--font-asm-body), "Barlow", "Helvetica Neue", Arial, sans-serif;
-  --asm-mono: var(--font-asm-mono), "IBM Plex Mono", ui-monospace, Menlo,
-    monospace;
+  /* The var carries its own fallback so a failed font load degrades to the
+     next family in the stack rather than invalidating the declaration and
+     dropping the whole page to the browser's default serif. */
+  --asm-display: var(--font-asm-display, "Barlow Semi Condensed"),
+    "Barlow Semi Condensed", "Arial Narrow", "Helvetica Neue", Arial,
+    sans-serif;
+  --asm-body: var(--font-asm-body, "Barlow"), "Barlow", "Helvetica Neue", Arial,
+    sans-serif;
+  --asm-mono: var(--font-asm-mono, "IBM Plex Mono"), "IBM Plex Mono",
+    ui-monospace, Menlo, monospace;
 
   --asm-d0: clamp(3.4rem, 11.4vw, 10.5rem);
   --asm-d1: clamp(2.75rem, 6.6vw, 6rem);
@@ -210,6 +215,7 @@
   line-height: 0.86;
   letter-spacing: -0.005em;
   text-wrap: balance;
+  overflow-wrap: break-word;
 }
 
 .assembly .asm-d0 {
@@ -651,8 +657,20 @@
   pointer-events: none;
   background: linear-gradient(
     180deg,
-    color-mix(in srgb, var(--asm-n-900) 6%, transparent) 0%,
-    color-mix(in srgb, var(--asm-n-900) 58%, transparent) 100%
+    color-mix(in srgb, var(--asm-n-900) 42%, transparent) 0%,
+    color-mix(in srgb, var(--asm-n-900) 62%, transparent) 45%,
+    color-mix(in srgb, var(--asm-n-900) 82%, transparent) 100%
+  );
+}
+
+/* Hero and rail carry display type straight on top of media — they get the
+   heaviest scrim so the headline clears contrast against any photograph. */
+.assembly .asm-hero .asm-media.is-scrim::before,
+.assembly .asm-railfeature .asm-media.is-scrim::before {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--asm-n-900) 58%, transparent) 0%,
+    color-mix(in srgb, var(--asm-n-900) 72%, transparent) 100%
   );
 }
 
