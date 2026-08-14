@@ -1776,8 +1776,9 @@
         "ctaLabel": "Register",
         "ctaHref": "/assembly/register",
         "media": {
-          "kind": "image",
-          "src": "/assembly/media/rail-ticket.svg",
+          "kind": "video",
+          "src": "/assembly/video/hero-loop.mp4",
+          "poster": "/assembly/media/rail-ticket.svg",
           "alt": "A full auditorium during the closing keynote",
           "aspect": "16 / 10",
           "placeholder": true

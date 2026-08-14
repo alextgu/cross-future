@@ -49,7 +49,16 @@ export default function AsmVideo({
   return (
     <figure
       className={className}
-      style={style}
+      style={
+        {
+          ...style,
+          /* Chrome ignores an SVG in the poster attribute, and every stand-in
+             frame in this design is an SVG. Painting it behind the element as
+             well means a slow, refused or unsupported clip still leaves the
+             slot filled instead of blank. */
+          ...(media.poster ? { "--asm-poster": `url(${media.poster})` } : {}),
+        } as React.CSSProperties
+      }
       data-placeholder={media.placeholder ? "true" : undefined}
     >
       <video

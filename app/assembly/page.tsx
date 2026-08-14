@@ -44,10 +44,15 @@ export default async function AssemblyHome() {
   ];
 
   return (
-    <AsmShell rail={assembly.rail}>
+    /* No rail on home: the hero mosaic already carries the agenda and the
+       ticket cards, so the rail would repeat both above the fold. */
+    <AsmShell>
       <AsmHero edition={edition} assembly={assembly} />
 
-      <AsmFacts facts={assembly.facts} />
+      <AsmFacts
+        facts={assembly.facts}
+        action={{ label: "Get a ticket", href: ASSEMBLY_REGISTER }}
+      />
 
       <AsmMarquee items={assembly.marquee} />
 

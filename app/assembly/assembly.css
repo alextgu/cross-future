@@ -352,6 +352,7 @@
 .assembly .asm-ticket,
 .assembly .asm-drawer,
 .assembly .asm-railfeature,
+.assembly .asm-herotile,
 .assembly .asm-hero {
   --asm-ink: var(--asm-ink-inv);
   --asm-ink-2: var(--asm-ink-inv-2);
@@ -550,6 +551,11 @@
   align-items: start;
 }
 
+/* Home runs without the rail — its hero already carries those two cards. */
+.assembly .asm-shell.is-full {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 .assembly .asm-main {
   display: grid;
   gap: var(--asm-gap);
@@ -677,6 +683,11 @@
   object-position: var(--asm-fp, 50% 50%);
 }
 
+/* The poster again, as a background: see the note in AsmVideo. */
+.assembly .asm-media > video {
+  background: var(--asm-poster, none) var(--asm-fp, 50% 50%) / cover no-repeat;
+}
+
 /* Duotone flattens sources of different provenance into one set. */
 .assembly .asm-media.is-duo > img,
 .assembly .asm-media.is-duo > video {
@@ -714,6 +725,7 @@
 /* Hero and rail carry display type straight on top of media — they get the
    heaviest scrim so the headline clears contrast against any photograph. */
 .assembly .asm-hero .asm-media.is-scrim::before,
+.assembly .asm-herotile .asm-media.is-scrim::before,
 .assembly .asm-railfeature .asm-media.is-scrim::before {
   background: linear-gradient(
     180deg,
@@ -791,7 +803,120 @@
 }
 
 /* ============================================================
-   Hero
+   Hero mosaic — the home hero
+
+   Three cards in one figure: an oversized type card, and a stacked pair of
+   video tiles beside it. The tiles are the narrower column at a fixed track
+   width so the headline gets every pixel the viewport can spare; below 1024px
+   the mosaic unstacks and the tiles run side by side under the type.
+   ============================================================ */
+
+.assembly .asm-heromosaic {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--asm-rail);
+  gap: var(--asm-gap);
+  align-items: stretch;
+}
+
+.assembly .asm-heromain {
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: clamp(16px, 2.2vh, 30px);
+  min-height: clamp(380px, 62vh, 660px);
+  padding-block: clamp(40px, 7vh, 96px);
+}
+
+/* The one place accent blue is allowed on the sky card: at display scale the
+   pair clears the 3:1 large-text threshold, and nothing smaller uses it. */
+.assembly .asm-heromain-title {
+  display: grid;
+  /* A step under --asm-d0: the mosaic gives the headline a card rather than
+     the full page width, so the d0 clamp runs into the padding. */
+  font-size: clamp(2.9rem, 8.2vw, 8.2rem);
+  color: var(--asm-accent);
+}
+
+.assembly .asm-heromain-title span {
+  display: block;
+}
+
+.assembly .asm-heromain-lede {
+  max-width: 46ch;
+}
+
+.assembly .asm-heroside {
+  display: grid;
+  grid-template-rows: minmax(0, 4fr) minmax(0, 5fr);
+  gap: var(--asm-gap);
+  min-width: 0;
+}
+
+.assembly .asm-herotile {
+  position: relative;
+  display: grid;
+  align-content: end;
+  min-height: 190px;
+  isolation: isolate;
+}
+
+.assembly .asm-herotile .asm-media {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 0;
+  aspect-ratio: auto;
+  height: 100%;
+}
+
+.assembly .asm-herotile-inner {
+  display: grid;
+  justify-items: start;
+  gap: 12px;
+  padding: var(--asm-pad-tight);
+}
+
+.assembly .asm-herotile-title {
+  font-family: var(--asm-display);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+  font-size: clamp(1.25rem, 1.9vw, 1.6rem);
+}
+
+.assembly .asm-herotile-text {
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: var(--asm-ink-2);
+  max-width: 34ch;
+}
+
+/* The ticket call to action riding in the facts row. */
+.assembly .asm-factcta {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  font-family: var(--asm-display);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: clamp(1.25rem, 1.9vw, 1.6rem);
+  line-height: 1.08;
+  text-decoration: none;
+}
+
+.assembly .asm-factcta-arrow {
+  font-size: 1.1em;
+  transition: transform 0.18s ease;
+}
+
+.assembly .asm-factcta:hover .asm-factcta-arrow {
+  transform: translate(3px, -3px);
+}
+
+/* ============================================================
+   Hero — the centred variant, still used by the 404 shell
    ============================================================ */
 
 .assembly .asm-hero {
@@ -1423,6 +1548,19 @@
     grid-template-columns: minmax(0, 1fr);
     gap: 26px;
   }
+  .assembly .asm-heromosaic {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .assembly .asm-heromain {
+    min-height: 0;
+  }
+  .assembly .asm-heroside {
+    grid-template-rows: none;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .assembly .asm-herotile {
+    min-height: 260px;
+  }
   .assembly .asm-row {
     grid-template-columns: repeat(var(--cols-md, 2), minmax(0, 1fr));
   }
@@ -1449,8 +1587,12 @@
     --asm-gap: 8px;
   }
   .assembly .asm-railcol,
+  .assembly .asm-heroside,
   .assembly .asm-row {
     grid-template-columns: minmax(0, 1fr);
+  }
+  .assembly .asm-herotile {
+    min-height: 220px;
   }
   .assembly .asm-footer-cols {
     grid-template-columns: 1fr;
