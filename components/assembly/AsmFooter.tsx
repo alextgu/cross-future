@@ -6,6 +6,7 @@ import {
   ASSEMBLY_ROUTES,
 } from "@/lib/assembly-nav";
 import AsmButton from "./AsmButton";
+import AsmCountdown from "./AsmCountdown";
 import AsmMedia from "./AsmMedia";
 
 export default function AsmFooter({
@@ -36,6 +37,7 @@ export default function AsmFooter({
               {formatEditionDate(edition)} · {edition.venue.name},{" "}
               {edition.venue.city}
             </p>
+            <AsmCountdown targetIso={edition.startsAt} />
             <div style={{ marginTop: 22 }}>
               <AsmButton href={ASSEMBLY_REGISTER} tone="inverse">
                 Register
