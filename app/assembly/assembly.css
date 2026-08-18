@@ -1308,6 +1308,133 @@
   text-align: right;
 }
 
+.assembly .asm-agenda {
+  overflow: hidden;
+}
+
+.assembly .asm-agenda-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: var(--asm-pad-tight) var(--asm-pad);
+  border-bottom: 1px solid var(--asm-hair);
+}
+
+.assembly .asm-agenda-toolbar > div:first-child {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.assembly .asm-agenda-controls {
+  display: flex;
+  gap: 6px;
+}
+
+.assembly .asm-agenda-controls button,
+.assembly .asm-agenda-toggle {
+  border: 1px solid var(--asm-hair);
+  background: var(--asm-card-plain);
+  color: var(--asm-on-plain);
+  cursor: pointer;
+}
+
+.assembly .asm-agenda-controls button {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  font-size: 1.1rem;
+}
+
+.assembly .asm-agenda-controls button:hover,
+.assembly .asm-agenda-toggle:hover {
+  background: var(--asm-card-deep);
+  color: var(--asm-on-deep);
+}
+
+.assembly .asm-agenda-strip {
+  display: flex;
+  gap: var(--asm-gap);
+  overflow-x: auto;
+  padding: var(--asm-gap);
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+}
+
+.assembly .asm-agenda-card {
+  flex: 0 0 min(380px, calc(100vw - 48px));
+  min-height: 390px;
+  padding: var(--asm-pad-tight);
+  border-radius: var(--asm-radius-sm);
+  background: var(--asm-card-mist);
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: flex-basis 0.28s ease, background 0.28s ease;
+}
+
+.assembly .asm-agenda-card.is-open {
+  --asm-ink: var(--asm-on-deep);
+  --asm-ink-2: var(--asm-ink-inv-2);
+  --asm-ink-3: var(--asm-ink-inv-2);
+  --asm-hair: var(--asm-hair-inv);
+  flex-basis: min(560px, calc(100vw - 48px));
+  background: var(--asm-card-deep);
+  color: var(--asm-on-deep);
+}
+
+.assembly .asm-agenda-card-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--asm-hair);
+}
+
+.assembly .asm-agenda-time {
+  margin-top: auto;
+  font-family: var(--asm-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+}
+
+.assembly .asm-agenda-detail {
+  display: grid;
+  gap: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--asm-hair);
+}
+
+.assembly .asm-agenda-detail ul {
+  display: grid;
+  gap: 7px;
+  padding-left: 18px;
+  list-style: square;
+  color: var(--asm-ink-2);
+}
+
+.assembly .asm-agenda-toggle {
+  align-self: flex-start;
+  margin-top: 8px;
+  padding: 9px 13px;
+  border-radius: var(--asm-radius-pill);
+  font-family: var(--asm-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.assembly .asm-agenda-card.is-open .asm-agenda-toggle {
+  border-color: var(--asm-hair-inv);
+  background: transparent;
+  color: var(--asm-on-deep);
+}
+
 /* ============================================================
    FAQ — native <details>, no JS
    ============================================================ */
