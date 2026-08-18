@@ -11,9 +11,10 @@ already exists and where it lives*.
 ## 1. The one rule
 
 ```
-content/seed*.json   ← all content
-lib/content.ts       ← the ONLY module allowed to import a seed file
-components/*         ← receive data as props, typed by lib/content.ts
+content/seed*.json   ← deterministic source content
+lib/content.ts       ← the ONLY content entry point
+lib/repositories/*   ← storage adapters behind typed interfaces
+components/*        ← receive data as props, typed by lib/content.ts
 app/*/page.tsx       ← call getSummitContent(variant), pass slices down
 ```
 
@@ -33,9 +34,12 @@ plain typed objects downward.
 
 ```
 app/
-  globals.css              Design A tokens + all Design A component CSS
-  layout.tsx               <html>, fonts, Event JSON-LD, skip link, column rules
-  page.tsx                 Design A — "Technical Broadsheet"
+  globals.css              global reset
+  layout.tsx               canonical Assembly shell, fonts, nav and footer
+  page.tsx                 canonical Assembly home
+  about|speakers|agenda|media|partners|register|contact/page.tsx
+  api/contact/route.ts     validated contact persistence
+  api/registrations/route.ts validated place-request persistence
   nexus/
     layout.tsx             Design B fonts + <div class="nexus"> scope wrapper
     nexus.css              Design B tokens + all Design B component CSS
@@ -43,8 +47,8 @@ app/
   assembly/
     layout.tsx             Design C fonts + <div class="assembly"> wrapper,
                            nav and footer (shared by every assembly route)
-    assembly.css           Design C tokens + all Design C component CSS
-    page.tsx               Design C home
+    assembly.css           canonical grayscale tokens + component CSS
+    page.tsx               preserved legacy route source
     about|speakers|agenda|media|partners|register|contact/page.tsx
     not-found.tsx          404 inside the Assembly shell
     [...slug]/page.tsx     Catch-all → notFound(), so bad URLs stay in-design
@@ -61,6 +65,8 @@ content/
 
 lib/
   content.ts               Types + adapter + derived views
+  repositories/            content and submission storage boundaries
+  submissions/             strict request contracts and Zod validation
   sections.ts              Design A section numbering (shared by nav/marks/footer)
   assembly-nav.ts          Design C route table (nav, drawer, footer, 404)
 
@@ -76,12 +82,18 @@ public/
   nexus/archive/           Design B archive photo wall (SVG placeholders)
   assembly/                Design C media — 103 SVGs + 1 mp4, all PLACEHOLDER
                            (see public/assembly/README.md)
+  summit/                  canonical Assembly media namespace
+
+db/
+  schema.ts                12-table Drizzle schema
+  client.ts                local libSQL connection factory
+  migrate.ts               committed migration runner
+
+drizzle/                   committed SQL migration + metadata
 ```
 
-Each design variation is **fully self-contained**: its own route folder, its
-own CSS file, its own font imports, its own component folder, its own seed.
-Changing one design cannot break another. That isolation is deliberate —
-keep it.
+Assembly is the canonical route shell. The older Design A/Nexus component
+families remain as references, but their public entry points redirect to `/`.
 
 ---
 
@@ -147,7 +159,23 @@ seeds stay valid without edits.
 
 ---
 
-## 4. Design A — "Technical Broadsheet" (`/`)
+### Storage boundary
+
+`CONTENT_SOURCE=seed` keeps builds self-contained. `CONTENT_SOURCE=database`
+loads the same `SummitContent` document through
+`createSqliteContentRepository()`. `db/schema.ts` also normalizes the core
+entities for later querying. Seeding refreshes content tables in one
+transaction and intentionally leaves `registrations` and `contact_inquiries`
+untouched.
+
+The submission routes parse strict Zod contracts and depend on the
+`SubmissionRepository` interface. A production PostgreSQL implementation can
+replace the SQLite adapter without changing page components, form payloads, or
+success/error UI.
+
+## 4. Design A — "Technical Broadsheet" (historical)
+
+This component family remains for reference; `/` now renders Assembly.
 
 Paper white, Inter Tight display, IBM Plex Mono labels, one electric blue
 `#4B47F5`. Square corners, hairline borders, no shadows. Blue is
@@ -207,7 +235,7 @@ under `public/nexus/`, marked PLACEHOLDER.
 
 ---
 
-## 6. Design C — "Assembly" (`/assembly`)
+## 6. Design C — "Assembly" (`/`, canonical)
 
 Barlow Semi Condensed + Barlow + IBM Plex Mono. Barlow is the family the live
 Cross Future site already uses; the semi-condensed cut carries the oversized
@@ -268,7 +296,7 @@ past Tier 2 from a component.
 | `AsmLetters` | `letters` | Letters shown as documents — no duotone, no crop. |
 | `AsmJournal` / `AsmPastEditions` / `AsmGallery` | | Field notes, edition archive, CSS-columns masonry photo wall. |
 | `AsmFaq` | `items` | Native `<details>`. Keyboard-operable and find-in-page-able with no client component. |
-| `AsmForm` | `fields`, `submitLabel`, `successNote`, `tone?` | `"use client"`. One engine behind registration and contact. Validates, focuses the first invalid field, then states plainly that nothing was sent. |
+| `AsmForm` | `fields`, `endpoint`, `edition`, `submitLabel`, `successNote`, `tone?` | `"use client"`. One engine behind registration and contact. Validates, focuses the first invalid field, posts strict JSON, and exposes pending/success/retry states. |
 | `AsmContact` | `contact`, `edition` | Shared contact block. |
 | `AsmCta` | `title`, `text`, `primary`, `secondary?`, `media?` | Closing call to action. |
 | `AsmPageHero` | `intro`, `aside?` | Inner-page hero from `assembly.pageIntros[route]`. |

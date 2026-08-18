@@ -1,18 +1,22 @@
 # Cross Future AI Summit 2026
 
-Site for the Cross Future AI Summit — a one-day event in Montréal on
-AI data center power and energy resilience, hosted by Cross Future Hub
-(non-profit). Ships with two complete design variations:
+Site for the Cross Future AI Summit — a one-day event in Montréal on AI data
+center power and energy resilience, hosted by Cross Future Hub. The canonical
+site uses the Assembly tiled-card system at `/`, with pages at `/about`,
+`/speakers`, `/agenda`, `/media`, `/partners`, `/register`, and `/contact`.
 
-- **`/` — Design A, "Technical Broadsheet"**: Inter Tight + IBM Plex Mono,
+The previous design explorations remain in the repository as references:
+
+- **Design A, "Technical Broadsheet"**: Inter Tight + IBM Plex Mono,
   `#4B47F5` accent, FIG. 01 electrical single-line diagram.
-- **`/nexus` — Design B, "Nexus"**: recreation of the
+- **`/nexus` — Design B, "Nexus"**: preserved source; the route redirects to
+  `/`. Originally a recreation of the
   cross-future-nexus.base44.app reference — Space Grotesk + Inter +
   JetBrains Mono, `#3D57FF` accent on `#FBFBF9`, thin extra-long broadsheet
   with horizontal snap agenda, faculty pillars, interviews, countdown
   footer — plus photo-forward innovations (portrait reveals, interview
   thumbnails, and the § 06 Archives photo wall the reference never renders).
-- **`/assembly` — Design C, "Assembly"**: a tiled card system with a sticky
+- **`/` — Design C, "Assembly"**: the canonical tiled card system with a sticky
   ticket rail, taking its structure from the IT/CONF reference and its type
   family (Barlow) from the live cross-future.com. Eight routes — home, about,
   speakers, agenda, media, partners, register, contact — plus an in-design
@@ -21,30 +25,53 @@ AI data center power and energy resilience, hosted by Cross Future Hub
   on purpose** — the colour pass is a five-line edit, see
   `COMPONENTS.md` § 6.
 
-Next.js 15 (App Router) · React 19 · TypeScript · plain CSS. No database, no
-CMS, no API keys. Node 20+.
+Next.js 15 (App Router) · React 19 · TypeScript · plain CSS · Drizzle ORM ·
+local libSQL/SQLite · Zod. No paid services or API keys. Node 20+.
 
 Architecture, the full component inventory and the rules that hold it
 together live in **[COMPONENTS.md](./COMPONENTS.md)** — read that first.
 
 ```bash
 npm install
-npm run dev     # http://localhost:3000
-npm run build   # production build
+cp .env.example .env.local
+npm run db:setup
+npm run dev       # http://localhost:3000
+npm run db:health # row counts only; never prints submissions
+npm run build
 ```
 
 ## Architecture: one content door
 
 ```
-content/seed.json   ← all content lives here
-lib/content.ts      ← the ONLY file allowed to import seed.json
-components/*        ← read data via props, typed by lib/content.ts
-app/page.tsx        ← calls getSummitContent(), passes slices down
+content/seed-assembly.json       ← deterministic source document
+db/schema.ts + drizzle/          ← portable schema and migrations
+scripts/db-seed.ts               ← repeatable import; preserves submissions
+lib/content.ts                   ← the only content door
+lib/repositories/*               ← adapters behind typed interfaces
+app/api/*                        ← validated form endpoints
+components/*                     ← receive data via typed props
 ```
 
-`getSummitContent()` is async on purpose. To swap in a CMS later, reimplement
-that single function (switch on `CONTENT_SOURCE` from `.env`) and return the
-same `SummitContent` shape. Nothing else changes.
+`getSummitContent()` is async on purpose. `CONTENT_SOURCE=seed` reads the
+committed document; `CONTENT_SOURCE=database` reads the seeded local database.
+To move to a CMS or PostgreSQL later, replace the repository adapter and return
+the same `SummitContent` shape. Page components do not change.
+
+## Local backend and production transfer
+
+`npm run db:setup` applies the SQL migrations and deterministically refreshes
+event content. It never deletes registration or contact submissions. The local
+database lives at `data/cross-future.db` and is ignored by Git.
+
+The relational tables cover editions, organizations, people, appearances,
+tracks, sessions, partners, documents, interviews, presentation content,
+registrations, and contact inquiries. Both form endpoints validate strict JSON
+with Zod and report success only after the row is committed.
+
+For production, keep the page and form contracts, then implement the same
+repository interfaces against the company database. A serverless deployment
+must use a persistent remote database connection; the local SQLite file is a
+mock/development store, not deployable shared storage.
 
 **Rule: if a component imports `content/seed.json`, the change is wrong.**
 Check with:
@@ -158,6 +185,8 @@ conductor animation.
 
 ## Forms
 
-The registration form validates client-side and then states plainly that it
-is not connected — nothing is sent or stored. Wire it to a backend or point
-people at `registrationUrl` when registration opens.
+Registration posts to `/api/registrations`; contact posts to `/api/contact`.
+The UI preserves field values on failure, focuses the first invalid input, and
+shows pending, stored, and retry states. A stored registration is explicitly a
+place request, not an issued ticket; a stored contact inquiry does not claim an
+email was sent.

@@ -13,6 +13,7 @@
     "db:migrate": "tsx scripts/db-migrate.ts",
     "db:seed": "tsx scripts/db-seed.ts",
     "db:setup": "npm run db:migrate && npm run db:seed",
+    "db:health": "tsx scripts/db-health.ts",
     "seed:assembly": "node scripts/build-seed-assembly.mjs",
     "placeholders:assembly": "node scripts/build-assembly-placeholders.mjs",
     "generate:assembly": "npm run seed:assembly && npm run placeholders:assembly"
