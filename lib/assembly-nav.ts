@@ -1,9 +1,9 @@
 /**
- * Route table for Design C. Nav, mobile drawer, footer and the 404 all read
+ * Canonical route table. Nav, mobile drawer, footer and the 404 all read
  * from here, so a page cannot exist without being reachable — and cannot be
  * linked from three places with three different labels.
  */
-export const ASSEMBLY_BASE = "/assembly";
+export const ASSEMBLY_BASE = "";
 
 export interface AssemblyRoute {
   num: string;
@@ -14,19 +14,19 @@ export interface AssemblyRoute {
 }
 
 export const ASSEMBLY_ROUTES: AssemblyRoute[] = [
-  { num: "00", label: "Home", href: `${ASSEMBLY_BASE}`, primary: false },
-  { num: "01", label: "About", href: `${ASSEMBLY_BASE}/about`, primary: true },
-  { num: "02", label: "Speakers", href: `${ASSEMBLY_BASE}/speakers`, primary: true },
-  { num: "03", label: "Agenda", href: `${ASSEMBLY_BASE}/agenda`, primary: true },
-  { num: "04", label: "Media", href: `${ASSEMBLY_BASE}/media`, primary: true },
-  { num: "05", label: "Partners", href: `${ASSEMBLY_BASE}/partners`, primary: true },
-  { num: "06", label: "Contact", href: `${ASSEMBLY_BASE}/contact`, primary: false },
+  { num: "00", label: "Home", href: "/", primary: false },
+  { num: "01", label: "About", href: "/about", primary: true },
+  { num: "02", label: "Speakers", href: "/speakers", primary: true },
+  { num: "03", label: "Agenda", href: "/agenda", primary: true },
+  { num: "04", label: "Media", href: "/media", primary: true },
+  { num: "05", label: "Partners", href: "/partners", primary: true },
+  { num: "06", label: "Contact", href: "/contact", primary: false },
 ];
 
 export const ASSEMBLY_REGISTER = `${ASSEMBLY_BASE}/register`;
 
-/** Longest-prefix match so /assembly/speakers does not light up /assembly. */
+/** Longest-prefix match while keeping the root link exact. */
 export function isCurrentRoute(href: string, pathname: string): boolean {
-  if (href === ASSEMBLY_BASE) return pathname === ASSEMBLY_BASE;
+  if (href === "/") return pathname === "/";
   return pathname === href || pathname.startsWith(`${href}/`);
 }

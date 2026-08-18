@@ -7,6 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
     "seed:assembly": "node scripts/build-seed-assembly.mjs",
     "placeholders:assembly": "node scripts/build-assembly-placeholders.mjs",
     "generate:assembly": "npm run seed:assembly && npm run placeholders:assembly"
@@ -20,7 +22,8 @@
     "@types/node": "^22.10.0",
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19.1.0",
-    "typescript": "^5.7.0"
+    "typescript": "^5.7.0",
+    "vitest": "^4.1.10"
   },
   "engines": {
     "node": ">=20"
