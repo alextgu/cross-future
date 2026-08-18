@@ -1,3 +1,22 @@
+CREATE TEMP TABLE `_cf_submission_fk_guard` (
+	`ok` integer NOT NULL CHECK (`ok` = 1)
+);
+--> statement-breakpoint
+INSERT INTO `_cf_submission_fk_guard` (`ok`)
+SELECT CASE WHEN EXISTS (
+	SELECT 1
+	FROM `contact_inquiries`
+	LEFT JOIN `editions` ON `editions`.`slug` = `contact_inquiries`.`edition_slug`
+	WHERE `editions`.`slug` IS NULL
+	UNION ALL
+	SELECT 1
+	FROM `registrations`
+	LEFT JOIN `editions` ON `editions`.`slug` = `registrations`.`edition_slug`
+	WHERE `editions`.`slug` IS NULL
+) THEN 0 ELSE 1 END;
+--> statement-breakpoint
+DROP TABLE `_cf_submission_fk_guard`;
+--> statement-breakpoint
 PRAGMA foreign_keys=OFF;--> statement-breakpoint
 CREATE TABLE `__new_contact_inquiries` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
@@ -38,4 +57,12 @@ DROP TABLE `registrations`;--> statement-breakpoint
 ALTER TABLE `__new_registrations` RENAME TO `registrations`;--> statement-breakpoint
 CREATE INDEX `registrations_edition_idx` ON `registrations` (`edition_slug`);--> statement-breakpoint
 CREATE INDEX `registrations_email_idx` ON `registrations` (`email`);--> statement-breakpoint
-CREATE INDEX `registrations_created_idx` ON `registrations` (`created_at`);
+CREATE INDEX `registrations_created_idx` ON `registrations` (`created_at`);--> statement-breakpoint
+CREATE TEMP TABLE `_cf_foreign_key_check_guard` (
+	`ok` integer NOT NULL CHECK (`ok` = 1)
+);--> statement-breakpoint
+INSERT INTO `_cf_foreign_key_check_guard` (`ok`)
+SELECT CASE WHEN EXISTS (
+	SELECT 1 FROM `pragma_foreign_key_check`
+) THEN 0 ELSE 1 END;--> statement-breakpoint
+DROP TABLE `_cf_foreign_key_check_guard`;

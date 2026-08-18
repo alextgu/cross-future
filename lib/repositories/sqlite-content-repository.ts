@@ -1,5 +1,4 @@
 import { eq } from "drizzle-orm";
-import { z } from "zod";
 import type { Database } from "../../db/client";
 import {
   appearances,
@@ -18,34 +17,12 @@ import type {
   Edition,
   Interview,
   Session,
-  SummitContent,
 } from "../content";
+import {
+  assemblyContentSchema,
+  summitContentSchema,
+} from "../content-schema";
 import type { ContentRepository } from "./content-repository";
-
-const assemblySchema = z
-  .object({
-    heroLines: z.array(z.string()).min(1),
-    facts: z.array(z.unknown()),
-    rail: z.object({}).passthrough(),
-    contact: z.object({ email: z.string().email() }).passthrough(),
-    pageIntros: z.record(z.string(), z.unknown()),
-  })
-  .passthrough();
-
-const sourceDocumentSchema = z
-  .object({
-    editions: z.array(z.object({ slug: z.string(), isCurrent: z.boolean() })),
-    organizations: z.array(z.object({ slug: z.string() })),
-    people: z.array(z.object({ slug: z.string() })),
-    appearances: z.array(z.object({ person: z.string() })),
-    tracks: z.array(z.object({ code: z.string() })),
-    sessions: z.array(z.object({ title: z.string() })),
-    partners: z.array(z.object({ slug: z.string() })),
-    documents: z.array(z.object({ title: z.string() })),
-    interviews: z.array(z.object({ code: z.string() })).optional(),
-    assembly: assemblySchema,
-  })
-  .passthrough();
 
 function inSourceOrder<T>(
   rows: T[],
@@ -84,16 +61,18 @@ export function createSqliteContentRepository(db: Database): ContentRepository {
         );
       }
 
-      const parsedSource = sourceDocumentSchema.safeParse(
+      const parsedSource = summitContentSchema.safeParse(
         record.sourceDocument as unknown
       );
-      const parsedAssembly = assemblySchema.safeParse(record.assembly as unknown);
+      const parsedAssembly = assemblyContentSchema.safeParse(
+        record.assembly as unknown
+      );
       if (!parsedSource.success || !parsedAssembly.success) {
         throw new Error(
           "Database presentation content is invalid. Re-run `npm run db:setup`."
         );
       }
-      const source = parsedSource.data as unknown as SummitContent;
+      const source = parsedSource.data;
 
       const [
         organizationRows,
@@ -124,6 +103,7 @@ export function createSqliteContentRepository(db: Database): ContentRepository {
           ...appearance,
           person: personSlug,
           edition: editionSlug,
+          thesis: appearance.thesis ?? undefined,
         })
       ) as Appearance[];
       const sessionContent = sessionRows.map(
@@ -131,6 +111,11 @@ export function createSqliteContentRepository(db: Database): ContentRepository {
           ...session,
           edition: editionSlug,
           track: trackCode,
+          code: session.code ?? undefined,
+          categoryLabel: session.categoryLabel ?? undefined,
+          speakerLabel: session.speakerLabel ?? undefined,
+          description: session.description ?? undefined,
+          outcomes: session.outcomes ?? undefined,
         })
       ) as Session[];
       const documentContent = documentRows.map(({ id: _id, ...document }) => document);
@@ -138,10 +123,13 @@ export function createSqliteContentRepository(db: Database): ContentRepository {
         ({ personSlug, ...interview }) => ({
           ...interview,
           person: personSlug,
+          pullQuote: interview.pullQuote ?? undefined,
+          image: interview.image ?? undefined,
+          url: interview.url ?? undefined,
         })
       ) as Interview[];
 
-      return {
+      return summitContentSchema.parse({
         ...source,
         editions: inSourceOrder(
           editionContent,
@@ -188,8 +176,8 @@ export function createSqliteContentRepository(db: Database): ContentRepository {
           (source.interviews ?? []).map((interview) => interview.code),
           (interview) => interview.code
         ),
-        assembly: parsedAssembly.data as unknown as SummitContent["assembly"],
-      };
+        assembly: parsedAssembly.data,
+      });
     },
   };
 }

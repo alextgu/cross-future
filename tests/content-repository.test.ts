@@ -3,7 +3,7 @@ import seedAssembly from "../content/seed-assembly.json";
 import type { SummitContent } from "../lib/content";
 import { createDatabase } from "../db/client";
 import { migrateDatabase } from "../db/migrate";
-import { people } from "../db/schema";
+import { people, siteContent } from "../db/schema";
 import { eq } from "drizzle-orm";
 import { seedDatabase } from "../scripts/db-seed";
 import { createSqliteContentRepository } from "../lib/repositories/sqlite-content-repository";
@@ -27,6 +27,22 @@ it("reconstructs the Assembly domain shape", async () => {
     updated.people.find((person) => person.slug === seedAssembly.people[0].slug)
       ?.firstName
   ).toBe("Database");
+
+  client.close();
+});
+
+it("rejects malformed presentation JSON at the repository boundary", async () => {
+  const { db, client } = createDatabase(":memory:");
+  await migrateDatabase(db);
+  await seedDatabase(db, seedAssembly as unknown as SummitContent);
+  await db
+    .update(siteContent)
+    .set({ assembly: {} as never })
+    .where(eq(siteContent.editionSlug, seedAssembly.editions[0].slug));
+
+  await expect(
+    createSqliteContentRepository(db).getSummitContent()
+  ).rejects.toThrow("Database presentation content is invalid");
 
   client.close();
 });

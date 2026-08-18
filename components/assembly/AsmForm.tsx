@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState } from "react";
+import React, { useId, useRef, useState } from "react";
 import AsmButton from "./AsmButton";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -46,11 +46,14 @@ export default function AsmForm({
     "idle" | "submitting" | "success" | "error"
   >("idle");
   const [serverMessage, setServerMessage] = useState("");
+  const submittingRef = useRef(false);
 
   const fieldId = (name: string) => `${uid}-${name}`;
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (submittingRef.current) return;
+
     const form = event.currentTarget;
     const data = new FormData(form);
     const next: Record<string, string> = {};
@@ -75,6 +78,7 @@ export default function AsmForm({
       return;
     }
 
+    submittingRef.current = true;
     setStatus("submitting");
     setServerMessage("");
 
@@ -123,6 +127,8 @@ export default function AsmForm({
     } catch {
       setStatus("error");
       setServerMessage("We could not store that submission. Please try again.");
+    } finally {
+      submittingRef.current = false;
     }
   }
 
