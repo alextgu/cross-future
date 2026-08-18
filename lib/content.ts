@@ -6,6 +6,7 @@
 import seed from "@/content/seed.json";
 import seedNexus from "@/content/seed-nexus.json";
 import seedAssembly from "@/content/seed-assembly.json";
+import type { ContentRepository } from "@/lib/repositories/content-repository";
 
 /* ---------- Types ---------- */
 
@@ -344,6 +345,21 @@ export interface SummitContent {
 
 export type ContentVariant = "default" | "nexus" | "assembly";
 
+let databaseContentRepository: Promise<ContentRepository> | undefined;
+
+async function getDatabaseContentRepository() {
+  if (!databaseContentRepository) {
+    databaseContentRepository = Promise.all([
+      import("@/db/client"),
+      import("@/lib/repositories/sqlite-content-repository"),
+    ]).then(([{ createDatabase }, { createSqliteContentRepository }]) => {
+      const { db } = createDatabase();
+      return createSqliteContentRepository(db);
+    });
+  }
+  return databaseContentRepository;
+}
+
 /**
  * Async so a CMS-backed implementation is a drop-in replacement.
  * CONTENT_SOURCE=local reads the seed files; any other value should be
@@ -353,6 +369,10 @@ export type ContentVariant = "default" | "nexus" | "assembly";
 export async function getSummitContent(
   variant: ContentVariant = "default"
 ): Promise<SummitContent> {
+  if (variant === "assembly" && process.env.CONTENT_SOURCE === "database") {
+    return (await getDatabaseContentRepository()).getSummitContent();
+  }
+
   switch (variant) {
     case "nexus":
       return seedNexus as SummitContent;
