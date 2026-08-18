@@ -7,9 +7,8 @@
    TOKENS ARE IN TWO TIERS.
    Tier 1 names the value. Tier 2 names the job. Components use
    ONLY Tier 2. Retheming this design = editing Tier 1 and nothing
-   else — which is exactly how the Cross Future palette got here:
-   the layout was designed and audited in greyscale first, then Tier 1
-   was swapped in one commit. Keep it that way.
+   else. This first pass is deliberately grayscale so hierarchy,
+   spacing and contrast can be approved before brand colour returns.
 
    Every rule is scoped under .assembly so this file cannot leak
    into Design A or Design B.
@@ -17,34 +16,25 @@
 
 .assembly {
   /* ---------- Tier 1: primitives ----------
-     The Cross Future palette, taken from the live site: petrol #04373F,
-     sky #3AA2DD, bright blue #116DFF, pale grey-teal #C0CDCF.
-
-     Two values are deliberately a step off the source, both for contrast:
-     the sky is lightened to #8CC7E8 so petrol body copy clears 4.5:1 on it
-     (the site's #3AA2DD gives 4.3:1), and the bright blue is deepened to
-     #0B57D0 so white button text clears 4.5:1 (#116DFF gives 4.3:1).
-     The neutral ramp is tinted toward petrol rather than pure grey, so
-     hairlines and secondary ink belong to the same family.
-
-     This block is the whole theme. Nothing below Tier 2 references a
-     literal colour. */
+     A neutral value ramp with enough separation for small mono labels,
+     inverse cards and focus indicators. This block is the whole theme.
+     Nothing below Tier 2 references a literal colour. */
   --asm-n-000: #ffffff;
-  --asm-n-025: #fbfcfc;
-  --asm-n-050: #f2f5f6;
-  --asm-n-100: #e4edf1;
-  --asm-n-150: #d7e4e9;
-  --asm-n-200: #c0cdcf;
-  --asm-n-300: #9fb2b7;
-  --asm-n-400: #7e969c;
-  --asm-n-500: #61787e;
-  --asm-n-600: #4e6469;
-  --asm-n-700: #2c4a51;
-  --asm-n-800: #12414a;
-  --asm-n-900: #04373f;
+  --asm-n-025: #fafafa;
+  --asm-n-050: #f4f4f4;
+  --asm-n-100: #e8e8e8;
+  --asm-n-150: #dddddd;
+  --asm-n-200: #cecece;
+  --asm-n-300: #b6b6b6;
+  --asm-n-400: #969696;
+  --asm-n-500: #767676;
+  --asm-n-600: #5d5d5d;
+  --asm-n-700: #414141;
+  --asm-n-800: #262626;
+  --asm-n-900: #111111;
 
-  --asm-c-sky: #8cc7e8;
-  --asm-c-blue: #0b57d0;
+  --asm-c-sky: #d7d7d7;
+  --asm-c-blue: #1d1d1d;
 
   /* Role hues. Each names the job it does in the composition, not what it
      looks like — which is what made the greyscale-to-colour swap mechanical. */
@@ -86,7 +76,7 @@
   --asm-focus: 2px solid var(--asm-c-blue);
   --asm-focus-inv: 2px solid var(--asm-n-000);
 
-  /* Duotone: media is flattened to the palette so photography of wildly
+  /* Duotone: media is flattened to the value system so photography of wildly
      different origins reads as one set. Two stops, mapped in a filter. */
   --asm-duo-shadow: var(--asm-n-900);
   --asm-duo-light: var(--asm-c-sky);
