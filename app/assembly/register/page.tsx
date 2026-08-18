@@ -144,20 +144,14 @@ export default async function RegisterPage() {
           </p>
           <AsmForm
             fields={fields}
+            endpoint="/api/registrations"
+            edition={edition.slug}
             submitLabel="Hold my place"
             successNote={
               <>
-                Your details look valid — but this form is not connected to a
-                backend, so nothing was sent or stored. Registration runs
-                through{" "}
-                <a href={edition.registrationUrl} target="_blank" rel="noreferrer">
-                  the official registration page
-                </a>
-                , or email{" "}
-                <a href={`mailto:${assembly.contact.email}`}>
-                  {assembly.contact.email}
-                </a>
-                .
+                Your place request was stored in the local mock database. This
+                is not an issued ticket; confirmation stays with the production
+                registration service when it is connected.
               </>
             }
           />

@@ -1623,6 +1623,22 @@
   color: var(--asm-ink-2);
 }
 
+.assembly .asm-formnote[data-state="success"],
+.assembly .asm-formnote[data-state="error"] {
+  padding-top: 12px;
+  border-top: 1px solid currentColor;
+  color: var(--asm-ink);
+  font-weight: 600;
+}
+
+.assembly .asm-form[aria-busy="true"] {
+  cursor: wait;
+}
+
+.assembly .asm-form button:disabled {
+  opacity: 0.62;
+}
+
 /* ============================================================
    Logo wall
    ============================================================ */

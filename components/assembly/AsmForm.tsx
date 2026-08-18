@@ -27,22 +27,29 @@ export interface AsmFieldSpec {
  */
 export default function AsmForm({
   fields,
+  endpoint,
+  edition,
   submitLabel,
   successNote,
   tone = "deep",
 }: {
   fields: AsmFieldSpec[];
+  endpoint: string;
+  edition: string;
   submitLabel: string;
   successNote: React.ReactNode;
   tone?: "deep" | "plain";
 }) {
   const uid = useId();
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [done, setDone] = useState(false);
+  const [status, setStatus] = useState<
+    "idle" | "submitting" | "success" | "error"
+  >("idle");
+  const [serverMessage, setServerMessage] = useState("");
 
   const fieldId = (name: string) => `${uid}-${name}`;
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = event.currentTarget;
     const data = new FormData(form);
@@ -59,16 +66,73 @@ export default function AsmForm({
 
     setErrors(next);
     const ok = Object.keys(next).length === 0;
-    setDone(ok);
 
     if (!ok) {
+      setStatus("error");
+      setServerMessage("Check the highlighted fields and try again.");
       const first = fields.find((f) => next[f.name]);
       if (first) form.querySelector<HTMLElement>(`#${CSS.escape(fieldId(first.name))}`)?.focus();
+      return;
+    }
+
+    setStatus("submitting");
+    setServerMessage("");
+
+    try {
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          edition,
+          ...Object.fromEntries(
+            fields.map((field) => [field.name, String(data.get(field.name) ?? "")])
+          ),
+        }),
+      });
+      const result = (await response.json().catch(() => null)) as
+        | {
+            ok?: boolean;
+            fieldErrors?: Record<string, string[]>;
+            message?: string;
+          }
+        | null;
+
+      if (!response.ok || !result?.ok) {
+        const returnedErrors = Object.fromEntries(
+          Object.entries(result?.fieldErrors ?? {}).flatMap(([name, messages]) =>
+            messages?.[0] ? [[name, messages[0]]] : []
+          )
+        );
+        setErrors(returnedErrors);
+        setStatus("error");
+        setServerMessage(
+          result?.message ?? "We could not store that submission. Please try again."
+        );
+        const first = fields.find((field) => returnedErrors[field.name]);
+        if (first) {
+          form
+            .querySelector<HTMLElement>(`#${CSS.escape(fieldId(first.name))}`)
+            ?.focus();
+        }
+        return;
+      }
+
+      form.reset();
+      setErrors({});
+      setStatus("success");
+    } catch {
+      setStatus("error");
+      setServerMessage("We could not store that submission. Please try again.");
     }
   }
 
   return (
-    <form className="asm-form" onSubmit={handleSubmit} noValidate>
+    <form
+      className="asm-form"
+      onSubmit={handleSubmit}
+      noValidate
+      aria-busy={status === "submitting"}
+    >
       <div
         className="asm-row"
         style={{ ["--cols" as string]: 2, ["--cols-md" as string]: 1 }}
@@ -97,13 +161,23 @@ export default function AsmForm({
         ))}
 
       <div style={{ marginTop: 6 }}>
-        <AsmButton type="submit" tone={tone === "deep" ? "inverse" : "accent"}>
-          {submitLabel}
+        <AsmButton
+          type="submit"
+          tone={tone === "deep" ? "inverse" : "accent"}
+          disabled={status === "submitting"}
+        >
+          {status === "submitting" ? "Storing…" : submitLabel}
         </AsmButton>
       </div>
 
-      <p className="asm-formnote" role="status">
-        {done ? successNote : "Validated in the browser · nothing leaves this page"}
+      <p className="asm-formnote" data-state={status} role="status">
+        {status === "success"
+          ? successNote
+          : status === "error"
+            ? serverMessage
+            : status === "submitting"
+              ? "Saving this submission locally…"
+              : "Your details are stored only after a successful response."}
       </p>
     </form>
   );

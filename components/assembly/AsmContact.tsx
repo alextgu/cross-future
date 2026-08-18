@@ -79,13 +79,14 @@ export default function AsmContact({
 
         <AsmForm
           fields={fields}
+          endpoint="/api/contact"
+          edition={edition.slug}
           submitLabel="Send"
           successNote={
             <>
-              Your details look valid — but this form is not connected to a
-              backend, so nothing was sent or stored. Email{" "}
-              <a href={`mailto:${contact.email}`}>{contact.email}</a> and it will
-              reach the {edition.year} organizing team directly.
+              Your inquiry was stored in the local mock database. No email was
+              sent yet; the {edition.year} team can transfer it when production
+              services are connected.
             </>
           }
         />
