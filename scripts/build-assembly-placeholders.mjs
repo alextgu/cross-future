@@ -1,5 +1,5 @@
 /**
- * Generates every placeholder asset under public/assembly/.
+ * Generates every placeholder asset under public/summit/.
  *
  * These exist so the layout can be judged with its media slots filled and so
  * dropping in real photography is a file swap, never a layout change: each
@@ -289,4 +289,4 @@ function walk(node) {
 }
 walk(seed.assembly);
 
-console.log(`wrote ${count} placeholder assets under public/assembly/`);
+console.log(`wrote ${count} placeholder assets under public/summit/`);

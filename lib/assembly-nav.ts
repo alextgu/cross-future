@@ -4,6 +4,7 @@
  * linked from three places with three different labels.
  */
 export const ASSEMBLY_BASE = "";
+export const ASSEMBLY_HOME = "/";
 
 export interface AssemblyRoute {
   num: string;
@@ -14,7 +15,7 @@ export interface AssemblyRoute {
 }
 
 export const ASSEMBLY_ROUTES: AssemblyRoute[] = [
-  { num: "00", label: "Home", href: "/", primary: false },
+  { num: "00", label: "Home", href: ASSEMBLY_HOME, primary: false },
   { num: "01", label: "About", href: "/about", primary: true },
   { num: "02", label: "Speakers", href: "/speakers", primary: true },
   { num: "03", label: "Agenda", href: "/agenda", primary: true },

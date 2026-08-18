@@ -18,6 +18,7 @@ import AsmCta from "@/components/assembly/AsmCta";
 
 export const metadata: Metadata = {
   title: "Media",
+  alternates: { canonical: "/media" },
   description:
     "Recorded interviews with the Cross Future AI Summit faculty, plus the photographic archive of every edition.",
 };

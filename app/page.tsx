@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import {
   getSummitContent,
   getCurrentEdition,
@@ -26,6 +27,10 @@ import AsmPastEditions from "@/components/assembly/AsmPastEditions";
 import AsmFaq from "@/components/assembly/AsmFaq";
 import AsmCta from "@/components/assembly/AsmCta";
 import AsmContact from "@/components/assembly/AsmContact";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 export default async function AssemblyHome() {
   const content = await getSummitContent("assembly");

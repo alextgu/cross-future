@@ -167,7 +167,12 @@ export const registrations = sqliteTable(
   "registrations",
   {
     id: integer("id").primaryKey({ autoIncrement: true }),
-    editionSlug: text("edition_slug").notNull(),
+    editionSlug: text("edition_slug")
+      .notNull()
+      .references(() => editions.slug, {
+        onDelete: "restrict",
+        onUpdate: "cascade",
+      }),
     firstName: text("first_name").notNull(),
     lastName: text("last_name").notNull(),
     email: text("email").notNull(),
@@ -188,7 +193,12 @@ export const contactInquiries = sqliteTable(
   "contact_inquiries",
   {
     id: integer("id").primaryKey({ autoIncrement: true }),
-    editionSlug: text("edition_slug").notNull(),
+    editionSlug: text("edition_slug")
+      .notNull()
+      .references(() => editions.slug, {
+        onDelete: "restrict",
+        onUpdate: "cascade",
+      }),
     firstName: text("first_name").notNull(),
     lastName: text("last_name").notNull(),
     email: text("email").notNull(),

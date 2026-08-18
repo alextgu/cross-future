@@ -37,11 +37,15 @@ export async function generateMetadata(): Promise<Metadata> {
   const edition = getCurrentEdition(content);
 
   return {
+    metadataBase: new URL(
+      process.env.NEXT_PUBLIC_SITE_URL ?? "https://cross-future.com"
+    ),
     title: {
       default: edition.seo.title,
       template: `%s — ${edition.name}`,
     },
     description: edition.seo.description,
+    alternates: { canonical: "/" },
   };
 }
 

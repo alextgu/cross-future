@@ -239,7 +239,7 @@ const tracks = [
  */
 
 const day = (h, m) =>
-  `2026-07-24T${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:00-04:00`;
+  `2026-10-08T${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:00-04:00`;
 
 const sessions = [
   ["S.01", "Registration & coffee", "ARRIVAL", "T1", [8, 30], [9, 15], "Foyer"],
@@ -323,7 +323,7 @@ const documents = [
 
 const assembly = {
   heroKicker: "Convene / Engineer / Sustain",
-  heroLines: ["Cross Future", "AI Summit", "07 / 2026"],
+  heroLines: ["Cross Future", "AI Summit", "10 / 2026"],
   heroMedia: vid(
     "/summit/video/hero-loop.mp4",
     "/summit/media/hero-poster.svg",
@@ -332,7 +332,7 @@ const assembly = {
   ),
 
   facts: [
-    { label: "When?", lines: ["Friday 24 July 2026", "08:30 – 17:30 EDT"] },
+    { label: "When?", lines: ["Thursday 8 October 2026", "08:30 – 17:30 EDT"] },
     { label: "Where?", lines: ["Montréal, Québec", "Hotel Monville · 1041 Rue de Bleury"] },
     { label: "For who?", lines: ["Power, grid and AI", "infrastructure engineers"] },
   ],
@@ -369,7 +369,7 @@ const assembly = {
       ),
       stub: [
         { label: "Edition", value: "03" },
-        { label: "Date", value: "24.07.26" },
+        { label: "Date", value: "08.10.26" },
         { label: "City", value: "YUL" },
       ],
     },
@@ -733,8 +733,8 @@ const editions = [
     thesis:
       "Strengthening the energy resilience of AI data centers is essential to the secure operation of digital infrastructure, grid stability, and the low-carbon transition.",
     theme: "AI data center power and energy resilience",
-    startsAt: "2026-07-24T08:30:00-04:00",
-    endsAt: "2026-07-24T17:30:00-04:00",
+    startsAt: "2026-10-08T08:30:00-04:00",
+    endsAt: "2026-10-08T17:30:00-04:00",
     timezone: "America/Montreal",
     venue: {
       name: "Hotel Monville",
@@ -756,7 +756,7 @@ const editions = [
     heroStatement:
       "A one-day summit convening leaders from academia and industry on the technical pathways, application scenarios and collaboration opportunities shaping AI data-center resilience.",
     seo: {
-      title: "Cross Future AI Summit 2026 — Montréal, 24 July",
+      title: "Cross Future AI Summit 2026 — Montréal, 8 October",
       description:
         "One day in Montréal on AI data center power and energy resilience. Grid capacity, power quality, backup power, energy storage and dispatch — academia and industry in one room. Hosted by Cross Future Hub.",
     },

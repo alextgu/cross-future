@@ -17,6 +17,7 @@ import AsmMedia from "@/components/assembly/AsmMedia";
 
 export const metadata: Metadata = {
   title: "Contact",
+  alternates: { canonical: "/contact" },
   description:
     "Reach the Cross Future AI Summit organizing team — programme, partnership, press and accessibility.",
 };

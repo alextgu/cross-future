@@ -7,8 +7,8 @@
       "tagline": "Shaping the future of AI, innovating for tomorrow.",
       "thesis": "Strengthening the energy resilience of AI data centers is essential to the secure operation of digital infrastructure, grid stability, and the low-carbon transition.",
       "theme": "AI data center power and energy resilience",
-      "startsAt": "2026-07-24T08:30:00-04:00",
-      "endsAt": "2026-07-24T17:30:00-04:00",
+      "startsAt": "2026-10-08T08:30:00-04:00",
+      "endsAt": "2026-10-08T17:30:00-04:00",
       "timezone": "America/Montreal",
       "venue": {
         "name": "Hotel Monville",
@@ -38,7 +38,7 @@
       ],
       "heroStatement": "A one-day summit convening leaders from academia and industry on the technical pathways, application scenarios and collaboration opportunities shaping AI data-center resilience.",
       "seo": {
-        "title": "Cross Future AI Summit 2026 — Montréal, 24 July",
+        "title": "Cross Future AI Summit 2026 — Montréal, 8 October",
         "description": "One day in Montréal on AI data center power and energy resilience. Grid capacity, power quality, backup power, energy storage and dispatch — academia and industry in one room. Hosted by Cross Future Hub."
       }
     }
@@ -1224,8 +1224,8 @@
       "title": "Registration & coffee",
       "edition": "2026-assembly",
       "track": "T1",
-      "startsAt": "2026-07-24T08:30:00-04:00",
-      "endsAt": "2026-07-24T09:15:00-04:00",
+      "startsAt": "2026-10-08T08:30:00-04:00",
+      "endsAt": "2026-10-08T09:15:00-04:00",
       "room": "Foyer",
       "speakers": [],
       "status": "proposed",
@@ -1239,8 +1239,8 @@
       "title": "Opening remarks",
       "edition": "2026-assembly",
       "track": "T1",
-      "startsAt": "2026-07-24T09:15:00-04:00",
-      "endsAt": "2026-07-24T09:30:00-04:00",
+      "startsAt": "2026-10-08T09:15:00-04:00",
+      "endsAt": "2026-10-08T09:30:00-04:00",
       "room": "Main stage",
       "speakers": [],
       "status": "proposed",
@@ -1254,8 +1254,8 @@
       "title": "Morning keynote",
       "edition": "2026-assembly",
       "track": "T1",
-      "startsAt": "2026-07-24T09:30:00-04:00",
-      "endsAt": "2026-07-24T10:30:00-04:00",
+      "startsAt": "2026-10-08T09:30:00-04:00",
+      "endsAt": "2026-10-08T10:30:00-04:00",
       "room": "Main stage",
       "speakers": [],
       "status": "proposed",
@@ -1269,8 +1269,8 @@
       "title": "Panel — grid capacity and interconnection",
       "edition": "2026-assembly",
       "track": "T1",
-      "startsAt": "2026-07-24T10:45:00-04:00",
-      "endsAt": "2026-07-24T12:00:00-04:00",
+      "startsAt": "2026-10-08T10:45:00-04:00",
+      "endsAt": "2026-10-08T12:00:00-04:00",
       "room": "Main stage",
       "speakers": [],
       "status": "proposed",
@@ -1284,8 +1284,8 @@
       "title": "Lunch & networking",
       "edition": "2026-assembly",
       "track": "T2",
-      "startsAt": "2026-07-24T12:00:00-04:00",
-      "endsAt": "2026-07-24T13:15:00-04:00",
+      "startsAt": "2026-10-08T12:00:00-04:00",
+      "endsAt": "2026-10-08T13:15:00-04:00",
       "room": "Foyer",
       "speakers": [],
       "status": "proposed",
@@ -1299,8 +1299,8 @@
       "title": "Breakouts — resilience, architecture, dispatch",
       "edition": "2026-assembly",
       "track": "T2",
-      "startsAt": "2026-07-24T13:15:00-04:00",
-      "endsAt": "2026-07-24T14:45:00-04:00",
+      "startsAt": "2026-10-08T13:15:00-04:00",
+      "endsAt": "2026-10-08T14:45:00-04:00",
       "room": "Rooms A–C",
       "speakers": [],
       "status": "proposed",
@@ -1314,8 +1314,8 @@
       "title": "Afternoon keynote",
       "edition": "2026-assembly",
       "track": "T3",
-      "startsAt": "2026-07-24T15:00:00-04:00",
-      "endsAt": "2026-07-24T16:00:00-04:00",
+      "startsAt": "2026-10-08T15:00:00-04:00",
+      "endsAt": "2026-10-08T16:00:00-04:00",
       "room": "Main stage",
       "speakers": [],
       "status": "proposed",
@@ -1329,8 +1329,8 @@
       "title": "Roundtable — the AI factory in 2030",
       "edition": "2026-assembly",
       "track": "T4",
-      "startsAt": "2026-07-24T16:00:00-04:00",
-      "endsAt": "2026-07-24T17:00:00-04:00",
+      "startsAt": "2026-10-08T16:00:00-04:00",
+      "endsAt": "2026-10-08T17:00:00-04:00",
       "room": "Main stage",
       "speakers": [],
       "status": "proposed",
@@ -1344,8 +1344,8 @@
       "title": "Closing remarks & reception",
       "edition": "2026-assembly",
       "track": "T4",
-      "startsAt": "2026-07-24T17:00:00-04:00",
-      "endsAt": "2026-07-24T17:30:00-04:00",
+      "startsAt": "2026-10-08T17:00:00-04:00",
+      "endsAt": "2026-10-08T17:30:00-04:00",
       "room": "Foyer",
       "speakers": [],
       "status": "proposed",
@@ -1716,7 +1716,7 @@
     "heroLines": [
       "Cross Future",
       "AI Summit",
-      "07 / 2026"
+      "10 / 2026"
     ],
     "heroMedia": {
       "kind": "video",
@@ -1730,7 +1730,7 @@
       {
         "label": "When?",
         "lines": [
-          "Friday 24 July 2026",
+          "Thursday 8 October 2026",
           "08:30 – 17:30 EDT"
         ]
       },
@@ -1789,7 +1789,7 @@
           },
           {
             "label": "Date",
-            "value": "24.07.26"
+            "value": "08.10.26"
           },
           {
             "label": "City",

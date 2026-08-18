@@ -1,13 +1,29 @@
 import type { Database } from "../../db/client";
 import { createDatabase } from "../../db/client";
-import { contactInquiries, registrations } from "../../db/schema";
-import type { SubmissionRepository } from "./submission-repository";
+import { and, eq } from "drizzle-orm";
+import { contactInquiries, editions, registrations } from "../../db/schema";
+import {
+  UnknownEditionError,
+  type SubmissionRepository,
+} from "./submission-repository";
 
 export function createSqliteSubmissionRepository(
   db: Database
 ): SubmissionRepository {
+  async function assertCurrentEdition(editionSlug: string) {
+    const [edition] = await db
+      .select({ slug: editions.slug })
+      .from(editions)
+      .where(
+        and(eq(editions.slug, editionSlug), eq(editions.isCurrent, true))
+      )
+      .limit(1);
+    if (!edition) throw new UnknownEditionError();
+  }
+
   return {
     async createRegistration(input) {
+      await assertCurrentEdition(input.edition);
       const [row] = await db
         .insert(registrations)
         .values({
@@ -26,6 +42,7 @@ export function createSqliteSubmissionRepository(
     },
 
     async createContactInquiry(input) {
+      await assertCurrentEdition(input.edition);
       const [row] = await db
         .insert(contactInquiries)
         .values({

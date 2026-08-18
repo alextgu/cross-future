@@ -15,6 +15,7 @@ import AsmCta from "@/components/assembly/AsmCta";
 
 export const metadata: Metadata = {
   title: "Partners",
+  alternates: { canonical: "/partners" },
   description:
     "Universities, industry and community organizations supporting the Cross Future AI Summit, plus the letters of support from Ontario and the City of Toronto.",
 };

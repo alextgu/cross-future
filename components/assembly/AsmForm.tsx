@@ -197,6 +197,8 @@ function Field({
     id,
     name: field.name,
     autoComplete: field.autoComplete,
+    required: Boolean(field.required),
+    "aria-required": Boolean(field.required),
     "aria-invalid": Boolean(error),
     "aria-describedby": describedBy,
   } as const;

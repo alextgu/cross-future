@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
   ASSEMBLY_BASE,
+  ASSEMBLY_HOME,
   ASSEMBLY_REGISTER,
   ASSEMBLY_ROUTES,
   isCurrentRoute,
@@ -34,7 +35,7 @@ export default function AsmNav({ year }: { year: number }) {
   return (
     <div className="asm-navbar">
       <nav className="asm-navbar-inner" aria-label="Primary">
-        <Link className="asm-wordmark" href={ASSEMBLY_BASE}>
+        <Link className="asm-wordmark" href={ASSEMBLY_HOME}>
           <AsmMark />
           <span>
             Cross Future <span className="asm-sr">AI Summit </span>/ {year}

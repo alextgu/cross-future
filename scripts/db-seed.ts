@@ -25,6 +25,42 @@ export async function seedDatabase(db: Database, source: SummitContent) {
     throw new Error("Assembly seed requires a current edition and presentation content.");
   }
   const assembly = content.assembly;
+  const editionValues = content.editions.map((edition) => {
+    const {
+      slug,
+      year,
+      name,
+      tagline,
+      thesis,
+      theme,
+      startsAt,
+      endsAt,
+      timezone,
+      venue,
+      registrationUrl,
+      status,
+      isCurrent,
+      seo,
+      ...optional
+    } = edition;
+    return {
+      slug,
+      year,
+      name,
+      tagline,
+      thesis,
+      theme,
+      startsAt,
+      endsAt,
+      timezone,
+      venue,
+      registrationUrl,
+      status,
+      isCurrent,
+      seo,
+      optional,
+    };
+  });
 
   await db.transaction(async (tx) => {
     await tx.delete(siteContent);
@@ -36,46 +72,14 @@ export async function seedDatabase(db: Database, source: SummitContent) {
     await tx.delete(tracks);
     await tx.delete(people);
     await tx.delete(organizations);
-    await tx.delete(editions);
-
-    await tx.insert(editions).values(
-      content.editions.map((edition) => {
-        const {
-          slug,
-          year,
-          name,
-          tagline,
-          thesis,
-          theme,
-          startsAt,
-          endsAt,
-          timezone,
-          venue,
-          registrationUrl,
-          status,
-          isCurrent,
-          seo,
-          ...optional
-        } = edition;
-        return {
-          slug,
-          year,
-          name,
-          tagline,
-          thesis,
-          theme,
-          startsAt,
-          endsAt,
-          timezone,
-          venue,
-          registrationUrl,
-          status,
-          isCurrent,
-          seo,
-          optional,
-        };
-      })
-    );
+    await tx.update(editions).set({ isCurrent: false });
+    for (const edition of editionValues) {
+      const { slug: _slug, ...updates } = edition;
+      await tx
+        .insert(editions)
+        .values(edition)
+        .onConflictDoUpdate({ target: editions.slug, set: updates });
+    }
 
     if (content.organizations.length) {
       await tx.insert(organizations).values(content.organizations);

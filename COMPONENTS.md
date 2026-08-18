@@ -72,7 +72,7 @@ lib/
 
 scripts/
   build-seed-assembly.mjs        Emits content/seed-assembly.json
-  build-assembly-placeholders.mjs Emits every file under public/assembly/
+  build-assembly-placeholders.mjs Emits every file under public/summit/
 
 public/
   headshots/               Design A speaker portraits (SVG placeholders)
@@ -80,9 +80,9 @@ public/
   documents/               Recognition documents (SVG placeholders)
   nexus/portraits/         Design B speaker portraits (SVG placeholders)
   nexus/archive/           Design B archive photo wall (SVG placeholders)
-  assembly/                Design C media — 103 SVGs + 1 mp4, all PLACEHOLDER
-                           (see public/assembly/README.md)
-  summit/                  canonical Assembly media namespace
+  assembly/                preserved legacy copy of Design C media
+  summit/                  canonical media — 103 SVGs + 1 mp4, all PLACEHOLDER
+                           (see public/summit/README.md)
 
 db/
   schema.ts                12-table Drizzle schema
@@ -303,12 +303,12 @@ past Tier 2 from a component.
 
 ### Generated files — do not hand-edit
 
-`content/seed-assembly.json` and everything under `public/assembly/` are build
+`content/seed-assembly.json` and everything under `public/summit/` are build
 artefacts:
 
 ```bash
 npm run seed:assembly          # → content/seed-assembly.json
-npm run placeholders:assembly  # → public/assembly/**
+npm run placeholders:assembly  # → public/summit/**
 npm run generate:assembly      # both, in order
 ```
 

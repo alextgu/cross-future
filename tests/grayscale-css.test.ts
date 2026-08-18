@@ -20,4 +20,10 @@ describe("the active design system", () => {
 
     expect(nonGray).toEqual([]);
   });
+
+  it("keeps reveal content visible without JavaScript", () => {
+    const revealRule = activeCss.match(/\.assembly \.asm-reveal\s*\{([^}]*)\}/)?.[1];
+    expect(revealRule).toBeDefined();
+    expect(revealRule).not.toMatch(/opacity\s*:\s*0/);
+  });
 });

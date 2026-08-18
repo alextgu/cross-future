@@ -18,8 +18,9 @@ import AsmCta from "@/components/assembly/AsmCta";
 
 export const metadata: Metadata = {
   title: "Agenda",
+  alternates: { canonical: "/agenda" },
   description:
-    "The shape of the day for Cross Future AI Summit 2026 — 24 July, 08:30 to 17:30, Hotel Monville, Montréal.",
+    "The shape of the day for Cross Future AI Summit 2026 — 8 October, 08:30 to 17:30, Hotel Monville, Montréal.",
 };
 
 export default async function AgendaPage() {

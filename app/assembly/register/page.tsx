@@ -18,7 +18,7 @@ import AsmMedia from "@/components/assembly/AsmMedia";
 export const metadata: Metadata = {
   title: "Register",
   description:
-    "Register for the Cross Future AI Summit 2026 — 24 July, Hotel Monville, Montréal.",
+    "Register for the Cross Future AI Summit 2026 — 8 October, Hotel Monville, Montréal.",
 };
 
 const STATUS_COPY: Record<string, string> = {

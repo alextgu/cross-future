@@ -25,6 +25,7 @@ import AsmInfrastructure from "@/components/assembly/AsmInfrastructure";
 
 export const metadata: Metadata = {
   title: "About",
+  alternates: { canonical: "/about" },
   description:
     "Cross Future Hub is a non-profit guiding tech enthusiasts through key trends. What the summit is for, how it is built, and where it has been.",
 };

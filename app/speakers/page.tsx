@@ -15,6 +15,7 @@ import AsmCta from "@/components/assembly/AsmCta";
 
 export const metadata: Metadata = {
   title: "Speakers",
+  alternates: { canonical: "/speakers" },
   description:
     "The full Edition 03 faculty — researchers, industry engineers and ecosystem organizations convening on AI data-centre power and energy resilience.",
 };

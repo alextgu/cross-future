@@ -1,8 +1,11 @@
 import { expect, it } from "vitest";
+import seedAssembly from "../content/seed-assembly.json";
+import type { SummitContent } from "../lib/content";
 import { createDatabase } from "../db/client";
 import { migrateDatabase } from "../db/migrate";
 import { contactInquiries, registrations } from "../db/schema";
 import { createSqliteSubmissionRepository } from "../lib/repositories/sqlite-submission-repository";
+import { seedDatabase } from "../scripts/db-seed";
 import {
   contactInquirySchema,
   registrationSchema,
@@ -24,6 +27,7 @@ it("rejects a malformed registration email", () => {
 it("persists normalized registration and contact submissions", async () => {
   const { db, client } = createDatabase(":memory:");
   await migrateDatabase(db);
+  await seedDatabase(db, seedAssembly as unknown as SummitContent);
   const repository = createSqliteSubmissionRepository(db);
 
   const registration = registrationSchema.parse({
@@ -53,5 +57,26 @@ it("persists normalized registration and contact submissions", async () => {
   expect(await db.select().from(contactInquiries)).toMatchObject([
     { firstName: "Grace", email: "grace@example.com", status: "new" },
   ]);
+  client.close();
+});
+
+it("rejects submissions for an unknown edition", async () => {
+  const { db, client } = createDatabase(":memory:");
+  await migrateDatabase(db);
+  await seedDatabase(db, seedAssembly as unknown as SummitContent);
+  const repository = createSqliteSubmissionRepository(db);
+
+  await expect(
+    repository.createRegistration({
+      edition: "not-a-real-edition",
+      firstName: "Ada",
+      lastName: "Lovelace",
+      email: "ada@example.com",
+      organization: "",
+      closest: "Research",
+      access: "",
+    })
+  ).rejects.toThrow(/edition/i);
+
   client.close();
 });
