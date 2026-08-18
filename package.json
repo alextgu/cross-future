@@ -9,19 +9,28 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "tsx scripts/db-migrate.ts",
+    "db:seed": "tsx scripts/db-seed.ts",
+    "db:setup": "npm run db:migrate && npm run db:seed",
     "seed:assembly": "node scripts/build-seed-assembly.mjs",
     "placeholders:assembly": "node scripts/build-assembly-placeholders.mjs",
     "generate:assembly": "npm run seed:assembly && npm run placeholders:assembly"
   },
   "dependencies": {
+    "@libsql/client": "^0.17.4",
+    "drizzle-orm": "^0.45.2",
     "next": "^15.5.4",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19.1.0",
+    "drizzle-kit": "^0.31.10",
+    "tsx": "^4.23.12",
     "typescript": "^5.7.0",
     "vitest": "^4.1.10"
   },
