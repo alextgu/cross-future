@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" role="img" aria-label="Delegates arriving at registration">
 <title>PLACEHOLDER — Delegates arriving at registration</title>
 <rect width="1200" height="900" fill="#e6e6e3"/>
-<rect x="0" y="24" width="1200" height="112" fill="#adadaa" opacity="0.55"/><rect x="0" y="553" width="1200" height="192" fill="#adadaa" opacity="0.55"/><rect x="0" y="487" width="1200" height="260" fill="#c6c6c2" opacity="0.55"/>
-<circle cx="576" cy="836" r="198" fill="#6f6f6c" opacity="0.5"/><circle cx="1130" cy="589" r="214" fill="#c6c6c2" opacity="0.5"/>
-<path d="M669 0 L1569 900 L1449 900 L549 0 Z" fill="#3a3a35" opacity="0.16"/>
+<rect x="0" y="372" width="1200" height="263" fill="#d9d9d6" opacity="0.55"/><rect x="0" y="22" width="1200" height="109" fill="#d9d9d6" opacity="0.55"/><rect x="0" y="762" width="1200" height="305" fill="#adadaa" opacity="0.55"/>
+<circle cx="1060" cy="822" r="401" fill="#8f8f8c" opacity="0.5"/><circle cx="23" cy="48" r="202" fill="#adadaa" opacity="0.5"/>
+<path d="M367 0 L1267 900 L1147 900 L247 0 Z" fill="#3a3a35" opacity="0.16"/>
 <g font-family="IBM Plex Mono, ui-monospace, monospace" font-size="20" fill="#3a3a35" opacity="0.62">
 <text x="28" y="42">PLACEHOLDER</text>
 <text x="28" y="874">1200×900 · 4 / 3</text>

@@ -62,6 +62,15 @@ export default async function AssemblyHome() {
       <AsmMarquee items={assembly.marquee} />
 
       <AsmSectionHead
+        id="interviews"
+        eyebrow="Interviews"
+        title="Voices from the floor"
+        lede="We film the faculty at every edition — every conversation on record, in full, below."
+        action={{ label: "Media archive", href: `${ASSEMBLY_BASE}/media` }}
+      />
+      <AsmInterviews cards={interviews} />
+
+      <AsmSectionHead
         id="faculty"
         eyebrow="Faculty"
         title="Meet the faculty"
@@ -98,15 +107,6 @@ export default async function AssemblyHome() {
       />
 
       <AsmFocus areas={assembly.focusAreas} hero={assembly.focusMedia} />
-
-      <AsmSectionHead
-        id="interviews"
-        eyebrow="Interviews"
-        title="Voices from the floor"
-        lede="We film the faculty at every edition. The archive is public and keeps growing between summits."
-        action={{ label: "Watch all", href: `${ASSEMBLY_BASE}/media` }}
-      />
-      <AsmInterviews cards={interviews.filter((c) => c.interview.featured)} />
 
       <AsmSectionHead
         eyebrow="On the record"

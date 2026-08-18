@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800" role="img" aria-label="Next-Generation AI Factory Infrastructure — illustrative figure">
 <title>PLACEHOLDER — Next-Generation AI Factory Infrastructure — illustrative figure</title>
 <rect width="1200" height="800" fill="#e6e6e3"/>
-<rect x="0" y="4" width="1200" height="113" fill="#c6c6c2" opacity="0.55"/><rect x="0" y="463" width="1200" height="272" fill="#6f6f6c" opacity="0.55"/><rect x="0" y="374" width="1200" height="259" fill="#8f8f8c" opacity="0.55"/>
-<circle cx="114" cy="593" r="292" fill="#4a4a46" opacity="0.5"/><circle cx="334" cy="278" r="246" fill="#4a4a46" opacity="0.5"/>
-<path d="M23 0 L823 800 L703 800 L-97 0 Z" fill="#3a3a35" opacity="0.16"/>
+<rect x="0" y="509" width="1200" height="110" fill="#8f8f8c" opacity="0.55"/><rect x="0" y="562" width="1200" height="271" fill="#adadaa" opacity="0.55"/><rect x="0" y="497" width="1200" height="315" fill="#d9d9d6" opacity="0.55"/>
+<circle cx="1093" cy="108" r="183" fill="#c6c6c2" opacity="0.5"/><circle cx="796" cy="682" r="198" fill="#6f6f6c" opacity="0.5"/>
+<path d="M1021 0 L1821 800 L1701 800 L901 0 Z" fill="#3a3a35" opacity="0.16"/>
 <g font-family="IBM Plex Mono, ui-monospace, monospace" font-size="20" fill="#3a3a35" opacity="0.62">
 <text x="28" y="42">PLACEHOLDER</text>
 <text x="28" y="774">1200×800 · 3 / 2</text>

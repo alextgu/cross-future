@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" role="img" aria-label="Closing reception">
 <title>PLACEHOLDER — Closing reception</title>
 <rect width="1200" height="900" fill="#e6e6e3"/>
-<rect x="0" y="158" width="1200" height="250" fill="#c6c6c2" opacity="0.55"/><rect x="0" y="622" width="1200" height="104" fill="#d9d9d6" opacity="0.55"/><rect x="0" y="771" width="1200" height="271" fill="#adadaa" opacity="0.55"/>
-<circle cx="795" cy="327" r="332" fill="#adadaa" opacity="0.5"/><circle cx="80" cy="123" r="410" fill="#8f8f8c" opacity="0.5"/>
-<path d="M781 0 L1681 900 L1561 900 L661 0 Z" fill="#3a3a35" opacity="0.16"/>
+<rect x="0" y="664" width="1200" height="346" fill="#6f6f6c" opacity="0.55"/><rect x="0" y="304" width="1200" height="254" fill="#4a4a46" opacity="0.55"/><rect x="0" y="361" width="1200" height="293" fill="#d9d9d6" opacity="0.55"/>
+<circle cx="134" cy="706" r="368" fill="#c6c6c2" opacity="0.5"/><circle cx="816" cy="377" r="312" fill="#6f6f6c" opacity="0.5"/>
+<path d="M543 0 L1443 900 L1323 900 L423 0 Z" fill="#3a3a35" opacity="0.16"/>
 <g font-family="IBM Plex Mono, ui-monospace, monospace" font-size="20" fill="#3a3a35" opacity="0.62">
 <text x="28" y="42">PLACEHOLDER</text>
 <text x="28" y="874">1200×900 · 4 / 3</text>

@@ -4,6 +4,8 @@ import { formatEditionDate } from "@/lib/content";
 import {
   ASSEMBLY_REGISTER,
   ASSEMBLY_ROUTES,
+  ASSEMBLY_RSVP_LABEL,
+  ASSEMBLY_RSVP_URL,
 } from "@/lib/assembly-nav";
 import AsmButton from "./AsmButton";
 import AsmCountdown from "./AsmCountdown";
@@ -39,8 +41,8 @@ export default function AsmFooter({
             </p>
             <AsmCountdown targetIso={edition.startsAt} />
             <div style={{ marginTop: 22 }}>
-              <AsmButton href={ASSEMBLY_REGISTER} tone="inverse">
-                Register
+              <AsmButton href={ASSEMBLY_RSVP_URL} tone="inverse">
+                {ASSEMBLY_RSVP_LABEL}
               </AsmButton>
             </div>
           </div>

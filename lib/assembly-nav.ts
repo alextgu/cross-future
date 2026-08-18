@@ -15,14 +15,30 @@ export interface AssemblyRoute {
 }
 
 export const ASSEMBLY_ROUTES: AssemblyRoute[] = [
-  { num: "00", label: "Home", href: ASSEMBLY_HOME, primary: false },
-  { num: "01", label: "About", href: "/about", primary: true },
-  { num: "02", label: "Speakers", href: "/speakers", primary: true },
-  { num: "03", label: "Agenda", href: "/agenda", primary: true },
-  { num: "04", label: "Media", href: "/media", primary: true },
-  { num: "05", label: "Partners", href: "/partners", primary: true },
-  { num: "06", label: "Contact", href: "/contact", primary: false },
+  { num: "00", label: "Home", href: ASSEMBLY_HOME, primary: true },
+  { num: "01", label: "Speakers", href: "/speakers", primary: true },
+  { num: "02", label: "Agenda", href: "/agenda", primary: true },
+  { num: "03", label: "Partners", href: "/partners", primary: true },
+  { num: "04", label: "Contact", href: "/contact", primary: true },
+  { num: "05", label: "About", href: "/about", primary: false },
+  { num: "06", label: "Media", href: "/media", primary: false },
 ];
+
+/** Bar order, matching the live site. */
+export const ASSEMBLY_BAR_ROUTES = ASSEMBLY_ROUTES.filter((r) => r.primary);
+
+/** Everything the bar has no room for, shown under the "More" dropdown. */
+export const ASSEMBLY_MORE_ROUTES = ASSEMBLY_ROUTES.filter((r) => !r.primary);
+
+export const ASSEMBLY_MORE_LABEL = "More";
+
+/**
+ * The nav and footer call-to-action point at the external ticketing page, as
+ * the live site does. The in-page register flow at ASSEMBLY_REGISTER stays —
+ * it is still linked from the page-level CTAs and the footer page list.
+ */
+export const ASSEMBLY_RSVP_URL = "https://www.eventgo.ai/event/1000909471805";
+export const ASSEMBLY_RSVP_LABEL = "RSVP Event";
 
 export const ASSEMBLY_REGISTER = `${ASSEMBLY_BASE}/register`;
 

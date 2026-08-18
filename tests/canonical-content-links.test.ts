@@ -2,8 +2,20 @@ import { expect, it } from "vitest";
 import seed from "../content/seed-assembly.json";
 
 it("uses canonical page links in primary homepage calls to action", () => {
-  expect(seed.assembly.rail.feature.ctaHref).toBe("/agenda");
+  /* The feature tile points at the interview archive, not the agenda: the
+     sessions are not confirmed yet, so an agenda CTA would promise a page
+     with nothing on it. */
+  expect(seed.assembly.rail.feature.ctaHref).toBe("/media");
   expect(seed.assembly.rail.ticket.ctaHref).toBe("/register");
+});
+
+it("backs the hero slot with a real clip, not a placeholder", () => {
+  expect(seed.assembly.heroMedia.kind).toBe("video");
+  expect(seed.assembly.heroMedia.src).toBe("/summit/video/hero-loop.mp4");
+  /* A poster is what stands in while the clip loads or when autoplay is
+     refused, so the hero cannot render as an empty dark card. */
+  expect(seed.assembly.heroMedia.poster).toBe("/summit/media/hero-poster.jpg");
+  expect("placeholder" in seed.assembly.heroMedia).toBe(false);
 });
 
 it("uses the canonical summit asset namespace", () => {

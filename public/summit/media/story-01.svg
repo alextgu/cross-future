@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" role="img" aria-label="A plenary session in progress, delegates seated in the round">
 <title>PLACEHOLDER — A plenary session in progress, delegates seated in the round</title>
 <rect width="1200" height="900" fill="#e6e6e3"/>
-<rect x="0" y="69" width="1200" height="357" fill="#c6c6c2" opacity="0.55"/><rect x="0" y="39" width="1200" height="138" fill="#adadaa" opacity="0.55"/><rect x="0" y="119" width="1200" height="185" fill="#6f6f6c" opacity="0.55"/>
-<circle cx="1124" cy="600" r="223" fill="#6f6f6c" opacity="0.5"/><circle cx="1011" cy="715" r="231" fill="#d9d9d6" opacity="0.5"/>
-<path d="M752 0 L1652 900 L1532 900 L632 0 Z" fill="#3a3a35" opacity="0.16"/>
+<rect x="0" y="288" width="1200" height="326" fill="#6f6f6c" opacity="0.55"/><rect x="0" y="454" width="1200" height="293" fill="#adadaa" opacity="0.55"/><rect x="0" y="490" width="1200" height="92" fill="#6f6f6c" opacity="0.55"/>
+<circle cx="1037" cy="650" r="209" fill="#adadaa" opacity="0.5"/><circle cx="1192" cy="410" r="187" fill="#adadaa" opacity="0.5"/>
+<path d="M737 0 L1637 900 L1517 900 L617 0 Z" fill="#3a3a35" opacity="0.16"/>
 <g font-family="IBM Plex Mono, ui-monospace, monospace" font-size="20" fill="#3a3a35" opacity="0.62">
 <text x="28" y="42">PLACEHOLDER</text>
 <text x="28" y="874">1200×900 · 4 / 3</text>

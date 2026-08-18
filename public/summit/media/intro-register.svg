@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 514" width="1200" height="514" role="img" aria-label="Delegates at the registration desk">
 <title>PLACEHOLDER — Delegates at the registration desk</title>
 <rect width="1200" height="514" fill="#e6e6e3"/>
-<rect x="0" y="126" width="1200" height="63" fill="#4a4a46" opacity="0.55"/><rect x="0" y="490" width="1200" height="103" fill="#d9d9d6" opacity="0.55"/><rect x="0" y="398" width="1200" height="84" fill="#4a4a46" opacity="0.55"/>
-<circle cx="338" cy="132" r="182" fill="#adadaa" opacity="0.5"/><circle cx="638" cy="476" r="97" fill="#adadaa" opacity="0.5"/>
-<path d="M97 0 L611 514 L491 514 L-23 0 Z" fill="#3a3a35" opacity="0.16"/>
+<rect x="0" y="98" width="1200" height="170" fill="#6f6f6c" opacity="0.55"/><rect x="0" y="386" width="1200" height="112" fill="#4a4a46" opacity="0.55"/><rect x="0" y="329" width="1200" height="169" fill="#8f8f8c" opacity="0.55"/>
+<circle cx="988" cy="69" r="221" fill="#6f6f6c" opacity="0.5"/><circle cx="1150" cy="37" r="244" fill="#c6c6c2" opacity="0.5"/>
+<path d="M562 0 L1076 514 L956 514 L442 0 Z" fill="#3a3a35" opacity="0.16"/>
 <g font-family="IBM Plex Mono, ui-monospace, monospace" font-size="20" fill="#3a3a35" opacity="0.62">
 <text x="28" y="42">PLACEHOLDER</text>
 <text x="28" y="488">1200×514 · 21 / 9</text>

@@ -343,6 +343,7 @@
 .assembly .asm-drawer,
 .assembly .asm-railfeature,
 .assembly .asm-herotile,
+.assembly .asm-heromain,
 .assembly .asm-hero {
   --asm-ink: var(--asm-ink-inv);
   --asm-ink-2: var(--asm-ink-inv-2);
@@ -460,6 +461,83 @@
 
 .assembly .asm-navcta {
   margin-left: 8px;
+}
+
+/* "More" dropdown. The trigger borrows the nav-link type so the bar reads as
+   one row of items, not five links and a button. */
+.assembly .asm-more {
+  position: relative;
+}
+
+.assembly .asm-more > button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 0;
+  cursor: pointer;
+  background: transparent;
+  font-family: var(--asm-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  padding: 9px 14px;
+  border-radius: var(--asm-radius-pill);
+  color: var(--asm-ink-2);
+  transition: background 0.16s ease, color 0.16s ease;
+}
+
+.assembly .asm-more > button:hover,
+.assembly .asm-more.is-open > button,
+.assembly .asm-more > button[data-current="true"] {
+  background: var(--asm-card-mist);
+  color: var(--asm-ink);
+}
+
+.assembly .asm-more .caret {
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid currentColor;
+  transition: transform 0.16s ease;
+}
+
+.assembly .asm-more.is-open .caret {
+  transform: rotate(180deg);
+}
+
+.assembly .asm-moremenu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 70;
+  min-width: 190px;
+  display: grid;
+  padding: 8px;
+  border-radius: 18px;
+  background: var(--asm-card-plain);
+  box-shadow: inset 0 0 0 1px var(--asm-hair), 0 18px 40px rgba(0, 0, 0, 0.14);
+}
+
+.assembly .asm-moremenu[hidden] {
+  display: none;
+}
+
+.assembly .asm-moremenu a {
+  font-family: var(--asm-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  padding: 11px 14px;
+  border-radius: 12px;
+  color: var(--asm-ink-2);
+  transition: background 0.16s ease, color 0.16s ease;
+}
+
+.assembly .asm-moremenu a:hover,
+.assembly .asm-moremenu a[aria-current="page"] {
+  background: var(--asm-card-mist);
+  color: var(--asm-ink);
 }
 
 .assembly .asm-burger {
@@ -715,6 +793,7 @@
 /* Hero and rail carry display type straight on top of media — they get the
    heaviest scrim so the headline clears contrast against any photograph. */
 .assembly .asm-hero .asm-media.is-scrim::before,
+.assembly .asm-heromain .asm-media.is-scrim::before,
 .assembly .asm-herotile .asm-media.is-scrim::before,
 .assembly .asm-railfeature .asm-media.is-scrim::before {
   background: linear-gradient(
@@ -809,22 +888,39 @@
 }
 
 .assembly .asm-heromain {
+  position: relative;
+  isolation: isolate;
   display: grid;
   align-content: center;
   justify-items: start;
   gap: clamp(16px, 2.2vh, 30px);
   min-height: clamp(380px, 62vh, 660px);
   padding-block: clamp(40px, 7vh, 96px);
+  background: var(--asm-card-deep);
 }
 
-/* The one place accent blue is allowed on the sky card: at display scale the
-   pair clears the 3:1 large-text threshold, and nothing smaller uses it. */
+/* The clip fills the card rather than holding its own aspect box: the mosaic
+   decides the height, and a 16/9 box inside it would letterbox the type. The
+   deep background underneath means a refused or still-loading clip leaves a
+   dark card, never a transparent one the headline cannot sit on. */
+.assembly .asm-heromain .asm-media {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 0;
+  aspect-ratio: auto;
+  height: 100%;
+}
+
+/* Display type straight on the footage, so it runs on inverse ink under the
+   heaviest scrim rather than the accent-on-sky pairing used when the slot
+   was empty. */
 .assembly .asm-heromain-title {
   display: grid;
   /* A step under --asm-d0: the mosaic gives the headline a card rather than
      the full page width, so the d0 clamp runs into the padding. */
   font-size: clamp(2.9rem, 8.2vw, 8.2rem);
-  color: var(--asm-accent);
+  color: var(--asm-ink-inv);
 }
 
 .assembly .asm-heromain-title span {

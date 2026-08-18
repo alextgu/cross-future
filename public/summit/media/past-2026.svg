@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" role="img" aria-label="Montréal venue exterior">
 <title>PLACEHOLDER — Montréal venue exterior</title>
 <rect width="1200" height="750" fill="#e6e6e3"/>
-<rect x="0" y="651" width="1200" height="274" fill="#c6c6c2" opacity="0.55"/><rect x="0" y="644" width="1200" height="219" fill="#4a4a46" opacity="0.55"/><rect x="0" y="404" width="1200" height="122" fill="#d9d9d6" opacity="0.55"/>
-<circle cx="399" cy="541" r="158" fill="#6f6f6c" opacity="0.5"/><circle cx="519" cy="106" r="181" fill="#6f6f6c" opacity="0.5"/>
-<path d="M63 0 L813 750 L693 750 L-57 0 Z" fill="#3a3a35" opacity="0.16"/>
+<rect x="0" y="600" width="1200" height="267" fill="#4a4a46" opacity="0.55"/><rect x="0" y="294" width="1200" height="178" fill="#adadaa" opacity="0.55"/><rect x="0" y="149" width="1200" height="193" fill="#8f8f8c" opacity="0.55"/>
+<circle cx="969" cy="361" r="290" fill="#c6c6c2" opacity="0.5"/><circle cx="121" cy="364" r="351" fill="#c6c6c2" opacity="0.5"/>
+<path d="M970 0 L1720 750 L1600 750 L850 0 Z" fill="#3a3a35" opacity="0.16"/>
 <g font-family="IBM Plex Mono, ui-monospace, monospace" font-size="20" fill="#3a3a35" opacity="0.62">
 <text x="28" y="42">PLACEHOLDER</text>
 <text x="28" y="724">1200×750 · 16 / 10</text>

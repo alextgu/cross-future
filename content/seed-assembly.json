@@ -1721,10 +1721,9 @@
     "heroMedia": {
       "kind": "video",
       "src": "/summit/video/hero-loop.mp4",
-      "poster": "/summit/media/hero-poster.svg",
-      "alt": "Montréal skyline at dusk, the venue exterior in motion",
-      "aspect": "16 / 9",
-      "placeholder": true
+      "poster": "/summit/media/hero-poster.jpg",
+      "alt": "The summit auditorium during a plenary, the Cross Future banner on the stage screen",
+      "aspect": "16 / 9"
     },
     "facts": [
       {
@@ -1759,13 +1758,13 @@
     ],
     "rail": {
       "feature": {
-        "title": "Agenda at a glance",
-        "ctaLabel": "View agenda",
-        "ctaHref": "/agenda",
+        "title": "Interviews on record",
+        "ctaLabel": "Watch interviews",
+        "ctaHref": "/media",
         "media": {
           "kind": "image",
-          "src": "/summit/media/rail-agenda.svg",
-          "alt": "Delegates in conversation between sessions",
+          "src": "/summit/media/rail-interviews.svg",
+          "alt": "A recorded interview being filmed in the foyer",
           "aspect": "4 / 3",
           "placeholder": true
         }
