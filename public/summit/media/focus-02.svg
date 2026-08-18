@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800" role="img" aria-label="Grid &#38; Microgrid Resilience — illustrative figure">
+<title>PLACEHOLDER — Grid &#38; Microgrid Resilience — illustrative figure</title>
+<rect width="1200" height="800" fill="#e6e6e3"/>
+<rect x="0" y="162" width="1200" height="262" fill="#4a4a46" opacity="0.55"/><rect x="0" y="7" width="1200" height="167" fill="#adadaa" opacity="0.55"/><rect x="0" y="81" width="1200" height="210" fill="#6f6f6c" opacity="0.55"/>
+<circle cx="438" cy="322" r="364" fill="#8f8f8c" opacity="0.5"/><circle cx="122" cy="190" r="178" fill="#4a4a46" opacity="0.5"/>
+<path d="M776 0 L1576 800 L1456 800 L656 0 Z" fill="#3a3a35" opacity="0.16"/>
+<g font-family="IBM Plex Mono, ui-monospace, monospace" font-size="20" fill="#3a3a35" opacity="0.62">
+<text x="28" y="42">PLACEHOLDER</text>
+<text x="28" y="774">1200×800 · 3 / 2</text>
+</g>
+<rect x="10" y="10" width="1180" height="780" fill="none" stroke="#3a3a35" stroke-opacity="0.3" stroke-dasharray="10 8"/>
+</svg>

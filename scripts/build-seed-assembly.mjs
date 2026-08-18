@@ -44,8 +44,8 @@ const vid = (src, poster, alt, aspect, extra = {}) => ({
 });
 
 const portrait = (slug, name) =>
-  `/assembly/portraits/${slug}.svg` && {
-    sourceUrl: `/assembly/portraits/${slug}.svg`,
+  `/summit/portraits/${slug}.svg` && {
+    sourceUrl: `/summit/portraits/${slug}.svg`,
     alt: `Portrait of ${name}`,
     focalPoint: { x: 50, y: 35 },
   };
@@ -289,7 +289,7 @@ const partners = PARTNERS.map(([slug, name, type, url]) => ({
   name,
   slug,
   logo: {
-    sourceUrl: `/assembly/partners/${slug}.svg`,
+    sourceUrl: `/summit/partners/${slug}.svg`,
     alt: `${name} logo`,
   },
   url,
@@ -303,7 +303,7 @@ const documents = [
     title: "Congratulatory letter — Province of Ontario",
     type: "letter",
     image: {
-      sourceUrl: "/assembly/documents/ontario-letter.svg",
+      sourceUrl: "/summit/documents/ontario-letter.svg",
       alt: "Congratulatory letter from the Province of Ontario",
     },
     issuer: "Government of Ontario",
@@ -312,7 +312,7 @@ const documents = [
     title: "Message from the Mayor — City of Toronto",
     type: "letter",
     image: {
-      sourceUrl: "/assembly/documents/toronto-mayor-letter.svg",
+      sourceUrl: "/summit/documents/toronto-mayor-letter.svg",
       alt: "Message from the Mayor of the City of Toronto",
     },
     issuer: "Office of the Mayor, City of Toronto",
@@ -325,8 +325,8 @@ const assembly = {
   heroKicker: "Convene / Engineer / Sustain",
   heroLines: ["Cross Future", "AI Summit", "07 / 2026"],
   heroMedia: vid(
-    "/assembly/video/hero-loop.mp4",
-    "/assembly/media/hero-poster.svg",
+    "/summit/video/hero-loop.mp4",
+    "/summit/media/hero-poster.svg",
     "Montréal skyline at dusk, the venue exterior in motion",
     "16 / 9"
   ),
@@ -350,9 +350,9 @@ const assembly = {
     feature: {
       title: "Agenda at a glance",
       ctaLabel: "View agenda",
-      ctaHref: "/assembly/agenda",
+      ctaHref: "/agenda",
       media: img(
-        "/assembly/media/rail-agenda.svg",
+        "/summit/media/rail-agenda.svg",
         "Delegates in conversation between sessions",
         "4 / 3"
       ),
@@ -361,9 +361,9 @@ const assembly = {
       title: "Ready to be part of it?",
       text: "One day, one room, the people actually building the power layer under AI. Registration is handled by our events partner.",
       ctaLabel: "Register",
-      ctaHref: "/assembly/register",
+      ctaHref: "/register",
       media: img(
-        "/assembly/media/rail-ticket.svg",
+        "/summit/media/rail-ticket.svg",
         "A full auditorium during the closing keynote",
         "16 / 10"
       ),
@@ -382,7 +382,7 @@ const assembly = {
       glyph: "cross",
       text: "Cross Future Hub is a non-profit guiding tech enthusiasts through the trends that matter. The summit exists to put the people who plan grids in the same room as the people who train models — before the two disciplines have to negotiate under pressure.",
       media: img(
-        "/assembly/media/story-01.svg",
+        "/summit/media/story-01.svg",
         "A plenary session in progress, delegates seated in the round",
         "4 / 3"
       ),
@@ -393,7 +393,7 @@ const assembly = {
       glyph: "node",
       text: "Keynotes, panels and working breakouts across one full day. Every track lands on a node of the same electrical chain, from the interconnection queue to the rack, so the day reads as one argument rather than a parade of talks.",
       media: img(
-        "/assembly/media/story-02.svg",
+        "/summit/media/story-02.svg",
         "A speaker mid-demonstration under stage lighting",
         "4 / 3"
       ),
@@ -404,7 +404,7 @@ const assembly = {
       glyph: "wave",
       text: "Three editions in, the summit has grown from a Toronto gathering into a cross-border convening of academia, industry and the ecosystem organizations that hold them together. Edition 03 moves to Montréal.",
       media: img(
-        "/assembly/media/story-03.svg",
+        "/summit/media/story-03.svg",
         "Delegates networking in the venue foyer",
         "4 / 3"
       ),
@@ -416,14 +416,14 @@ const assembly = {
     title: t.name,
     text: t.description,
     media: img(
-      `/assembly/media/focus-0${i + 1}.svg`,
+      `/summit/media/focus-0${i + 1}.svg`,
       `${t.name} — illustrative figure`,
       "3 / 2"
     ),
   })),
 
   focusMedia: img(
-    "/assembly/media/focus-hero.svg",
+    "/summit/media/focus-hero.svg",
     "A data hall corridor, cabinets receding into the distance",
     "1 / 1"
   ),
@@ -525,7 +525,7 @@ const assembly = {
         "As demand for large AI models and high-performance computing accelerates, AI data centers are reshaping the landscape of power infrastructure. The bottleneck has moved.",
       readMin: 6,
       media: img(
-        "/assembly/media/journal-01.svg",
+        "/summit/media/journal-01.svg",
         "Transmission infrastructure at dusk",
         "3 / 2"
       ),
@@ -538,7 +538,7 @@ const assembly = {
         "Ultra-high-density loads do not just need more megawatts. They need grid capacity, power quality and supply reliability arriving together, on a schedule nobody controls alone.",
       readMin: 8,
       media: img(
-        "/assembly/media/journal-02.svg",
+        "/summit/media/journal-02.svg",
         "A substation control room",
         "3 / 2"
       ),
@@ -551,7 +551,7 @@ const assembly = {
         "Backup power, energy storage and dispatch stop being separate procurement lines once the facility is treated as a controllable load on a decarbonizing grid.",
       readMin: 5,
       media: img(
-        "/assembly/media/journal-03.svg",
+        "/summit/media/journal-03.svg",
         "Battery energy storage containers on site",
         "3 / 2"
       ),
@@ -569,7 +569,7 @@ const assembly = {
         { value: "TO", label: "City" },
       ],
       media: img(
-        "/assembly/media/past-2024.svg",
+        "/summit/media/past-2024.svg",
         "Edition 01 plenary, Toronto",
         "16 / 10"
       ),
@@ -584,7 +584,7 @@ const assembly = {
         { value: "TO", label: "City" },
       ],
       media: img(
-        "/assembly/media/past-2025.svg",
+        "/summit/media/past-2025.svg",
         "Edition 02 audience during the closing keynote",
         "16 / 10"
       ),
@@ -599,7 +599,7 @@ const assembly = {
         { value: "YUL", label: "City" },
       ],
       media: img(
-        "/assembly/media/past-2026.svg",
+        "/summit/media/past-2026.svg",
         "Montréal venue exterior",
         "16 / 10"
       ),
@@ -613,9 +613,9 @@ const assembly = {
       date: "2025-01-16",
       excerpt:
         "Welcome to the AI and Technology Summit, hosted by the Canada Universal Media Association and Cross Future Hub.",
-      crest: img("/assembly/documents/crest-ontario.svg", "Coat of arms of Ontario", "1 / 1"),
+      crest: img("/summit/documents/crest-ontario.svg", "Coat of arms of Ontario", "1 / 1"),
       document: img(
-        "/assembly/documents/ontario-letter.svg",
+        "/summit/documents/ontario-letter.svg",
         "Congratulatory letter from the Province of Ontario",
         "17 / 22"
       ),
@@ -626,9 +626,9 @@ const assembly = {
       date: "2025-01-16",
       excerpt:
         "It is my pleasure to welcome everyone attending the Cross Future AI and Technology Summit, Shaping Future of AI, Innovating for Tomorrow, hosted by Cross Future Hub.",
-      crest: img("/assembly/documents/crest-toronto.svg", "Crest of the City of Toronto", "1 / 1"),
+      crest: img("/summit/documents/crest-toronto.svg", "Crest of the City of Toronto", "1 / 1"),
       document: img(
-        "/assembly/documents/toronto-mayor-letter.svg",
+        "/summit/documents/toronto-mayor-letter.svg",
         "Message from the Mayor of the City of Toronto",
         "17 / 22"
       ),
@@ -636,14 +636,14 @@ const assembly = {
   ],
 
   gallery: [
-    img("/assembly/media/gallery-01.svg", "Delegates arriving at registration", "4 / 3"),
-    img("/assembly/media/gallery-02.svg", "A keynote in progress", "16 / 10"),
-    img("/assembly/media/gallery-03.svg", "Breakout room discussion", "1 / 1"),
-    img("/assembly/media/gallery-04.svg", "Interview filming on the mezzanine", "3 / 4"),
-    img("/assembly/media/gallery-05.svg", "The partner wall in the foyer", "16 / 10"),
-    img("/assembly/media/gallery-06.svg", "Closing reception", "4 / 3"),
-    img("/assembly/media/gallery-07.svg", "Whiteboard from the dispatch breakout", "3 / 2"),
-    img("/assembly/media/gallery-08.svg", "Montréal at night from the venue", "16 / 9"),
+    img("/summit/media/gallery-01.svg", "Delegates arriving at registration", "4 / 3"),
+    img("/summit/media/gallery-02.svg", "A keynote in progress", "16 / 10"),
+    img("/summit/media/gallery-03.svg", "Breakout room discussion", "1 / 1"),
+    img("/summit/media/gallery-04.svg", "Interview filming on the mezzanine", "3 / 4"),
+    img("/summit/media/gallery-05.svg", "The partner wall in the foyer", "16 / 10"),
+    img("/summit/media/gallery-06.svg", "Closing reception", "4 / 3"),
+    img("/summit/media/gallery-07.svg", "Whiteboard from the dispatch breakout", "3 / 2"),
+    img("/summit/media/gallery-08.svg", "Montréal at night from the venue", "16 / 9"),
   ],
 
   registerBenefits: [
@@ -671,7 +671,7 @@ const assembly = {
   },
 
   footerBand: img(
-    "/assembly/media/footer-band.svg",
+    "/summit/media/footer-band.svg",
     "Wide view of the summit floor at capacity",
     "32 / 9"
   ),
@@ -681,43 +681,43 @@ const assembly = {
       eyebrow: "About",
       title: "Behind the summit",
       lede: "Cross Future Hub is a non-profit guiding tech enthusiasts through key trends. The summit is its one day a year where the argument gets made in person.",
-      media: img("/assembly/media/intro-about.svg", "The venue main hall before doors open", "21 / 9"),
+      media: img("/summit/media/intro-about.svg", "The venue main hall before doors open", "21 / 9"),
     },
     speakers: {
       eyebrow: "Faculty",
       title: "Meet the faculty",
       lede: "Researchers, industry engineers and the ecosystem organizations that connect them — the full Edition 03 roster.",
-      media: img("/assembly/media/intro-speakers.svg", "Faculty on stage during a panel", "21 / 9"),
+      media: img("/summit/media/intro-speakers.svg", "Faculty on stage during a panel", "21 / 9"),
     },
     agenda: {
       eyebrow: "Agenda",
       title: "Shape of the day",
       lede: "One day, 08:30 to 17:30. The structure is fixed; named sessions publish to registrants first.",
-      media: img("/assembly/media/intro-agenda.svg", "The main stage set for the opening", "21 / 9"),
+      media: img("/summit/media/intro-agenda.svg", "The main stage set for the opening", "21 / 9"),
     },
     media: {
       eyebrow: "Media",
       title: "Voices and archive",
       lede: "Recorded interviews with the faculty, and the photographic record of every edition so far.",
-      media: img("/assembly/media/intro-media.svg", "An interview being filmed", "21 / 9"),
+      media: img("/summit/media/intro-media.svg", "An interview being filmed", "21 / 9"),
     },
     partners: {
       eyebrow: "Partners",
       title: "Partners in innovation",
       lede: "Universities, industry and community organizations. The summit is a non-profit event and runs on their support.",
-      media: img("/assembly/media/intro-partners.svg", "The partner wall in the foyer", "21 / 9"),
+      media: img("/summit/media/intro-partners.svg", "The partner wall in the foyer", "21 / 9"),
     },
     register: {
       eyebrow: "Register",
       title: "Ready to be part of it?",
       lede: "Registration is handled by our events partner. Tell us what you need and we will confirm before the day.",
-      media: img("/assembly/media/intro-register.svg", "Delegates at the registration desk", "21 / 9"),
+      media: img("/summit/media/intro-register.svg", "Delegates at the registration desk", "21 / 9"),
     },
     contact: {
       eyebrow: "Contact",
       title: "Connect with us",
       lede: "Questions about the programme, partnership, press or access — this reaches the organizing team directly.",
-      media: img("/assembly/media/intro-contact.svg", "The organizing team at the front desk", "21 / 9"),
+      media: img("/summit/media/intro-contact.svg", "The organizing team at the front desk", "21 / 9"),
     },
   },
 };
@@ -798,7 +798,7 @@ const interviews = INTERVIEWS.map(([person, title, durationMin, featured, pullQu
   featured,
   ...(pullQuote ? { pullQuote } : {}),
   image: {
-    sourceUrl: `/assembly/interviews/${person}.svg`,
+    sourceUrl: `/summit/interviews/${person}.svg`,
     alt: `Still from the recorded interview with ${person
       .split("-")
       .map((s) => s[0].toUpperCase() + s.slice(1))

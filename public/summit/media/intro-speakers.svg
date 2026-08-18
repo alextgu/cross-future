@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 514" width="1200" height="514" role="img" aria-label="Faculty on stage during a panel">
+<title>PLACEHOLDER — Faculty on stage during a panel</title>
+<rect width="1200" height="514" fill="#e6e6e3"/>
+<rect x="0" y="52" width="1200" height="59" fill="#8f8f8c" opacity="0.55"/><rect x="0" y="180" width="1200" height="134" fill="#6f6f6c" opacity="0.55"/><rect x="0" y="480" width="1200" height="163" fill="#6f6f6c" opacity="0.55"/>
+<circle cx="79" cy="88" r="141" fill="#4a4a46" opacity="0.5"/><circle cx="706" cy="33" r="159" fill="#6f6f6c" opacity="0.5"/>
+<path d="M536 0 L1050 514 L930 514 L416 0 Z" fill="#3a3a35" opacity="0.16"/>
+<g font-family="IBM Plex Mono, ui-monospace, monospace" font-size="20" fill="#3a3a35" opacity="0.62">
+<text x="28" y="42">PLACEHOLDER</text>
+<text x="28" y="488">1200×514 · 21 / 9</text>
+</g>
+<rect x="10" y="10" width="1180" height="494" fill="none" stroke="#3a3a35" stroke-opacity="0.3" stroke-dasharray="10 8"/>
+</svg>

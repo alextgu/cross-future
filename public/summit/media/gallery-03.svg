@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" width="1200" height="1200" role="img" aria-label="Breakout room discussion">
+<title>PLACEHOLDER — Breakout room discussion</title>
+<rect width="1200" height="1200" fill="#e6e6e3"/>
+<rect x="0" y="700" width="1200" height="226" fill="#c6c6c2" opacity="0.55"/><rect x="0" y="218" width="1200" height="421" fill="#adadaa" opacity="0.55"/><rect x="0" y="1012" width="1200" height="248" fill="#4a4a46" opacity="0.55"/>
+<circle cx="305" cy="517" r="564" fill="#d9d9d6" opacity="0.5"/><circle cx="226" cy="1177" r="266" fill="#4a4a46" opacity="0.5"/>
+<path d="M316 0 L1516 1200 L1396 1200 L196 0 Z" fill="#3a3a35" opacity="0.16"/>
+<g font-family="IBM Plex Mono, ui-monospace, monospace" font-size="20" fill="#3a3a35" opacity="0.62">
+<text x="28" y="42">PLACEHOLDER</text>
+<text x="28" y="1174">1200×1200 · 1 / 1</text>
+</g>
+<rect x="10" y="10" width="1180" height="1180" fill="none" stroke="#3a3a35" stroke-opacity="0.3" stroke-dasharray="10 8"/>
+</svg>
