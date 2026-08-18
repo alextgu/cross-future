@@ -1,26 +1,46 @@
 import type { Metadata } from "next";
-import { Inter_Tight, IBM_Plex_Mono } from "next/font/google";
-import { getSummitContent, getCurrentEdition, getHostOrganization } from "@/lib/content";
+import { Barlow, Barlow_Semi_Condensed, IBM_Plex_Mono } from "next/font/google";
+import {
+  getAssembly,
+  getCurrentEdition,
+  getHostOrganization,
+  getSummitContent,
+} from "@/lib/content";
+import AsmFooter from "@/components/assembly/AsmFooter";
+import AsmNav from "@/components/assembly/AsmNav";
 import "./globals.css";
+import "./assembly/assembly.css";
 
-const interTight = Inter_Tight({
+const display = Barlow_Semi_Condensed({
   subsets: ["latin"],
-  variable: "--font-inter-tight",
+  weight: ["400", "600", "700"],
+  variable: "--font-asm-display",
   display: "swap",
 });
 
-const plexMono = IBM_Plex_Mono({
+const body = Barlow({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-asm-body",
+  display: "swap",
+});
+
+const mono = IBM_Plex_Mono({
   subsets: ["latin"],
   weight: ["400", "500"],
-  variable: "--font-plex-mono",
+  variable: "--font-asm-mono",
   display: "swap",
 });
 
 export async function generateMetadata(): Promise<Metadata> {
-  const content = await getSummitContent();
+  const content = await getSummitContent("assembly");
   const edition = getCurrentEdition(content);
+
   return {
-    title: edition.seo.title,
+    title: {
+      default: edition.seo.title,
+      template: `%s — ${edition.name}`,
+    },
     description: edition.seo.description,
   };
 }
@@ -28,9 +48,10 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const content = await getSummitContent();
+  const content = await getSummitContent("assembly");
   const edition = getCurrentEdition(content);
   const host = getHostOrganization(content);
+  const assembly = getAssembly(content);
 
   const eventJsonLd = {
     "@context": "https://schema.org",
@@ -63,23 +84,21 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`${interTight.variable} ${plexMono.variable}`}>
+      <body>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(eventJsonLd) }}
         />
-        <a className="skip-link" href="#main">
-          Skip to content
-        </a>
-        <div className="column-rules" aria-hidden="true">
-          <span />
-          <span />
-          <span />
-          <span />
-          <span />
-          <span />
+        <div
+          className={`assembly ${display.variable} ${body.variable} ${mono.variable}`}
+        >
+          <a className="asm-skip" href="#main">
+            Skip to content
+          </a>
+          <AsmNav year={edition.year} />
+          {children}
+          <AsmFooter edition={edition} host={host} assembly={assembly} />
         </div>
-        {children}
       </body>
     </html>
   );
