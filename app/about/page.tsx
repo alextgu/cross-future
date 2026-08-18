@@ -21,6 +21,7 @@ import AsmPastEditions from "@/components/assembly/AsmPastEditions";
 import AsmMarquee from "@/components/assembly/AsmMarquee";
 import AsmCta from "@/components/assembly/AsmCta";
 import AsmGlyph from "@/components/assembly/AsmGlyph";
+import AsmInfrastructure from "@/components/assembly/AsmInfrastructure";
 
 export const metadata: Metadata = {
   title: "About",
@@ -95,6 +96,7 @@ export default async function AboutPage() {
         tone="plain"
         size="d2"
       />
+      <AsmInfrastructure tracks={content.tracks} />
       <AsmFocus areas={assembly.focusAreas} />
 
       <AsmSectionHead

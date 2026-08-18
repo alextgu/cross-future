@@ -1436,6 +1436,88 @@
 }
 
 /* ============================================================
+   Utility-to-rack system map
+   ============================================================ */
+
+.assembly .asm-infrastructure {
+  padding: var(--asm-pad);
+}
+
+.assembly .asm-infrastructure-caption {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(240px, 0.65fr);
+  gap: var(--asm-pad);
+  align-items: end;
+  margin-bottom: var(--asm-pad-tight);
+}
+
+.assembly .asm-infrastructure-caption .asm-d2 {
+  margin-top: 12px;
+}
+
+.assembly .asm-infrastructure-scroll {
+  overflow-x: auto;
+  border: 1px solid var(--asm-hair-inv);
+  border-radius: var(--asm-radius-sm);
+}
+
+.assembly .asm-infrastructure svg {
+  min-width: 690px;
+  width: 100%;
+  height: auto;
+  color: var(--asm-on-deep);
+}
+
+.assembly .asm-infrastructure-grid,
+.assembly .asm-infrastructure-detail,
+.assembly .asm-infrastructure-wire,
+.assembly .asm-infrastructure-symbol {
+  fill: none;
+  stroke: currentColor;
+}
+
+.assembly .asm-infrastructure-grid {
+  stroke: var(--asm-hair-inv);
+  stroke-width: 1;
+}
+
+.assembly .asm-infrastructure-wire {
+  stroke-width: 2;
+}
+
+.assembly .asm-infrastructure-symbol,
+.assembly .asm-infrastructure-detail {
+  stroke-width: 1.5;
+}
+
+.assembly .asm-infrastructure-dot {
+  fill: currentColor;
+}
+
+.assembly .asm-infrastructure-label,
+.assembly .asm-infrastructure-track {
+  fill: currentColor;
+  font-family: var(--asm-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.assembly .asm-infrastructure-label {
+  font-size: 10px;
+}
+
+.assembly .asm-infrastructure-track {
+  font-size: 11px;
+  font-weight: 500;
+}
+
+@media (max-width: 720px) {
+  .assembly .asm-infrastructure-caption {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ============================================================
    FAQ — native <details>, no JS
    ============================================================ */
 
