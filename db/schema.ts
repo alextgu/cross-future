@@ -9,7 +9,6 @@ import type {
   AssemblyContent,
   ChainStage,
   EditionStatus,
-  MediaAsset,
   PersonLink,
   SessionStatus,
   SummitContent,
@@ -149,7 +148,7 @@ export const interviews = sqliteTable("interviews", {
   durationMin: integer("duration_min").notNull(),
   featured: integer("featured", { mode: "boolean" }).notNull(),
   pullQuote: text("pull_quote"),
-  image: text("image", { mode: "json" }).$type<MediaAsset>(),
+  image: text("image", { mode: "json" }).$type<{ sourceUrl: string; alt: string }>(),
   url: text("url"),
 });
 
