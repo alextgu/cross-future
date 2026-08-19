@@ -866,9 +866,13 @@
   --asm-media-cap: none;
 }
 
-/* Scanned documents and the archive wall are where a tall crop would lose
-   the content, so their ceiling is generous rather than tight. */
-.assembly .asm-letters,
+/* Scanned documents and the archive wall are where a tight crop would lose
+   the content — but a full page of scan is a screen and a half of paper, so
+   the letters show their head and hand off to the excerpt beside them. */
+.assembly .asm-letters {
+  --asm-media-cap: 42vh;
+}
+
 .assembly .asm-gallery-item {
   --asm-media-cap: 74vh;
 }
@@ -989,6 +993,9 @@
    Section header card
    ============================================================ */
 
+/* Page heroes and the agenda opener still need the two-column head: a title
+   on the left, a lede and an action on the right. Section heads no longer do
+   — see .asm-sechead below. */
 .assembly .asm-head {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 0.62fr);
@@ -1011,6 +1018,60 @@
   gap: 18px;
   justify-items: start;
   align-content: end;
+}
+
+/* Section head: a rule and a line, not a card. See AsmSectionHead. */
+.assembly .asm-sechead {
+  display: grid;
+  grid-template-columns: minmax(0, auto) minmax(0, 1fr) auto;
+  align-items: baseline;
+  column-gap: 22px;
+  row-gap: 6px;
+  padding: 26px 4px 14px;
+  border-top: 1px solid var(--asm-hair);
+}
+
+.assembly .asm-sechead .asm-eyebrow {
+  grid-column: 1;
+}
+
+.assembly .asm-sechead-title {
+  grid-column: 2;
+  font-family: var(--asm-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: clamp(1.45rem, 2.1vw, 2rem);
+  line-height: 1;
+  letter-spacing: -0.005em;
+}
+
+.assembly .asm-sechead-lede {
+  grid-column: 2;
+  grid-row: 2;
+  max-width: 62ch;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--asm-ink-2);
+}
+
+.assembly .asm-sechead-action {
+  grid-column: 3;
+  grid-row: 1;
+  justify-self: end;
+}
+
+@media (max-width: 720px) {
+  .assembly .asm-sechead {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .assembly .asm-sechead .asm-eyebrow,
+  .assembly .asm-sechead-title,
+  .assembly .asm-sechead-lede,
+  .assembly .asm-sechead-action {
+    grid-column: 1;
+    grid-row: auto;
+    justify-self: start;
+  }
 }
 
 /* ============================================================
@@ -1976,23 +2037,33 @@
    Logo wall
    ============================================================ */
 
+.assembly .asm-logowall {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(196px, 1fr));
+  border-radius: var(--asm-radius);
+  overflow: hidden;
+  /* No wall colour behind the cells: a part-filled last row would otherwise
+     paint a block of grey where the missing logos would go. */
+  background: transparent;
+}
+
 .assembly .asm-logo {
   color: var(--asm-on-plain);
   display: grid;
   place-items: center;
-  min-height: 128px;
-  padding: 22px;
-  border-radius: var(--asm-radius-sm);
+  min-height: 116px;
+  padding: 20px 24px;
   background: var(--asm-card-plain);
-  transition: transform 0.18s ease;
+  box-shadow: inset 0 0 0 1px var(--asm-hair);
+  transition: background 0.18s ease;
 }
 
 .assembly .asm-logo:hover {
-  transform: translateY(-2px);
+  background: var(--asm-card-mist);
 }
 
 .assembly .asm-logo img {
-  max-height: 52px;
+  max-height: 56px;
   width: auto;
   object-fit: contain;
 }

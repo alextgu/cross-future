@@ -92,7 +92,6 @@ export default async function ContactPage() {
         title="Possibly already answered"
         lede="The eight things we get asked most."
         tone="deep"
-        size="d2"
         action={{ label: "Register", href: ASSEMBLY_REGISTER }}
       />
       <AsmFaq items={assembly.faq} />

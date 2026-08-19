@@ -80,7 +80,6 @@ export default async function AssemblyHome() {
         title="The making of the summit"
         lede="Three editions in, run by a non-profit, built around one argument rather than a parade of talks."
         tone="plain"
-        size="d2"
       />
       <AsmStory chapters={assembly.story} />
 
@@ -107,7 +106,6 @@ export default async function AssemblyHome() {
         eyebrow="On the record"
         title="What is actually being said"
         tone="plain"
-        size="d2"
       />
       <AsmVoices voices={assembly.voices} />
 
@@ -117,7 +115,6 @@ export default async function AssemblyHome() {
         title="Letters of support"
         lede="Editions 01 and 02 were recognized by the Province of Ontario and the City of Toronto."
         tone="tint"
-        size="d2"
       />
       <AsmLetters letters={assembly.letters} />
 
@@ -126,7 +123,6 @@ export default async function AssemblyHome() {
         title="Why this summit exists"
         lede="Three short briefings on the problem the programme is built around."
         tone="plain"
-        size="d2"
       />
       <AsmJournal posts={assembly.journal} />
 
@@ -135,7 +131,6 @@ export default async function AssemblyHome() {
         title="Past editions and key resources"
         action={{ label: "Media archive", href: `${ASSEMBLY_BASE}/media` }}
         tone="deep"
-        size="d2"
       />
       <AsmPastEditions
         editions={assembly.pastEditions}
@@ -147,7 +142,6 @@ export default async function AssemblyHome() {
         eyebrow="Questions"
         title="Questions answered"
         lede="Everything we get asked most often. If it is not here, the contact form reaches the organizing team."
-        size="d2"
       />
       <AsmFaq items={assembly.faq} />
 

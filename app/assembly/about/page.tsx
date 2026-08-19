@@ -66,7 +66,6 @@ export default async function AboutPage() {
         title="The making of the summit"
         lede={`Hosted by ${host?.name ?? "Cross Future Hub"}, a non-profit. Three editions, one argument, built in public.`}
         tone="plain"
-        size="d2"
       />
       <AsmStory chapters={assembly.story} />
 
@@ -76,7 +75,6 @@ export default async function AboutPage() {
         eyebrow="Thesis"
         title="The future is already a power problem"
         tone="deep"
-        size="d2"
         lede={edition.thesis}
       />
       <AsmVoices voices={assembly.voices} />
@@ -93,7 +91,6 @@ export default async function AboutPage() {
         title="What the day is about"
         lede="Four tracks, each pinned to a node on the same electrical chain."
         tone="plain"
-        size="d2"
       />
       <AsmFocus areas={assembly.focusAreas} />
 
@@ -101,7 +98,6 @@ export default async function AboutPage() {
         eyebrow="Recognition"
         title="Letters of support"
         tone="tint"
-        size="d2"
       />
       <AsmLetters letters={assembly.letters} />
 
@@ -109,7 +105,6 @@ export default async function AboutPage() {
         eyebrow="Archive"
         title="Where it has been"
         action={{ label: "Media archive", href: `${ASSEMBLY_BASE}/media` }}
-        size="d2"
       />
       <AsmPastEditions
         editions={assembly.pastEditions}

@@ -3,50 +3,48 @@ import AsmButton from "./AsmButton";
 export type AsmTone = "plain" | "mist" | "tint" | "deep" | "accent";
 
 /**
- * The header card that opens every section: bracketed mono eyebrow, oversized
- * display heading, and an optional lede plus action sitting bottom-right.
- * Sections never write their own header markup — the rhythm of the page comes
- * from this being identical everywhere.
+ * The band that opens every section: a hairline rule, a mono eyebrow, the
+ * title, and an optional lede and action on the same line.
+ *
+ * It used to be a padded card with display type up to 6rem — seven of them on
+ * the home page came to a third of its height, and every section arrived
+ * behind a slab instead of starting. A section head is a label, not a
+ * landmark; the cards below it are the content.
+ *
+ * Sections never write their own header markup, so the rhythm of the page
+ * comes from this being identical everywhere.
  */
 export default function AsmSectionHead({
   eyebrow,
   title,
   lede,
   action,
-  tone = "mist",
-  size = "d1",
+  tone = "plain",
   id,
 }: {
   eyebrow: string;
   title: React.ReactNode;
   lede?: string;
   action?: { label: string; href: string };
+  /** Only decides which button treatment reads on the surrounding ground. */
   tone?: AsmTone;
-  size?: "d1" | "d2";
   id?: string;
 }) {
-  const solo = !lede && !action;
   return (
-    <div className={`asm-card is-padded t-${tone}`} id={id}>
-      <div className={`asm-head${solo ? " is-solo" : ""}`}>
-        <div className="asm-head-title">
-          <p className="asm-eyebrow">{eyebrow}</p>
-          <h2 className={`asm-${size}`}>{title}</h2>
+    <header className="asm-sechead" id={id}>
+      <p className="asm-eyebrow">{eyebrow}</p>
+      <h2 className="asm-sechead-title">{title}</h2>
+      {lede ? <p className="asm-sechead-lede">{lede}</p> : null}
+      {action ? (
+        <div className="asm-sechead-action">
+          <AsmButton
+            href={action.href}
+            tone={tone === "deep" || tone === "accent" ? "inverse" : "ghost"}
+          >
+            {action.label}
+          </AsmButton>
         </div>
-        {solo ? null : (
-          <div className="asm-head-aside">
-            {lede ? <p className="asm-lede">{lede}</p> : null}
-            {action ? (
-              <AsmButton
-                href={action.href}
-                tone={tone === "deep" || tone === "accent" ? "inverse" : "accent"}
-              >
-                {action.label}
-              </AsmButton>
-            ) : null}
-          </div>
-        )}
-      </div>
-    </div>
+      ) : null}
+    </header>
   );
 }

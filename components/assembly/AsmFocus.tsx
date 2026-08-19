@@ -42,9 +42,11 @@ export default function AsmFocus({
 
       <div className="asm-row" style={{ ["--cols" as string]: 4, ["--cols-md" as string]: 2 }}>
         {areas.map((area, i) => (
-          <article key={area.code} className="asm-card t-plain">
-            {area.media ? <AsmMedia media={area.media} aspect="3 / 2" /> : null}
-            <div style={{ padding: "var(--asm-pad-tight)", display: "grid", gap: 12 }}>
+          /* No image per card. The four stand-ins were four grey rectangles
+             in a row under an opener that already carries a picture, and the
+             text is the content here. */
+          <article key={area.code} className="asm-card is-padded t-plain">
+            <div style={{ display: "grid", gap: 12 }}>
               <span className="asm-chip">{area.code}</span>
               <h3 className="asm-d3">{area.title}</h3>
               <p className="asm-body" style={{ fontSize: "0.92rem" }}>

@@ -16,7 +16,6 @@ import AsmFacts from "@/components/assembly/AsmFacts";
 import AsmMarquee from "@/components/assembly/AsmMarquee";
 import AsmSectionHead from "@/components/assembly/AsmSectionHead";
 import AsmFacultyGrid from "@/components/assembly/AsmFacultyGrid";
-import AsmStory from "@/components/assembly/AsmStory";
 import AsmPartners from "@/components/assembly/AsmPartners";
 import AsmFocus from "@/components/assembly/AsmFocus";
 import AsmInterviews from "@/components/assembly/AsmInterviews";
@@ -66,10 +65,16 @@ export default async function AssemblyHome() {
         eyebrow="Cross Future Hub"
         title="Why this summit exists"
         tone="plain"
-        size="d2"
         action={{ label: "About the host", href: `${ASSEMBLY_BASE}/about` }}
       />
-      <AsmStory chapters={assembly.story.slice(0, 1)} />
+      {/* The paragraph itself, not a chapter card: the section head above
+          already carries the title, and the chapter frame repeated it over a
+          screen of empty card and a stand-in photograph. */}
+      <div className="asm-card is-padded t-plain">
+        <p className="asm-lede" style={{ maxWidth: "68ch" }}>
+          {assembly.story[0]?.text}
+        </p>
+      </div>
 
       <AsmSectionHead
         id="interviews"
@@ -77,7 +82,7 @@ export default async function AssemblyHome() {
         title="Voices from the floor"
         action={{ label: "Media archive", href: `${ASSEMBLY_BASE}/media` }}
       />
-      <AsmInterviews cards={interviews.slice(0, 8)} />
+      <AsmInterviews cards={interviews.slice(0, 4)} />
 
       <AsmSectionHead
         id="faculty"
@@ -99,13 +104,13 @@ export default async function AssemblyHome() {
         title="The shape of the day"
         action={{ label: "Full agenda", href: `${ASSEMBLY_BASE}/agenda` }}
         tone="plain"
-        size="d2"
       />
       <AsmAgenda
         edition={edition}
         confirmed={confirmed}
         proposed={proposed}
         tracks={content.tracks}
+        variant="strip"
       />
 
       <AsmSectionHead
@@ -114,7 +119,6 @@ export default async function AssemblyHome() {
         title="Letters of support"
         lede="Editions 01 and 02 were recognized by the Province of Ontario and the City of Toronto."
         tone="tint"
-        size="d2"
       />
       <AsmLetters letters={assembly.letters} />
 

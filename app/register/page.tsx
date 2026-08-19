@@ -168,7 +168,6 @@ export default async function RegisterPage() {
         title="Before you register"
         lede="If it is not answered here, the contact form reaches the organizing team directly."
         tone="tint"
-        size="d2"
         action={{ label: "Contact us", href: `${ASSEMBLY_BASE}/contact` }}
       />
       <AsmFaq items={assembly.faq} />

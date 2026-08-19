@@ -65,7 +65,6 @@ export default async function SpeakersPage() {
             }
             lede={GROUP_COPY[group.category]}
             tone={i % 2 === 0 ? "mist" : "plain"}
-            size="d2"
           />
           <AsmFacultyGrid members={group.members} columns={4} />
         </section>

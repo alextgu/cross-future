@@ -56,7 +56,6 @@ export default async function MediaPage() {
         eyebrow="Featured"
         title="Start here"
         lede="Five conversations that frame the whole programme."
-        size="d2"
       />
       <AsmInterviews cards={featured} columns={3} />
 
@@ -65,7 +64,6 @@ export default async function MediaPage() {
         title="Every interview"
         lede="Filmed on site at each edition. New conversations publish between summits, not only on the day."
         tone="plain"
-        size="d2"
       />
       <AsmInterviews cards={rest} columns={4} />
 
@@ -74,7 +72,6 @@ export default async function MediaPage() {
         title="On the floor"
         lede="The photographic record — plenaries, breakouts, the foyer, the reception."
         tone="tint"
-        size="d2"
       />
       <AsmGallery items={assembly.gallery} />
 
@@ -82,7 +79,6 @@ export default async function MediaPage() {
         eyebrow="Archive"
         title="By edition"
         tone="deep"
-        size="d2"
       />
       <AsmPastEditions
         editions={assembly.pastEditions}
@@ -92,7 +88,6 @@ export default async function MediaPage() {
       <AsmSectionHead
         eyebrow="Field notes"
         title="Written record"
-        size="d2"
       />
       <AsmJournal posts={assembly.journal} />
 

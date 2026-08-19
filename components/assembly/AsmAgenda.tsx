@@ -14,11 +14,19 @@ export default function AsmAgenda({
   confirmed,
   proposed,
   tracks,
+  variant = "full",
 }: {
   edition: Edition;
   confirmed: Session[];
   proposed: Session[];
   tracks: Track[];
+  /**
+   * "full" is the agenda page: the date card, the strip and the track list.
+   * "strip" is everywhere else — just the sessions. On the home page the date
+   * is already in the facts row above and the tracks are the focus areas, so
+   * the full block said each of them twice.
+   */
+  variant?: "full" | "strip";
 }) {
   const published = confirmed.length > 0;
   const rows = published ? confirmed : proposed;
@@ -38,6 +46,10 @@ export default function AsmAgenda({
       room: session.room,
     };
   });
+
+  if (variant === "strip") {
+    return <AsmAgendaStrip items={items} provisional={!published} />;
+  }
 
   return (
     <div className="asm-stack">

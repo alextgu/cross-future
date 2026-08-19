@@ -51,7 +51,6 @@ export default async function AgendaPage() {
         eyebrow="Questions"
         title="Before the day"
         tone="plain"
-        size="d2"
       />
       <AsmFaq items={agendaFaq} />
 

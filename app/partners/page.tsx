@@ -70,14 +70,13 @@ export default async function PartnersPage() {
         lede="Meet the organizations fuelling the summit. Edition 03 runs on their support."
         tone="deep"
       />
-      <AsmPartners groups={groups} columns={5} />
+      <AsmPartners groups={groups} />
 
       <AsmSectionHead
         eyebrow="Recognition"
         title="Letters of support"
         lede="Editions 01 and 02 were recognized by the Province of Ontario and the Office of the Mayor of Toronto."
         tone="tint"
-        size="d2"
       />
       <AsmLetters letters={assembly.letters} />
 
@@ -85,7 +84,6 @@ export default async function PartnersPage() {
         eyebrow="Become a partner"
         title="What partnership looks like"
         tone="plain"
-        size="d2"
       />
       <div className="asm-row" style={{ ["--cols" as string]: 2 }}>
         {TIERS.map((tier) => (
