@@ -1,15 +1,13 @@
-import Link from "next/link";
 import type { AssemblyContent, Edition, Organization } from "@/lib/content";
 import { formatEditionDate } from "@/lib/content";
 import {
   ASSEMBLY_REGISTER,
-  ASSEMBLY_ROUTES,
-  ASSEMBLY_RSVP_LABEL,
-  ASSEMBLY_RSVP_URL,
+  ASSEMBLY_REGISTER_LABEL,
 } from "@/lib/assembly-nav";
 import AsmButton from "./AsmButton";
 import AsmCountdown from "./AsmCountdown";
 import AsmMedia from "./AsmMedia";
+import { AsmLockup } from "./AsmLogo";
 
 export default function AsmFooter({
   edition,
@@ -39,27 +37,23 @@ export default function AsmFooter({
               {formatEditionDate(edition)} · {edition.venue.name},{" "}
               {edition.venue.city}
             </p>
-            <AsmCountdown targetIso={edition.startsAt} />
-            <div style={{ marginTop: 22 }}>
-              <AsmButton href={ASSEMBLY_RSVP_URL} tone="inverse">
-                {ASSEMBLY_RSVP_LABEL}
+            {/* One button. The EventGo handoff lives on /register, where it
+                is the next step rather than a second competing choice. */}
+            <div className="asm-footer-actions">
+              <AsmButton href={ASSEMBLY_REGISTER} tone="inverse">
+                {ASSEMBLY_REGISTER_LABEL}
               </AsmButton>
             </div>
           </div>
 
-          <nav aria-label="Footer">
-            <h3>Pages</h3>
-            <ul>
-              {ASSEMBLY_ROUTES.map((route) => (
-                <li key={route.href}>
-                  <Link href={route.href}>{route.label}</Link>
-                </li>
-              ))}
-              <li>
-                <Link href={ASSEMBLY_REGISTER}>Register</Link>
-              </li>
-            </ul>
-          </nav>
+          {/* The clock is the reason to read the footer at all, so it takes
+              the middle column rather than trailing the address block. The
+              page list is gone: the nav is a table of contents for the same
+              page, and the sections are one scroll away. */}
+          <div className="asm-footer-clock">
+            <h3>Doors open in</h3>
+            <AsmCountdown targetIso={edition.startsAt} />
+          </div>
 
           <div>
             <h3>Contact</h3>
@@ -79,6 +73,10 @@ export default function AsmFooter({
 
           <div>
             <h3>Host</h3>
+            <AsmLockup
+              className="asm-footer-lockup"
+              label={host ? host.name : "Cross Future Hub"}
+            />
             <p className="asm-lede">
               {host ? host.name : "Cross Future Hub"} is a non-profit guiding
               tech enthusiasts through key trends.

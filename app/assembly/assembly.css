@@ -7,8 +7,10 @@
    TOKENS ARE IN TWO TIERS.
    Tier 1 names the value. Tier 2 names the job. Components use
    ONLY Tier 2. Retheming this design = editing Tier 1 and nothing
-   else. This first pass is deliberately grayscale so hierarchy,
-   spacing and contrast can be approved before brand colour returns.
+   else — which is exactly what app/assembly/themes.css does: every
+   alternative scheme there restates Tier 1 and touches nothing else.
+   The layout was approved in greyscale first; colour arrived as a
+   token swap, so the hierarchy it was approved on is unchanged.
 
    Every rule is scoped under .assembly so this file cannot leak
    into Design A or Design B.
@@ -16,25 +18,36 @@
 
 .assembly {
   /* ---------- Tier 1: primitives ----------
-     A neutral value ramp with enough separation for small mono labels,
-     inverse cards and focus indicators. This block is the whole theme.
-     Nothing below Tier 2 references a literal colour. */
-  --asm-n-000: #ffffff;
-  --asm-n-025: #fafafa;
-  --asm-n-050: #f4f4f4;
-  --asm-n-100: #e8e8e8;
-  --asm-n-150: #dddddd;
-  --asm-n-200: #cecece;
-  --asm-n-300: #b6b6b6;
-  --asm-n-400: #969696;
-  --asm-n-500: #767676;
-  --asm-n-600: #5d5d5d;
-  --asm-n-700: #414141;
-  --asm-n-800: #262626;
-  --asm-n-900: #111111;
+     A value ramp with enough separation for small mono labels, inverse cards
+     and focus indicators. This block is the whole theme: every alternative
+     scheme in themes.css restates exactly these names and nothing else.
+     Nothing below Tier 2 references a literal colour.
 
-  --asm-c-sky: #d7d7d7;
-  --asm-c-blue: #1d1d1d;
+     The default ramp is the Cross Future blue (#215f9a, sampled from the
+     real mark) carried through the neutrals as a cool cast, so the greyscale
+     layout that was approved keeps its value structure. */
+  --asm-n-000: #ffffff;
+  --asm-n-025: #f8fafc;
+  --asm-n-050: #eef2f7;
+  --asm-n-100: #e1e8f0;
+  --asm-n-150: #d3dde9;
+  --asm-n-200: #c1cedd;
+  --asm-n-300: #a4b5c9;
+  --asm-n-400: #8496ad;
+  --asm-n-500: #697b92;
+  --asm-n-600: #536377;
+  --asm-n-700: #3a495c;
+  --asm-n-800: #1e2c3d;
+  --asm-n-900: #0d1723;
+
+  --asm-c-sky: #cfe0f0;
+  --asm-c-blue: #215f9a;
+  /* The one value no scheme restates. Type set over photography has to stay
+     light whatever the ramp is doing, or an inverted scheme puts dark text on
+     a dark picture. */
+  --asm-c-white: #ffffff;
+  /* Likewise the scrim: it darkens a photograph, so it is always dark. */
+  --asm-c-black: #060b11;
 
   /* Role hues. Each names the job it does in the composition, not what it
      looks like — which is what made the greyscale-to-colour swap mechanical. */
@@ -55,6 +68,10 @@
   --asm-ink-3: var(--asm-n-600);
   --asm-ink-inv: var(--asm-n-000);
   --asm-ink-inv-2: color-mix(in srgb, var(--asm-n-000) 66%, transparent);
+  /* Ink for surfaces whose background is a photograph rather than a token. */
+  --asm-ink-media: var(--asm-c-white);
+  --asm-ink-media-2: color-mix(in srgb, var(--asm-c-white) 74%, transparent);
+  --asm-scrim: var(--asm-c-black);
 
   --asm-card-plain: var(--asm-n-000);
   --asm-card-mist: var(--asm-h-mist);
@@ -80,7 +97,7 @@
      different origins reads as one set. Two stops, mapped in a filter. */
   --asm-duo-shadow: var(--asm-n-900);
   --asm-duo-light: var(--asm-c-sky);
-  --asm-duo-strength: 0.8;
+  --asm-duo-strength: 0.55;
 
   /* ---------- Metrics ---------- */
   --asm-gap: 10px;
@@ -340,15 +357,28 @@
 .assembly .t-accent,
 .assembly .asm-person,
 .assembly .asm-ticket,
-.assembly .asm-drawer,
-.assembly .asm-railfeature,
-.assembly .asm-herotile,
-.assembly .asm-heromain,
-.assembly .asm-hero {
+.assembly .asm-drawer {
   --asm-ink: var(--asm-ink-inv);
   --asm-ink-2: var(--asm-ink-inv-2);
   --asm-ink-3: var(--asm-ink-inv-2);
   color: var(--asm-ink-inv);
+}
+
+/* Scrimmed media surfaces. Their ground is a picture, so their ink cannot be
+   derived from the ramp — under an inverted scheme that would put near-black
+   type on a photograph. They take the fixed light ink instead, and the
+   hairlines that sit on them follow. */
+.assembly .asm-railfeature,
+.assembly .asm-herotile,
+.assembly .asm-heromain,
+.assembly .asm-hero {
+  --asm-ink: var(--asm-ink-media);
+  --asm-ink-2: var(--asm-ink-media-2);
+  --asm-ink-3: var(--asm-ink-media-2);
+  --asm-ink-inv: var(--asm-ink-media);
+  --asm-ink-inv-2: var(--asm-ink-media-2);
+  --asm-hair-inv: color-mix(in srgb, var(--asm-c-white) 26%, transparent);
+  color: var(--asm-ink-media);
 }
 
 .assembly .t-deep {
@@ -396,6 +426,32 @@
   top: 0;
   z-index: 60;
   padding: var(--asm-gap) var(--asm-gap) 0;
+  /* Leaves on the way down, returns on the way up or when the pointer
+     reaches for the top of the window. Transform rather than display so the
+     bar is still in the tab order and still there for a screen reader. */
+  transition: transform 0.24s cubic-bezier(0.3, 0.7, 0.2, 1);
+  will-change: transform;
+}
+
+.assembly .asm-navbar.is-hidden {
+  transform: translateY(calc(-100% - var(--asm-gap)));
+}
+
+/* Anchors into the page, so the current section is a state the bar can show. */
+.assembly .asm-navlinks a[aria-current="true"] {
+  background: var(--asm-card-mist);
+  color: var(--asm-ink);
+}
+
+/* Any anchor target clears the bar when it is jumped to. */
+.assembly [id] {
+  scroll-margin-top: calc(var(--asm-nav) + var(--asm-gap) * 3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .assembly .asm-navbar {
+    transition: none;
+  }
 }
 
 .assembly .asm-navbar-inner {
@@ -406,9 +462,12 @@
   gap: var(--asm-gap);
   min-height: var(--asm-nav);
   padding: 8px 8px 8px 18px;
-  border-radius: var(--asm-radius-pill);
-  background: color-mix(in srgb, var(--asm-card-plain) 88%, transparent);
-  backdrop-filter: blur(14px) saturate(1.2);
+  /* The nav is another card in the same system: same radius, same hairline,
+     opaque. It was a translucent blurred pill; over the hero photograph that
+     put nav labels on a moving background and made the bar read as chrome
+     borrowed from somewhere else rather than as part of this page. */
+  border-radius: var(--asm-radius);
+  background: var(--asm-card-plain);
   box-shadow: inset 0 0 0 1px var(--asm-hair);
 }
 
@@ -429,6 +488,41 @@
   width: 26px;
   height: 26px;
   flex: none;
+}
+
+/* ---------- The mark ----------
+   Single-colour artwork drawn as a mask so one file serves every surface and
+   every scheme: the fill is whatever ink the surrounding card is using. */
+.assembly .asm-brand {
+  display: block;
+  flex: none;
+  background-color: currentColor;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+.assembly .asm-brand-mark {
+  width: 26px;
+  height: 26px;
+  -webkit-mask-image: url("/brand/cross-future-mark.png");
+  mask-image: url("/brand/cross-future-mark.png");
+}
+
+.assembly .asm-brand-lockup {
+  width: 186px;
+  aspect-ratio: 1100 / 480;
+  -webkit-mask-image: url("/brand/cross-future-lockup.png");
+  mask-image: url("/brand/cross-future-lockup.png");
+}
+
+/* In the nav the mark carries the brand colour; the wordmark beside it stays
+   ink, so the pair reads as a logo rather than a coloured word. */
+.assembly .asm-wordmark .asm-brand-mark {
+  color: var(--asm-accent);
 }
 
 .assembly .asm-navlinks {
@@ -735,11 +829,59 @@
   aspect-ratio: var(--asm-aspect, 16 / 9);
 }
 
+/* The focus opener is a band, not a page: capped so the four topic cards it
+   introduces are on screen with it rather than a scroll below. */
+.assembly .asm-focushero > * {
+  max-height: 46vh;
+}
+
+.assembly .asm-focushero .asm-card.is-padded {
+  display: grid;
+  align-content: center;
+}
+
+/* Section rhythm. An aspect-ratio box at column width can be taller than the
+   screen, which is what made sections arrive half-cut: you scrolled into the
+   middle of one image and could not see the block it belonged to. Every media
+   box therefore carries a viewport-relative ceiling and crops into it. Bled
+   media is exempt — it fills a card whose height is set by the card. */
+.assembly .asm-main,
+.assembly .asm-railcol {
+  --asm-media-cap: 58vh;
+}
+
+.assembly .asm-media {
+  max-height: var(--asm-media-cap, none);
+}
+
+.assembly .asm-media.is-bleed {
+  max-height: none;
+}
+
+.assembly .asm-person {
+  --asm-media-cap: 34vh;
+}
+
+.assembly .asm-facultystrip .asm-person {
+  --asm-media-cap: none;
+}
+
+/* Scanned documents and the archive wall are where a tall crop would lose
+   the content, so their ceiling is generous rather than tight. */
+.assembly .asm-letters,
+.assembly .asm-gallery-item {
+  --asm-media-cap: 74vh;
+}
+
 .assembly .asm-media.is-square {
   border-radius: 0;
 }
 .assembly .asm-media.is-bleed {
   border-radius: 0;
+  /* Bleed means the card decides the shape. Keeping the aspect ratio here
+     made a capped card show a square of image and a band of empty card. */
+  aspect-ratio: auto;
+  width: 100%;
   height: 100%;
 }
 
@@ -784,9 +926,9 @@
   pointer-events: none;
   background: linear-gradient(
     180deg,
-    color-mix(in srgb, var(--asm-n-900) 42%, transparent) 0%,
-    color-mix(in srgb, var(--asm-n-900) 62%, transparent) 45%,
-    color-mix(in srgb, var(--asm-n-900) 82%, transparent) 100%
+    transparent 0%,
+    color-mix(in srgb, var(--asm-scrim) 22%, transparent) 48%,
+    color-mix(in srgb, var(--asm-scrim) 74%, transparent) 100%
   );
 }
 
@@ -798,8 +940,8 @@
 .assembly .asm-railfeature .asm-media.is-scrim::before {
   background: linear-gradient(
     180deg,
-    color-mix(in srgb, var(--asm-n-900) 58%, transparent) 0%,
-    color-mix(in srgb, var(--asm-n-900) 72%, transparent) 100%
+    color-mix(in srgb, var(--asm-scrim) 58%, transparent) 0%,
+    color-mix(in srgb, var(--asm-scrim) 72%, transparent) 100%
   );
 }
 
@@ -813,8 +955,8 @@
   font-size: 0.66rem;
   letter-spacing: 0.07em;
   text-transform: uppercase;
-  color: var(--asm-ink-inv);
-  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+  color: var(--asm-ink-media);
+  text-shadow: 0 1px 8px color-mix(in srgb, var(--asm-c-black) 55%, transparent);
 }
 
 /* Placeholder marker: visible enough to audit, quiet enough to design with. */
@@ -897,6 +1039,52 @@
   min-height: clamp(380px, 62vh, 660px);
   padding-block: clamp(40px, 7vh, 96px);
   background: var(--asm-card-deep);
+}
+
+/* Hover clears the card so the footage can be watched.
+   The type is what the card is for, so it stays until the reader deliberately
+   points at it — then the headline, kicker and lede step aside and the scrim
+   lifts. Only on real pointers: on touch there is no hover to undo, and
+   under reduced motion the text simply stays. Keyboard focus inside the card
+   never triggers it, so tabbing cannot hide the words. */
+@media (hover: hover) and (pointer: fine) {
+  .assembly .asm-heromain > .asm-eyebrow,
+  .assembly .asm-heromain > .asm-heromain-title,
+  .assembly .asm-heromain > .asm-heromain-lede {
+    transition: opacity 0.28s ease, transform 0.28s ease;
+  }
+
+  .assembly .asm-heromain:hover > .asm-eyebrow,
+  .assembly .asm-heromain:hover > .asm-heromain-title,
+  .assembly .asm-heromain:hover > .asm-heromain-lede {
+    opacity: 0;
+    transform: translateY(-6px);
+    pointer-events: none;
+  }
+
+  .assembly .asm-heromain:hover .asm-media.is-scrim::before {
+    opacity: 0.25;
+  }
+
+  .assembly .asm-heromain:focus-within > .asm-eyebrow,
+  .assembly .asm-heromain:focus-within > .asm-heromain-title,
+  .assembly .asm-heromain:focus-within > .asm-heromain-lede {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.assembly .asm-heromain .asm-media.is-scrim::before {
+  transition: opacity 0.28s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .assembly .asm-heromain:hover > .asm-eyebrow,
+  .assembly .asm-heromain:hover > .asm-heromain-title,
+  .assembly .asm-heromain:hover > .asm-heromain-lede {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* The clip fills the card rather than holding its own aspect box: the mosaic
@@ -1133,6 +1321,55 @@
 
 .assembly .asm-person:hover .asm-media {
   transform: scale(1.03);
+}
+
+/* The faculty strip: one sideways row, ~8 portraits across a desktop screen.
+   Cards shrink with the viewport rather than reflowing into a wall, so the
+   section is always one band deep and the next section is always visible
+   under it. Snap points stop it drifting mid-portrait. */
+.assembly .asm-facultystrip {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: clamp(132px, calc((100% - 7 * var(--asm-gap)) / 8), 190px);
+  gap: var(--asm-gap);
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  padding-bottom: 4px;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+}
+
+.assembly .asm-facultystrip > * {
+  scroll-snap-align: start;
+}
+
+.assembly .asm-facultystrip:focus-visible {
+  outline: var(--asm-focus);
+  outline-offset: 4px;
+  border-radius: var(--asm-radius);
+}
+
+/* At strip size the plate is a caption, not a card face. */
+.assembly .asm-facultystrip .asm-person-plate {
+  padding: 11px 12px 13px;
+}
+
+.assembly .asm-facultystrip .asm-person-name {
+  font-size: 0.92rem;
+}
+
+.assembly .asm-facultystrip .asm-person-org {
+  font-size: 0.72rem;
+}
+
+.assembly .asm-facultystrip .asm-person-role {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .assembly .asm-facultystrip {
+    grid-auto-columns: clamp(128px, 38vw, 168px);
+  }
 }
 
 .assembly .asm-person-plate {
@@ -1779,8 +2016,23 @@
 
 .assembly .asm-footer-cols {
   display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
+  grid-template-columns: 1.2fr 1fr 1.1fr;
   gap: var(--asm-pad);
+}
+
+/* The countdown column sits centred between the invitation and the contact
+   details, so the clock reads as the footer's subject rather than a footnote
+   under the address. */
+.assembly .asm-footer-clock {
+  display: grid;
+  align-content: start;
+  justify-items: center;
+  text-align: center;
+}
+
+.assembly .asm-footer-clock .asm-countdown {
+  margin-top: 16px;
+  max-width: 340px;
 }
 
 .assembly .asm-footer-cols h3 {
@@ -1800,6 +2052,34 @@
 .assembly .asm-footer-cols a:hover {
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+
+.assembly .asm-footer-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px 18px;
+  margin-top: 22px;
+}
+
+.assembly .asm-footer-ticket {
+  font-family: var(--asm-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--asm-ink-2);
+  border-bottom: 1px solid var(--asm-hair-inv);
+  padding-bottom: 3px;
+}
+
+.assembly .asm-footer-ticket:hover {
+  color: var(--asm-ink-inv);
+}
+
+.assembly .asm-footer-lockup {
+  width: 168px;
+  margin-bottom: 16px;
+  opacity: 0.92;
 }
 
 .assembly .asm-countdown {
@@ -1824,6 +2104,39 @@
   font-size: clamp(1.55rem, 2.4vw, 2.35rem);
   font-variant-numeric: tabular-nums;
   line-height: 0.9;
+}
+
+/* Empty state. One outline card, the width of the block it replaces. */
+.assembly .asm-empty {
+  display: grid;
+  gap: 10px;
+  justify-items: start;
+}
+
+.assembly .asm-empty .asm-body {
+  max-width: 52ch;
+  color: var(--asm-ink-2);
+}
+
+.assembly .asm-empty-action {
+  margin-top: 6px;
+}
+
+/* Skeleton. It stands in only for a figure the client has to compute — see
+   AsmCountdown — and is drawn from the same type scale as the figure, so the
+   tile does not resize when the number lands. No pulse: the wait is a frame
+   or two, and a shimmer would be the loudest thing on a still page. */
+.assembly .asm-skel {
+  display: block;
+  border-radius: 3px;
+  background: color-mix(in srgb, currentColor 24%, transparent);
+}
+
+.assembly .asm-skel-num {
+  font-size: clamp(1.55rem, 2.4vw, 2.35rem);
+  width: 2.1ch;
+  height: 0.9em;
+  margin: 0 auto;
 }
 
 .assembly .asm-countdown-part small {
@@ -1853,23 +2166,17 @@
    Reveal
    ============================================================ */
 
-.assembly .asm-reveal {
-  opacity: 1;
-  transform: none;
-  transition: opacity 0.62s cubic-bezier(0.2, 0.7, 0.2, 1),
-    transform 0.62s cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-
-.assembly .asm-reveal.is-visible {
-  opacity: 1;
-  transform: none;
-}
-
 /* ============================================================
    Responsive
    ============================================================ */
 
 @media (max-width: 1180px) {
+  /* Seven labels plus the CTA is a wide bar. Between the desktop layout and
+     the burger breakpoint the links tighten rather than wrap. */
+  .assembly .asm-navlinks a {
+    padding: 9px 10px;
+    font-size: 0.68rem;
+  }
   .assembly .asm-shell {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -1957,10 +2264,6 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
-  }
-  .assembly .asm-reveal {
-    opacity: 1;
-    transform: none;
   }
   .assembly .asm-marquee-track {
     animation: none;

@@ -1,7 +1,6 @@
 import type { StoryChapter } from "@/lib/content";
 import AsmGlyph from "./AsmGlyph";
 import AsmMedia from "./AsmMedia";
-import AsmReveal from "./AsmReveal";
 
 /**
  * "The making of" — numbered chapters alternating text card / media card so
@@ -35,10 +34,10 @@ export default function AsmStory({ chapters }: { chapters: StoryChapter[] }) {
         );
 
         return (
-          <AsmReveal key={chapter.num} className="asm-split">
+          <div key={chapter.num} className="asm-split">
             {mediaFirst ? media : text}
             {mediaFirst ? text : media}
-          </AsmReveal>
+          </div>
         );
       })}
     </div>

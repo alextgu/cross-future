@@ -1,6 +1,5 @@
 import type { PastEdition } from "@/lib/content";
 import AsmMedia from "./AsmMedia";
-import AsmReveal from "./AsmReveal";
 
 /** Past editions and key resources. The current year is marked, not hidden. */
 export default function AsmPastEditions({
@@ -15,10 +14,8 @@ export default function AsmPastEditions({
       {editions.map((past, i) => {
         const isCurrent = past.year === currentYear;
         return (
-          <AsmReveal
+          <article
             key={past.label}
-            as="article"
-            delay={i * 70}
             className={`asm-card ${isCurrent ? "t-deep" : "t-plain"}`}
           >
             <AsmMedia media={past.media} aspect="16 / 10" />
@@ -59,7 +56,7 @@ export default function AsmPastEditions({
                 ))}
               </dl>
             </div>
-          </AsmReveal>
+          </article>
         );
       })}
     </div>

@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cross Future — Wireframe v0.1</title>
+<style>
+:root{
+  --ink:#111;--ink2:#5d5d5d;--ink3:#969696;
+  --n000:#fff;--n025:#fafafa;--n050:#f4f4f4;--n100:#e8e8e8;--n150:#ddd;
+  --n200:#cecece;--n300:#b6b6b6;--n400:#969696;--n700:#414141;--n800:#262626;--n900:#111;
+  --gap:10px;--rad:22px;--radsm:14px;--rail:312px;--max:1560px;--nav:62px;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --body:"Barlow","Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:#e9e9e9;font-family:var(--body);color:var(--ink);-webkit-font-smoothing:antialiased}
+
+/* ---------- app chrome ---------- */
+.app{display:grid;grid-template-columns:250px 1fr;height:100vh}
+.side{background:#1a1a1a;color:#e8e8e8;overflow-y:auto;padding:16px 0;font-family:var(--mono);font-size:11px}
+.side h1{font-family:var(--body);font-size:14px;letter-spacing:.02em;margin:0 16px 2px;color:#fff;font-weight:600}
+.side .sub{margin:0 16px 18px;color:#8a8a8a;font-size:10px;line-height:1.5}
+.side .grp{margin:16px 16px 6px;color:#6f6f6f;letter-spacing:.14em;text-transform:uppercase;font-size:9px}
+.side a{display:flex;gap:8px;align-items:baseline;padding:5px 16px;color:#c9c9c9;text-decoration:none;border-left:2px solid transparent}
+.side a:hover{background:#242424;color:#fff}
+.side a.on{background:#2e2e2e;color:#fff;border-left-color:#fff}
+.side a .n{color:#6f6f6f;min-width:22px}
+.side a.new .n{color:#fff}
+.side a.new::after{content:"NEW";margin-left:auto;font-size:8px;letter-spacing:.1em;color:#111;background:#e8e8e8;padding:1px 4px;border-radius:3px}
+.ctl{margin:18px 16px;display:flex;flex-wrap:wrap;gap:4px}
+.ctl button{font-family:var(--mono);font-size:9px;letter-spacing:.08em;padding:5px 8px;background:#2e2e2e;color:#c9c9c9;border:1px solid #3d3d3d;border-radius:4px;cursor:pointer}
+.ctl button.on{background:#e8e8e8;color:#111;border-color:#e8e8e8}
+
+.stage{overflow-y:auto;padding:24px}
+.stagehead{max-width:var(--max);margin:0 auto 14px;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.stagehead h2{font-family:var(--body);font-size:26px;margin:0;letter-spacing:-.01em}
+.stagehead .path{font-family:var(--mono);font-size:11px;color:var(--ink2);background:#fff;padding:3px 8px;border-radius:4px;border:1px solid var(--n150)}
+.stagehead .meta{font-family:var(--mono);font-size:10px;color:var(--ink3);margin-left:auto}
+.note{max-width:var(--max);margin:0 auto 16px;font-size:12.5px;line-height:1.6;color:var(--ink2);background:#fff;border:1px solid var(--n150);border-left:3px solid var(--n800);border-radius:6px;padding:11px 14px}
+
+/* ---------- page frame ---------- */
+.frame{margin:0 auto;background:var(--n050);border:1px solid var(--n200);border-radius:8px;overflow:hidden;transition:max-width .18s}
+.frame[data-w=d]{max-width:var(--max)}
+.frame[data-w=t]{max-width:900px}
+.frame[data-w=m]{max-width:390px}
+
+.cnav{height:var(--nav);background:var(--n000);border-bottom:1px solid var(--n150);display:flex;align-items:center;gap:14px;padding:0 var(--gap);font-family:var(--mono);font-size:10px}
+.cnav .mark{width:26px;height:26px;border:1px dashed var(--n300);border-radius:5px;display:grid;place-items:center;color:var(--ink3);font-size:8px}
+.cnav .wm{font-family:var(--body);font-weight:600;font-size:13px;letter-spacing:-.01em}
+.cnav .links{display:flex;gap:12px;color:var(--ink2);margin-left:6px}
+.cnav .links b{font-weight:600;color:var(--ink)}
+.cnav .ed{margin-left:auto;border:1px solid var(--n200);border-radius:99px;padding:3px 8px;color:var(--ink2)}
+.cnav .rsvp{background:var(--n900);color:#fff;padding:5px 11px;border-radius:99px;letter-spacing:.06em}
+.frame[data-w=m] .cnav .links,.frame[data-w=m] .cnav .ed{display:none}
+.frame[data-w=t] .cnav .links{display:none}
+
+.shell{display:grid;grid-template-columns:minmax(0,1fr) var(--rail);gap:var(--gap);padding:var(--gap);align-items:start}
+.shell.full{grid-template-columns:minmax(0,1fr)}
+.frame[data-w=t] .shell,.frame[data-w=m] .shell{grid-template-columns:minmax(0,1fr)}
+.main{display:grid;gap:var(--gap)}
+.railcol{display:grid;gap:var(--gap);position:sticky;top:var(--gap)}
+.frame[data-w=t] .railcol{grid-template-columns:1fr 1fr;position:static}
+.cfoot{background:var(--n800);color:#cfcfcf;padding:20px var(--gap);font-family:var(--mono);font-size:10px;display:grid;grid-template-columns:repeat(4,1fr);gap:var(--gap)}
+.frame[data-w=m] .cfoot{grid-template-columns:1fr 1fr}
+.cfoot b{display:block;color:#fff;font-size:9px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px}
+.cfoot p{margin:3px 0;color:#9a9a9a}
+
+/* ---------- block card ---------- */
+.b{position:relative;border-radius:var(--rad);border:1px solid var(--n150);background:var(--n000);padding:22px;overflow:hidden}
+.frame[data-w=m] .b{border-radius:18px;padding:16px}
+.b.mist{background:var(--n025)}
+.b.tint{background:var(--n050)}
+.b.deep{background:var(--n800);border-color:var(--n800);color:#f0f0f0}
+.b.accent{background:var(--n900);border-color:var(--n900);color:#fff}
+.b.pad0{padding:0}
+.tag{position:absolute;top:0;left:0;font-family:var(--mono);font-size:8.5px;letter-spacing:.09em;background:var(--n900);color:#fff;padding:3px 7px;border-bottom-right-radius:7px;z-index:5}
+.b.deep .tag,.b.accent .tag{background:#fff;color:#111}
+.tag.nw{background:#fff;color:#111;box-shadow:inset 0 0 0 1px #111}
+body.noannot .tag{display:none}
+
+/* ---------- schematic atoms ---------- */
+.eye{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3);margin-bottom:9px}
+.b.deep .eye,.b.accent .eye{color:#9a9a9a}
+.dsp{background:var(--n200);border-radius:3px;height:26px;margin-bottom:7px}
+.dsp.xl{height:46px}.dsp.xxl{height:64px}.dsp.sm{height:16px}
+.b.deep .dsp,.b.accent .dsp{background:#565656}
+.ln{background:var(--n100);border-radius:2px;height:7px;margin-bottom:5px}
+.b.deep .ln,.b.accent .ln{background:#454545}
+.ln.s60{width:60%}.ln.s75{width:75%}.ln.s45{width:45%}.ln.s85{width:85%}.ln.s30{width:30%}
+.mx{background:repeating-linear-gradient(135deg,var(--n100) 0 7px,var(--n050) 7px 14px);border:1px dashed var(--n300);border-radius:var(--radsm);display:grid;place-items:center;font-family:var(--mono);font-size:9px;color:var(--ink3);letter-spacing:.08em;min-height:40px}
+.b.deep .mx,.b.accent .mx{background:repeating-linear-gradient(135deg,#3a3a3a 0 7px,#303030 7px 14px);border-color:#5a5a5a;color:#9a9a9a}
+.mx.vid::after{content:"▶";position:absolute}
+.pill{display:inline-block;font-family:var(--mono);font-size:9px;padding:3px 9px;border:1px solid var(--n200);border-radius:99px;color:var(--ink2);margin:0 4px 4px 0}
+.b.deep .pill,.b.accent .pill{border-color:#5a5a5a;color:#bdbdbd}
+.pill.on{background:var(--n900);color:#fff;border-color:var(--n900)}
+.btn{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.07em;padding:8px 15px;border-radius:99px;background:var(--n900);color:#fff}
+.btn.gh{background:transparent;color:var(--ink);border:1px solid var(--n300)}
+.b.deep .btn,.b.accent .btn{background:#fff;color:#111}
+.b.deep .btn.gh,.b.accent .btn.gh{background:transparent;color:#fff;border-color:#6a6a6a}
+.g{display:grid;gap:var(--gap)}
+.g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}.g5{grid-template-columns:repeat(5,1fr)}
+.frame[data-w=t] .g4,.frame[data-w=t] .g5{grid-template-columns:repeat(3,1fr)}
+.frame[data-w=t] .g3{grid-template-columns:repeat(2,1fr)}
+.frame[data-w=m] .g2,.frame[data-w=m] .g3,.frame[data-w=m] .g4,.frame[data-w=m] .g5{grid-template-columns:1fr}
+.sp{display:grid;grid-template-columns:7fr 5fr;gap:var(--gap)}
+.sp.inv{grid-template-columns:5fr 7fr}
+.frame[data-w=m] .sp{grid-template-columns:1fr}
+.cell{border:1px solid var(--n150);border-radius:var(--radsm);padding:13px;background:var(--n000)}
+.b.deep .cell,.b.accent .cell{background:#303030;border-color:#454545}
+.cell.q{background:var(--n025)}
+.num{font-family:var(--body);font-size:34px;font-weight:600;letter-spacing:-.03em;line-height:1}
+.mono{font-family:var(--mono);font-size:9.5px;color:var(--ink3);letter-spacing:.06em}
+.b.deep .mono,.b.accent .mono{color:#9a9a9a}
+.hr{height:1px;background:var(--n150);margin:13px 0}
+.b.deep .hr,.b.accent .hr{background:#454545}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.strip{display:flex;gap:var(--gap);overflow-x:auto;padding-bottom:5px}
+.strip>*{flex:0 0 210px}
+.perf{height:1px;border-top:2px dashed #5a5a5a;margin:12px 0}
+.fld{height:31px;border:1px solid var(--n200);border-radius:7px;background:var(--n000);margin-bottom:7px}
+.b.deep .fld{border-color:#565656;background:#303030}
+.det{border-top:1px solid var(--n150);padding:11px 0;display:flex;justify-content:space-between;align-items:center}
+.b.deep .det,.b.accent .det{border-color:#454545}
+.det .ln{margin:0;width:52%}
+.masonry{columns:4;column-gap:var(--gap)}
+.frame[data-w=t] .masonry{columns:3}.frame[data-w=m] .masonry{columns:2}
+.masonry .mx{margin-bottom:var(--gap);break-inside:avoid}
+
+/* library view */
+.lib{max-width:var(--max);margin:0 auto;display:grid;gap:18px}
+.libsec h3{font-family:var(--body);font-size:15px;margin:0 0 3px;letter-spacing:.01em}
+.libsec .d{font-size:12px;color:var(--ink2);margin:0 0 10px;line-height:1.55}
+.libgrid{display:grid;gap:var(--gap);grid-template-columns:repeat(auto-fill,minmax(330px,1fr));align-items:start}
+.libitem{background:#fff;border:1px solid var(--n200);border-radius:10px;overflow:hidden}
+.libitem .hd{padding:8px 11px;border-bottom:1px solid var(--n150);display:flex;gap:8px;align-items:baseline;font-family:var(--mono);font-size:10px}
+.libitem .hd b{color:var(--ink)}
+.libitem .hd .st{margin-left:auto;font-size:8px;letter-spacing:.1em;padding:2px 5px;border-radius:3px;background:var(--n100);color:var(--ink2)}
+.libitem .hd .st.n{background:#111;color:#fff}
+.libitem .hd .st.x{background:var(--n700);color:#fff}
+.libitem .bd{padding:var(--gap);background:var(--n050)}
+.libitem .ds{padding:9px 11px;font-size:11.5px;line-height:1.5;color:var(--ink2);border-top:1px solid var(--n150)}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <h1>Cross Future</h1>
+    <p class="sub">Wireframe v0.1 · layout round<br>greyscale · single event, versioned yearly</p>
+    <div class="ctl">
+      <button data-w="d" class="on">DESKTOP</button>
+      <button data-w="t">TABLET</button>
+      <button data-w="m">MOBILE</button>
+      <button id="annot" class="on">LABELS</button>
+    </div>
+    <div class="grp">Library</div>
+    <a href="#" data-v="lib"><span class="n">§</span>Block library</a>
+    <div class="grp">Current edition</div>
+    <a href="#" data-v="/" class="on"><span class="n">00</span>Home</a>
+    <a href="#" data-v="/speakers"><span class="n">01</span>Speakers</a>
+    <a href="#" data-v="/speakers/x" class="new"><span class="n">01a</span>Speaker</a>
+    <a href="#" data-v="/agenda"><span class="n">02</span>Agenda</a>
+    <a href="#" data-v="/partners"><span class="n">03</span>Partners</a>
+    <a href="#" data-v="/contact"><span class="n">04</span>Contact</a>
+    <a href="#" data-v="/about"><span class="n">05</span>About</a>
+    <a href="#" data-v="/media"><span class="n">06</span>Media</a>
+    <a href="#" data-v="/media/x" class="new"><span class="n">06a</span>Interview</a>
+    <a href="#" data-v="/register"><span class="n">07</span>Register</a>
+    <div class="grp">Archive · versioning</div>
+    <a href="#" data-v="/editions" class="new"><span class="n">08</span>Editions</a>
+    <a href="#" data-v="/editions/2025" class="new"><span class="n">08a</span>Edition 2025</a>
+    <div class="grp">Utility</div>
+    <a href="#" data-v="/privacy" class="new"><span class="n">09</span>Legal</a>
+    <a href="#" data-v="/404"><span class="n">—</span>404</a>
+  </aside>
+  <main class="stage">
+    <div class="stagehead"><h2 id="ttl">Home</h2><span class="path" id="pth">/</span><span class="meta" id="mta"></span></div>
+    <div class="note" id="nte"></div>
+    <div id="out"></div>
+  </main>
+</div>
+
+<script>
+/* ---------- schematic helpers ---------- */
+const T=(id,name,isNew)=>`<span class="tag${isNew?' nw':''}">${id} ${name}</span>`;
+const eye=t=>`<div class="eye">${t}</div>`;
+const lns=(n,w=['s85','s75','s60'])=>Array.from({length:n},(_,i)=>`<div class="ln ${w[i%w.length]}"></div>`).join('');
+const mx=(label,h=110,cls='')=>`<div class="mx ${cls}" style="min-height:${h}px">${label}</div>`;
+const pills=a=>a.map((p,i)=>`<span class="pill${i===0?' on':''}">${p}</span>`).join('');
+const gridOf=(n,inner,cols=4)=>`<div class="g g${cols}">${Array.from({length:n},()=>inner).join('')}</div>`;
+
+/* SectionHead */
+const head=(e,t,lede,action,tone='plain',id='')=>({tone,id:'B03',name:'SectionHead',html:`
+  ${eye(e)}<div class="dsp xl" style="width:62%"></div>
+  ${lede?`<div style="max-width:52ch;margin-top:12px">${lns(2)}</div>`:''}
+  ${action?`<div style="margin-top:14px"><span class="btn gh">${action} →</span></div>`:''}`});
+
+/* ---------- block registry ---------- */
+const B = {
+B03:{n:'SectionHead',tone:'plain',h:()=>`${eye('Eyebrow')}<div class="dsp xl" style="width:62%"></div><div style="max-width:52ch;margin-top:12px">${lns(2)}</div><div style="margin-top:14px"><span class="btn gh">Action →</span></div>`},
+B01:{n:'HomeHero',tone:'deep',pad:0,h:()=>`
+ <div class="g" style="grid-template-columns:2fr 1fr;gap:10px;padding:10px">
+   <div class="cell" style="padding:26px;position:relative;min-height:300px;display:flex;flex-direction:column;justify-content:space-between">
+     ${eye('Convene / Engineer / Sustain')}
+     <div><div class="dsp xxl" style="width:78%"></div><div class="dsp xxl" style="width:64%"></div><div class="dsp xxl" style="width:40%"></div></div>
+     <div style="margin-top:16px">${mx('HERO VIDEO · bleed + scrim',96,'vid')}</div>
+     <div class="row" style="margin-top:14px"><span class="btn">RSVP Event</span><span class="btn gh">See the agenda</span></div>
+   </div>
+   <div class="g" style="gap:10px">${mx('R1 · rail feature',150)}
+     <div class="cell">${eye('Ticket')}<div class="dsp sm" style="width:70%"></div><div class="perf"></div>
+       <div class="mono">EDITION 03 &nbsp;·&nbsp; 08.10.26 &nbsp;·&nbsp; YUL</div><div style="margin-top:11px"><span class="btn">Register</span></div></div>
+   </div>
+ </div>`},
+B02:{n:'PageHero',tone:'mist',h:(o={})=>`
+ <div class="sp"><div>${eye(o.e||'Section')}<div class="dsp xxl" style="width:82%"></div><div style="max-width:54ch;margin-top:12px">${lns(3)}</div></div>
+ <div>${o.aside?`<div class="cell q"><div class="mono" style="margin-bottom:9px">AT A GLANCE</div>${pills(o.aside)}</div>`:mx('21:9 intro media',130)}</div></div>`},
+B04:{n:'Facts',tone:'plain',h:(o={})=>`<div class="g g4">
+   <div class="cell"><div class="mono">WHEN</div><div class="dsp sm" style="margin-top:9px;width:80%"></div><div class="ln s60"></div></div>
+   <div class="cell"><div class="mono">WHERE</div><div class="dsp sm" style="margin-top:9px;width:80%"></div><div class="ln s60"></div></div>
+   <div class="cell"><div class="mono">FOR WHO</div><div class="dsp sm" style="margin-top:9px;width:80%"></div><div class="ln s60"></div></div>
+   ${o.cta===false?'':'<div class="cell" style="background:#111;color:#fff;border-color:#111;display:grid;place-items:center"><span class="btn" style="background:#fff;color:#111">Get a ticket →</span></div>'}</div>`},
+B05:{n:'Marquee',tone:'tint',h:()=>`<div class="row" style="flex-wrap:nowrap;overflow:hidden;gap:26px">${
+   ['GRID INTERFACE','ULTRA-HIGH DENSITY','MICROGRID','BESS','DIGITAL TWIN','AI FACTORY','POWER QUALITY']
+   .map(x=>`<span class="mono" style="white-space:nowrap;font-size:12px;letter-spacing:.18em">${x}</span>`).join('<span class="mono">/</span>')}</div>`},
+B06:{n:'Countdown',tone:'deep',h:()=>`<div class="row" style="justify-content:space-between">${
+   ['DAYS','HRS','MIN','SEC'].map(l=>`<div style="text-align:center;flex:1"><div class="num">00</div><div class="mono">${l}</div></div>`).join('')}</div>
+   <div class="hr"></div><div class="mono">POST-DATE STATE → “Edition 03 concluded · see the archive”</div>`},
+B07:{n:'Stats',tone:'deep',h:()=>`<div class="g g4">${
+   [['47','SPEAKERS'],['04','TRACKS'],['18','INTERVIEWS'],['24','PARTNERS']]
+   .map(([a,b])=>`<div class="cell"><div class="num">${a}</div><div class="mono" style="margin-top:6px">${b}</div></div>`).join('')}</div>
+   <div class="mono" style="margin-top:11px">derived from content — never hardcoded</div>`},
+B08:{n:'Story',tone:'plain',h:()=>[0,1,2].map(i=>`<div class="sp ${i%2?'inv':''}" style="margin-bottom:10px">
+   ${i%2?mx('16:10 chapter media',150):''}<div class="cell"><div class="mono">CH. 0${i+1}</div><div class="dsp xl" style="width:70%;margin-top:9px"></div>${lns(3)}</div>${i%2?'':mx('16:10 chapter media',150)}</div>`).join('')},
+B09:{n:'Voices',tone:'mist',h:()=>gridOf(3,`<div class="cell"><div class="dsp" style="width:92%"></div><div class="dsp" style="width:70%"></div><div class="hr"></div><div class="row"><div class="mx" style="width:34px;height:34px;min-height:0;border-radius:99px"></div><div><div class="ln s85" style="width:90px"></div><div class="mono">Role · Org</div></div></div></div>`,3)},
+B10:{n:'Prose',tone:'plain',nw:1,h:()=>`<div style="max-width:68ch">${eye('Long form')}<div class="dsp" style="width:55%"></div>${lns(4)}<div style="height:9px"></div>${lns(5)}
+   <div class="cell q" style="margin-top:12px;border-left:3px solid #111">${lns(2)}</div>${lns(3)}</div>
+   <div class="mono" style="margin-top:12px">measure 60–72ch · h2/h3/ul/blockquote/table · used by legal, bios, transcripts, journal</div>`},
+B11:{n:'Thesis',tone:'deep',h:()=>`${eye('Thesis')}<div class="dsp xxl" style="width:88%"></div><div class="dsp xxl" style="width:66%"></div><div style="max-width:56ch;margin-top:14px">${lns(3)}</div>`},
+B12:{n:'Focus',tone:'plain',h:(o={})=>`${o.hero?`<div class="sp" style="margin-bottom:10px">${mx('focus hero media',170)}<div class="cell"><div class="dsp xl" style="width:80%"></div>${lns(3)}</div></div>`:''}
+   <div class="g g4">${['T1 Power challenges','T2 Grid & microgrid','T3 Power architecture','T4 AI factory infra']
+   .map(t=>`<div class="cell"><span class="pill on">${t.slice(0,2)}</span><div class="dsp sm" style="margin-top:9px;width:88%"></div><div style="margin-top:7px">${lns(2)}</div></div>`).join('')}</div>`},
+B13:{n:'Infrastructure',tone:'plain',h:()=>`${eye('FIG. 01 · single line')}
+   <div class="row" style="flex-wrap:nowrap;overflow-x:auto;margin-top:12px;gap:0">${
+   ['GRID','SUBSTATION','SWITCHGEAR','UPS / BESS','PDU','RACK'].map((n,i)=>
+   `${i?'<span style="flex:0 0 26px;height:1px;background:#b6b6b6"></span>':''}<div style="flex:0 0 auto;text-align:center"><div class="mx" style="width:78px;height:48px;min-height:0"></div><div class="mono" style="margin-top:5px">${n}</div></div>`).join('')}</div>
+   <div class="row" style="margin-top:12px">${pills(['T1','T2','T3','T4'])}</div>`},
+B14:{n:'Agenda',tone:'tint',h:()=>`<div class="cell" style="margin-bottom:10px"><span class="pill on">PROVISIONAL · 9 proposed / 0 confirmed</span>
+   <div class="dsp xl" style="width:64%;margin-top:11px"></div>${lns(2)}<div style="margin-top:11px"><span class="btn">Get it first — register</span></div></div>
+   <div class="strip">${Array.from({length:5},(_,i)=>`<div class="cell"><div class="mono">09:${30+i*5} — 10:15 · T${(i%4)+1}</div><div class="dsp sm" style="margin-top:8px"></div>${lns(2)}<div class="mono" style="margin-top:8px">To be announced &nbsp; ⌄</div></div>`).join('')}</div>
+   <div class="mono" style="margin-top:9px">B15 SessionCard · scroll-snap · keyboard paging · expandable</div>`},
+B16:{n:'TrackList',tone:'plain',h:()=>gridOf(4,`<div class="cell"><span class="pill on">T#</span><div class="dsp sm" style="margin-top:9px;width:85%"></div></div>`,4)},
+B17:{n:'PersonCard',tone:'plain',h:()=>`<div style="max-width:230px">${mx('portrait 4:5',180)}<div class="cell" style="border-radius:0 0 14px 14px;border-top:0"><div class="dsp sm" style="width:75%"></div><div class="mono" style="margin-top:5px">Role · Organization</div></div></div>
+   <div class="mono" style="margin-top:10px">links out only when verified && links.length — pickLink</div>`},
+B18:{n:'PersonGrid',tone:'mist',h:(o={})=>gridOf(o.n||8,`<div>${mx('4:5',150)}<div class="cell" style="border-radius:0 0 14px 14px;border-top:0"><div class="dsp sm" style="width:78%"></div><div class="mono" style="margin-top:5px">Role · Org</div></div></div>`,o.c||4)},
+B19:{n:'PersonProfile',tone:'plain',nw:1,h:()=>`<div class="sp inv">${mx('portrait 4:5',260)}
+   <div>${eye('Faculty · research')}<div class="dsp xxl" style="width:72%"></div><div class="mono" style="margin:9px 0">Professor · University of Waterloo / Google DeepMind</div>
+   <div class="row" style="margin-top:12px">${pills(['Profile ↗','Scholar ↗','2026','2025'])}</div>
+   <div class="hr"></div><div class="mono">4 blocks follow: bio · their sessions · their interview · other editions</div></div></div>`},
+B20:{n:'Toolbar',tone:'plain',nw:1,h:()=>`<div class="row" style="gap:10px"><div class="fld" style="flex:1;margin:0;display:flex;align-items:center;padding:0 12px"><span class="mono">⌕ &nbsp; Search 47 speakers…</span></div><span class="mono">47 RESULTS</span></div>
+   <div class="hr"></div><div class="row">${pills(['All','Research 22','Industry 07','Ecosystem 03','│','2026','2025','2024'])}</div>
+   <div class="mono" style="margin-top:9px">client-side over a server-rendered list — full list without JS</div>`},
+B21:{n:'MediaFrame',tone:'plain',h:()=>`<div class="g g3">${mx('16:9 · duotone',110)}${mx('4:5 · focal point',110)}${mx('PLACEHOLDER · dashed',110)}</div>
+   <div class="mono" style="margin-top:10px">the single door: aspect · focal · duotone · scrim · bleed · lazy · video delegate</div>`},
+B22:{n:'InterviewCard',tone:'plain',h:()=>`<div style="max-width:300px">${mx('16:9 still ▶',150,'vid')}<div class="cell" style="border-radius:0 0 14px 14px;border-top:0"><div class="mono">IV.04 · 14 MIN</div><div class="dsp sm" style="margin-top:8px;width:88%"></div><div class="mono" style="margin-top:5px">Name · Organization</div><div style="margin-top:9px">${lns(2)}</div></div></div>`},
+B23:{n:'InterviewGrid',tone:'plain',h:(o={})=>gridOf(o.n||8,`<div>${mx('16:9 ▶',110,'vid')}<div class="cell" style="border-radius:0 0 14px 14px;border-top:0"><div class="mono">IV.## · ## MIN</div><div class="dsp sm" style="margin-top:7px;width:85%"></div><div class="mono" style="margin-top:4px">Name · Org</div></div></div>`,o.c||4)},
+B24:{n:'InterviewDetail',tone:'deep',nw:1,h:()=>`${eye('IV.04 · 14 min · 2026')}<div class="dsp xxl" style="width:70%"></div>
+   <div style="margin-top:12px">${mx('16:9 PLAYER',240,'vid')}</div>
+   <div class="row" style="margin-top:12px"><div class="mx" style="width:42px;height:42px;min-height:0;border-radius:99px"></div><div><div class="dsp sm" style="width:130px"></div><div class="mono">Role · Org →  B19</div></div><span class="btn gh" style="margin-left:auto">Speaker page →</span></div>`},
+B25:{n:'Gallery',tone:'tint',h:()=>`<div class="masonry">${[130,180,150,200,140,170,120,190].map(h=>mx('',h)).join('')}</div>`},
+B26:{n:'PartnerWall',tone:'plain',h:(o={})=>[['HOST',2],['LEAD',4],['SUPPORTING',5],['COMMUNITY',5]].slice(0,o.t||4).map(([t,n])=>
+   `<div style="margin-bottom:12px"><div class="mono" style="margin-bottom:8px">${t}</div><div class="g g5">${Array.from({length:n},()=>`<div class="cell" style="display:grid;place-items:center;min-height:64px"><span class="mono">LOGO</span></div>`).join('')}</div></div>`).join('')
+   +`<div class="mono">every logo needs alt + url + tier — the live wall has none</div>`},
+B27:{n:'PartnerTiers',tone:'plain',nw:1,h:()=>`<div class="g g2">
+   <div class="cell"><div class="mono">WHAT PARTNERS GET</div>${[0,1,2,3].map(()=>`<div class="det"><div class="ln s85"></div><span class="mono">✓</span></div>`).join('')}</div>
+   <div class="cell"><div class="mono">WHAT WE ASK</div>${[0,1,2].map(()=>`<div class="det"><div class="ln s75"></div><span class="mono">✓</span></div>`).join('')}</div></div>
+   <div style="margin-top:12px" class="row">${pills(['Host','Lead','Supporting','Community','Media'])}</div>`},
+B28:{n:'Letters',tone:'tint',h:()=>`<div class="g g2">${[['Legislative Assembly eScroll'],['Message from the Mayor']].map(([t])=>
+   `<div class="sp"><div class="cell"><div class="mx" style="width:44px;height:44px;min-height:0"></div><div class="dsp sm" style="margin-top:11px;width:88%"></div><div class="mono" style="margin-top:5px">Issuer · date</div><div style="margin-top:9px">${lns(3)}</div><div class="mono" style="margin-top:9px">EXCERPT — required, text is pixels today</div></div>${mx('17:22 document',180)}</div>`).join('')}</div>`},
+B29:{n:'PastEditions',tone:'plain',h:()=>gridOf(3,`<div>${mx('16:10',120)}<div class="cell" style="border-radius:0 0 14px 14px;border-top:0"><span class="pill on">ED.0#</span><div class="dsp sm" style="margin-top:9px;width:70%"></div><div class="mono" style="margin-top:5px">Year · City</div><div class="hr"></div><div class="row"><div><div class="num" style="font-size:22px">##</div><div class="mono">SPEAKERS</div></div><div><div class="num" style="font-size:22px">##</div><div class="mono">SESSIONS</div></div></div></div></div>`,3)},
+B30:{n:'EditionDetail',tone:'plain',nw:1,h:()=>`<div class="cell" style="background:#111;color:#fff;border-color:#111;margin-bottom:10px"><span class="mono" style="color:#bdbdbd">ARCHIVE — you are viewing Edition 02 · 2025</span> <span class="btn" style="background:#fff;color:#111;margin-left:12px">Go to Edition 03 →</span></div>
+   <div class="mono">renders the SAME blocks with the edition scoped to 2025 — hero · facts · agenda (published) · people · interviews · partners · gallery</div>`},
+B31:{n:'Journal',tone:'plain',h:()=>gridOf(3,`<div>${mx('3:2',110)}<div class="cell" style="border-radius:0 0 14px 14px;border-top:0"><div class="mono">12 JUN 2026 · 6 MIN</div><div class="dsp sm" style="margin-top:8px;width:88%"></div><div style="margin-top:7px">${lns(2)}</div></div></div>`,3)},
+B32:{n:'CTA',tone:'accent',h:()=>`<div class="sp"><div><div class="dsp xxl" style="width:74%"></div><div style="max-width:46ch;margin-top:11px">${lns(2)}</div>
+   <div class="row" style="margin-top:15px"><span class="btn">Register</span><span class="btn gh">See the agenda</span></div></div>${mx('bleed media',150)}</div>`},
+B33:{n:'Form',tone:'deep',h:()=>`${eye('Hold me a place')}<div class="g g2" style="gap:0 10px"><div class="fld"></div><div class="fld"></div></div>
+   <div class="fld"></div><div class="fld"></div><div class="fld"></div><div class="fld" style="height:74px"></div>
+   <div class="row" style="margin-top:6px"><span class="btn">Hold my place</span><span class="mono">idle · submitting · success · error</span></div>`},
+B34:{n:'Contact',tone:'deep',h:()=>`<div class="sp"><div>${eye('Contact')}<div class="dsp xl" style="width:76%"></div><div style="max-width:46ch;margin-top:11px">${lns(3)}</div>
+   <div class="mono" style="margin-top:14px">info@cross-future.com</div><div class="row" style="margin-top:10px">${pills(['LinkedIn ↗','YouTube ↗'])}</div></div>
+   <div class="cell"><div class="g g2" style="gap:0 10px"><div class="fld"></div><div class="fld"></div></div><div class="fld"></div><div class="fld"></div><div class="fld" style="height:66px"></div><span class="btn">Send</span></div></div>`},
+B35:{n:'Newsletter',tone:'mist',nw:1,h:()=>`<div class="sp"><div>${eye('Be in the know')}<div class="dsp xl" style="width:68%"></div><div style="margin-top:9px;max-width:44ch">${lns(2)}</div></div>
+   <div class="cell"><div class="fld"></div><div class="row"><span class="mono">☐ &nbsp; Yes, subscribe me to the newsletter</span></div><div style="margin-top:10px"><span class="btn">Join</span></div>
+   <div class="mono" style="margin-top:9px">double opt-in · → /api/subscribe</div></div></div>`},
+B36:{n:'FAQ',tone:'mist',h:()=>[0,1,2,3,4].map(i=>`<div class="det"><div class="ln ${i%2?'s60':'s75'}"></div><span class="mono">${i?'+':'−'}</span></div>`).join('')
+   +`<div class="mono" style="margin-top:10px">native details/summary · no JS · tag-filterable</div>`},
+R1:{n:'RailFeature',tone:'plain',pad:0,h:()=>`${mx('bleed + scrim',140)}<div style="padding:16px"><div class="dsp sm" style="width:80%"></div><div style="margin-top:11px"><span class="btn gh">Watch interviews →</span></div></div>`},
+R2:{n:'RailTicket',tone:'deep',h:()=>`${mx('16:10',94)}<div class="dsp sm" style="margin-top:12px;width:72%"></div><div style="margin-top:7px">${lns(2)}</div>
+   <div class="perf"></div><div class="mono" style="line-height:1.9">EDITION &nbsp;&nbsp;03<br>DATE &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;08.10.26<br>CITY &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YUL</div>
+   <div style="margin-top:12px"><span class="btn" style="display:block;text-align:center">Register</span></div>`},
+C5:{n:'Breadcrumb',tone:'plain',nw:1,h:()=>`<div class="mono">Speakers &nbsp;/&nbsp; <b style="color:#111">Wenhu Chen</b></div>`},
+C4:{n:'EditionBadge',tone:'accent',nw:1,h:()=>`<div class="row"><span class="mono" style="color:#bdbdbd">ARCHIVE — Edition 02 · 2025 · Toronto</span><span class="btn gh" style="margin-left:auto">Current edition →</span></div>`}
+};
+
+/* ---------- pages ---------- */
+const H=(e,t,l,a)=>({k:'B03',e,t,l,a});
+const PAGES={
+'/':{title:'Home',rail:false,note:'<b>25 blocks → 16.</b> Today’s home is longer than the live site’s entire page. Essentials folds into B07 Stats; Journal moves to /media; the duplicate Focus pass and three SectionHeads are cut. The hero carries R1 + R2 as tiles, so this is the only page with no rail.',blocks:[
+ {k:'B01'},{k:'B04'},{k:'B05'},
+ H('Interviews','Voices from the floor',1,'All 18'),{k:'B23',o:{n:8,c:4}},
+ H('Faculty','Meet the faculty',1,'All 47'),{k:'B18',o:{n:8,c:4}},
+ H('Programme','Key areas of focus',1),{k:'B12',o:{hero:1}},
+ H('Agenda','The shape of the day',1,'Full agenda'),{k:'B14'},
+ H('The work','The making of the summit',1),{k:'B08'},
+ {k:'B07'},
+ H('Partners','Partners in innovation',1,'All partners'),{k:'B26',o:{t:2}},
+ H('On the record','What is actually being said',0),{k:'B09'},
+ H('Recognition','Letters of support',1),{k:'B28'},
+ H('Archive','Past editions',1,'Archive'),{k:'B29'},
+ H('Questions','Questions answered',0),{k:'B36'},
+ {k:'B32'},{k:'B34'}]},
+
+'/speakers':{title:'Speakers',rail:true,note:'<b>The flagship change.</b> 47 people in a flat carousel becomes structured, filterable and linkable. B20 Toolbar and B19 PersonProfile are the two new blocks that make “keep all 47 speakers” actually work — and every profile is an SEO surface the old site never had.',blocks:[
+ {k:'B02',o:{e:'Faculty',aside:['47 confirmed','22 research','07 industry','03 ecosystem']}},
+ {k:'B20'},
+ H('Research','From the lab',1),{k:'B18',o:{n:8,c:4}},
+ H('Industry','From the floor',1),{k:'B18',o:{n:4,c:4}},
+ H('Ecosystem','From the ecosystem',1),{k:'B18',o:{n:3,c:4}},
+ {k:'B10',tone:'deep'},{k:'B32'}]},
+
+'/speakers/x':{title:'Speaker profile',rail:true,note:'<b>New route.</b> The data model already knows a returning speaker is one person with many appearances — the current UI throws that away. This page is where a bio lives, where a speaker shares themselves, and where the verified-link rule pays off.',blocks:[
+ {k:'C5'},{k:'B19'},{k:'B10'},
+ H('Sessions','On the programme',0),{k:'B14'},
+ H('On the record','Their interview',0),{k:'B22'},
+ H('Also appeared','Other editions',0),{k:'B29'},
+ H('Related','Others from the lab',0),{k:'B18',o:{n:4,c:4}},
+ {k:'B32'}]},
+
+'/agenda':{title:'Agenda',rail:true,note:'The live site says “AGENDA IS COMING SOON”. The repo’s provisional state is strictly better and already built: 9 proposed sessions render with a Provisional chip and a registrants-first CTA. Adding one <code>confirmed</code> row flips the whole page — no code change.',blocks:[
+ {k:'B02',o:{e:'Agenda',aside:['Provisional','08.10.26','08:30 — 17:30']}},
+ {k:'B04',o:{cta:false}},{k:'B14'},{k:'B16'},
+ H('Questions','Before the day',0),{k:'B36'},{k:'B32'}]},
+
+'/partners':{title:'Partners',rail:true,note:'The live wall is ~24 logos with <b>zero alt text</b> — the names exist only as pixels. Rebuild adds a <code>tier</code> axis, required alt, and real URLs. “Become Our Partner” is currently a heading that links nowhere; B27 gives it a destination.',blocks:[
+ {k:'B02',o:{e:'Partners',aside:['24 organizations','02 host','04 lead','05 supporting']}},
+ H('Partners','Partners in innovation',1),{k:'B26'},
+ H('Recognition','Letters of support',1),{k:'B28'},
+ H('Become a partner','What partnership looks like',1),{k:'B27'},
+ {k:'B32'}]},
+
+'/contact':{title:'Contact',rail:true,note:'Matches the live contact section (First / Last / Email / Message + newsletter consent) but the street address moves out of JSX and into edition data.',blocks:[
+ {k:'B02',o:{e:'Contact'}},{k:'B04',o:{cta:false}},{k:'B34'},
+ {k:'B21'},H('Questions','Possibly already answered',0),{k:'B36'},{k:'B10'}]},
+
+'/about':{title:'About',rail:true,note:'Carries the long non-profit paragraph from the live site — rewritten. The current copy has six typos including <code>thelandscape</code>, <code>supply reltabity</code> and <code>dispatchStrengthening</code>. B13 Infrastructure is the strongest asset in the repo and belongs here.',blocks:[
+ {k:'B02',o:{e:'About',aside:['Non-profit','Edition 03','Montréal']}},
+ {k:'B11'},H('The work','The making of the summit',1),{k:'B08'},{k:'B05'},
+ H('Programme','Utility to rack',1),{k:'B13'},{k:'B12'},
+ {k:'B09'},{k:'B07'},
+ H('Recognition','Letters of support',0),{k:'B28'},
+ H('Archive','Where it has been',1,'Archive'),{k:'B29'},{k:'B32'}]},
+
+'/media':{title:'Media',rail:true,note:'The Wix video wall exposed no titles and no URLs — 18 cards, one of them a duplicate. This becomes a real, filterable library with a detail route per interview.',blocks:[
+ {k:'B02',o:{e:'Media',aside:['18 interviews','4 h 12 m','8 photographs']}},
+ {k:'B20'},H('Featured','Start here',1),{k:'B23',o:{n:3,c:3}},
+ H('Full archive','Every interview',1),{k:'B23',o:{n:8,c:4}},
+ H('Photographs','On the floor',1),{k:'B25'},
+ H('Field notes','Written record',1),{k:'B31'},
+ H('Archive','By edition',0),{k:'B29'},{k:'B32'}]},
+
+'/media/x':{title:'Interview detail',rail:true,note:'<b>New route.</b> Player, transcript (B10 Prose — also the a11y and SEO path), and a hard cross-link to the speaker profile. Needs video URLs, which the Wix channel never exposed.',blocks:[
+ {k:'C5'},{k:'B24'},{k:'B10'},
+ H('Speaker','Who is talking',0),{k:'B22'},
+ H('Related','Keep watching',0),{k:'B23',o:{n:4,c:4}},{k:'B32'}]},
+
+'/register':{title:'Register',rail:true,note:'Two paths side by side: the official external ticketing link, and an in-house “hold my place” form whose success copy is deliberately honest — it never claims a ticket was issued or an email was sent.',blocks:[
+ {k:'B02',o:{e:'Register',aside:['Registration open','08.10.26','08:30 — 17:30']}},
+ {k:'B33'},{k:'B21'},
+ H('Questions','Before you register',1,'Contact us'),{k:'B36'},{k:'B35'}]},
+
+'/editions':{title:'Editions',rail:true,note:'<b>New route — this is what “versioned yearly” actually means.</b> Without it, past editions are three summary cards that link nowhere.',blocks:[
+ {k:'B02',o:{e:'Archive',aside:['03 editions','2024 — 2026','Toronto · Montréal']}},
+ {k:'B29'},{k:'B07'},{k:'B32'}]},
+
+'/editions/2025':{title:'Edition 2025',rail:true,note:'<b>Every block here already exists.</b> An archived year costs one route file and zero new components, because blocks read edition-scoped data. Rolling to 2027 = add an edition row, flip <code>isCurrent</code>, and last year freezes itself.',blocks:[
+ {k:'C4'},{k:'C5'},{k:'B02',o:{e:'Edition 02 · 2025',aside:['Toronto','38 speakers','12 sessions']}},
+ {k:'B04',o:{cta:false}},H('Agenda','As it ran',0),{k:'B14'},
+ H('Faculty','Who spoke',0),{k:'B18',o:{n:8,c:4}},
+ H('Media','What was recorded',0),{k:'B23',o:{n:4,c:4}},
+ H('Partners','Who backed it',0),{k:'B26',o:{t:2}},
+ {k:'B25'},{k:'B32'}]},
+
+'/privacy':{title:'Privacy / Terms',rail:false,note:'<b>Both live pages are Lorem Ipsum</b> under a Wix default title — <code>Privacy Policy | Site</code>. There is nowhere in the repo to put body text at all. B10 Prose unblocks these plus journal detail, bios and transcripts.',blocks:[
+ {k:'B02',o:{e:'Legal'}},{k:'B10'},{k:'B35'}]},
+
+'/404':{title:'404',rail:true,note:'Already designed in-shell. One fix: the “every page” list iterates ROUTES, which omits /register — so the page the header CTA points at is missing from the list.',blocks:[
+ {k:'B02',tone:'deep',o:{e:'Error 404'}},{k:'B10'}]}
+};
+
+/* ---------- render ---------- */
+const el=s=>document.querySelector(s);
+let W='d', V='/';
+
+function blockHTML(spec){
+  if(spec.k==='B03'){
+    const h=head(spec.e,spec.t,spec.l,spec.a);
+    return `<div class="b ${spec.tone||'plain'}">${T('B03','SectionHead')}${h.html}</div>`;
+  }
+  const d=B[spec.k]; if(!d) return '';
+  const tone=spec.tone||d.tone||'plain';
+  return `<div class="b ${tone}${d.pad===0?' pad0':''}">${T(spec.k,d.n,d.nw)}${d.h(spec.o||{})}</div>`;
+}
+
+function renderPage(route){
+  const p=PAGES[route]; if(!p) return;
+  el('#ttl').textContent=p.title; el('#pth').textContent=route.replace('/x','/[slug]');
+  const heads=p.blocks.filter(b=>b.k==='B03').length;
+  el('#mta').textContent=`${p.blocks.length-heads} content blocks · ${heads} section heads · rail ${p.rail?'yes':'no'}`;
+  el('#nte').innerHTML=p.note; el('#nte').style.display='block';
+  const rail=p.rail?`<div class="railcol">${blockHTML({k:'R1'})}${blockHTML({k:'R2'})}</div>`:'';
+  el('#out').innerHTML=`<div class="frame" data-w="${W}">
+    <div class="cnav"><div class="mark">A4</div><div class="wm">CROSS FUTURE</div>
+      <div class="links">${['Home:/','Speakers:/speakers','Agenda:/agenda','Partners:/partners','Contact:/contact'].map(x=>{const[l,h]=x.split(':');const on=route===h||(h!=='/'&&route.startsWith(h));return on?`<b>${l}</b>`:`<span>${l}</span>`}).join('')}<span>More ⌄</span></div>
+      <div class="ed">ED. 03 · 2026</div><div class="rsvp">RSVP EVENT</div></div>
+    <div class="shell ${p.rail?'':'full'}"><div class="main">${p.blocks.map(blockHTML).join('')}</div>${rail}</div>
+    <div class="cfoot">
+      <div><b>Come join us</b><p>Wordmark · A4</p><p>Event is here →</p></div>
+      <div><b>Pages</b><p>All routes from ROUTES</p><p>Privacy · Terms</p></div>
+      <div><b>Contact</b><p>info@cross-future.com</p><p>B35 Newsletter</p></div>
+      <div><b>B06 Countdown</b><p>00d 00h 00m 00s</p><p>Copyright 2026 Cross Future Hub</p></div>
+    </div></div>`;
+}
+
+const LIBSECS=[
+ {t:'Openers',d:'B03 SectionHead is the highest-leverage block in the system — it is the only thing giving a long page structure. No other block grows its own heading.',ks:['B01','B02','B03']},
+ {t:'Orientation',d:'B06 Countdown’s post-date state is what keeps the site from going stale. The live site is still advertising July 24th today. B07 Stats is split out of Essentials and derived from content, never hardcoded.',ks:['B04','B05','B06','B07']},
+ {t:'Narrative',d:'B10 Prose is a hard requirement, not a nicety — legal pages, journal detail, speaker bios and interview transcripts all have nowhere to live without it.',ks:['B08','B09','B10','B11']},
+ {t:'Programme',d:'B12 maps 1:1 to the live site’s “Key Areas of Focus”. B13 and B14 are repo innovations the old site never had; B14’s provisional state is better than “COMING SOON”.',ks:['B12','B13','B14','B16']},
+ {t:'People — the biggest gap',d:'47 speakers in one flat grid is a wall. No way to link to a person, no place for a bio, and no way to show that a returning speaker is the same person across editions.',ks:['B17','B18','B19','B20']},
+ {t:'Media',d:'B21 MediaFrame stays the only door for imagery — keep that discipline. B24 turns the Wix video wall into an actual library.',ks:['B21','B22','B23','B24','B25']},
+ {t:'Ecosystem',d:'The live logo wall has zero alt text and no tiers; names exist only as pixels. Letters need transcribed excerpts for the same reason.',ks:['B26','B27','B28']},
+ {t:'Archive — the versioning surface',d:'B30 is the entire answer to “versioned yearly”. Blocks read edition-scoped data, so an archived year costs one route and no new components.',ks:['B29','B30','B31']},
+ {t:'Conversion',d:'B35 Newsletter is a straight regression if omitted — the live site captures email in two places, the repo in zero.',ks:['B32','B33','B34','B35','B36']},
+ {t:'Rail & chrome',d:'R2 RailTicket is the best object in the system. C4 and C5 become necessary the moment detail and archive routes exist.',ks:['R1','R2','C4','C5']}
+];
+
+function renderLib(){
+  el('#ttl').textContent='Block library';
+  el('#pth').textContent='58 blocks · 41 exist · 6 extend · 11 new';
+  el('#mta').textContent='';
+  el('#nte').innerHTML='<b>A page is an ordered list of blocks, and that list lives in content.</b> Today every page hardcodes its section sequence in TSX — <code>app/page.tsx</code> is a 25-block wall of JSX, <code>derivedStats</code> is duplicated across two files, and partner tiers, faculty group copy and the venue street address are stranded inside page components. One <code>&lt;BlockRenderer&gt;</code> maps <code>kind</code> → component; pages become four lines; the page definition <i>is</i> the CMS schema.';
+  el('#out').innerHTML=`<div class="lib">${LIBSECS.map(s=>`
+    <div class="libsec"><h3>${s.t}</h3><p class="d">${s.d}</p>
+    <div class="libgrid">${s.ks.map(k=>{const d=B[k];return `
+      <div class="libitem"><div class="hd"><b>${k}</b><span>${d.n}</span>
+        <span class="st ${d.nw?'n':''}">${d.nw?'NEW':'EXISTS'}</span></div>
+        <div class="bd"><div class="frame" data-w="${W==='m'?'m':'t'}" style="border:0;background:transparent">
+          <div class="b ${d.tone||'plain'}${d.pad===0?' pad0':''}" style="border-radius:12px">${d.h({})}</div></div></div></div>`}).join('')}</div></div>`).join('')}</div>`;
+}
+
+function go(v){
+  V=v;
+  document.querySelectorAll('.side a').forEach(a=>a.classList.toggle('on',a.dataset.v===v));
+  el('.stage').scrollTop=0;
+  v==='lib'?renderLib():renderPage(v);
+}
+document.querySelectorAll('.side a').forEach(a=>a.onclick=e=>{e.preventDefault();go(a.dataset.v)});
+document.querySelectorAll('.ctl button[data-w]').forEach(b=>b.onclick=()=>{
+  W=b.dataset.w;
+  document.querySelectorAll('.ctl button[data-w]').forEach(x=>x.classList.toggle('on',x===b));
+  go(V);
+});
+el('#annot').onclick=function(){document.body.classList.toggle('noannot');this.classList.toggle('on')};
+go('/');
+</script>
+</body>
+</html>

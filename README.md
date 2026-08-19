@@ -21,9 +21,8 @@ The previous design explorations remain in the repository as references:
   family (Barlow) from the live cross-future.com. Eight routes — home, about,
   speakers, agenda, media, partners, register, contact — plus an in-design
   404. Built media-forward: 30+ image slots and a video hero, all routed
-  through one `AsmMedia` component. **Tier 1 of its token block is greyscale
-  on purpose** — the colour pass is a five-line edit, see
-  `COMPONENTS.md` § 6.
+  through one `AsmMedia` component. Approved in greyscale, then coloured by a
+  Tier-1 token swap — see **Design system** below.
 
 Next.js 15 (App Router) · React 19 · TypeScript · plain CSS · Drizzle ORM ·
 local libSQL/SQLite · Zod. No paid services or API keys. Node 20+.
@@ -171,17 +170,57 @@ The empty state disappears as soon as the first `confirmed` session exists.
 
 ## Design system
 
-"Technical Broadsheet": paper white, Inter Tight display, IBM Plex Mono
-labels, one electric blue `#4B47F5`. Tokens live in `app/globals.css` in two
-tiers — primitives (`--c-blue-500`) then semantics (`--text-accent`).
-Components use only semantic tokens; retheme by remapping semantics.
+"Assembly": a tiled card system — every block is a rounded card on a common
+ground with a constant gutter, plus a sticky rail carrying the agenda teaser
+and the ticket stub. Type is Barlow Semi Condensed (display), Barlow (body),
+IBM Plex Mono (labels).
 
-Square corners, hairline borders, no shadows. Blue is load-bearing only
-(section numbers, primary buttons, active states, the conductor pulse).
+Tokens live in `app/assembly/assembly.css` in two tiers. **Tier 1** names the
+value (`--asm-n-500`, `--asm-c-blue`); **Tier 2** names the job
+(`--asm-card-deep`, `--asm-ink-2`). Components use Tier 2 only, so retheming
+is a Tier-1 edit and nothing else. Two Tier-1 values are deliberately outside
+the ramp — `--asm-c-white` (ink over photography) and `--asm-c-black` (the
+scrim) — because neither may invert when the scheme does.
+
+Hierarchy is carried by the five card tones: `plain → mist → tint → deep →
+accent`. Never two deep cards adjacent; at most one accent per fold.
+
+### Colour schemes
+
+`app/assembly/themes.css` holds the alternatives, each one a restatement of
+Tier 1 and nothing else:
+
+| id | what it is |
+| --- | --- |
+| `hub` | default — the real mark's blue, `#215f9a` |
+| `signal` | navy ground, amber accent |
+| `verdant` | forest ground, green accent |
+| `midnight` | the ramp inverted — a dark scheme with no dark-mode code |
+| `mono` | the greyscale study the layout was approved in |
+
+The scheme is one attribute — `data-theme` on `<html>` — set before first
+paint by the boot script in `app/layout.tsx` and stored in `localStorage`.
+
+**Theme lab.** `components/assembly/AsmThemeLab.tsx` renders the on-screen
+switcher (bottom bar) used in review sessions; the choice survives navigation
+and reload. Turn it off for a deploy with `NEXT_PUBLIC_THEME_LAB=off`.
+
+`tests/theme-tokens.test.ts` enforces the discipline: a literal colour outside
+a Tier-1 token fails the suite, and every scheme must restate the full ramp.
+
+### Brand assets
+
+`public/brand/` holds the real Cross Future Hub artwork taken from the live
+site and trimmed to its alpha bounds: `cross-future-mark.png` (nav) and
+`cross-future-lockup.png` (footer). Both are single-colour artwork on
+transparency, drawn through `AsmLogo` as a CSS mask filled with `currentColor`
+— so one file is accent blue on the white nav, white on the deep footer card,
+and follows every scheme without a second asset. `app/icon.png` and
+`app/apple-icon.png` are the same mark.
 
 Accessibility: skip link, visible focus rings, semantic landmarks, real alt
-text, Event JSON-LD in the layout, `prefers-reduced-motion` stops the FIG. 01
-conductor animation.
+text, Event JSON-LD in the layout, and `prefers-reduced-motion` stops reveals
+and the marquee.
 
 ## Forms
 

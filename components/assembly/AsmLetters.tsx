@@ -1,6 +1,5 @@
 import type { LetterItem } from "@/lib/content";
 import AsmMedia from "./AsmMedia";
-import AsmReveal from "./AsmReveal";
 
 /**
  * Letters of support. Documents are shown as documents — full page, no
@@ -9,14 +8,12 @@ import AsmReveal from "./AsmReveal";
 export default function AsmLetters({ letters }: { letters: LetterItem[] }) {
   return (
     <div
-      className="asm-row"
+      className="asm-row asm-letters"
       style={{ ["--cols" as string]: Math.min(letters.length, 2) }}
     >
       {letters.map((letter, i) => (
-        <AsmReveal
+        <article
           key={letter.title + letter.issuer}
-          as="article"
-          delay={i * 80}
           className="asm-card is-padded t-plain"
         >
           <div
@@ -53,7 +50,7 @@ export default function AsmLetters({ letters }: { letters: LetterItem[] }) {
               )}
             </time>
           </p>
-        </AsmReveal>
+        </article>
       ))}
     </div>
   );

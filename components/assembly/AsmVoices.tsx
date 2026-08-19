@@ -1,5 +1,4 @@
 import type { VoiceItem } from "@/lib/content";
-import AsmReveal from "./AsmReveal";
 
 /**
  * Pull quotes. Sourced, not invented — each one attributes to the document or
@@ -10,10 +9,8 @@ export default function AsmVoices({ voices }: { voices: VoiceItem[] }) {
   return (
     <div className="asm-row" style={{ ["--cols" as string]: voices.length }}>
       {voices.map((voice, i) => (
-        <AsmReveal
+        <figure
           key={voice.quote.slice(0, 40)}
-          as="figure"
-          delay={i * 70}
           className="asm-card is-padded t-plain"
         >
           <blockquote
@@ -31,7 +28,7 @@ export default function AsmVoices({ voices }: { voices: VoiceItem[] }) {
             </span>
             <span className="asm-meta">{voice.role}</span>
           </figcaption>
-        </AsmReveal>
+        </figure>
       ))}
     </div>
   );

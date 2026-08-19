@@ -130,10 +130,12 @@ export const assemblyContentSchema = z
       z
         .object({
           slug: z.string(),
-          date: z.string(),
+          /* Both optional: a briefing drawn from the summit's own material is
+             not a dated, published article, and the card must not imply one. */
+          date: z.string().optional(),
           title: z.string(),
           excerpt: z.string(),
-          readMin: z.number(),
+          readMin: z.number().optional(),
           media: mediaAssetSchema,
         })
         .strict()
@@ -244,6 +246,10 @@ const personSchema = z
         sourceUrl: z.string(),
         alt: z.string(),
         focalPoint: z.object({ x: z.number(), y: z.number() }).strict(),
+        /* True while the file is a stand-in. The card draws the placeholder
+           frame from this, so a real photograph landing in the seed is the
+           only change needed to retire the marker. */
+        placeholder: z.boolean().optional(),
       })
       .strict(),
     links: z.array(z.object({ type: z.string(), url: z.string() }).strict()),
@@ -320,7 +326,11 @@ const interviewSchema = z
     featured: z.boolean(),
     pullQuote: z.string().optional(),
     image: z
-      .object({ sourceUrl: z.string(), alt: z.string() })
+      .object({
+        sourceUrl: z.string(),
+        alt: z.string(),
+        placeholder: z.boolean().optional(),
+      })
       .strict()
       .optional(),
     url: z.string().optional(),

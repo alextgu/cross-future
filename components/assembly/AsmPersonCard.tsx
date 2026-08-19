@@ -29,7 +29,7 @@ export default function AsmPersonCard({
             ...(fp ? { "--asm-fp": `${fp.x}% ${fp.y}%` } : {}),
           } as React.CSSProperties
         }
-        data-placeholder="true"
+        data-placeholder={person.headshot.placeholder ? "true" : undefined}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img

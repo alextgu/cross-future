@@ -1,4 +1,5 @@
 import type { Partner } from "@/lib/content";
+import AsmEmpty from "./AsmEmpty";
 
 const TYPE_LABEL: Record<string, string> = {
   academic: "Academic",
@@ -19,6 +20,15 @@ export default function AsmPartners({
   groups: { type: string; partners: Partner[] }[];
   columns?: number;
 }) {
+  if (groups.every((group) => group.partners.length === 0)) {
+    return (
+      <AsmEmpty
+        label="Partners being confirmed"
+        note="Supporting organizations are listed once their agreement is signed and they have supplied a logo."
+      />
+    );
+  }
+
   return (
     <div className="asm-stack">
       {groups.map((group) => (

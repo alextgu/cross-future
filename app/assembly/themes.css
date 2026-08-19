@@ -1,0 +1,286 @@
+/* ============================================================
+   Colour schemes
+   ============================================================
+   The design system keeps every literal colour in Tier 1 (see the token
+   header in assembly.css). A scheme is therefore nothing but a restatement
+   of those same names — no component, no layout rule and no tone class
+   changes between schemes.
+
+   Selector shape: the attribute sits on <html> so the inline boot script in
+   app/layout.tsx can set it before first paint, while the styles stay scoped
+   under .assembly so nothing leaks.
+
+   Default (no attribute) = "hub", the real Cross Future blue, defined in
+   assembly.css. Every scheme below is a full replacement of the ramp; the
+   value structure (which step is light, which is dark) is identical across
+   schemes, which is what keeps the approved layout intact.
+   ============================================================ */
+
+/* ---------- mono — the approved greyscale study ---------- */
+[data-theme="mono"] .assembly {
+  --asm-n-000: #ffffff;
+  --asm-n-025: #fafafa;
+  --asm-n-050: #f4f4f4;
+  --asm-n-100: #e8e8e8;
+  --asm-n-150: #dddddd;
+  --asm-n-200: #cecece;
+  --asm-n-300: #b6b6b6;
+  --asm-n-400: #969696;
+  --asm-n-500: #767676;
+  --asm-n-600: #5d5d5d;
+  --asm-n-700: #414141;
+  --asm-n-800: #262626;
+  --asm-n-900: #111111;
+
+  --asm-c-sky: #d7d7d7;
+  --asm-c-blue: #1d1d1d;
+}
+
+/* ---------- signal — navy ground, amber accent ---------- */
+[data-theme="signal"] .assembly {
+  --asm-n-000: #ffffff;
+  --asm-n-025: #faf8f4;
+  --asm-n-050: #f3efe8;
+  --asm-n-100: #eae3d8;
+  --asm-n-150: #ddd4c5;
+  --asm-n-200: #cabfab;
+  --asm-n-300: #ac9f89;
+  --asm-n-400: #8c7e67;
+  --asm-n-500: #726550;
+  --asm-n-600: #5c5040;
+  --asm-n-700: #423a2e;
+  --asm-n-800: #24211b;
+  --asm-n-900: #16233a;
+
+  --asm-c-sky: #efdcbb;
+  --asm-c-blue: #a4560c;
+}
+
+/* ---------- verdant — forest ground, green accent ---------- */
+[data-theme="verdant"] .assembly {
+  --asm-n-000: #ffffff;
+  --asm-n-025: #f7faf7;
+  --asm-n-050: #eef3ee;
+  --asm-n-100: #e0eae1;
+  --asm-n-150: #d0ded2;
+  --asm-n-200: #bacdbd;
+  --asm-n-300: #9bb3a0;
+  --asm-n-400: #7c957f;
+  --asm-n-500: #627a66;
+  --asm-n-600: #4d6351;
+  --asm-n-700: #37483a;
+  --asm-n-800: #1c2a20;
+  --asm-n-900: #0e1a13;
+
+  --asm-c-sky: #cfe6d5;
+  --asm-c-blue: #1f7a4d;
+}
+
+/* ---------- midnight — the ramp inverted ----------
+   Nothing else in the system knows this is a dark scheme. The ramp runs the
+   other way, so "plain" becomes the darkest reading surface and "deep" — the
+   emphasis card — flips to light. Tier 2 does the rest unaided, including the
+   hairlines and the media duotone, because both are colour-mixes of the ramp
+   ends rather than fixed values. */
+[data-theme="midnight"] .assembly {
+  --asm-n-000: #10161d;
+  --asm-n-025: #141c25;
+  --asm-n-050: #0a0f15;
+  --asm-n-100: #1a242f;
+  --asm-n-150: #212d3a;
+  --asm-n-200: #2b3947;
+  --asm-n-300: #3d4c5c;
+  --asm-n-400: #5f7183;
+  --asm-n-500: #8195a7;
+  --asm-n-600: #a3b4c4;
+  --asm-n-700: #c2cfdb;
+  --asm-n-800: #dde6ef;
+  --asm-n-900: #f1f6fb;
+
+  --asm-c-sky: #1d2f42;
+  --asm-c-blue: #63aae8;
+
+  /* The two places an inverted ramp cannot infer the answer: text on the
+     bright accent needs to go dark, and the duotone needs a real shadow
+     rather than the ramp's now-light n-900. */
+  --asm-h-accent-ink: #0a0f15;
+  --asm-duo-shadow: #060b11;
+  --asm-duo-light: #4d84b5;
+  --asm-duo-strength: 0.72;
+}
+
+/* The page ground lives outside .assembly, on <body>, so it has to be told
+   about the scheme separately or the viewport edges stay light. */
+body {
+  background: #eef2f7;
+}
+[data-theme="mono"] body {
+  background: #f4f4f4;
+}
+[data-theme="signal"] body {
+  background: #f3efe8;
+}
+[data-theme="verdant"] body {
+  background: #eef3ee;
+}
+[data-theme="midnight"] body {
+  background: #0a0f15;
+  color-scheme: dark;
+}
+
+/* ============================================================
+   Theme lab — the on-screen scheme switcher
+   ============================================================
+   A review tool, not site chrome: it is fixed to the corner, mono-typed and
+   deliberately unstyled by the design system so nobody mistakes it for part
+   of the page. Hidden entirely when NEXT_PUBLIC_THEME_LAB=off.
+   ============================================================ */
+
+.asm-lab {
+  position: fixed;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  z-index: 400;
+  font-family: var(--font-asm-mono, ui-monospace, Menlo, monospace);
+  color: #f2f6fa;
+  max-width: calc(100vw - 24px);
+}
+
+.asm-lab-panel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  background: rgba(12, 16, 22, 0.93);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.32);
+  overflow-x: auto;
+}
+
+.asm-lab-head {
+  display: flex;
+  align-items: center;
+  padding-left: 6px;
+  font-size: 8.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #7f92a6;
+  white-space: nowrap;
+}
+
+.asm-lab-list {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.asm-lab-swatch {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 12px 7px 8px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: rgba(255, 255, 255, 0.05);
+  color: #cfdae6;
+  font: inherit;
+  font-size: 10px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* The lab is outside .assembly and so inherits none of its focus handling.
+   Keyboard reach matters here as much as anywhere: tab order is the five
+   schemes then the close button, and the ring is drawn light because the
+   panel is always dark. */
+.asm-lab button:focus-visible {
+  outline: 2px solid #9fd0ff;
+  outline-offset: 2px;
+}
+
+.asm-lab-swatch:hover {
+  background: rgba(255, 255, 255, 0.13);
+  color: #ffffff;
+}
+
+.asm-lab-swatch[aria-pressed="true"] {
+  background: rgba(255, 255, 255, 0.17);
+  border-color: rgba(255, 255, 255, 0.42);
+  color: #ffffff;
+}
+
+.asm-lab-chips {
+  display: flex;
+  flex: none;
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.asm-lab-chips i {
+  width: 8px;
+  height: 15px;
+  display: block;
+}
+
+.asm-lab-close {
+  background: none;
+  border: 0;
+  color: #7f92a6;
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  line-height: 1;
+  padding: 4px 8px;
+}
+
+.asm-lab-close:hover {
+  color: #ffffff;
+}
+
+.asm-lab-open {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(12, 16, 22, 0.93);
+  color: #cfdae6;
+  font: inherit;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.3);
+}
+
+.asm-lab-open:hover {
+  color: #ffffff;
+}
+
+.asm-lab-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: block;
+}
+
+@media (max-width: 720px) {
+  .asm-lab-head {
+    display: none;
+  }
+  .asm-lab-swatch span.asm-lab-name {
+    display: none;
+  }
+}
+
+@media print {
+  .asm-lab {
+    display: none;
+  }
+}

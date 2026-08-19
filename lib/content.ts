@@ -71,6 +71,7 @@ export interface Person {
     sourceUrl: string;
     alt: string;
     focalPoint: { x: number; y: number };
+    placeholder?: boolean;
   };
   links: PersonLink[];
   verified: boolean;
@@ -151,7 +152,7 @@ export interface Interview {
   durationMin: number;
   featured: boolean;
   pullQuote?: string;
-  image?: { sourceUrl: string; alt: string };
+  image?: { sourceUrl: string; alt: string; placeholder?: boolean };
   url?: string;
 }
 
@@ -237,10 +238,10 @@ export interface VoiceItem {
 
 export interface JournalPost {
   slug: string;
-  date: string;
+  date?: string;
   title: string;
   excerpt: string;
-  readMin: number;
+  readMin?: number;
   media: MediaAsset;
 }
 

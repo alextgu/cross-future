@@ -280,7 +280,8 @@
         "focalPoint": {
           "x": 50,
           "y": 35
-        }
+        },
+        "placeholder": true
       },
       "links": [],
       "verified": false,
@@ -296,7 +297,8 @@
         "focalPoint": {
           "x": 50,
           "y": 35
-        }
+        },
+        "placeholder": true
       },
       "links": [],
       "verified": false,
@@ -307,7 +309,7 @@
       "lastName": "Elder",
       "slug": "james-elder",
       "headshot": {
-        "sourceUrl": "/summit/portraits/james-elder.svg",
+        "sourceUrl": "/summit/portraits/james-elder.jpg",
         "alt": "Portrait of James Elder",
         "focalPoint": {
           "x": 50,
@@ -323,7 +325,7 @@
       "lastName": "Perlin",
       "slug": "ken-perlin",
       "headshot": {
-        "sourceUrl": "/summit/portraits/ken-perlin.svg",
+        "sourceUrl": "/summit/portraits/ken-perlin.jpg",
         "alt": "Portrait of Ken Perlin",
         "focalPoint": {
           "x": 50,
@@ -339,7 +341,7 @@
       "lastName": "Dziri",
       "slug": "nouha-dziri",
       "headshot": {
-        "sourceUrl": "/summit/portraits/nouha-dziri.svg",
+        "sourceUrl": "/summit/portraits/nouha-dziri.jpg",
         "alt": "Portrait of Nouha Dziri",
         "focalPoint": {
           "x": 50,
@@ -355,7 +357,7 @@
       "lastName": "Chen",
       "slug": "wenhu-chen",
       "headshot": {
-        "sourceUrl": "/summit/portraits/wenhu-chen.svg",
+        "sourceUrl": "/summit/portraits/wenhu-chen.jpg",
         "alt": "Portrait of WenHu Chen",
         "focalPoint": {
           "x": 50,
@@ -371,7 +373,7 @@
       "lastName": "Jaques",
       "slug": "natasha-jaques",
       "headshot": {
-        "sourceUrl": "/summit/portraits/natasha-jaques.svg",
+        "sourceUrl": "/summit/portraits/natasha-jaques.jpg",
         "alt": "Portrait of Natasha Jaques",
         "focalPoint": {
           "x": 50,
@@ -387,7 +389,7 @@
       "lastName": "Su",
       "slug": "yu-su",
       "headshot": {
-        "sourceUrl": "/summit/portraits/yu-su.svg",
+        "sourceUrl": "/summit/portraits/yu-su.jpg",
         "alt": "Portrait of Yu Su",
         "focalPoint": {
           "x": 50,
@@ -403,7 +405,7 @@
       "lastName": "Coates",
       "slug": "mark-coates",
       "headshot": {
-        "sourceUrl": "/summit/portraits/mark-coates.svg",
+        "sourceUrl": "/summit/portraits/mark-coates.jpg",
         "alt": "Portrait of Mark Coates",
         "focalPoint": {
           "x": 50,
@@ -419,7 +421,7 @@
       "lastName": "Liu",
       "slug": "bang-liu",
       "headshot": {
-        "sourceUrl": "/summit/portraits/bang-liu.svg",
+        "sourceUrl": "/summit/portraits/bang-liu.jpg",
         "alt": "Portrait of Bang Liu",
         "focalPoint": {
           "x": 50,
@@ -435,7 +437,7 @@
       "lastName": "Li",
       "slug": "yunzhu-li",
       "headshot": {
-        "sourceUrl": "/summit/portraits/yunzhu-li.svg",
+        "sourceUrl": "/summit/portraits/yunzhu-li.jpg",
         "alt": "Portrait of Yunzhu Li",
         "focalPoint": {
           "x": 50,
@@ -456,7 +458,8 @@
         "focalPoint": {
           "x": 50,
           "y": 35
-        }
+        },
+        "placeholder": true
       },
       "links": [],
       "verified": false,
@@ -472,7 +475,8 @@
         "focalPoint": {
           "x": 50,
           "y": 35
-        }
+        },
+        "placeholder": true
       },
       "links": [],
       "verified": false,
@@ -483,7 +487,7 @@
       "lastName": "Gollakota",
       "slug": "shyam-gollakota",
       "headshot": {
-        "sourceUrl": "/summit/portraits/shyam-gollakota.svg",
+        "sourceUrl": "/summit/portraits/shyam-gollakota.jpg",
         "alt": "Portrait of Shyam Gollakota",
         "focalPoint": {
           "x": 50,
@@ -504,7 +508,8 @@
         "focalPoint": {
           "x": 50,
           "y": 35
-        }
+        },
+        "placeholder": true
       },
       "links": [],
       "verified": false,
@@ -520,7 +525,8 @@
         "focalPoint": {
           "x": 50,
           "y": 35
-        }
+        },
+        "placeholder": true
       },
       "links": [],
       "verified": false,
@@ -536,7 +542,8 @@
         "focalPoint": {
           "x": 50,
           "y": 35
-        }
+        },
+        "placeholder": true
       },
       "links": [],
       "verified": false,
@@ -552,7 +559,8 @@
         "focalPoint": {
           "x": 50,
           "y": 35
-        }
+        },
+        "placeholder": true
       },
       "links": [],
       "verified": false,
@@ -568,7 +576,8 @@
         "focalPoint": {
           "x": 50,
           "y": 35
-        }
+        },
+        "placeholder": true
       },
       "links": [],
       "verified": false,
@@ -584,7 +593,8 @@
         "focalPoint": {
           "x": 50,
           "y": 35
-        }
+        },
+        "placeholder": true
       },
       "links": [],
       "verified": false,
@@ -600,7 +610,8 @@
         "focalPoint": {
           "x": 50,
           "y": 35
-        }
+        },
+        "placeholder": true
       },
       "links": [],
       "verified": false,
@@ -611,7 +622,7 @@
       "lastName": "Yang",
       "slug": "ze-yang",
       "headshot": {
-        "sourceUrl": "/summit/portraits/ze-yang.svg",
+        "sourceUrl": "/summit/portraits/ze-yang.jpg",
         "alt": "Portrait of Ze Yang",
         "focalPoint": {
           "x": 50,
@@ -632,7 +643,8 @@
         "focalPoint": {
           "x": 50,
           "y": 35
-        }
+        },
+        "placeholder": true
       },
       "links": [],
       "verified": false,
@@ -643,7 +655,7 @@
       "lastName": "Arik",
       "slug": "sercan-arik",
       "headshot": {
-        "sourceUrl": "/summit/portraits/sercan-arik.svg",
+        "sourceUrl": "/summit/portraits/sercan-arik.jpg",
         "alt": "Portrait of Sercan Arik",
         "focalPoint": {
           "x": 50,
@@ -664,7 +676,8 @@
         "focalPoint": {
           "x": 50,
           "y": 35
-        }
+        },
+        "placeholder": true
       },
       "links": [],
       "verified": false,
@@ -680,7 +693,8 @@
         "focalPoint": {
           "x": 50,
           "y": 35
-        }
+        },
+        "placeholder": true
       },
       "links": [],
       "verified": false,
@@ -696,7 +710,8 @@
         "focalPoint": {
           "x": 50,
           "y": 35
-        }
+        },
+        "placeholder": true
       },
       "links": [],
       "verified": false,
@@ -712,7 +727,8 @@
         "focalPoint": {
           "x": 50,
           "y": 35
-        }
+        },
+        "placeholder": true
       },
       "links": [],
       "verified": false,
@@ -728,7 +744,8 @@
         "focalPoint": {
           "x": 50,
           "y": 35
-        }
+        },
+        "placeholder": true
       },
       "links": [],
       "verified": false,
@@ -744,7 +761,8 @@
         "focalPoint": {
           "x": 50,
           "y": 35
-        }
+        },
+        "placeholder": true
       },
       "links": [],
       "verified": false,
@@ -755,7 +773,7 @@
       "lastName": "Lijour",
       "slug": "marc-lijour",
       "headshot": {
-        "sourceUrl": "/summit/portraits/marc-lijour.svg",
+        "sourceUrl": "/summit/portraits/marc-lijour.jpg",
         "alt": "Portrait of Marc Lijour",
         "focalPoint": {
           "x": 50,
@@ -776,7 +794,8 @@
         "focalPoint": {
           "x": 50,
           "y": 35
-        }
+        },
+        "placeholder": true
       },
       "links": [],
       "verified": false,
@@ -792,7 +811,8 @@
         "focalPoint": {
           "x": 50,
           "y": 35
-        }
+        },
+        "placeholder": true
       },
       "links": [],
       "verified": false,
@@ -808,7 +828,8 @@
         "focalPoint": {
           "x": 50,
           "y": 35
-        }
+        },
+        "placeholder": true
       },
       "links": [],
       "verified": false,
@@ -824,7 +845,8 @@
         "focalPoint": {
           "x": 50,
           "y": 35
-        }
+        },
+        "placeholder": true
       },
       "links": [],
       "verified": false,
@@ -1492,7 +1514,7 @@
       "title": "Congratulatory letter — Province of Ontario",
       "type": "letter",
       "image": {
-        "sourceUrl": "/summit/documents/ontario-letter.svg",
+        "sourceUrl": "/summit/documents/ontario-letter.jpg",
         "alt": "Congratulatory letter from the Province of Ontario"
       },
       "issuer": "Government of Ontario"
@@ -1501,7 +1523,7 @@
       "title": "Message from the Mayor — City of Toronto",
       "type": "letter",
       "image": {
-        "sourceUrl": "/summit/documents/toronto-mayor-letter.svg",
+        "sourceUrl": "/summit/documents/toronto-mayor-letter.jpg",
         "alt": "Message from the Mayor of the City of Toronto"
       },
       "issuer": "Office of the Mayor, City of Toronto"
@@ -1510,204 +1532,200 @@
   "interviews": [
     {
       "code": "IV.01",
-      "title": "The human data supply chain behind frontier models",
+      "title": "Shaun VanWeelden",
       "person": "shaun-vanweelden",
-      "durationMin": 14,
+      "durationMin": 17,
       "featured": true,
-      "pullQuote": "The bottleneck stopped being algorithms a while ago.",
       "image": {
-        "sourceUrl": "/summit/interviews/shaun-vanweelden.svg",
-        "alt": "Still from the recorded interview with Shaun Vanweelden"
+        "sourceUrl": "/summit/interviews/shaun-vanweelden.jpg",
+        "alt": "Still from the recorded interview with Shaun VanWeelden at the Cross Future AI Summit"
       }
     },
     {
       "code": "IV.02",
-      "title": "Sensing, wireless systems and intelligence at the edge",
+      "title": "Shyam Gollakota",
       "person": "shyam-gollakota",
-      "durationMin": 11,
+      "durationMin": 5,
       "featured": true,
       "image": {
-        "sourceUrl": "/summit/interviews/shyam-gollakota.svg",
-        "alt": "Still from the recorded interview with Shyam Gollakota"
+        "sourceUrl": "/summit/interviews/shyam-gollakota.jpg",
+        "alt": "Still from the recorded interview with Shyam Gollakota at the Cross Future AI Summit"
       }
     },
     {
       "code": "IV.03",
-      "title": "Language agents that actually touch the world",
+      "title": "Yu Su",
       "person": "yu-su",
-      "durationMin": 12,
+      "durationMin": 3,
       "featured": true,
-      "pullQuote": "An agent that cannot act is a very expensive autocomplete.",
       "image": {
-        "sourceUrl": "/summit/interviews/yu-su.svg",
-        "alt": "Still from the recorded interview with Yu Su"
+        "sourceUrl": "/summit/interviews/yu-su.jpg",
+        "alt": "Still from the recorded interview with Yu Su at the Cross Future AI Summit"
       }
     },
     {
       "code": "IV.04",
-      "title": "Multimodal reasoning and what retrieval still cannot fix",
+      "title": "Wenhu Chen",
       "person": "wenhu-chen",
-      "durationMin": 13,
-      "featured": false,
+      "durationMin": 3,
+      "featured": true,
       "image": {
-        "sourceUrl": "/summit/interviews/wenhu-chen.svg",
-        "alt": "Still from the recorded interview with Wenhu Chen"
+        "sourceUrl": "/summit/interviews/wenhu-chen.jpg",
+        "alt": "Still from the recorded interview with Wenhu Chen at the Cross Future AI Summit"
       }
     },
     {
       "code": "IV.05",
-      "title": "Where reasoning breaks, and why benchmarks miss it",
+      "title": "Nouha Dziri",
       "person": "nouha-dziri",
-      "durationMin": 15,
+      "durationMin": 4,
       "featured": true,
-      "pullQuote": "The failure modes are structural, not statistical.",
       "image": {
-        "sourceUrl": "/summit/interviews/nouha-dziri.svg",
-        "alt": "Still from the recorded interview with Nouha Dziri"
+        "sourceUrl": "/summit/interviews/nouha-dziri.jpg",
+        "alt": "Still from the recorded interview with Nouha Dziri at the Cross Future AI Summit"
       }
     },
     {
       "code": "IV.06",
-      "title": "Social reinforcement learning between people and models",
-      "person": "natasha-jaques",
-      "durationMin": 12,
+      "title": "Ken Perlin",
+      "person": "ken-perlin",
+      "durationMin": 3,
       "featured": false,
       "image": {
-        "sourceUrl": "/summit/interviews/natasha-jaques.svg",
-        "alt": "Still from the recorded interview with Natasha Jaques"
+        "sourceUrl": "/summit/interviews/ken-perlin.jpg",
+        "alt": "Still from the recorded interview with Ken Perlin at the Cross Future AI Summit"
       }
     },
     {
       "code": "IV.07",
-      "title": "What machine vision still gets wrong about scenes",
-      "person": "james-elder",
-      "durationMin": 10,
+      "title": "Natasha Jaques",
+      "person": "natasha-jaques",
+      "durationMin": 4,
       "featured": false,
       "image": {
-        "sourceUrl": "/summit/interviews/james-elder.svg",
-        "alt": "Still from the recorded interview with James Elder"
+        "sourceUrl": "/summit/interviews/natasha-jaques.jpg",
+        "alt": "Still from the recorded interview with Natasha Jaques at the Cross Future AI Summit"
       }
     },
     {
       "code": "IV.08",
-      "title": "Trustworthy deployment when the data is tabular and messy",
-      "person": "sercan-arik",
-      "durationMin": 11,
+      "title": "James Elder",
+      "person": "james-elder",
+      "durationMin": 5,
       "featured": false,
       "image": {
-        "sourceUrl": "/summit/interviews/sercan-arik.svg",
-        "alt": "Still from the recorded interview with Sercan Arik"
+        "sourceUrl": "/summit/interviews/james-elder.jpg",
+        "alt": "Still from the recorded interview with James Elder at the Cross Future AI Summit"
       }
     },
     {
       "code": "IV.09",
-      "title": "Silicon to systems: the stack under an AI data centre",
-      "person": "chris-smith",
-      "durationMin": 16,
-      "featured": true,
-      "pullQuote": "Every watt you save at the rack is a watt you do not have to interconnect.",
+      "title": "Sercan Arik",
+      "person": "sercan-arik",
+      "durationMin": 4,
+      "featured": false,
       "image": {
-        "sourceUrl": "/summit/interviews/chris-smith.svg",
-        "alt": "Still from the recorded interview with Chris Smith"
+        "sourceUrl": "/summit/interviews/sercan-arik.jpg",
+        "alt": "Still from the recorded interview with Sercan Arik at the Cross Future AI Summit"
       }
     },
     {
       "code": "IV.10",
-      "title": "Synthetic worlds, forty years in",
-      "person": "ken-perlin",
-      "durationMin": 13,
+      "title": "Chris Smith",
+      "person": "chris-smith",
+      "durationMin": 1,
       "featured": false,
       "image": {
-        "sourceUrl": "/summit/interviews/ken-perlin.svg",
-        "alt": "Still from the recorded interview with Ken Perlin"
+        "sourceUrl": "/summit/interviews/chris-smith.jpg",
+        "alt": "Still from the recorded interview with Chris Smith at the Cross Future AI Summit"
       }
     },
     {
       "code": "IV.11",
-      "title": "Building the ecosystem around the technology",
-      "person": "miryam-lazarte",
-      "durationMin": 9,
+      "title": "James Elder",
+      "person": "james-elder",
+      "durationMin": 2,
       "featured": false,
       "image": {
-        "sourceUrl": "/summit/interviews/miryam-lazarte.svg",
-        "alt": "Still from the recorded interview with Miryam Lazarte"
+        "sourceUrl": "/summit/interviews/james-elder-2.jpg",
+        "alt": "Still from the recorded interview with James Elder at the Cross Future AI Summit"
       }
     },
     {
       "code": "IV.12",
-      "title": "AI literacy as infrastructure",
-      "person": "maria-parysz",
-      "durationMin": 10,
+      "title": "Miryam Lazarte",
+      "person": "miryam-lazarte",
+      "durationMin": 2,
       "featured": false,
       "image": {
-        "sourceUrl": "/summit/interviews/maria-parysz.svg",
-        "alt": "Still from the recorded interview with Maria Parysz"
+        "sourceUrl": "/summit/interviews/miryam-lazarte.jpg",
+        "alt": "Still from the recorded interview with Miryam Lazarte at the Cross Future AI Summit"
       }
     },
     {
       "code": "IV.13",
-      "title": "Accelerating women-led ventures in deep tech",
-      "person": "nicole-troster",
-      "durationMin": 9,
+      "title": "Maria Parysz",
+      "person": "maria-parysz",
+      "durationMin": 2,
       "featured": false,
       "image": {
-        "sourceUrl": "/summit/interviews/nicole-troster.svg",
-        "alt": "Still from the recorded interview with Nicole Troster"
+        "sourceUrl": "/summit/interviews/maria-parysz.jpg",
+        "alt": "Still from the recorded interview with Maria Parysz at the Cross Future AI Summit"
       }
     },
     {
       "code": "IV.14",
-      "title": "Policy, platforms and public interest",
-      "person": "joseph-turcotte",
-      "durationMin": 11,
+      "title": "Nicole Troster",
+      "person": "nicole-troster",
+      "durationMin": 2,
       "featured": false,
       "image": {
-        "sourceUrl": "/summit/interviews/joseph-turcotte.svg",
-        "alt": "Still from the recorded interview with Joseph Turcotte"
+        "sourceUrl": "/summit/interviews/nicole-troster.jpg",
+        "alt": "Still from the recorded interview with Nicole Troster at the Cross Future AI Summit"
       }
     },
     {
       "code": "IV.15",
-      "title": "Community access to advanced technology",
-      "person": "pui-sai-lau",
-      "durationMin": 8,
+      "title": "Joseph Turcotte",
+      "person": "joseph-turcotte",
+      "durationMin": 1,
       "featured": false,
       "image": {
-        "sourceUrl": "/summit/interviews/pui-sai-lau.svg",
-        "alt": "Still from the recorded interview with Pui Sai Lau"
+        "sourceUrl": "/summit/interviews/joseph-turcotte.jpg",
+        "alt": "Still from the recorded interview with Joseph Turcotte at the Cross Future AI Summit"
       }
     },
     {
       "code": "IV.16",
-      "title": "Vision models and the compute they assume",
-      "person": "yang-wang",
-      "durationMin": 10,
+      "title": "Pui Sai Lau",
+      "person": "pui-sai-lau",
+      "durationMin": 1,
       "featured": false,
       "image": {
-        "sourceUrl": "/summit/interviews/yang-wang.svg",
-        "alt": "Still from the recorded interview with Yang Wang"
+        "sourceUrl": "/summit/interviews/pui-sai-lau.jpg",
+        "alt": "Still from the recorded interview with Pui Sai Lau at the Cross Future AI Summit"
       }
     },
     {
       "code": "IV.17",
-      "title": "Systems thinking for resilient infrastructure",
-      "person": "rasoul-yousef",
-      "durationMin": 12,
+      "title": "Yang Wang",
+      "person": "yang-wang",
+      "durationMin": 2,
       "featured": false,
       "image": {
-        "sourceUrl": "/summit/interviews/rasoul-yousef.svg",
-        "alt": "Still from the recorded interview with Rasoul Yousef"
+        "sourceUrl": "/summit/interviews/yang-wang.jpg",
+        "alt": "Still from the recorded interview with Yang Wang at the Cross Future AI Summit"
       }
     },
     {
       "code": "IV.18",
-      "title": "Embodied agents and grounded language",
-      "person": "manling-li",
-      "durationMin": 11,
+      "title": "Rasoul Yousef",
+      "person": "rasoul-yousef",
+      "durationMin": 1,
       "featured": false,
       "image": {
-        "sourceUrl": "/summit/interviews/manling-li.svg",
-        "alt": "Still from the recorded interview with Manling Li"
+        "sourceUrl": "/summit/interviews/rasoul-yousef.jpg",
+        "alt": "Still from the recorded interview with Rasoul Yousef at the Cross Future AI Summit"
       }
     }
   ],
@@ -1763,10 +1781,9 @@
         "ctaHref": "/media",
         "media": {
           "kind": "image",
-          "src": "/summit/media/rail-interviews.svg",
-          "alt": "A recorded interview being filmed in the foyer",
-          "aspect": "4 / 3",
-          "placeholder": true
+          "src": "/summit/media/rail-interviews.jpg",
+          "alt": "Frame from a recorded Cross Future interview, filmed on site",
+          "aspect": "4 / 3"
         }
       },
       "ticket": {
@@ -1980,10 +1997,8 @@
     "journal": [
       {
         "slug": "power-is-the-constraint",
-        "date": "2026-05-12",
         "title": "Power is the constraint, not compute",
         "excerpt": "As demand for large AI models and high-performance computing accelerates, AI data centers are reshaping the landscape of power infrastructure. The bottleneck has moved.",
-        "readMin": 6,
         "media": {
           "kind": "image",
           "src": "/summit/media/journal-01.svg",
@@ -1994,10 +2009,8 @@
       },
       {
         "slug": "interconnection-queue",
-        "date": "2026-05-28",
         "title": "The interconnection queue is the new supply chain",
         "excerpt": "Ultra-high-density loads do not just need more megawatts. They need grid capacity, power quality and supply reliability arriving together, on a schedule nobody controls alone.",
-        "readMin": 8,
         "media": {
           "kind": "image",
           "src": "/summit/media/journal-02.svg",
@@ -2008,10 +2021,8 @@
       },
       {
         "slug": "what-resilience-means",
-        "date": "2026-06-15",
         "title": "What resilience means for an AI factory",
         "excerpt": "Backup power, energy storage and dispatch stop being separate procurement lines once the facility is treated as a controllable load on a decarbonizing grid.",
-        "readMin": 5,
         "media": {
           "kind": "image",
           "src": "/summit/media/journal-03.svg",
@@ -2107,10 +2118,9 @@
         },
         "document": {
           "kind": "image",
-          "src": "/summit/documents/ontario-letter.svg",
+          "src": "/summit/documents/ontario-letter.jpg",
           "alt": "Congratulatory letter from the Province of Ontario",
-          "aspect": "17 / 22",
-          "placeholder": true
+          "aspect": "17 / 22"
         }
       },
       {
@@ -2127,10 +2137,9 @@
         },
         "document": {
           "kind": "image",
-          "src": "/summit/documents/toronto-mayor-letter.svg",
+          "src": "/summit/documents/toronto-mayor-letter.jpg",
           "alt": "Message from the Mayor of the City of Toronto",
-          "aspect": "17 / 22",
-          "placeholder": true
+          "aspect": "17 / 22"
         }
       }
     ],
@@ -2270,10 +2279,9 @@
         "lede": "Recorded interviews with the faculty, and the photographic record of every edition so far.",
         "media": {
           "kind": "image",
-          "src": "/summit/media/intro-media.svg",
-          "alt": "An interview being filmed",
-          "aspect": "21 / 9",
-          "placeholder": true
+          "src": "/summit/media/intro-media.jpg",
+          "alt": "Frame from a recorded Cross Future interview, filmed on site",
+          "aspect": "21 / 9"
         }
       },
       "partners": {

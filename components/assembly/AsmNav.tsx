@@ -4,62 +4,113 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import {
-  ASSEMBLY_BAR_ROUTES,
   ASSEMBLY_BASE,
   ASSEMBLY_HOME,
-  ASSEMBLY_MORE_LABEL,
-  ASSEMBLY_MORE_ROUTES,
   ASSEMBLY_REGISTER,
+  ASSEMBLY_REGISTER_LABEL,
   ASSEMBLY_ROUTES,
-  ASSEMBLY_RSVP_LABEL,
-  ASSEMBLY_RSVP_URL,
+  ASSEMBLY_SECTIONS,
   isCurrentRoute,
+  sectionHref,
 } from "@/lib/assembly-nav";
 import AsmButton from "./AsmButton";
-import { AsmMark } from "./AsmGlyph";
+import { AsmMark } from "./AsmLogo";
+
+/** Past this much scrolling the bar has been read and can get out of the way. */
+const HIDE_AFTER = 260;
+/** Cursor inside this band at the top of the window calls the bar back. */
+const REVEAL_BAND = 90;
 
 export default function AsmNav({ year }: { year: number }) {
   const pathname = usePathname() ?? ASSEMBLY_BASE;
+  const onHome = pathname === ASSEMBLY_HOME;
   const [open, setOpen] = useState(false);
-  const [moreOpen, setMoreOpen] = useState(false);
-  const moreRef = useRef<HTMLDivElement>(null);
+  const [hidden, setHidden] = useState(false);
+  const [active, setActive] = useState<string | null>(null);
+  const barRef = useRef<HTMLElement | null>(null);
 
   /* Close the drawer on navigation and on Escape — a drawer that survives a
-     route change is the classic mobile-nav bug. The dropdown shares the rule. */
+     route change is the classic mobile-nav bug. */
   useEffect(() => {
     setOpen(false);
-    setMoreOpen(false);
   }, [pathname]);
 
   useEffect(() => {
-    if (!open && !moreOpen) return;
+    if (!open) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key !== "Escape") return;
-      setOpen(false);
-      setMoreOpen(false);
+      if (e.key === "Escape") setOpen(false);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [open, moreOpen]);
+  }, [open]);
 
-  /* Pointer-down rather than click: a menu that survives the press that opened
-     something else reads as a stuck menu. */
+  /* Hide going down, show going up — plus two safety valves: the pointer
+     reaching for the top of the window, and focus landing inside the bar,
+     which is how a keyboard gets back to it. */
   useEffect(() => {
-    if (!moreOpen) return;
-    const onDown = (e: PointerEvent) => {
-      if (!moreRef.current?.contains(e.target as Node)) setMoreOpen(false);
-    };
-    window.addEventListener("pointerdown", onDown);
-    return () => window.removeEventListener("pointerdown", onDown);
-  }, [moreOpen]);
+    let last = window.scrollY;
 
-  const moreIsCurrent = ASSEMBLY_MORE_ROUTES.some((route) =>
-    isCurrentRoute(route.href, pathname),
-  );
+    /* Read straight off the scroll event rather than through
+       requestAnimationFrame: rAF is throttled when the tab is not painting,
+       which leaves the bar stuck in whichever state it was last in. The work
+       here is two comparisons, and React coalesces the state writes. */
+    const onScroll = () => {
+      const y = window.scrollY;
+      /* A few pixels of jitter — a trackpad settling, an address bar
+         resizing — should not toggle the bar. */
+      if (Math.abs(y - last) < 6) return;
+      const goingDown = y > last;
+      last = y;
+      setHidden(goingDown && y > HIDE_AFTER && !open);
+    };
+    const onPointer = (event: PointerEvent) => {
+      if (event.clientY <= REVEAL_BAND) setHidden(false);
+    };
+    const onFocus = () => {
+      if (barRef.current?.contains(document.activeElement)) setHidden(false);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("pointermove", onPointer, { passive: true });
+    document.addEventListener("focusin", onFocus);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("pointermove", onPointer);
+      document.removeEventListener("focusin", onFocus);
+    };
+  }, [open]);
+
+  /* Which section the reader is in, so the anchors say where they are. Home
+     only: elsewhere the anchors point off-page and marking one would lie. */
+  useEffect(() => {
+    if (!onHome) {
+      setActive(null);
+      return;
+    }
+    const targets = ASSEMBLY_SECTIONS.map(({ section }) =>
+      document.getElementById(section)
+    ).filter((el): el is HTMLElement => el !== null);
+    if (targets.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        if (visible[0]) setActive(visible[0].target.id);
+      },
+      { rootMargin: "-18% 0px -70% 0px" }
+    );
+    targets.forEach((target) => observer.observe(target));
+    return () => observer.disconnect();
+  }, [onHome]);
 
   return (
-    <div className="asm-navbar">
-      <nav className="asm-navbar-inner" aria-label="Primary">
+    <div
+      className={`asm-navbar${hidden ? " is-hidden" : ""}`}
+      data-hidden={hidden ? "true" : undefined}
+    >
+      <nav className="asm-navbar-inner" aria-label="Primary" ref={barRef}>
         <Link className="asm-wordmark" href={ASSEMBLY_HOME}>
           <AsmMark />
           <span>
@@ -68,70 +119,22 @@ export default function AsmNav({ year }: { year: number }) {
         </Link>
 
         <div className="asm-navlinks">
-          {ASSEMBLY_BAR_ROUTES.map((route) => (
-            <Link
-              key={route.href}
-              href={route.href}
+          {ASSEMBLY_SECTIONS.map((item) => (
+            <a
+              key={item.section}
+              href={sectionHref(item.section, pathname)}
               aria-current={
-                isCurrentRoute(route.href, pathname) ? "page" : undefined
+                onHome && active === item.section ? "true" : undefined
               }
             >
-              {route.label}
-            </Link>
+              {item.label}
+            </a>
           ))}
-
-          <div
-            className={`asm-more${moreOpen ? " is-open" : ""}`}
-            ref={moreRef}
-            /* Focus leaving the whole group closes it; focus moving between
-               the trigger and its items does not. */
-            onBlur={(e) => {
-              if (!e.currentTarget.contains(e.relatedTarget as Node)) {
-                setMoreOpen(false);
-              }
-            }}
-          >
-            <button
-              type="button"
-              aria-expanded={moreOpen}
-              aria-haspopup="true"
-              aria-controls="asm-more-menu"
-              data-current={moreIsCurrent ? "true" : undefined}
-              onClick={() => setMoreOpen((v) => !v)}
-            >
-              {ASSEMBLY_MORE_LABEL}
-              <span className="caret" aria-hidden="true" />
-            </button>
-
-            <div id="asm-more-menu" className="asm-moremenu" hidden={!moreOpen}>
-              {ASSEMBLY_MORE_ROUTES.map((route) => (
-                <Link
-                  key={route.href}
-                  href={route.href}
-                  aria-current={
-                    isCurrentRoute(route.href, pathname) ? "page" : undefined
-                  }
-                >
-                  {route.label}
-                </Link>
-              ))}
-              <Link
-                href={ASSEMBLY_REGISTER}
-                aria-current={
-                  isCurrentRoute(ASSEMBLY_REGISTER, pathname)
-                    ? "page"
-                    : undefined
-                }
-              >
-                Register
-              </Link>
-            </div>
-          </div>
         </div>
 
         <div className="asm-navcta">
-          <AsmButton href={ASSEMBLY_RSVP_URL} arrow={false}>
-            {ASSEMBLY_RSVP_LABEL}
+          <AsmButton href={ASSEMBLY_REGISTER} arrow={false}>
+            {ASSEMBLY_REGISTER_LABEL}
           </AsmButton>
         </div>
 
@@ -149,6 +152,8 @@ export default function AsmNav({ year }: { year: number }) {
         </button>
       </nav>
 
+      {/* The drawer stays a site map: on a phone the sections are a scroll
+          away anyway, and the pages are the thing that is hard to find. */}
       <div
         id="asm-drawer"
         className={`asm-drawer${open ? " is-open" : ""}`}
@@ -166,14 +171,15 @@ export default function AsmNav({ year }: { year: number }) {
             {route.label}
           </Link>
         ))}
-        <Link href={ASSEMBLY_REGISTER}>
+        <Link
+          href={ASSEMBLY_REGISTER}
+          aria-current={
+            isCurrentRoute(ASSEMBLY_REGISTER, pathname) ? "page" : undefined
+          }
+        >
           <span className="n">07</span>
-          Register
+          {ASSEMBLY_REGISTER_LABEL}
         </Link>
-        <a href={ASSEMBLY_RSVP_URL} target="_blank" rel="noreferrer">
-          <span className="n">08</span>
-          {ASSEMBLY_RSVP_LABEL}
-        </a>
       </div>
     </div>
   );

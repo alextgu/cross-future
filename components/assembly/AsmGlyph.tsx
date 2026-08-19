@@ -75,28 +75,3 @@ export default function AsmGlyph({
     </svg>
   );
 }
-
-/**
- * Wordmark. PLACEHOLDER — an abstract bracket-and-dot mark standing in for
- * the Cross Future Hub logo until the real asset is supplied. Swap the SVG
- * here and every surface updates.
- */
-export function AsmMark() {
-  return (
-    <svg viewBox="0 0 32 32" fill="none" aria-hidden="true" focusable="false">
-      <path
-        d="M9 4H6a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2v-3"
-        stroke="currentColor"
-        strokeWidth="3.4"
-        strokeLinecap="square"
-      />
-      <path
-        d="M14 12v6a2 2 0 0 0 2 2h6"
-        stroke="currentColor"
-        strokeWidth="3.4"
-        strokeLinecap="square"
-      />
-      <circle cx="26" cy="6" r="2.6" fill="currentColor" />
-    </svg>
-  );
-}
