@@ -2084,12 +2084,20 @@
 
 .assembly .asm-railcue.is-start {
   left: 6px;
-  padding-bottom: 0;
-  padding-right: 2px;
+  padding-bottom: 4px;
+  padding-right: 0;
+  padding-left: 3px;
 }
 
 .assembly .asm-railcue.is-end {
   right: 6px;
+}
+
+.assembly .asm-railcue:disabled {
+  opacity: 0.28;
+  cursor: default;
+  pointer-events: none;
+  filter: none;
 }
 
 .assembly .asm-railcue:hover {

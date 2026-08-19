@@ -1,8 +1,7 @@
  "use client";
 
 import type { InterviewCard } from "@/lib/content";
-import { scrollHorizontalPage } from "@/lib/scroll-horizontal-page";
-import { useRef } from "react";
+import { useHorizontalRailScroll } from "@/lib/use-horizontal-rail-scroll";
 import AsmEmpty from "./AsmEmpty";
 
 /**
@@ -26,13 +25,8 @@ export default function AsmInterviews({
   columns?: number;
   layout?: "grid" | "rail";
 }) {
-  const railRef = useRef<HTMLDivElement | null>(null);
-
-  const scrollRail = (direction: -1 | 1) => {
-    const node = railRef.current;
-    if (!node) return;
-    scrollHorizontalPage(node, direction);
-  };
+  const { ref: railRef, scroll: scrollRail, canScrollBack, canScrollForward } =
+    useHorizontalRailScroll();
 
   if (cards.length === 0) {
     return (
@@ -116,6 +110,7 @@ export default function AsmInterviews({
           type="button"
           className="asm-railcue is-start"
           onClick={() => scrollRail(-1)}
+          disabled={!canScrollBack}
           aria-label="Scroll interviews to the left"
         >
           ‹
@@ -133,6 +128,7 @@ export default function AsmInterviews({
           type="button"
           className="asm-railcue is-end"
           onClick={() => scrollRail(1)}
+          disabled={!canScrollForward}
           aria-label="Scroll interviews to the right"
         >
           ›

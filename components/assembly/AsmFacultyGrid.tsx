@@ -1,8 +1,7 @@
  "use client";
 
 import type { FacultyMember } from "@/lib/content";
-import { scrollHorizontalPage } from "@/lib/scroll-horizontal-page";
-import { useRef } from "react";
+import { useHorizontalRailScroll } from "@/lib/use-horizontal-rail-scroll";
 import AsmPersonCard from "./AsmPersonCard";
 import AsmEmpty from "./AsmEmpty";
 
@@ -32,13 +31,8 @@ export default function AsmFacultyGrid({
   layout?: "grid" | "strip";
   rows?: 1 | 2;
 }) {
-  const stripRef = useRef<HTMLDivElement | null>(null);
-
-  const scrollStrip = (direction: -1 | 1) => {
-    const node = stripRef.current;
-    if (!node) return;
-    scrollHorizontalPage(node, direction);
-  };
+  const { ref: stripRef, scroll: scrollStrip, canScrollBack, canScrollForward } =
+    useHorizontalRailScroll();
 
   if (members.length === 0) {
     return (
@@ -77,6 +71,7 @@ export default function AsmFacultyGrid({
           type="button"
           className="asm-railcue is-start"
           onClick={() => scrollStrip(-1)}
+          disabled={!canScrollBack}
           aria-label="Scroll faculty to the left"
         >
           ‹
@@ -86,6 +81,7 @@ export default function AsmFacultyGrid({
           type="button"
           className="asm-railcue is-end"
           onClick={() => scrollStrip(1)}
+          disabled={!canScrollForward}
           aria-label="Scroll faculty to the right"
         >
           ›
