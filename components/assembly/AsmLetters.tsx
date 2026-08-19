@@ -7,49 +7,13 @@ import AsmMedia from "./AsmMedia";
  */
 export default function AsmLetters({ letters }: { letters: LetterItem[] }) {
   return (
-    <div
-      className="asm-row asm-letters"
-      style={{ ["--cols" as string]: Math.min(letters.length, 2) }}
-    >
-      {letters.map((letter, i) => (
-        <article
-          key={letter.title + letter.issuer}
-          className="asm-card is-padded t-plain"
-        >
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 14,
-              marginBottom: 20,
-            }}
-          >
-            {letter.crest ? (
-              <div style={{ width: 46, flex: "none" }}>
-                <AsmMedia media={letter.crest} aspect="1 / 1" duotone={false} />
-              </div>
-            ) : null}
-            <div>
-              <h3 className="asm-d3" style={{ fontSize: "1.15rem" }}>
-                {letter.title}
-              </h3>
-              <p className="asm-meta">{letter.issuer}</p>
-            </div>
-          </div>
-
-          <p className="asm-body" style={{ marginBottom: 20 }}>
-            “{letter.excerpt}”
-          </p>
-
+    <div className="asm-letters">
+      {letters.map((letter) => (
+        <article key={letter.title + letter.issuer} className="asm-card asm-certificate">
+          <h3 className="asm-sr">
+            {letter.title} — {letter.issuer}
+          </h3>
           <AsmMedia media={letter.document} duotone={false} aspect="17 / 22" />
-
-          <p className="asm-meta" style={{ marginTop: 14 }}>
-            <time dateTime={letter.date}>
-              {new Intl.DateTimeFormat("en-CA", { dateStyle: "long" }).format(
-                new Date(letter.date)
-              )}
-            </time>
-          </p>
         </article>
       ))}
     </div>

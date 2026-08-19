@@ -9,7 +9,13 @@ import {
 import AsmFooter from "@/components/assembly/AsmFooter";
 import AsmNav from "@/components/assembly/AsmNav";
 import AsmThemeLab from "@/components/assembly/AsmThemeLab";
-import { THEME_DEFAULT, THEME_SCHEMES, THEME_STORAGE_KEY } from "@/lib/themes";
+import {
+  THEME_DEFAULT,
+  THEME_MEDIA_TINT_DEFAULT,
+  THEME_MEDIA_TINT_KEY,
+  THEME_SCHEMES,
+  THEME_STORAGE_KEY,
+} from "@/lib/themes";
 import "./globals.css";
 import "./assembly/assembly.css";
 import "./assembly/themes.css";
@@ -23,9 +29,13 @@ const THEME_BOOT = `(function(){try{var ids=${JSON.stringify(
   THEME_STORAGE_KEY,
 )});document.documentElement.dataset.theme=ids.indexOf(v)>-1?v:${JSON.stringify(
   THEME_DEFAULT,
-)};}catch(e){document.documentElement.dataset.theme=${JSON.stringify(
+)};var s=Number(localStorage.getItem(${JSON.stringify(
+  THEME_MEDIA_TINT_KEY,
+)}));if(!Number.isFinite(s))s=${THEME_MEDIA_TINT_DEFAULT};if(s<0)s=0;if(s>1)s=1;document.documentElement.style.setProperty('--asm-media-tint',String(s));}catch(e){document.documentElement.dataset.theme=${JSON.stringify(
   THEME_DEFAULT,
-)};}})();`;
+)};document.documentElement.style.setProperty('--asm-media-tint',${JSON.stringify(
+  String(THEME_MEDIA_TINT_DEFAULT),
+)});}})();`;
 
 /* The switcher is a review tool. It ships unless the deploy turns it off. */
 const THEME_LAB_ENABLED = process.env.NEXT_PUBLIC_THEME_LAB !== "off";

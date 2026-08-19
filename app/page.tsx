@@ -9,11 +9,12 @@ import {
   getConfirmedSessions,
   getProposedSessions,
 } from "@/lib/content";
-import { ASSEMBLY_BASE } from "@/lib/assembly-nav";
 import AsmShell from "@/components/assembly/AsmShell";
 import AsmHero from "@/components/assembly/AsmHero";
 import AsmFacts from "@/components/assembly/AsmFacts";
 import AsmMarquee from "@/components/assembly/AsmMarquee";
+import AsmSection from "@/components/assembly/AsmSection";
+import AsmAboutIntro from "@/components/assembly/AsmAboutIntro";
 import AsmSectionHead from "@/components/assembly/AsmSectionHead";
 import AsmFacultyGrid from "@/components/assembly/AsmFacultyGrid";
 import AsmPartners from "@/components/assembly/AsmPartners";
@@ -50,88 +51,95 @@ export default async function AssemblyHome() {
        the facts row's "Get a ticket" and the closing CTA were the same
        action under two more names, one of them word-for-word the hero's.
 
-       No rail: the hero mosaic already carries the agenda and ticket cards. */
+       No rail: the hero mosaic already carries the agenda and ticket cards.
+
+       The body is a flat list of sections and nothing else. A section is a
+       top-level region — what the nav points at, what has or could have its
+       own heading — and it is the only thing that takes section distance.
+       The hero, the three fact cards and the ticker are one region, not
+       three: the facts are the hero's own metadata, so they tile directly
+       under it at the same gap the hero's own tiles use. */
     <AsmShell>
-      <AsmHero edition={edition} assembly={assembly} />
-
-      <AsmFacts facts={assembly.facts} />
-
-      <AsmMarquee items={assembly.marquee} />
+      <AsmSection flow="tile" label="Cross Future AI Summit 2026">
+        <AsmHero edition={edition} assembly={assembly} />
+        <AsmFacts facts={assembly.facts} />
+        <AsmMarquee items={assembly.marquee} />
+      </AsmSection>
 
       {/* The non-profit's own statement of purpose — the paragraph the live
           site opens with, in its own words. */}
-      <AsmSectionHead
-        id="about"
-        eyebrow="Cross Future Hub"
-        title="Why this summit exists"
-        tone="plain"
-        action={{ label: "About the host", href: `${ASSEMBLY_BASE}/about` }}
-      />
-      {/* The paragraph itself, not a chapter card: the section head above
-          already carries the title, and the chapter frame repeated it over a
-          screen of empty card and a stand-in photograph. */}
-      <div className="asm-card is-padded t-plain">
-        <p className="asm-lede" style={{ maxWidth: "68ch" }}>
-          {assembly.story[0]?.text}
-        </p>
-      </div>
+      <AsmSection id="about" flow="tile">
+        <AsmAboutIntro />
+      </AsmSection>
 
-      <AsmSectionHead
-        id="interviews"
-        eyebrow="Interviews"
-        title="Voices from the floor"
-        action={{ label: "Media archive", href: `${ASSEMBLY_BASE}/media` }}
-      />
-      <AsmInterviews cards={interviews.slice(0, 4)} />
+      {/* Speakers, with the interviews under them. The interview wall is an
+          archive of people who have already spoken here — it belongs to the
+          faculty rather than standing beside them as a peer subject. */}
+      <AsmSection id="faculty">
+        <AsmSectionHead
+          eyebrow="Main stage"
+          title="Meet the faculty"
+        />
+        <AsmFacultyGrid members={faculty} layout="strip" rows={2} />
+        <span className="asm-anchor" id="interviews" aria-hidden="true" />
+        <AsmSectionHead
+          eyebrow="On the record"
+          title="Recorded interviews"
+          tone="plain"
+          space="tight"
+        />
+        <AsmInterviews cards={interviews} layout="rail" />
+      </AsmSection>
 
-      <AsmSectionHead
-        id="faculty"
-        eyebrow="Main stage"
-        title="Meet the faculty"
-        action={{ label: "All speakers", href: `${ASSEMBLY_BASE}/speakers` }}
-      />
-      <AsmFacultyGrid members={faculty} layout="strip" />
+      {/* Program: what the day covers, then when it happens. Two sections
+          asking a visitor the same question — is this day about my problem,
+          and can I be in the room for it — so they answer it once, under one
+          head, with the focus lede introducing both halves. */}
+      <AsmSection id="focus">
+        <AsmSectionHead
+          eyebrow="Program"
+          title="Key Areas of Focus and Topics"
+          tone="plain"
+        />
+        <AsmFocus
+          areas={assembly.focusAreas}
+          /* Same page now: a track cell points at its own entry in the agenda
+             below rather than at a page that no longer exists. */
+          href=""
+        />
+        <span className="asm-anchor" id="agenda" aria-hidden="true" />
+        {/* The full agenda, not a teaser for one: this is the only place the
+            programme lives now, and the track list inside it carries the
+            anchors the focus cells point at. */}
+        <AsmAgenda
+          edition={edition}
+          confirmed={confirmed}
+          proposed={proposed}
+          tracks={content.tracks}
+          variant="full"
+        />
+      </AsmSection>
 
-      <AsmFocus
-        id="focus"
-        areas={assembly.focusAreas}
-        hero={assembly.focusMedia}
-      />
+      {/* Supporters: everyone vouching for the summit, in order of weight.
+          The letters are a government and a city on paper; the logos are the
+          companies in the room. Same kind of claim, one section. */}
+      <AsmSection id="recognition" space="major">
+        <AsmSectionHead
+          eyebrow="Supporters"
+          title="Who stands behind it"
+          lede="Editions 01 and 02 were recognized by the Province of Ontario and the City of Toronto."
+          tone="tint"
+        />
+        <AsmLetters letters={assembly.letters} />
+        <span className="asm-anchor" id="partners" aria-hidden="true" />
+        <AsmPartners groups={partnerGroups} />
+      </AsmSection>
 
-      <AsmSectionHead
-        id="agenda"
-        eyebrow="Agenda"
-        title="The shape of the day"
-        action={{ label: "Full agenda", href: `${ASSEMBLY_BASE}/agenda` }}
-        tone="plain"
-      />
-      <AsmAgenda
-        edition={edition}
-        confirmed={confirmed}
-        proposed={proposed}
-        tracks={content.tracks}
-        variant="strip"
-      />
-
-      <AsmSectionHead
-        id="recognition"
-        eyebrow="Recognition"
-        title="Letters of support"
-        lede="Editions 01 and 02 were recognized by the Province of Ontario and the City of Toronto."
-        tone="tint"
-      />
-      <AsmLetters letters={assembly.letters} />
-
-      <AsmSectionHead
-        id="partners"
-        eyebrow="Partners"
-        title="Our partners"
-        action={{ label: "Become a partner", href: `${ASSEMBLY_BASE}/partners` }}
-        tone="deep"
-      />
-      <AsmPartners groups={partnerGroups} />
-
-      <AsmContact contact={assembly.contact} edition={edition} />
+      {/* AsmContact carries the #contact anchor itself, so the wrapper is
+          here for rhythm only. */}
+      <AsmSection>
+        <AsmContact contact={assembly.contact} edition={edition} />
+      </AsmSection>
     </AsmShell>
   );
 }

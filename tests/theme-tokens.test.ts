@@ -88,9 +88,9 @@ describe("the design system's colour discipline", () => {
     );
     expect(keyframes).toEqual(["asm-marquee"]);
 
-    /* One component may watch the scroll position: the nav, to say which
-       section you are in. Anything else reaching for an observer is the
-       reveal-on-scroll pattern coming back. */
+    /* One component may watch the scroll position, and only this one: the
+       nav, to say which section you are in. Anything else reaching for an
+       observer is the reveal-on-scroll pattern coming back. */
     const observing = readdirSync("components/assembly")
       .filter((file) => file.endsWith(".tsx"))
       .filter((file) =>

@@ -1778,7 +1778,7 @@
       "feature": {
         "title": "Interviews on record",
         "ctaLabel": "Watch interviews",
-        "ctaHref": "/media",
+        "ctaHref": "/#interviews",
         "media": {
           "kind": "image",
           "src": "/summit/media/rail-interviews.jpg",
@@ -1790,7 +1790,7 @@
         "title": "Ready to be part of it?",
         "text": "One day, one room, the people actually building the power layer under AI. Registration is handled by our events partner.",
         "ctaLabel": "Register",
-        "ctaHref": "/register",
+        "ctaHref": "https://www.eventgo.ai/event/1000909471805",
         "media": {
           "kind": "image",
           "src": "/summit/media/rail-ticket.svg",

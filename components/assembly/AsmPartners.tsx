@@ -30,40 +30,18 @@ export default function AsmPartners({
     );
   }
 
-  return (
-    <div className="asm-logowall">
-      {partners.map((partner) => {
-        const logo = (
-          /* eslint-disable-next-line @next/next/no-img-element */
-          <img
-            src={partner.logo.sourceUrl}
-            alt={partner.logo.alt}
-            loading="lazy"
-            decoding="async"
-          />
-        );
+  const slots = Array.from({ length: partners.length });
 
-        return partner.url ? (
-          <a
-            key={partner.slug}
-            className="asm-logo"
-            href={partner.url}
-            target="_blank"
-            rel="noreferrer"
-            title={partner.name ?? undefined}
-          >
-            {logo}
-          </a>
-        ) : (
-          <div
-            key={partner.slug}
-            className="asm-logo"
-            title={partner.name ?? undefined}
-          >
-            {logo}
+  return (
+    <section className="asm-sponsorwall" aria-label="Sponsors">
+      <h3 className="asm-sponsorwall-title">Our Partners</h3>
+      <div className="asm-logowall is-placeholder">
+        {slots.map((_, i) => (
+          <div key={`placeholder-${i}`} className="asm-logo is-placeholder">
+            <span>Logo {String(i + 1).padStart(2, "0")}</span>
           </div>
-        );
-      })}
-    </div>
+        ))}
+      </div>
+    </section>
   );
 }

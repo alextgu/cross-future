@@ -8,6 +8,7 @@ import {
 import { ASSEMBLY_REGISTER } from "@/lib/assembly-nav";
 import AsmButton from "./AsmButton";
 import AsmAgendaStrip, { type AsmAgendaItem } from "./AsmAgendaStrip";
+import AsmMedia from "./AsmMedia";
 
 export default function AsmAgenda({
   edition,
@@ -28,6 +29,13 @@ export default function AsmAgenda({
    */
   variant?: "full" | "strip";
 }) {
+  const comingSoonMedia = {
+    kind: "image",
+    src: "/summit/media/agenda-coming-soon.png",
+    alt: "Cross Future workshop invitation visual for the upcoming agenda",
+    aspect: "21 / 9",
+  } as const;
+
   const published = confirmed.length > 0;
   const rows = published ? confirmed : proposed;
   const trackByCode = new Map(tracks.map((track) => [track.code, track]));
@@ -53,12 +61,14 @@ export default function AsmAgenda({
 
   return (
     <div className="asm-stack">
-      <div className="asm-card is-padded t-deep">
+      <div className={`asm-card is-padded t-deep${published ? "" : " is-provisional"}`}>
         <div className="asm-head">
           <div className="asm-head-title">
-            <p className="asm-eyebrow">
-              {published ? "Programme" : "Agenda · not yet published"}
-            </p>
+            {published ? (
+              <p className="asm-eyebrow">Programme</p>
+            ) : (
+              <p className="asm-agenda-state">Agenda · not yet published</p>
+            )}
             <h2 className="asm-d1">
               {formatEditionDate(edition)}
               <br />
@@ -66,11 +76,19 @@ export default function AsmAgenda({
             </h2>
           </div>
           <div className="asm-head-aside">
-            <p className="asm-lede">
-              {published
-                ? `One day at ${edition.venue.name}, ${edition.venue.city}. Rooms are confirmed on arrival.`
-                : "The structure of the day is fixed. Named sessions and speakers go to registrants first as they are confirmed, then here."}
-            </p>
+            {published ? (
+              <p className="asm-lede">
+                {`One day at ${edition.venue.name}, ${edition.venue.city}. Rooms are confirmed on arrival.`}
+              </p>
+            ) : (
+              <div className="asm-agenda-coming-frame">
+                <AsmMedia
+                  media={comingSoonMedia}
+                  className="asm-agenda-coming-art"
+                  bleed
+                />
+              </div>
+            )}
             <AsmButton href={ASSEMBLY_REGISTER} tone="inverse">
               {published ? "Register" : "Get it first — register"}
             </AsmButton>
@@ -89,7 +107,13 @@ export default function AsmAgenda({
           style={{ ["--cols" as string]: tracks.length, ["--cols-md" as string]: 2 }}
         >
           {tracks.map((track) => (
-            <div key={track.code} style={{ display: "grid", gap: 10 }}>
+            /* Anchored per track: the focus rows on the home page point a
+               reader straight at the track they just read about. */
+            <div
+              key={track.code}
+              id={`track-${track.code}`}
+              style={{ display: "grid", gap: 10 }}
+            >
               <span className="asm-chip">{track.code}</span>
               <h3 className="asm-d3" style={{ fontSize: "1.12rem" }}>
                 {track.name}

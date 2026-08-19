@@ -350,7 +350,7 @@ const assembly = {
     feature: {
       title: "Agenda at a glance",
       ctaLabel: "View agenda",
-      ctaHref: "/agenda",
+      ctaHref: "/#agenda",
       media: img(
         "/summit/media/rail-agenda.svg",
         "Delegates in conversation between sessions",
@@ -361,7 +361,7 @@ const assembly = {
       title: "Ready to be part of it?",
       text: "One day, one room, the people actually building the power layer under AI. Registration is handled by our events partner.",
       ctaLabel: "Register",
-      ctaHref: "/register",
+      ctaHref: "https://www.eventgo.ai/event/1000909471805",
       media: img(
         "/summit/media/rail-ticket.svg",
         "A full auditorium during the closing keynote",

@@ -3,7 +3,7 @@ import {
   getCurrentEdition,
   getAssembly,
 } from "@/lib/content";
-import { ASSEMBLY_ROUTES, ASSEMBLY_REGISTER } from "@/lib/assembly-nav";
+import { ASSEMBLY_SITE_ROUTES, ASSEMBLY_REGISTER } from "@/lib/assembly-nav";
 import Link from "next/link";
 import AsmShell from "@/components/assembly/AsmShell";
 import AsmButton from "@/components/assembly/AsmButton";
@@ -47,7 +47,7 @@ export default async function AssemblyNotFound() {
           className="asm-row"
           style={{ ["--cols" as string]: 3, ["--cols-md" as string]: 2 }}
         >
-          {ASSEMBLY_ROUTES.map((route) => (
+          {ASSEMBLY_SITE_ROUTES.map((route) => (
             <li key={route.href}>
               <Link
                 href={route.href}

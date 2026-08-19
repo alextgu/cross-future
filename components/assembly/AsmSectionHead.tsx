@@ -21,6 +21,7 @@ export default function AsmSectionHead({
   action,
   tone = "plain",
   id,
+  space,
 }: {
   eyebrow: string;
   title: React.ReactNode;
@@ -29,9 +30,13 @@ export default function AsmSectionHead({
   /** Only decides which button treatment reads on the surrounding ground. */
   tone?: AsmTone;
   id?: string;
+  /** How far this section stands off the one above it. Default is the plain
+      section break; `tight` is a section that continues the previous one,
+      `major` is the break the page is built around. */
+  space?: "tight" | "major";
 }) {
   return (
-    <header className="asm-sechead" id={id}>
+    <header className="asm-sechead" id={id} data-space={space}>
       <p className="asm-eyebrow">{eyebrow}</p>
       <h2 className="asm-sechead-title">{title}</h2>
       {lede ? <p className="asm-sechead-lede">{lede}</p> : null}

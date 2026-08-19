@@ -6,7 +6,6 @@ import {
 } from "@/lib/assembly-nav";
 import AsmButton from "./AsmButton";
 import AsmCountdown from "./AsmCountdown";
-import AsmMedia from "./AsmMedia";
 import { AsmLockup } from "./AsmLogo";
 
 export default function AsmFooter({
@@ -18,14 +17,10 @@ export default function AsmFooter({
   host: Organization | null;
   assembly: AssemblyContent;
 }) {
-  const { contact, footerBand } = assembly;
+  const { contact } = assembly;
 
   return (
     <footer className="asm-footer">
-      <div className="asm-footer-band">
-        <AsmMedia media={footerBand} aspect="32 / 9" scrim />
-      </div>
-
       <div className="asm-card is-padded t-deep">
         <div className="asm-footer-cols">
           <div>
@@ -81,6 +76,26 @@ export default function AsmFooter({
               {host ? host.name : "Cross Future Hub"} is a non-profit guiding
               tech enthusiasts through key trends.
             </p>
+          </div>
+
+          <div className="asm-footer-newsletter">
+            <h3>Newsletter</h3>
+            <p className="asm-lede">
+              Get summit updates and the agenda release in your inbox.
+            </p>
+            <form action="" method="get">
+              <label className="asm-sr" htmlFor="footer-newsletter-email">
+                Email address
+              </label>
+              <input
+                id="footer-newsletter-email"
+                name="email"
+                type="email"
+                placeholder="you@company.com"
+                autoComplete="email"
+              />
+              <button type="button">Subscribe</button>
+            </form>
           </div>
         </div>
 

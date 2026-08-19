@@ -3,6 +3,10 @@
 import { useEffect, useState } from "react";
 import {
   THEME_DEFAULT,
+  THEME_MEDIA_TINT_DEFAULT,
+  THEME_MEDIA_TINT_KEY,
+  THEME_MEDIA_TINT_MAX,
+  THEME_MEDIA_TINT_MIN,
   THEME_SCHEMES,
   THEME_STORAGE_KEY,
   isThemeId,
@@ -18,6 +22,7 @@ import {
  */
 export default function AsmThemeLab() {
   const [theme, setTheme] = useState(THEME_DEFAULT);
+  const [mediaTint, setMediaTint] = useState(THEME_MEDIA_TINT_DEFAULT);
   const [open, setOpen] = useState(true);
 
   /* Adopt whatever the boot script already put on the element rather than
@@ -26,6 +31,28 @@ export default function AsmThemeLab() {
   useEffect(() => {
     const applied = document.documentElement.dataset.theme;
     if (isThemeId(applied)) setTheme(applied as string);
+
+    try {
+      const stored = Number(window.localStorage.getItem(THEME_MEDIA_TINT_KEY));
+      if (Number.isFinite(stored)) {
+        const clamped = Math.min(
+          THEME_MEDIA_TINT_MAX,
+          Math.max(THEME_MEDIA_TINT_MIN, stored)
+        );
+        setMediaTint(clamped);
+        document.documentElement.style.setProperty(
+          "--asm-media-tint",
+          String(clamped)
+        );
+        return;
+      }
+    } catch {
+      /* If storage is blocked, keep the default saturation for this view. */
+    }
+    document.documentElement.style.setProperty(
+      "--asm-media-tint",
+      String(THEME_MEDIA_TINT_DEFAULT)
+    );
   }, []);
 
   function choose(id: string) {
@@ -36,6 +63,20 @@ export default function AsmThemeLab() {
     } catch {
       /* Private mode or a blocked store: the switch still works for this
          page view, it just will not survive a reload. */
+    }
+  }
+
+  function chooseMediaTint(value: number) {
+    const clamped = Math.min(
+      THEME_MEDIA_TINT_MAX,
+      Math.max(THEME_MEDIA_TINT_MIN, value)
+    );
+    setMediaTint(clamped);
+    document.documentElement.style.setProperty("--asm-media-tint", String(clamped));
+    try {
+      window.localStorage.setItem(THEME_MEDIA_TINT_KEY, String(clamped));
+    } catch {
+      /* Same as theme selection: live change still works without persistence. */
     }
   }
 
@@ -87,6 +128,19 @@ export default function AsmThemeLab() {
             </button>
           ))}
         </div>
+
+        <label className="asm-lab-sat">
+          <span>Tint {Math.round(mediaTint * 100)}%</span>
+          <input
+            type="range"
+            min={THEME_MEDIA_TINT_MIN}
+            max={THEME_MEDIA_TINT_MAX}
+            step={0.05}
+            value={mediaTint}
+            onChange={(event) => chooseMediaTint(Number(event.target.value))}
+            aria-label="Media tint strength"
+          />
+        </label>
 
         <button
           type="button"

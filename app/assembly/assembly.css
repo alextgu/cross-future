@@ -104,11 +104,29 @@
   --asm-radius: 22px;
   --asm-radius-sm: 14px;
   --asm-radius-pill: 999px;
+  /* ---------- Spacing tiers ----------
+     Three sizes and nothing in between, so the page groups by distance
+     alone: items inside one grid sit at --space-item, a section head sits
+     --space-head above its own content, and one section clears the next by
+     --space-section, which is never less than three times the largest gap
+     inside a section. Two variants exist for relationship: sections that
+     continue an argument use --tight, and the one break the page is built
+     around uses --major. */
+  --asm-space-item: 20px;
+  --asm-space-head: clamp(24px, 3vw, 44px);
+  --asm-space-section: clamp(48px, 6vw, 100px);
+  --asm-space-section-tight: clamp(36px, 4vw, 70px);
+  --asm-space-section-major: clamp(64px, 8vw, 130px);
+
   --asm-pad: clamp(20px, 2.6vw, 44px);
   --asm-pad-tight: clamp(16px, 1.8vw, 28px);
   --asm-rail: 312px;
   --asm-max: 1560px;
   --asm-nav: 62px;
+  /* The bar's own box: its height plus the gap it floats in. Anything that
+     has to clear it — anchor targets, the hero headline — measures from
+     this, not from the bar's height alone. */
+  --asm-navclear: calc(var(--asm-nav) + var(--asm-gap) + 24px);
   --asm-stick: calc(var(--asm-nav) + var(--asm-gap) * 2);
 
   /* ---------- Type ---------- */
@@ -131,6 +149,10 @@
   --asm-num: clamp(3rem, 6.5vw, 6.5rem);
 
   min-height: 100dvh;
+  /* Full-bleed blocks are sized against 100vw, which counts the scrollbar;
+     clip (not hidden) keeps that off the horizontal axis without turning the
+     page into a scroll container and breaking the sticky rail. */
+  overflow-x: clip;
   background: var(--asm-page);
   color: var(--asm-ink);
   font-family: var(--asm-body);
@@ -401,13 +423,13 @@
 /* Card grids. Every section composes from these three. */
 .assembly .asm-stack {
   display: grid;
-  gap: var(--asm-gap);
+  gap: var(--asm-space-item);
   min-width: 0;
 }
 
 .assembly .asm-row {
   display: grid;
-  gap: var(--asm-gap);
+  gap: var(--asm-space-item);
   grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr));
 }
 
@@ -445,7 +467,7 @@
 
 /* Any anchor target clears the bar when it is jumped to. */
 .assembly [id] {
-  scroll-margin-top: calc(var(--asm-nav) + var(--asm-gap) * 3);
+  scroll-margin-top: var(--asm-navclear);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -533,6 +555,9 @@
 }
 
 .assembly .asm-navlinks a {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5em;
   font-family: var(--asm-mono);
   font-size: 0.72rem;
   letter-spacing: 0.09em;
@@ -543,6 +568,10 @@
   transition: background 0.16s ease, color 0.16s ease;
 }
 
+.assembly .asm-navlinks a .n {
+  letter-spacing: 0.08em;
+}
+
 .assembly .asm-navlinks a:hover {
   background: var(--asm-card-mist);
   color: var(--asm-ink);
@@ -551,6 +580,40 @@
 .assembly .asm-navlinks a[aria-current="page"] {
   background: var(--asm-card-mist);
   color: var(--asm-ink);
+}
+
+.assembly .asm-navaux {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+}
+
+.assembly .asm-navpage {
+  display: inline-flex;
+  align-items: center;
+  padding: 9px 14px 9px 16px;
+  margin-left: 4px;
+  border-left: 1px solid var(--asm-hair);
+  border-radius: 0;
+  font-family: var(--asm-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--asm-ink-2);
+  transition: background 0.16s ease, color 0.16s ease;
+}
+
+.assembly .asm-navpage:hover {
+  background: var(--asm-card-mist);
+  color: var(--asm-ink);
+}
+
+.assembly .asm-navpage[aria-current="page"] {
+  background: color-mix(in srgb, var(--asm-accent) 16%, var(--asm-card-mist));
+  color: var(--asm-ink);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--asm-accent) 42%, var(--asm-hair));
+  font-weight: 500;
 }
 
 .assembly .asm-navcta {
@@ -703,9 +766,31 @@
   color: var(--asm-ink-2);
 }
 
+.assembly .asm-drawer-divider {
+  margin: 8px 4px 4px;
+  border: 0;
+  border-top: 1px solid var(--asm-hair-inv);
+  opacity: 0.55;
+}
+
+.assembly .asm-drawer-page {
+  font-size: 1.35rem;
+  letter-spacing: 0.02em;
+}
+
+.assembly .asm-drawer-page[aria-current="page"] {
+  background: color-mix(in srgb, var(--asm-n-000) 10%, transparent);
+  color: var(--asm-ink-inv);
+  margin-inline: -4px;
+  padding-inline: 8px;
+  border-radius: var(--asm-radius-sm);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--asm-n-000) 22%, transparent);
+}
+
 .assembly .asm-shell {
   max-width: var(--asm-max);
   margin: 0 auto;
+  /* Keep the content/foot seam tight; the footer now carries the close. */
   padding: var(--asm-gap);
   display: grid;
   grid-template-columns: minmax(0, 1fr) var(--asm-rail);
@@ -720,9 +805,81 @@
 
 .assembly .asm-main {
   display: grid;
-  gap: var(--asm-gap);
+  /* No uniform gap: a single value between every child is what made the
+     page read flat — the distance from a head to its own content was the
+     same as the distance to the next subject. Spacing is set per child
+     instead, by what the child is. */
+  gap: 0;
   min-width: 0;
 }
+
+/* Rhythm lives at one level only: the seam between two sections. A section
+   is a top-level region — the thing the nav points at, the thing that has or
+   could have its own heading. Everything inside one is a component and gets
+   no outer margin at all, so a card, a rail or a row of facts can never buy
+   itself section distance by being visually distinct. */
+.assembly .asm-main > .asm-section {
+  margin-top: var(--asm-space-section);
+}
+
+.assembly .asm-main > .asm-section:first-child {
+  margin-top: 0;
+}
+
+/* Relationship: `tight` continues the subject above, `major` is the break
+   the page is built around. */
+.assembly .asm-main > .asm-section[data-space="tight"] {
+  margin-top: var(--asm-space-section-tight);
+}
+
+.assembly .asm-main > .asm-section[data-space="major"] {
+  margin-top: var(--asm-space-section-major);
+}
+
+/* Inside a section: a head stands off its own content at component
+   distance, and that is the largest gap a section may contain. */
+.assembly .asm-section {
+  display: grid;
+  gap: var(--asm-space-head);
+  min-width: 0;
+}
+
+/* The opening tiles rather than stacks: hero, fact cards and ticker are one
+   mosaic, so they sit at the same distance from each other as the tiles
+   inside the hero do. Any other gap here reads as three separate blocks. */
+.assembly .asm-section[data-flow="tile"] {
+  gap: var(--asm-gap);
+}
+
+/* Components never carry outer vertical margin. If a gap needs changing it
+   is changed on the section, not here. */
+.assembly .asm-section > * {
+  margin-block: 0;
+}
+
+/* Pages not yet built from sections keep the same rule expressed flatly: a
+   section head is where a region starts, so it is the only child that takes
+   section distance. */
+.assembly .asm-main > :not(.asm-section) {
+  margin-top: var(--asm-space-head);
+}
+
+.assembly .asm-main > :not(.asm-section):first-child {
+  margin-top: 0;
+}
+
+.assembly .asm-main > .asm-sechead:not(.asm-section) {
+  margin-top: var(--asm-space-section);
+}
+
+.assembly .asm-main > .asm-sechead[data-space="tight"] {
+  margin-top: var(--asm-space-section-tight);
+}
+
+.assembly .asm-main > .asm-sechead[data-space="major"] {
+  margin-top: var(--asm-space-section-major);
+}
+
 
 .assembly .asm-railcol {
   position: sticky;
@@ -835,9 +992,273 @@
   max-height: 46vh;
 }
 
-.assembly .asm-focushero .asm-card.is-padded {
+/* Two blocks on the home page carry no container at all — this intro and the
+   statement of purpose above it. Both were a padded slab holding one
+   paragraph, which made the border do the separating that space should do.
+   Space does it now. */
+.assembly .asm-focusintro-copy {
   display: grid;
   align-content: center;
+  padding: clamp(8px, 1.6vw, 22px) 4px;
+}
+
+/* eyebrow → title → body, at proximity: the label sits on the title, the
+   title stands well clear of the paragraph. */
+.assembly .asm-focusintro-copy .asm-eyebrow {
+  margin-bottom: 14px;
+}
+
+.assembly .asm-focusintro-copy .asm-d2 {
+  margin: 0 0 34px;
+}
+
+.assembly .asm-bare {
+  padding-inline: 4px;
+}
+
+/* ---------------------------------------------------------------------
+   About intro — two-column mission band with framed figure.
+   --------------------------------------------------------------------- */
+.assembly .asm-about-intro {
+  border-block: 1px solid var(--asm-hair);
+  background: var(--asm-card-mist);
+  padding-block: clamp(48px, 5vw, 64px);
+  padding-inline: clamp(12px, 1.6vw, 20px);
+}
+
+.assembly .asm-about-intro-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  gap: clamp(28px, 4vw, 52px);
+  align-items: start;
+}
+
+.assembly .asm-about-copy {
+  display: grid;
+  align-content: start;
+  gap: 0;
+  min-width: 0;
+}
+
+.assembly .asm-about-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px 16px;
+  margin-bottom: clamp(22px, 2.4vw, 30px);
+}
+
+.assembly .asm-about-title {
+  margin: 0;
+  font-family: var(--asm-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: clamp(1.35rem, 1.95vw, 1.9rem);
+  line-height: 1.05;
+  letter-spacing: -0.005em;
+}
+
+.assembly .asm-about-lead {
+  margin: 0 0 20px;
+  max-width: 54ch;
+  font-size: clamp(1.125rem, 1.45vw, 1.5rem);
+  line-height: 1.45;
+  font-weight: 600;
+  color: var(--asm-ink);
+}
+
+.assembly .asm-about-body {
+  margin: 0 0 26px;
+  max-width: 56ch;
+  font-size: 1rem;
+  line-height: 1.62;
+  color: var(--asm-ink-2);
+}
+
+.assembly .asm-about-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.assembly .asm-about-tag {
+  font-family: var(--asm-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--asm-ink-2);
+  padding: 8px 12px;
+  border: 1px solid var(--asm-hair);
+  background: color-mix(in srgb, var(--asm-card-plain) 72%, transparent);
+}
+
+.assembly .asm-about-tag::before {
+  content: "[ ";
+}
+
+.assembly .asm-about-tag::after {
+  content: " ]";
+}
+
+.assembly .asm-about-figure {
+  margin: 0;
+  min-width: 0;
+  border: 1px solid var(--asm-hair);
+  background: var(--asm-card-plain);
+  display: grid;
+}
+
+.assembly .asm-about-figlabel {
+  margin: 0;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--asm-hair);
+  font-family: var(--asm-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--asm-ink-3);
+}
+
+.assembly .asm-about-figlabel::before {
+  content: "[ ";
+}
+
+.assembly .asm-about-figlabel::after {
+  content: " ]";
+}
+
+.assembly .asm-about-media {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--asm-n-800);
+}
+
+.assembly .asm-about-media img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  border-radius: 0;
+  filter: contrast(1.08) saturate(0.82);
+}
+
+.assembly .asm-about-caption {
+  margin: 0;
+  padding: 10px 14px;
+  border-top: 1px solid var(--asm-hair);
+  font-family: var(--asm-mono);
+  font-size: 0.64rem;
+  line-height: 1.45;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--asm-ink-3);
+}
+
+@media (max-width: 960px) {
+  .assembly .asm-about-intro-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---------------------------------------------------------------------
+   Focus grid. Four columns with large titles and short descriptions.
+   --------------------------------------------------------------------- */
+.assembly .asm-focusgrid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(10px, 1.2vw, 18px);
+}
+
+.assembly .asm-focuscell {
+  border-left: 1px solid var(--asm-hair);
+  padding-left: clamp(10px, 1vw, 16px);
+  display: grid;
+  align-content: start;
+  gap: 10px;
+}
+
+.assembly .asm-focuscell:first-child {
+  border-left: 0;
+  padding-left: 0;
+}
+
+.assembly .asm-track-kicker {
+  margin: 0;
+  font-family: var(--asm-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--asm-ink-3);
+}
+
+.assembly .asm-focus-bigtitle {
+  font-family: var(--asm-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: clamp(1.35rem, 2.2vw, 2.3rem);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  margin: 0;
+}
+
+.assembly .asm-track-copy {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+  padding: var(--asm-pad-tight);
+}
+
+.assembly .asm-track-title {
+  font-family: var(--asm-display);
+  font-weight: 700;
+  font-size: clamp(1.05rem, 1.15vw, 1.28rem);
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.assembly .asm-track-text {
+  font-size: 0.9rem;
+  color: var(--asm-ink-2);
+  margin: 0;
+}
+
+@media (max-width: 1000px) {
+  .assembly .asm-focusgrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(12px, 2vw, 20px);
+  }
+
+  .assembly .asm-focuscell:nth-child(odd) {
+    border-left: 0;
+    padding-left: 0;
+  }
+}
+
+@media (max-width: 720px) {
+  .assembly .asm-focusgrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .assembly .asm-focuscell {
+    border-left: 0;
+    padding-left: 0;
+    border-top: 1px solid var(--asm-hair);
+    padding-top: 10px;
+  }
+
+  .assembly .asm-focuscell:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
 }
 
 /* Section rhythm. An aspect-ratio box at column width can be taller than the
@@ -866,11 +1287,27 @@
   --asm-media-cap: none;
 }
 
-/* Scanned documents and the archive wall are where a tight crop would lose
-   the content — but a full page of scan is a screen and a half of paper, so
-   the letters show their head and hand off to the excerpt beside them. */
+/* Certificates: visual-first wall, oversized and full-page readable. */
 .assembly .asm-letters {
-  --asm-media-cap: 42vh;
+  --asm-media-cap: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(14px, 1.8vw, 26px);
+}
+
+.assembly .asm-certificate {
+  background: var(--asm-card-plain);
+  padding: clamp(10px, 1.2vw, 18px);
+}
+
+.assembly .asm-certificate .asm-media {
+  border-radius: 0;
+}
+
+@media (max-width: 900px) {
+  .assembly .asm-letters {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 .assembly .asm-gallery-item {
@@ -905,7 +1342,7 @@
 /* Duotone flattens sources of different provenance into one set. */
 .assembly .asm-media.is-duo > img,
 .assembly .asm-media.is-duo > video {
-  filter: grayscale(1) contrast(1.06);
+  filter: grayscale(var(--asm-media-tint, 1)) contrast(1.06);
 }
 
 .assembly .asm-media.is-duo::after {
@@ -919,7 +1356,7 @@
     var(--asm-duo-shadow)
   );
   mix-blend-mode: multiply;
-  opacity: var(--asm-duo-strength);
+  opacity: calc(var(--asm-duo-strength) * var(--asm-media-tint, 1));
 }
 
 .assembly .asm-media.is-scrim::before {
@@ -1020,6 +1457,44 @@
   align-content: end;
 }
 
+.assembly .asm-agenda-state {
+  margin: 0;
+  font-family: var(--asm-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: clamp(1.35rem, 2.2vw, 2.1rem);
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+}
+
+.assembly .asm-card.is-provisional .asm-head-aside {
+  grid-template-rows: minmax(0, 1fr) auto;
+  justify-items: stretch;
+  align-content: stretch;
+}
+
+.assembly .asm-card.is-provisional .asm-head {
+  align-items: stretch;
+}
+
+.assembly .asm-agenda-coming-frame {
+  min-height: clamp(300px, 38vh, 520px);
+  border-radius: var(--asm-radius-sm);
+  overflow: hidden;
+}
+
+.assembly .asm-agenda-coming-art,
+.assembly .asm-agenda-coming-art.is-bleed {
+  --asm-media-cap: none;
+  width: 100%;
+  height: 100%;
+}
+
+.assembly .asm-agenda-coming-art > img,
+.assembly .asm-agenda-coming-art > video {
+  object-fit: cover;
+}
+
 /* Section head: a rule and a line, not a card. See AsmSectionHead. */
 .assembly .asm-sechead {
   display: grid;
@@ -1027,12 +1502,25 @@
   align-items: baseline;
   column-gap: 22px;
   row-gap: 6px;
-  padding: 26px 4px 14px;
+  /* Tight to its own content: the distance to the section above is set by
+     the page rhythm, not by padding here. */
+  padding: 16px 4px 0;
   border-top: 1px solid var(--asm-hair);
 }
 
 .assembly .asm-sechead .asm-eyebrow {
   grid-column: 1;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+
+/* A merged section answers to the ids it absorbed: an empty anchor, carrying
+   only the offset that clears the bar. */
+.assembly .asm-anchor {
+  display: block;
+  scroll-margin-top: var(--asm-navclear);
 }
 
 .assembly .asm-sechead-title {
@@ -1090,6 +1578,28 @@
   align-items: stretch;
 }
 
+/* The fact cards under the mosaic are part of the opening and have to be on
+   screen with it, so wherever the mosaic runs side by side it is measured
+   against the window rather than against its own content: window height,
+   less the bar it sits under, less the strip of fact card that must show
+   below the fold. Under 1025px the mosaic stacks — main card over the two
+   tiles — and no cap can hold that inside one screen without gutting the
+   headline, so the cards fall below the fold there by design. */
+@media (min-width: 1025px) {
+  .assembly .asm-heromosaic {
+    max-height: calc(100svh - var(--asm-navclear) - 72px);
+    /* 71/29 rather than a fixed 312px rail. Both side tiles narrow together
+       — they are one stack and a stepped edge between them read as a
+       mistake — and the footage takes back every pixel they give up.
+       Columns only: the mosaic's height is unchanged. */
+    grid-template-columns: minmax(0, 71fr) minmax(0, 29fr);
+  }
+
+  .assembly .asm-heromosaic > * {
+    min-height: 0;
+  }
+}
+
 .assembly .asm-heromain {
   position: relative;
   isolation: isolate;
@@ -1097,9 +1607,22 @@
   align-content: center;
   justify-items: start;
   gap: clamp(16px, 2.2vh, 30px);
-  min-height: clamp(380px, 62vh, 660px);
-  padding-block: clamp(40px, 7vh, 96px);
+  /* Short enough that the three fact cards under the mosaic break the fold —
+     they are the hero's own metadata and the page reads wrong without them
+     in view. The nav clearance above the headline is paid for by taking it
+     off the bottom rather than by growing the card. */
+  min-height: clamp(360px, 66vh, 760px);
+  padding-bottom: clamp(22px, 3.2vh, 52px);
   background: var(--asm-card-deep);
+}
+
+/* The bar is sticky and comes back over this card on the way up, so the
+   headline starts below where the bar can reach. Written against .asm-card
+   so it beats the padding .is-padded sets. */
+.assembly .asm-card.asm-heromain {
+  /* Clears the bar, but never at the cost of the headline: on a short window
+     the clearance gives way rather than pushing the type out of the card. */
+  padding-top: min(var(--asm-navclear), 11vh);
 }
 
 /* Hover clears the card so the footage can be watched.
@@ -1159,6 +1682,9 @@
   border-radius: 0;
   aspect-ratio: auto;
   height: 100%;
+  /* The clip is cropped, not fitted, and cropped a little above centre so
+     the people on stage stay in frame as the panel narrows. */
+  --asm-fp: 50% 40%;
 }
 
 /* Display type straight on the footage, so it runs on inverse ink under the
@@ -1167,8 +1693,11 @@
 .assembly .asm-heromain-title {
   display: grid;
   /* A step under --asm-d0: the mosaic gives the headline a card rather than
-     the full page width, so the d0 clamp runs into the padding. */
-  font-size: clamp(2.9rem, 8.2vw, 8.2rem);
+     the full page width, so the d0 clamp runs into the padding. The vh term
+     is the ceiling: three lines of this on a short window is what pushed the
+     fact cards off screen, so the headline answers to the window's height as
+     well as its width. */
+  font-size: min(clamp(2.9rem, 8.2vw, 8.2rem), 10.5vh);
   color: var(--asm-ink-inv);
 }
 
@@ -1288,6 +1817,13 @@
   display: block;
 }
 
+/* Shorter than a standard padded card: these three are a caption strip under
+   the mosaic, not content in their own right, and every pixel they give back
+   goes to the footage panel above them. */
+.assembly .asm-card.asm-fact {
+  padding-block: clamp(15px, 1.7vw, 24px);
+}
+
 .assembly .asm-fact dt {
   font-family: var(--asm-mono);
   font-size: 0.68rem;
@@ -1391,9 +1927,16 @@
 .assembly .asm-facultystrip {
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: clamp(132px, calc((100% - 7 * var(--asm-gap)) / 8), 190px);
-  gap: var(--asm-gap);
+  grid-auto-columns: clamp(
+    132px,
+    calc((100% - 7 * var(--asm-space-item)) / 8),
+    190px
+  );
+  gap: var(--asm-space-item);
   overflow-x: auto;
+  /* overflow-x: auto turns overflow-y into auto too, and a rail that owns the
+     vertical axis swallows the page scroll under the cursor. */
+  overflow-y: hidden;
   scroll-snap-type: x proximity;
   padding-bottom: 4px;
   overscroll-behavior-x: contain;
@@ -1427,9 +1970,155 @@
   display: none;
 }
 
+/* Two rows of portraits: the home page's roster is the draw, so it gets the
+   depth. Six across rather than ten — at strip width a name wrapped to three
+   lines and the role had to be dropped; at this width every card carries
+   name, organisation and what the person actually does. */
+.assembly .asm-facultystrip[data-rows="2"] {
+  grid-template-rows: repeat(2, auto);
+  grid-auto-columns: clamp(
+    176px,
+    calc((100% - 5 * var(--asm-space-item)) / 6),
+    228px
+  );
+}
+
+.assembly .asm-facultystrip[data-rows="2"] .asm-person-plate {
+  padding: 13px 15px 15px;
+}
+
+.assembly .asm-facultystrip[data-rows="2"] .asm-person-name {
+  font-size: 1rem;
+}
+
+.assembly .asm-facultystrip[data-rows="2"] .asm-person-org {
+  font-size: 0.76rem;
+}
+
+.assembly .asm-facultystrip[data-rows="2"] .asm-person-role {
+  display: block;
+  font-size: 0.72rem;
+}
+
 @media (max-width: 1024px) {
   .assembly .asm-facultystrip {
     grid-auto-columns: clamp(128px, 38vw, 168px);
+  }
+
+  .assembly .asm-facultystrip[data-rows="2"] {
+    grid-auto-columns: clamp(164px, 46vw, 200px);
+  }
+}
+
+/* Scroll cue. A rail that ends flush with the viewport edge reads as a row
+   that happens to be cut off; the fade over the last column, the chevron on
+   top of it and the count underneath say the same thing three ways — there
+   are more people back there. Fade and chevron are decoration and take no
+   pointer events, so the card under them stays clickable.
+
+   Where scroll-driven animation exists, both retire once the rail is at its
+   end — a cue pointing at nothing is worse than no cue. Elsewhere they stay
+   put, which is the honest fallback. */
+.assembly .asm-railwrap {
+  --asm-railnote-h: 26px; /* the note's own row, so the cue can ignore it */
+  position: relative;
+  display: grid;
+  /* The count belongs to the rail above it, not to the page: it sits closer
+     to the cards than anything else on screen. */
+  gap: 12px;
+}
+
+.assembly .asm-railwrap::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: var(--asm-railnote-h);
+  right: -1px;
+  width: clamp(40px, 6%, 84px);
+  background: linear-gradient(
+    to right,
+    rgb(0 0 0 / 0),
+    var(--asm-page) 78%
+  );
+  pointer-events: none;
+}
+
+.assembly .asm-railcue {
+  position: absolute;
+  top: calc((100% - var(--asm-railnote-h)) / 2 - 19px);
+  right: 6px;
+  /* Above the fade: the wrapper's ::after paints last and would otherwise
+     wash the chip out. */
+  z-index: 1;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  /* Deep chip, not a white one: on a pale page a white circle over a white
+     fade is invisible, which is the one thing a scroll cue cannot be. */
+  background: var(--asm-card-deep);
+  color: var(--asm-on-deep);
+  font-family: var(--asm-display);
+  font-size: 1.5rem;
+  line-height: 1;
+  padding-bottom: 4px;
+  pointer-events: none;
+  box-shadow: 0 3px 14px rgb(0 0 0 / 0.22);
+}
+
+.assembly .asm-railnote {
+  font-family: var(--asm-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--asm-ink-3);
+}
+
+/* No scroll-driven retire: the cue stays put. Chrome would not keep a named
+   scroll timeline alive across two rails on the same page, and a cue that
+   flickers is worse than one that simply always says "there is more". */
+/* The interview rail: same idea as the faculty strip, two rows deep. The
+   video wall is the largest thing the archive has, so nothing gets sliced
+   off the list — the cards run sideways instead of down the page. Rows are
+   equal-height so the second band lines up under the first whatever the
+   pull quotes do. */
+.assembly .asm-rail {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(2, 1fr);
+  gap: var(--asm-space-item);
+  overflow-x: auto;
+  /* overflow-x: auto turns overflow-y into auto too, and a rail that owns the
+     vertical axis swallows the page scroll under the cursor. */
+  overflow-y: hidden;
+  scroll-snap-type: x proximity;
+  padding-bottom: 4px;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+}
+
+.assembly .asm-rail > * {
+  scroll-snap-align: start;
+}
+
+.assembly .asm-rail:focus-visible {
+  outline: var(--asm-focus);
+  outline-offset: 4px;
+  border-radius: var(--asm-radius);
+}
+
+.assembly .asm-rail.is-interviews {
+  grid-auto-columns: clamp(
+    250px,
+    calc((100% - 3 * var(--asm-space-item)) / 4),
+    330px
+  );
+}
+
+@media (max-width: 1024px) {
+  .assembly .asm-rail.is-interviews {
+    grid-auto-columns: clamp(230px, 68vw, 300px);
   }
 }
 
@@ -1752,7 +2441,7 @@
 
 .assembly .asm-agenda-strip {
   display: flex;
-  gap: var(--asm-gap);
+  gap: var(--asm-space-item);
   overflow-x: auto;
   padding: var(--asm-gap);
   scroll-snap-type: x mandatory;
@@ -2068,6 +2757,43 @@
   object-fit: contain;
 }
 
+.assembly .asm-sponsorwall {
+  display: grid;
+  gap: clamp(20px, 2.4vw, 34px);
+}
+
+.assembly .asm-sponsorwall-title {
+  margin: 0;
+  text-align: center;
+  font-family: var(--asm-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: clamp(2rem, 5.2vw, 4rem);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+}
+
+.assembly .asm-logowall.is-placeholder {
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: clamp(18px, 2.4vw, 34px);
+  background: transparent;
+}
+
+.assembly .asm-logo.is-placeholder {
+  min-height: clamp(96px, 12vw, 142px);
+  border-radius: 0;
+  background: color-mix(in srgb, var(--asm-n-000) 52%, var(--asm-page));
+  box-shadow: inset 0 0 0 1px var(--asm-hair);
+}
+
+.assembly .asm-logo.is-placeholder span {
+  font-family: var(--asm-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--asm-ink-3);
+}
+
 /* ============================================================
    Footer
    ============================================================ */
@@ -2087,8 +2813,10 @@
 
 .assembly .asm-footer-cols {
   display: grid;
-  grid-template-columns: 1.2fr 1fr 1.1fr;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.95fr) minmax(280px, 1.05fr);
+  grid-template-rows: auto auto;
   gap: var(--asm-pad);
+  align-items: start;
 }
 
 /* The countdown column sits centred between the invitation and the contact
@@ -2097,8 +2825,8 @@
 .assembly .asm-footer-clock {
   display: grid;
   align-content: start;
-  justify-items: center;
-  text-align: center;
+  justify-items: start;
+  text-align: left;
 }
 
 .assembly .asm-footer-clock .asm-countdown {
@@ -2151,6 +2879,72 @@
   width: 168px;
   margin-bottom: 16px;
   opacity: 0.92;
+}
+
+.assembly .asm-footer-newsletter {
+  grid-column: 3;
+  grid-row: 1 / span 2;
+  align-self: start;
+  min-width: 0;
+  display: grid;
+  gap: 8px;
+  border: 1px solid var(--asm-hair-inv);
+  border-radius: var(--asm-radius-sm);
+  padding: 14px 16px;
+}
+
+.assembly .asm-footer-newsletter h3 {
+  margin-bottom: 0;
+}
+
+.assembly .asm-footer-newsletter .asm-lede {
+  font-size: 0.82rem;
+  line-height: 1.45;
+  max-width: none;
+  margin: 0;
+}
+
+.assembly .asm-footer-newsletter form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.assembly .asm-footer-newsletter input {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid var(--asm-hair-inv);
+  border-radius: var(--asm-radius-pill);
+  background: color-mix(in srgb, var(--asm-n-000) 6%, transparent);
+  color: var(--asm-ink-inv);
+  font-family: var(--asm-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.05em;
+  padding: 7px 10px;
+}
+
+.assembly .asm-footer-newsletter input::placeholder {
+  color: var(--asm-ink-2);
+}
+
+.assembly .asm-footer-newsletter button {
+  width: auto;
+  white-space: nowrap;
+  border: 1px solid var(--asm-hair-inv);
+  border-radius: var(--asm-radius-pill);
+  background: transparent;
+  color: var(--asm-ink-inv);
+  font-family: var(--asm-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 7px 12px;
+  cursor: pointer;
+}
+
+.assembly .asm-footer-newsletter button:hover {
+  background: color-mix(in srgb, var(--asm-n-000) 12%, transparent);
 }
 
 .assembly .asm-countdown {
@@ -2259,7 +3053,7 @@
 
 @media (max-width: 1024px) {
   .assembly .asm-navlinks,
-  .assembly .asm-navcta {
+  .assembly .asm-navaux {
     display: none;
   }
   .assembly .asm-burger {
@@ -2292,6 +3086,11 @@
     grid-template-columns: 1fr 1fr;
     gap: 32px;
   }
+
+  .assembly .asm-footer-newsletter {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
   .assembly .asm-slot {
     grid-template-columns: 116px minmax(0, 1fr);
     row-gap: 8px;
@@ -2311,6 +3110,9 @@
   .assembly .asm-heroside,
   .assembly .asm-row {
     grid-template-columns: minmax(0, 1fr);
+  }
+  .assembly .asm-tracklist {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .assembly .asm-herotile {
     min-height: 220px;

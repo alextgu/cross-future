@@ -176,6 +176,23 @@ body {
   gap: 4px;
 }
 
+.asm-lab-sat {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 4px 0 2px;
+  color: #cfdae6;
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.asm-lab-sat input[type="range"] {
+  width: 110px;
+  accent-color: #9fd0ff;
+}
+
 .asm-lab-swatch {
   display: flex;
   align-items: center;
@@ -276,6 +293,9 @@ body {
   }
   .asm-lab-swatch span.asm-lab-name {
     display: none;
+  }
+  .asm-lab-sat input[type="range"] {
+    width: 84px;
   }
 }
 

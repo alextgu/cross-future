@@ -6,11 +6,12 @@ import { useEffect, useRef, useState } from "react";
 import {
   ASSEMBLY_BASE,
   ASSEMBLY_HOME,
+  ASSEMBLY_PAST_EVENTS_ROUTE,
   ASSEMBLY_REGISTER,
   ASSEMBLY_REGISTER_LABEL,
-  ASSEMBLY_ROUTES,
   ASSEMBLY_SECTIONS,
   isCurrentRoute,
+  sectionNumber,
   sectionHref,
 } from "@/lib/assembly-nav";
 import AsmButton from "./AsmButton";
@@ -127,12 +128,24 @@ export default function AsmNav({ year }: { year: number }) {
                 onHome && active === item.section ? "true" : undefined
               }
             >
+              <span className="n">{sectionNumber(item.section)}</span>
               {item.label}
             </a>
           ))}
         </div>
 
-        <div className="asm-navcta">
+        <div className="asm-navaux">
+          <Link
+            className="asm-navpage"
+            href={ASSEMBLY_PAST_EVENTS_ROUTE.href}
+            aria-current={
+              isCurrentRoute(ASSEMBLY_PAST_EVENTS_ROUTE.href, pathname)
+                ? "page"
+                : undefined
+            }
+          >
+            {ASSEMBLY_PAST_EVENTS_ROUTE.label}
+          </Link>
           <AsmButton href={ASSEMBLY_REGISTER} arrow={false}>
             {ASSEMBLY_REGISTER_LABEL}
           </AsmButton>
@@ -152,34 +165,46 @@ export default function AsmNav({ year }: { year: number }) {
         </button>
       </nav>
 
-      {/* The drawer stays a site map: on a phone the sections are a scroll
-          away anyway, and the pages are the thing that is hard to find. */}
+      {/* Home sections in the drawer; Past Events and tickets are separate. */}
       <div
         id="asm-drawer"
         className={`asm-drawer${open ? " is-open" : ""}`}
         hidden={!open}
       >
-        {ASSEMBLY_ROUTES.map((route) => (
-          <Link
-            key={route.href}
-            href={route.href}
+        {ASSEMBLY_SECTIONS.map((item) => (
+          <a
+            key={item.section}
+            href={sectionHref(item.section, pathname)}
+            onClick={() => setOpen(false)}
             aria-current={
-              isCurrentRoute(route.href, pathname) ? "page" : undefined
+              onHome && active === item.section ? "true" : undefined
             }
           >
-            <span className="n">{route.num}</span>
-            {route.label}
-          </Link>
+            <span className="n">{sectionNumber(item.section)}</span>
+            {item.label}
+          </a>
         ))}
+
+        <p className="asm-drawer-divider" aria-hidden="true" />
+
         <Link
-          href={ASSEMBLY_REGISTER}
+          className="asm-drawer-page"
+          href={ASSEMBLY_PAST_EVENTS_ROUTE.href}
+          onClick={() => setOpen(false)}
           aria-current={
-            isCurrentRoute(ASSEMBLY_REGISTER, pathname) ? "page" : undefined
+            isCurrentRoute(ASSEMBLY_PAST_EVENTS_ROUTE.href, pathname)
+              ? "page"
+              : undefined
           }
         >
-          <span className="n">07</span>
-          {ASSEMBLY_REGISTER_LABEL}
+          {ASSEMBLY_PAST_EVENTS_ROUTE.label}
         </Link>
+
+        {/* The ticket link leaves the site, so it is an anchor, not a route. */}
+        <a href={ASSEMBLY_REGISTER} target="_blank" rel="noreferrer">
+          <span className="n">↗</span>
+          {ASSEMBLY_REGISTER_LABEL}
+        </a>
       </div>
     </div>
   );
