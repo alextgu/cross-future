@@ -133,7 +133,7 @@ body {
    ============================================================
    A review tool, not site chrome: it is fixed to the corner, mono-typed and
    deliberately unstyled by the design system so nobody mistakes it for part
-   of the page. Hidden entirely when NEXT_PUBLIC_THEME_LAB=off.
+   of the page. Hidden when NEXT_PUBLIC_THEME_LAB=off.
    ============================================================ */
 
 .asm-lab {
@@ -208,6 +208,26 @@ body {
   text-transform: uppercase;
   cursor: pointer;
   white-space: nowrap;
+}
+
+.asm-lab-toggle {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #cfdae6;
+  font: inherit;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 7px 12px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.asm-lab-toggle[aria-pressed="true"] {
+  background: rgba(159, 208, 255, 0.2);
+  border-color: rgba(159, 208, 255, 0.55);
+  color: #e9f5ff;
 }
 
 /* The lab is outside .assembly and so inherits none of its focus handling.

@@ -1,5 +1,7 @@
 import type { AssemblyContent, Edition } from "@/lib/content";
+import { sectionNumber } from "@/lib/assembly-nav";
 import AsmForm, { type AsmFieldSpec } from "./AsmForm";
+import AsmSocialIcon from "./AsmSocialIcon";
 
 /**
  * Contact block. Shared by the home page and /contact so there is one form,
@@ -49,9 +51,13 @@ export default function AsmContact({
     <section className="asm-card is-padded t-deep" id="contact">
       <div className="asm-split" style={{ ["--split" as string]: "1fr 1.15fr" }}>
         <div style={{ display: "grid", gap: 20, alignContent: "start" }}>
-          <p className="asm-eyebrow">Contact</p>
+          <span className="asm-sechead-num">{sectionNumber("contact")}</span>
           <h2 className="asm-d1">Connect with us</h2>
-          <p className="asm-lede">{contact.note}</p>
+          <p className="asm-lede">
+            Reach the Cross Future team for speaking, partnerships, and
+            attendance.
+          </p>
+          <p className="asm-meta">Contact owner: Partnerships & Programs Team</p>
           <p>
             <a
               className="asm-d3"
@@ -61,19 +67,28 @@ export default function AsmContact({
               {contact.email}
             </a>
           </p>
-          <ul style={{ display: "flex", gap: 18, flexWrap: "wrap" }}>
+          <ul className="asm-social-list">
             {contact.social.map((link) => (
               <li key={link.label}>
                 <a
-                  className="asm-meta"
+                  className="asm-social-link"
                   href={link.url}
                   target="_blank"
                   rel="noreferrer"
                 >
-                  {link.label} ↗
+                  <AsmSocialIcon label={link.label} url={link.url} />
+                  {link.label}
                 </a>
               </li>
             ))}
+            <li>
+              <a
+                className="asm-meta"
+                href="mailto:partnerships@cross-future.com?subject=Partnership%20Deck%20Request"
+              >
+                Partner deck ↗
+              </a>
+            </li>
           </ul>
         </div>
 
@@ -84,9 +99,8 @@ export default function AsmContact({
           submitLabel="Send"
           successNote={
             <>
-              Your inquiry was stored in the local mock database. No email was
-              sent yet; the {edition.year} team can transfer it when production
-              services are connected.
+              Thanks — we received your message. The {edition.year} team will
+              reply within two business days.
             </>
           }
         />

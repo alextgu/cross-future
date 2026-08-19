@@ -1,4 +1,5 @@
 import AsmButton from "./AsmButton";
+import { sectionNumber } from "@/lib/assembly-nav";
 
 export type AsmTone = "plain" | "mist" | "tint" | "deep" | "accent";
 
@@ -15,6 +16,8 @@ export type AsmTone = "plain" | "mist" | "tint" | "deep" | "accent";
  * comes from this being identical everywhere.
  */
 export default function AsmSectionHead({
+  section,
+  num,
   eyebrow,
   title,
   lede,
@@ -23,7 +26,12 @@ export default function AsmSectionHead({
   id,
   space,
 }: {
-  eyebrow: string;
+  /** Nav anchor id — resolves to the same number shown in the bar. */
+  section?: string;
+  /** Explicit prefix when the head is not tied to a nav destination. */
+  num?: string;
+  /** Fallback label for inner routes that are not home sections. */
+  eyebrow?: string;
   title: React.ReactNode;
   lede?: string;
   action?: { label: string; href: string };
@@ -35,9 +43,15 @@ export default function AsmSectionHead({
       `major` is the break the page is built around. */
   space?: "tight" | "major";
 }) {
+  const prefix = num ?? (section ? sectionNumber(section) : null);
+
   return (
     <header className="asm-sechead" id={id} data-space={space}>
-      <p className="asm-eyebrow">{eyebrow}</p>
+      {prefix ? (
+        <span className="asm-sechead-num">{prefix}</span>
+      ) : eyebrow ? (
+        <p className="asm-eyebrow is-bare">{eyebrow}</p>
+      ) : null}
       <h2 className="asm-sechead-title">{title}</h2>
       {lede ? <p className="asm-sechead-lede">{lede}</p> : null}
       {action ? (

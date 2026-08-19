@@ -182,8 +182,8 @@ export default function AsmForm({
           : status === "error"
             ? serverMessage
             : status === "submitting"
-              ? "Saving this submission locally…"
-              : "Your details are stored only after a successful response."}
+              ? "Sending..."
+              : "Privacy: we use your details only to reply to this inquiry."}
       </p>
     </form>
   );

@@ -1,3 +1,5 @@
+import { sectionNumber } from "@/lib/assembly-nav";
+
 const ABOUT_TAGS = [
   "01 // GRID RESILIENCE",
   "02 // HIGH-DENSITY COMPUTE",
@@ -14,7 +16,7 @@ export default function AsmAboutIntro() {
       <div className="asm-about-intro-grid">
         <div className="asm-about-copy">
           <header className="asm-about-head">
-            <p className="asm-eyebrow">Cross Future Hub</p>
+            <span className="asm-sechead-num">{sectionNumber("about")}</span>
             <h2 className="asm-about-title">Why this summit exists</h2>
           </header>
 

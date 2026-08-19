@@ -18,7 +18,7 @@ import AsmAboutIntro from "@/components/assembly/AsmAboutIntro";
 import AsmSectionHead from "@/components/assembly/AsmSectionHead";
 import AsmFacultyGrid from "@/components/assembly/AsmFacultyGrid";
 import AsmPartners from "@/components/assembly/AsmPartners";
-import AsmFocus from "@/components/assembly/AsmFocus";
+import AsmPartnerCta from "@/components/assembly/AsmPartnerCta";
 import AsmInterviews from "@/components/assembly/AsmInterviews";
 import AsmAgenda from "@/components/assembly/AsmAgenda";
 import AsmLetters from "@/components/assembly/AsmLetters";
@@ -76,14 +76,11 @@ export default async function AssemblyHome() {
           archive of people who have already spoken here — it belongs to the
           faculty rather than standing beside them as a peer subject. */}
       <AsmSection id="faculty">
-        <AsmSectionHead
-          eyebrow="Main stage"
-          title="Meet the faculty"
-        />
+        <AsmSectionHead section="faculty" title="Meet the faculty" />
         <AsmFacultyGrid members={faculty} layout="strip" rows={2} />
         <span className="asm-anchor" id="interviews" aria-hidden="true" />
         <AsmSectionHead
-          eyebrow="On the record"
+          section="interviews"
           title="Recorded interviews"
           tone="plain"
           space="tight"
@@ -91,32 +88,16 @@ export default async function AssemblyHome() {
         <AsmInterviews cards={interviews} layout="rail" />
       </AsmSection>
 
-      {/* Program: what the day covers, then when it happens. Two sections
-          asking a visitor the same question — is this day about my problem,
-          and can I be in the room for it — so they answer it once, under one
-          head, with the focus lede introducing both halves. */}
-      <AsmSection id="focus">
-        <AsmSectionHead
-          eyebrow="Program"
-          title="Key Areas of Focus and Topics"
-          tone="plain"
-        />
-        <AsmFocus
-          areas={assembly.focusAreas}
-          /* Same page now: a track cell points at its own entry in the agenda
-             below rather than at a page that no longer exists. */
-          href=""
-        />
+      {/* Program placeholder until schedule publication. */}
+      <AsmSection id="focus" flow="tile">
+        <AsmSectionHead section="focus" title="Program" tone="plain" />
         <span className="asm-anchor" id="agenda" aria-hidden="true" />
-        {/* The full agenda, not a teaser for one: this is the only place the
-            programme lives now, and the track list inside it carries the
-            anchors the focus cells point at. */}
         <AsmAgenda
           edition={edition}
           confirmed={confirmed}
           proposed={proposed}
           tracks={content.tracks}
-          variant="full"
+          variant="status"
         />
       </AsmSection>
 
@@ -125,14 +106,15 @@ export default async function AssemblyHome() {
           companies in the room. Same kind of claim, one section. */}
       <AsmSection id="recognition" space="major">
         <AsmSectionHead
-          eyebrow="Supporters"
-          title="Who stands behind it"
-          lede="Editions 01 and 02 were recognized by the Province of Ontario and the City of Toronto."
+          section="recognition"
+          title="Backed by institutions that build this city"
+          lede="Our first two editions received formal recognition from the Province of Ontario and the City of Toronto."
           tone="tint"
         />
         <AsmLetters letters={assembly.letters} />
         <span className="asm-anchor" id="partners" aria-hidden="true" />
         <AsmPartners groups={partnerGroups} />
+        <AsmPartnerCta />
       </AsmSection>
 
       {/* AsmContact carries the #contact anchor itself, so the wrapper is

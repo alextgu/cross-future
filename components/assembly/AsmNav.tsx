@@ -50,6 +50,7 @@ export default function AsmNav({ year }: { year: number }) {
      which is how a keyboard gets back to it. */
   useEffect(() => {
     let last = window.scrollY;
+    let idleTimer: number | null = null;
 
     /* Read straight off the scroll event rather than through
        requestAnimationFrame: rAF is throttled when the tab is not painting,
@@ -57,6 +58,10 @@ export default function AsmNav({ year }: { year: number }) {
        here is two comparisons, and React coalesces the state writes. */
     const onScroll = () => {
       const y = window.scrollY;
+      if (idleTimer !== null) window.clearTimeout(idleTimer);
+      idleTimer = window.setTimeout(() => {
+        setHidden(false);
+      }, 480);
       /* A few pixels of jitter — a trackpad settling, an address bar
          resizing — should not toggle the bar. */
       if (Math.abs(y - last) < 6) return;
@@ -78,6 +83,7 @@ export default function AsmNav({ year }: { year: number }) {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("pointermove", onPointer);
       document.removeEventListener("focusin", onFocus);
+      if (idleTimer !== null) window.clearTimeout(idleTimer);
     };
   }, [open]);
 

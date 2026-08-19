@@ -12,6 +12,8 @@ import {
   isThemeId,
 } from "@/lib/themes";
 
+const SECTION_CONTRAST_KEY = "cf-section-contrast";
+
 /**
  * On-screen scheme switcher for review sessions.
  *
@@ -23,6 +25,7 @@ import {
 export default function AsmThemeLab() {
   const [theme, setTheme] = useState(THEME_DEFAULT);
   const [mediaTint, setMediaTint] = useState(THEME_MEDIA_TINT_DEFAULT);
+  const [sectionContrast, setSectionContrast] = useState(false);
   const [open, setOpen] = useState(true);
 
   /* Adopt whatever the boot script already put on the element rather than
@@ -53,6 +56,18 @@ export default function AsmThemeLab() {
       "--asm-media-tint",
       String(THEME_MEDIA_TINT_DEFAULT)
     );
+
+    try {
+      const stored = window.localStorage.getItem(SECTION_CONTRAST_KEY) === "on";
+      setSectionContrast(stored);
+      if (stored) {
+        document.documentElement.dataset.sectionContrast = "on";
+      } else {
+        delete document.documentElement.dataset.sectionContrast;
+      }
+    } catch {
+      /* Keep default (off) when storage is unavailable. */
+    }
   }, []);
 
   function choose(id: string) {
@@ -78,6 +93,23 @@ export default function AsmThemeLab() {
     } catch {
       /* Same as theme selection: live change still works without persistence. */
     }
+  }
+
+  function toggleSectionContrast() {
+    setSectionContrast((prev) => {
+      const next = !prev;
+      if (next) {
+        document.documentElement.dataset.sectionContrast = "on";
+      } else {
+        delete document.documentElement.dataset.sectionContrast;
+      }
+      try {
+        window.localStorage.setItem(SECTION_CONTRAST_KEY, next ? "on" : "off");
+      } catch {
+        /* Live toggle still works without persistence. */
+      }
+      return next;
+    });
   }
 
   const current =
@@ -141,6 +173,15 @@ export default function AsmThemeLab() {
             aria-label="Media tint strength"
           />
         </label>
+
+        <button
+          type="button"
+          className="asm-lab-toggle"
+          aria-pressed={sectionContrast}
+          onClick={toggleSectionContrast}
+        >
+          Sections {sectionContrast ? "On" : "Off"}
+        </button>
 
         <button
           type="button"

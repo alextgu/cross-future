@@ -1,4 +1,8 @@
+ "use client";
+
 import type { FacultyMember } from "@/lib/content";
+import { scrollHorizontalPage } from "@/lib/scroll-horizontal-page";
+import { useRef } from "react";
 import AsmPersonCard from "./AsmPersonCard";
 import AsmEmpty from "./AsmEmpty";
 
@@ -28,6 +32,14 @@ export default function AsmFacultyGrid({
   layout?: "grid" | "strip";
   rows?: 1 | 2;
 }) {
+  const stripRef = useRef<HTMLDivElement | null>(null);
+
+  const scrollStrip = (direction: -1 | 1) => {
+    const node = stripRef.current;
+    if (!node) return;
+    scrollHorizontalPage(node, direction);
+  };
+
   if (members.length === 0) {
     return (
       <AsmEmpty
@@ -41,6 +53,7 @@ export default function AsmFacultyGrid({
     const strip = (
       <div
         className="asm-facultystrip"
+        ref={stripRef}
         data-rows={rows}
         tabIndex={0}
         role="group"
@@ -60,15 +73,23 @@ export default function AsmFacultyGrid({
 
     return (
       <div className="asm-railwrap">
+        <button
+          type="button"
+          className="asm-railcue is-start"
+          onClick={() => scrollStrip(-1)}
+          aria-label="Scroll faculty to the left"
+        >
+          ‹
+        </button>
         {strip}
-        {/* Same scroll cue as the interview rail: fade, chevron, and a plain
-            line saying how many people are back there. */}
-        <span className="asm-railcue" aria-hidden="true">
+        <button
+          type="button"
+          className="asm-railcue is-end"
+          onClick={() => scrollStrip(1)}
+          aria-label="Scroll faculty to the right"
+        >
           ›
-        </span>
-        <p className="asm-railnote">
-          {members.length} confirmed speakers — scroll sideways for the rest
-        </p>
+        </button>
       </div>
     );
   }

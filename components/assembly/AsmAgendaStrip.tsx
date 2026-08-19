@@ -40,7 +40,7 @@ export default function AsmAgendaStrip({
       <div className="asm-agenda-toolbar">
         <div>
           <span className={`asm-chip${provisional ? "" : " is-solid"}`}>
-            {provisional ? "Provisional" : "Confirmed"}
+            {provisional ? "Upcoming" : "Confirmed"}
           </span>
           <p className="asm-meta">
             {items.length} {items.length === 1 ? "session" : "sessions"} · swipe or use controls

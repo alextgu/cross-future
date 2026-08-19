@@ -1,4 +1,8 @@
+ "use client";
+
 import type { InterviewCard } from "@/lib/content";
+import { scrollHorizontalPage } from "@/lib/scroll-horizontal-page";
+import { useRef } from "react";
 import AsmEmpty from "./AsmEmpty";
 
 /**
@@ -22,6 +26,14 @@ export default function AsmInterviews({
   columns?: number;
   layout?: "grid" | "rail";
 }) {
+  const railRef = useRef<HTMLDivElement | null>(null);
+
+  const scrollRail = (direction: -1 | 1) => {
+    const node = railRef.current;
+    if (!node) return;
+    scrollHorizontalPage(node, direction);
+  };
+
   if (cards.length === 0) {
     return (
       <AsmEmpty
@@ -100,23 +112,31 @@ export default function AsmInterviews({
   if (layout === "rail") {
     return (
       <div className="asm-railwrap">
+        <button
+          type="button"
+          className="asm-railcue is-start"
+          onClick={() => scrollRail(-1)}
+          aria-label="Scroll interviews to the left"
+        >
+          ‹
+        </button>
         <div
           className="asm-rail is-interviews"
+          ref={railRef}
           tabIndex={0}
           role="group"
           aria-label={`${cards.length} recorded interviews — scroll sideways for more`}
         >
           {items}
         </div>
-        {/* The scroll cue: a fade over the cut-off column and a chevron, both
-            decoration — the count is already in the region's label and in the
-            note below, so a screen reader hears it once, not three times. */}
-        <span className="asm-railcue" aria-hidden="true">
+        <button
+          type="button"
+          className="asm-railcue is-end"
+          onClick={() => scrollRail(1)}
+          aria-label="Scroll interviews to the right"
+        >
           ›
-        </span>
-        <p className="asm-railnote">
-          {cards.length} interviews — scroll sideways for the rest
-        </p>
+        </button>
       </div>
     );
   }

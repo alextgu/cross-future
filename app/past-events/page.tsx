@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import { getSummitContent } from "@/lib/content";
+import { getSummitContent, getAssembly } from "@/lib/content";
 import AsmShell from "@/components/assembly/AsmShell";
 import AsmSectionHead from "@/components/assembly/AsmSectionHead";
+import AsmPastEventsMockup from "@/components/assembly/AsmPastEventsMockup";
 
 export const metadata: Metadata = {
   title: "Past Events",
@@ -10,7 +11,8 @@ export const metadata: Metadata = {
 };
 
 export default async function PastEventsPage() {
-  await getSummitContent("assembly");
+  const content = await getSummitContent("assembly");
+  const assembly = getAssembly(content);
 
   return (
     <AsmShell>
@@ -20,6 +22,7 @@ export default async function PastEventsPage() {
         lede="Previous editions of the Cross Future AI Summit."
         tone="plain"
       />
+      <AsmPastEventsMockup editions={assembly.pastEditions} />
     </AsmShell>
   );
 }

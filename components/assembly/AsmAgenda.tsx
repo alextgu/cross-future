@@ -27,7 +27,7 @@ export default function AsmAgenda({
    * is already in the facts row above and the tracks are the focus areas, so
    * the full block said each of them twice.
    */
-  variant?: "full" | "strip";
+  variant?: "full" | "strip" | "status";
 }) {
   const comingSoonMedia = {
     kind: "image",
@@ -57,6 +57,31 @@ export default function AsmAgenda({
 
   if (variant === "strip") {
     return <AsmAgendaStrip items={items} provisional={!published} />;
+  }
+
+  if (variant === "status") {
+    return (
+      <div className="asm-card is-padded t-deep is-provisional">
+        <div className="asm-head">
+          <div className="asm-head-title">
+            <p className="asm-agenda-state">Program updates coming soon</p>
+            <h2 className="asm-d1">
+              {formatEditionDate(edition)}
+              <br />
+              {formatEditionHours(edition)}
+            </h2>
+          </div>
+          <div className="asm-head-aside">
+            <div className="asm-agenda-coming-frame">
+              <AsmMedia media={comingSoonMedia} className="asm-agenda-coming-art" bleed />
+            </div>
+            <AsmButton href={ASSEMBLY_REGISTER} tone="inverse">
+              Get updates
+            </AsmButton>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
