@@ -1,9 +1,9 @@
 import { sectionNumber } from "@/lib/assembly-nav";
 
-const ABOUT_TAGS = [
-  "01 // GRID RESILIENCE",
-  "02 // HIGH-DENSITY COMPUTE",
-  "03 // LOW-CARBON DISPATCH",
+const ABOUT_SYSTEMS = [
+  { number: "01", label: "GRID RESILIENCE" },
+  { number: "02", label: "HIGH-DENSITY COMPUTE" },
+  { number: "03", label: "LOW-CARBON DISPATCH" },
 ] as const;
 
 /**
@@ -36,13 +36,27 @@ export default function AsmAboutIntro() {
             utility operators to establish actionable technical pathways.
           </p>
 
-          <ul className="asm-about-tags" aria-label="Key focus areas">
-            {ABOUT_TAGS.map((tag) => (
-              <li key={tag} className="asm-about-tag">
-                {tag}
-              </li>
-            ))}
-          </ul>
+          <section
+            className="asm-about-systems"
+            aria-labelledby="asm-about-systems-title"
+          >
+            <header className="asm-about-systems-head">
+              <h3 id="asm-about-systems-title">Systems in scope</h3>
+              <p>
+                <span>03</span> priorities
+              </p>
+            </header>
+            <ol className="asm-about-systems-list">
+              {ABOUT_SYSTEMS.map((system) => (
+                <li key={system.number}>
+                  <span className="asm-about-system-code">
+                    {system.number} //{" "}
+                  </span>
+                  <span className="asm-about-system-label">{system.label}</span>
+                </li>
+              ))}
+            </ol>
+          </section>
         </div>
 
         <figure className="asm-about-figure">

@@ -1127,32 +1127,78 @@
   color: var(--asm-ink-2);
 }
 
-.assembly .asm-about-tags {
+.assembly .asm-about-systems {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--asm-hair-inv);
+  border-top: 2px solid var(--asm-accent);
+  border-radius: 3px;
+  background: var(--asm-card-deep);
+  color: var(--asm-on-deep);
+}
+
+.assembly .asm-about-systems-head {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  list-style: none;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--asm-hair-inv);
+}
+
+.assembly .asm-about-systems-head h3,
+.assembly .asm-about-systems-head p {
+  margin: 0;
+  font-family: var(--asm-mono);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--asm-ink-inv-2);
+}
+
+.assembly .asm-about-systems-head p span {
+  color: var(--asm-on-deep);
+  font-weight: 700;
+}
+
+.assembly .asm-about-systems-list {
   margin: 0;
   padding: 0;
+  list-style: none;
 }
 
-.assembly .asm-about-tag {
+.assembly .asm-about-systems-list li {
+  min-height: 64px;
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(12px, 1.6vw, 22px);
+  padding: 13px 16px;
+  border-top: 1px solid var(--asm-hair-inv);
+}
+
+.assembly .asm-about-systems-list li:first-child {
+  border-top: 0;
+}
+
+.assembly .asm-about-system-code {
   font-family: var(--asm-mono);
-  font-size: 0.66rem;
-  letter-spacing: 0.1em;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  color: var(--asm-ink-inv-2);
+  white-space: pre;
+}
+
+.assembly .asm-about-system-label {
+  font-family: var(--asm-display);
+  font-size: clamp(1rem, 1.35vw, 1.3rem);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1;
   text-transform: uppercase;
-  color: var(--asm-ink-2);
-  padding: 8px 12px;
-  border: 1px solid var(--asm-hair);
-  background: color-mix(in srgb, var(--asm-card-plain) 72%, transparent);
-}
-
-.assembly .asm-about-tag::before {
-  content: "[ ";
-}
-
-.assembly .asm-about-tag::after {
-  content: " ]";
+  color: var(--asm-on-deep);
 }
 
 .assembly .asm-about-figure {
