@@ -107,8 +107,12 @@ body {
   color-scheme: dark;
 }
 
+:root {
+  --asm-radius: 22px;
+}
+
 /* ============================================================
-   Theme lab — the on-screen scheme switcher
+   CEO review panel — on-screen presentation controls
    ============================================================
    A review tool, not site chrome: it is fixed to the corner, mono-typed and
    deliberately unstyled by the design system so nobody mistakes it for part
@@ -117,58 +121,92 @@ body {
 
 .asm-lab {
   position: fixed;
-  left: 50%;
-  bottom: 16px;
-  transform: translateX(-50%);
+  right: 10px;
+  bottom: 10px;
   z-index: 400;
+  width: min(420px, calc(100vw - 20px));
   font-family: var(--font-asm-mono, ui-monospace, Menlo, monospace);
   color: #f2f6fa;
-  max-width: calc(100vw - 24px);
 }
 
 .asm-lab-panel {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 10px;
-  border-radius: 999px;
+  display: grid;
+  gap: 16px;
+  max-height: min(720px, calc(100dvh - 20px));
+  padding: 14px;
+  border-radius: 18px;
   background: rgba(12, 16, 22, 0.93);
   border: 1px solid rgba(255, 255, 255, 0.16);
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.32);
-  overflow-x: auto;
+  overflow-y: auto;
+  backdrop-filter: blur(18px);
 }
 
-.asm-lab-head {
+.asm-lab-header {
+  position: sticky;
+  top: -14px;
+  z-index: 1;
   display: flex;
   align-items: center;
-  padding-left: 6px;
-  font-size: 8.5px;
-  letter-spacing: 0.16em;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 2px 0 12px;
+  background: #0c1016;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.asm-lab-header div {
+  display: grid;
+  gap: 3px;
+}
+
+.asm-lab-header strong {
+  font-size: 12px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #7f92a6;
-  white-space: nowrap;
+}
+
+.asm-lab-header span,
+.asm-lab-label {
+  color: #8fa2b6;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .asm-lab-list {
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 4px;
 }
 
-.asm-lab-sat {
-  display: flex;
-  align-items: center;
+.asm-lab-group {
+  display: grid;
   gap: 8px;
-  padding: 0 4px 0 2px;
-  color: #cfdae6;
-  font-size: 9.5px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  white-space: nowrap;
 }
 
-.asm-lab-sat input[type="range"] {
-  width: 110px;
+.asm-lab-range {
+  display: grid;
+  gap: 8px;
+  color: #cfdae6;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.asm-lab-range span {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.asm-lab-range b {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.asm-lab-range input[type="range"] {
+  width: 100%;
   accent-color: #9fd0ff;
 }
 
@@ -176,8 +214,8 @@ body {
   display: flex;
   align-items: center;
   gap: 7px;
-  padding: 7px 12px 7px 8px;
-  border-radius: 999px;
+  padding: 9px;
+  border-radius: 10px;
   border: 1px solid transparent;
   background: rgba(255, 255, 255, 0.05);
   color: #cfdae6;
@@ -196,6 +234,35 @@ body {
 .asm-lab button:focus-visible {
   outline: 2px solid #9fd0ff;
   outline-offset: 2px;
+}
+
+.asm-lab-options {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 4px;
+}
+
+.asm-lab-options button,
+.asm-lab-reset {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #cfdae6;
+  font: inherit;
+  font-size: 9px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  padding: 9px 10px;
+  cursor: pointer;
+}
+
+.asm-lab-options button:hover,
+.asm-lab-reset:hover,
+.asm-lab-options button[aria-pressed="true"] {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.4);
+  color: #ffffff;
 }
 
 .asm-lab-swatch:hover {
@@ -231,7 +298,7 @@ body {
   font: inherit;
   font-size: 13px;
   line-height: 1;
-  padding: 4px 8px;
+  padding: 6px 8px;
 }
 
 .asm-lab-close:hover {
@@ -253,6 +320,7 @@ body {
   text-transform: uppercase;
   cursor: pointer;
   box-shadow: 0 14px 30px rgba(0, 0, 0, 0.3);
+  margin-left: auto;
 }
 
 .asm-lab-open:hover {
@@ -266,15 +334,17 @@ body {
   display: block;
 }
 
-@media (max-width: 720px) {
-  .asm-lab-head {
-    display: none;
-  }
-  .asm-lab-swatch span.asm-lab-name {
-    display: none;
-  }
-  .asm-lab-sat input[type="range"] {
-    width: 84px;
+.asm-lab-reset {
+  position: sticky;
+  bottom: -14px;
+  width: 100%;
+  padding-block: 11px;
+  background: #1b2632;
+}
+
+@media (max-width: 390px) {
+  .asm-lab-list {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 

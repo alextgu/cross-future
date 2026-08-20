@@ -49,6 +49,7 @@ export default function AsmFacultyGrid({
         className="asm-facultystrip"
         ref={stripRef}
         data-rows={rows}
+        data-review-collection="speakers"
         tabIndex={0}
         role="group"
         aria-label={`${members.length} confirmed speakers — scroll sideways for more`}

@@ -116,6 +116,7 @@ export default function AsmInterviews({
         </button>
         <div
           className="asm-rail is-interviews"
+          data-review-collection="interviews"
           ref={railRef}
           tabIndex={0}
           role="group"

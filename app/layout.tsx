@@ -16,6 +16,18 @@ import {
   THEME_SCHEMES,
   THEME_STORAGE_KEY,
 } from "@/lib/themes";
+import {
+  REVIEW_COLLECTION_DEFAULT,
+  REVIEW_COLLECTION_DEPTHS,
+  REVIEW_COLLECTION_STORAGE_KEY,
+  REVIEW_DENSITIES,
+  REVIEW_DENSITY_DEFAULT,
+  REVIEW_DENSITY_STORAGE_KEY,
+  REVIEW_RADIUS_DEFAULT,
+  REVIEW_RADIUS_MAX,
+  REVIEW_RADIUS_MIN,
+  REVIEW_RADIUS_STORAGE_KEY,
+} from "@/lib/review-settings";
 import "./globals.css";
 import "./assembly/assembly.css";
 import "./assembly/themes.css";
@@ -23,21 +35,41 @@ import "./assembly/themes.css";
 /* Applied before first paint so a stored scheme never flashes through the
    default one. Kept to a single attribute write and wrapped in try/catch:
    storage is blocked outright in some privacy modes. */
-const THEME_BOOT = `(function(){try{var ids=${JSON.stringify(
+const THEME_BOOT = `(function(){var d=document.documentElement;function defaults(){d.dataset.theme=${JSON.stringify(
+  THEME_DEFAULT,
+)};d.dataset.reviewDensity=${JSON.stringify(
+  REVIEW_DENSITY_DEFAULT,
+)};d.dataset.reviewCollection=${JSON.stringify(
+  REVIEW_COLLECTION_DEFAULT,
+)};d.style.setProperty('--asm-media-tint',${JSON.stringify(
+  String(THEME_MEDIA_TINT_DEFAULT),
+)});d.style.setProperty('--asm-radius',${JSON.stringify(
+  `${REVIEW_RADIUS_DEFAULT}px`,
+)});}try{var ids=${JSON.stringify(
   THEME_SCHEMES.map((scheme) => scheme.id),
 )};var v=localStorage.getItem(${JSON.stringify(
   THEME_STORAGE_KEY,
-)});document.documentElement.dataset.theme=ids.indexOf(v)>-1?v:${JSON.stringify(
+)});d.dataset.theme=ids.indexOf(v)>-1?v:${JSON.stringify(
   THEME_DEFAULT,
-)};var s=Number(localStorage.getItem(${JSON.stringify(
+)};var sr=localStorage.getItem(${JSON.stringify(
   THEME_MEDIA_TINT_KEY,
-)}));if(!Number.isFinite(s))s=${THEME_MEDIA_TINT_DEFAULT};if(s<0)s=0;if(s>1)s=1;document.documentElement.style.setProperty('--asm-media-tint',String(s));}catch(e){document.documentElement.dataset.theme=${JSON.stringify(
-  THEME_DEFAULT,
-)};document.documentElement.style.setProperty('--asm-media-tint',${JSON.stringify(
-  String(THEME_MEDIA_TINT_DEFAULT),
-)});}})();`;
+)});var s=sr===null?${THEME_MEDIA_TINT_DEFAULT}:Number(sr);if(!Number.isFinite(s))s=${THEME_MEDIA_TINT_DEFAULT};if(s<0)s=0;if(s>1)s=1;d.style.setProperty('--asm-media-tint',String(s));var densities=${JSON.stringify(
+  REVIEW_DENSITIES,
+)};var density=localStorage.getItem(${JSON.stringify(
+  REVIEW_DENSITY_STORAGE_KEY,
+)});d.dataset.reviewDensity=densities.indexOf(density)>-1?density:${JSON.stringify(
+  REVIEW_DENSITY_DEFAULT,
+)};var depths=${JSON.stringify(
+  REVIEW_COLLECTION_DEPTHS,
+)};var depth=localStorage.getItem(${JSON.stringify(
+  REVIEW_COLLECTION_STORAGE_KEY,
+)});d.dataset.reviewCollection=depths.indexOf(depth)>-1?depth:${JSON.stringify(
+  REVIEW_COLLECTION_DEFAULT,
+)};var rr=localStorage.getItem(${JSON.stringify(
+  REVIEW_RADIUS_STORAGE_KEY,
+)});var r=rr===null?${REVIEW_RADIUS_DEFAULT}:Number(rr);if(!Number.isFinite(r))r=${REVIEW_RADIUS_DEFAULT};if(r<${REVIEW_RADIUS_MIN})r=${REVIEW_RADIUS_MIN};if(r>${REVIEW_RADIUS_MAX})r=${REVIEW_RADIUS_MAX};d.style.setProperty('--asm-radius',String(r)+'px');}catch(e){defaults();}})();`;
 
-/* Dev colour/saturation bar — on by default; set NEXT_PUBLIC_THEME_LAB=off to hide. */
+/* CEO review controls — on by default; set NEXT_PUBLIC_THEME_LAB=off to hide. */
 const THEME_LAB_ENABLED = process.env.NEXT_PUBLIC_THEME_LAB !== "off";
 
 const display = Barlow_Semi_Condensed({
