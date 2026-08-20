@@ -24,6 +24,14 @@ export const legacyRedirects = [
 ] as const;
 
 const nextConfig: NextConfig = {
+  outputFileTracingIncludes: {
+    "/*": [
+      "./node_modules/@libsql/client/lib-esm/web.js",
+      "./node_modules/@libsql/client/lib-cjs/web.js",
+      "./node_modules/@libsql/isomorphic-ws/web.mjs",
+      "./node_modules/@libsql/isomorphic-ws/web.cjs",
+    ],
+  },
   async redirects() {
     return [...legacyRedirects];
   },
