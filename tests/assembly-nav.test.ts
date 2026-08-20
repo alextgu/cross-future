@@ -40,11 +40,12 @@ describe("canonical navigation", () => {
 });
 
 describe("the bar as a table of contents", () => {
-  it("offers five numbered destinations", () => {
+  it("offers six numbered destinations with progress in the page sequence", () => {
     expect(ASSEMBLY_SECTIONS.map((item) => item.label)).toEqual([
       "About",
       "Speakers",
       "Program",
+      "So Far",
       "Supporters",
       "Contact",
     ]);
@@ -54,14 +55,24 @@ describe("the bar as a table of contents", () => {
       "03",
       "04",
       "05",
+      "06",
     ]);
     expect(ASSEMBLY_SECTIONS.map((item) => item.section)).toEqual([
       "about",
       "faculty",
       "focus",
+      "progress",
       "recognition",
       "contact",
     ]);
+  });
+
+  it("identifies the progress destination as the recommended stop", () => {
+    expect(
+      ASSEMBLY_SECTIONS.filter((item) => item.recommended).map(
+        (item) => item.section
+      )
+    ).toEqual(["progress"]);
   });
 
   it("keeps every id a merged section absorbed", () => {
@@ -73,6 +84,7 @@ describe("the bar as a table of contents", () => {
       "interviews",
       "focus",
       "agenda",
+      "progress",
       "recognition",
       "partners",
       "contact",

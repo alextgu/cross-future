@@ -136,6 +136,9 @@ export default function AsmNav({ year }: { year: number }) {
             >
               <span className="n">{sectionNumber(item.section)}</span>
               {item.label}
+              {item.recommended ? (
+                <span className="asm-nav-recommended">Recommended</span>
+              ) : null}
             </a>
           ))}
         </div>
@@ -188,6 +191,9 @@ export default function AsmNav({ year }: { year: number }) {
           >
             <span className="n">{sectionNumber(item.section)}</span>
             {item.label}
+            {item.recommended ? (
+              <span className="asm-nav-recommended">Recommended</span>
+            ) : null}
           </a>
         ))}
 

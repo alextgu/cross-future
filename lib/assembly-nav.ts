@@ -23,12 +23,14 @@ export interface AssemblySection {
   label: string;
   /** Element id on the home page. */
   section: string;
+  /** Marks the most useful review stop without changing its nav behavior. */
+  recommended?: boolean;
   /** Ids this section absorbed, so old links still land somewhere real. */
   alsoAnchors?: string[];
 }
 
 /**
- * Five destinations, not eight steps.
+ * Six destinations, not eight steps.
  *
  * The bar was a numbered list of eight, which reads as an order a visitor has
  * to work through; these are places to go. Sections that asked the same
@@ -47,11 +49,17 @@ export const ASSEMBLY_SECTIONS: AssemblySection[] = [
   { num: "03", label: "Program", section: "focus", alsoAnchors: ["agenda"] },
   {
     num: "04",
+    label: "So Far",
+    section: "progress",
+    recommended: true,
+  },
+  {
+    num: "05",
     label: "Supporters",
     section: "recognition",
     alsoAnchors: ["partners"],
   },
-  { num: "05", label: "Contact", section: "contact" },
+  { num: "06", label: "Contact", section: "contact" },
 ];
 
 /** Past editions — a separate page, not part of the home scroll. */

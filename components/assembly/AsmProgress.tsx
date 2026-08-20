@@ -7,15 +7,17 @@ export default function AsmProgress({ editions }: { editions: PastEdition[] }) {
   if (editions.length === 0) return null;
 
   return (
-    <AsmSection label="Festival progress" space="major">
+    <AsmSection id="progress" label="Festival progress" space="major">
       <div className="asm-progress-intro">
         <div>
           <p className="asm-eyebrow is-bare">Cross Future so far</p>
           <h2 className="asm-d2">Built edition by edition</h2>
         </div>
         <p className="asm-body">
-          Each gathering adds proof, relationships, and a clearer shared agenda.
-          This is the completed record behind the next Cross Future.
+          Cross Future is designed as a long-term platform, not a one-off event.
+          Each edition builds community, institutional support, and a visible
+          record of progress. Together, these milestones form the completed
+          foundation behind what comes next.
         </p>
       </div>
 

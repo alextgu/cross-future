@@ -42,7 +42,14 @@ describe("festival progress", () => {
   it("tells the completed-edition story and links once to the archive", () => {
     render(<AsmProgress editions={editions} />);
 
+    expect(document.querySelector("#progress")).toBeTruthy();
     expect(screen.getByRole("heading", { name: "Built edition by edition" })).toBeTruthy();
+    expect(
+      screen.getByText(/cross future is designed as a long-term platform/i)
+    ).toBeTruthy();
+    expect(
+      screen.getByText(/community, institutional support, and a visible record of progress/i)
+    ).toBeTruthy();
     expect(screen.getByText("2025")).toBeTruthy();
     expect(screen.getByText("2024")).toBeTruthy();
     expect(
