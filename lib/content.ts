@@ -380,11 +380,11 @@ export async function getSummitContent(
 
   switch (variant) {
     case "nexus":
-      return seedNexus as SummitContent;
+      return seedNexus as unknown as SummitContent;
     case "assembly":
       return seedAssembly as unknown as SummitContent;
     default:
-      return seed as SummitContent;
+      return seed as unknown as SummitContent;
   }
 }
 

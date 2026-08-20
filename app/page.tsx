@@ -8,6 +8,7 @@ import {
   getPartnersByType,
   getConfirmedSessions,
   getProposedSessions,
+  getCompletedPastEditions,
 } from "@/lib/content";
 import AsmShell from "@/components/assembly/AsmShell";
 import AsmHero from "@/components/assembly/AsmHero";
@@ -23,6 +24,7 @@ import AsmInterviews from "@/components/assembly/AsmInterviews";
 import AsmAgenda from "@/components/assembly/AsmAgenda";
 import AsmLetters from "@/components/assembly/AsmLetters";
 import AsmContact from "@/components/assembly/AsmContact";
+import AsmProgress from "@/components/assembly/AsmProgress";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -37,6 +39,7 @@ export default async function AssemblyHome() {
   const partnerGroups = getPartnersByType(content);
   const confirmed = getConfirmedSessions(content, edition.slug);
   const proposed = getProposedSessions(content, edition.slug);
+  const completedEditions = getCompletedPastEditions(content);
 
   return (
     /* The page follows the live site's own running order — intro, interviews,
@@ -100,6 +103,8 @@ export default async function AssemblyHome() {
           variant="status"
         />
       </AsmSection>
+
+      <AsmProgress editions={completedEditions} />
 
       {/* Supporters: everyone vouching for the summit, in order of weight.
           The letters are a government and a city on paper; the logos are the

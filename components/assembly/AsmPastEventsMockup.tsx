@@ -58,28 +58,25 @@ export default function AsmPastEventsMockup({
               </div>
             ))}
           </dl>
+
+          {active.highlights.length > 0 ? (
+            <div className="asm-past-highlights">
+              <p className="asm-meta">What moved forward</p>
+              <ul>
+                {active.highlights.map((highlight) => (
+                  <li className="asm-body" key={highlight}>
+                    {highlight}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
         </div>
 
         <div className="asm-card t-plain">
           <AsmMedia media={active.media} aspect="21 / 9" />
         </div>
 
-        <div className="asm-row" style={{ ["--cols" as string]: 2 }}>
-          <article className="asm-card is-padded t-plain asm-past-slot">
-            <p className="asm-meta">Recorded interviews</p>
-            <h3 className="asm-d3">Speaker clips by year</h3>
-            <p className="asm-body">
-              Interview clips for {active.year} will be published here.
-            </p>
-          </article>
-          <article className="asm-card is-padded t-plain asm-past-slot">
-            <p className="asm-meta">Photo archive</p>
-            <h3 className="asm-d3">Compact gallery preview</h3>
-            <p className="asm-body">
-              A horizontal photo strip for {active.year} will appear here.
-            </p>
-          </article>
-        </div>
       </div>
     </section>
   );

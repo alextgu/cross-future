@@ -2535,8 +2535,91 @@
 }
 
 /* ============================================================
-   Past events mockup
+   Festival progress and past events
    ============================================================ */
+.assembly .asm-progress-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(260px, 0.85fr);
+  gap: var(--asm-pad);
+  align-items: end;
+}
+
+.assembly .asm-progress-intro .asm-d2 {
+  margin-top: 12px;
+  max-width: 12ch;
+}
+
+.assembly .asm-progress-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--asm-space-item);
+}
+
+.assembly .asm-progress-card {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.7fr) minmax(0, 1fr);
+}
+
+.assembly .asm-progress-card-copy {
+  display: grid;
+  gap: var(--asm-pad-tight);
+  align-content: start;
+  padding: var(--asm-pad);
+}
+
+.assembly .asm-progress-card-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--asm-space-item);
+}
+
+.assembly .asm-progress-card-head .asm-display {
+  font-size: clamp(1.8rem, 4vw, 3.4rem);
+  line-height: 0.8;
+}
+
+.assembly .asm-progress-highlights,
+.assembly .asm-past-highlights ul {
+  display: grid;
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.assembly .asm-progress-highlights li,
+.assembly .asm-past-highlights li {
+  position: relative;
+  padding-left: 18px;
+}
+
+.assembly .asm-progress-highlights li::before,
+.assembly .asm-past-highlights li::before {
+  content: "↗";
+  position: absolute;
+  left: 0;
+  color: var(--asm-ink-3);
+}
+
+.assembly .asm-progress-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--asm-pad-tight);
+  padding-top: var(--asm-pad-tight);
+  border-top: 1px solid var(--asm-hair);
+}
+
+.assembly .asm-progress-stats > div {
+  display: grid;
+  gap: 4px;
+}
+
+.assembly .asm-progress-action {
+  display: flex;
+  justify-content: flex-start;
+}
+
 .assembly .asm-past-mockup {
   display: grid;
   gap: var(--asm-space-item);
@@ -2583,11 +2666,12 @@
   line-height: 1;
 }
 
-.assembly .asm-past-slot {
+.assembly .asm-past-highlights {
   display: grid;
   gap: 10px;
-  min-height: 170px;
-  align-content: start;
+  padding-top: var(--asm-pad-tight);
+  margin-top: var(--asm-pad-tight);
+  border-top: 1px solid var(--asm-hair);
 }
 
 /* ============================================================
@@ -3261,6 +3345,9 @@
   .assembly .asm-split {
     grid-template-columns: minmax(0, 1fr);
   }
+  .assembly .asm-progress-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
   .assembly .asm-footer-cols {
     grid-template-columns: 1fr 1fr;
     gap: 32px;
@@ -3297,6 +3384,10 @@
   .assembly .asm-railcol,
   .assembly .asm-heroside,
   .assembly .asm-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .assembly .asm-progress-intro,
+  .assembly .asm-progress-card {
     grid-template-columns: minmax(0, 1fr);
   }
   .assembly .asm-tracklist {
