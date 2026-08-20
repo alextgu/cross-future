@@ -2705,6 +2705,20 @@
 /* ============================================================
    Festival progress and past events
    ============================================================ */
+.assembly .asm-progress-surface {
+  display: grid;
+  gap: clamp(18px, 2vw, 30px);
+  padding: clamp(18px, 2.6vw, 38px);
+  border-radius: calc(var(--asm-radius) * 1.35);
+  background: color-mix(
+    in srgb,
+    var(--asm-card-mist) 82%,
+    var(--asm-accent) 18%
+  );
+  box-shadow: inset 0 0 0 1px
+    color-mix(in srgb, var(--asm-accent) 14%, var(--asm-hair));
+}
+
 .assembly .asm-progress-intro {
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(260px, 0.85fr);
@@ -2714,78 +2728,230 @@
 
 .assembly .asm-progress-intro .asm-d2 {
   margin-top: 12px;
-  max-width: 12ch;
+  max-width: 15ch;
 }
 
-.assembly .asm-progress-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--asm-space-item);
+.assembly .asm-progress-intro > .asm-body {
+  max-width: 52ch;
+  color: var(--asm-ink-2);
 }
 
-.assembly .asm-progress-card {
-  display: grid;
-  grid-template-columns: minmax(150px, 0.7fr) minmax(0, 1fr);
-}
-
-.assembly .asm-progress-card-copy {
-  display: grid;
-  gap: var(--asm-pad-tight);
-  align-content: start;
-  padding: var(--asm-pad);
-}
-
-.assembly .asm-progress-card-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--asm-space-item);
-}
-
-.assembly .asm-progress-card-head .asm-display {
-  font-size: clamp(1.8rem, 4vw, 3.4rem);
-  line-height: 0.8;
-}
-
-.assembly .asm-progress-highlights,
-.assembly .asm-past-highlights ul {
-  display: grid;
-  gap: 8px;
-  padding: 0;
+.assembly .asm-progress-disclaimer {
   margin: 0;
-  list-style: none;
+  padding: 12px 16px;
+  border: 1px solid color-mix(in srgb, var(--asm-accent) 28%, var(--asm-hair));
+  border-radius: var(--asm-radius-sm);
+  background: color-mix(in srgb, var(--asm-card-plain) 76%, transparent);
+  color: var(--asm-ink-2);
+  font-family: var(--asm-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  line-height: 1.55;
+  text-transform: uppercase;
 }
 
-.assembly .asm-progress-highlights li,
-.assembly .asm-past-highlights li {
+.assembly .asm-progress-disclaimer strong {
+  color: var(--asm-ink);
+}
+
+.assembly .asm-progress-carousel {
+  overflow: hidden;
+  border-radius: var(--asm-radius);
+  background: var(--asm-card-deep);
+  box-shadow: 0 20px 50px color-mix(in srgb, var(--asm-c-black) 15%, transparent);
+  outline: none;
+}
+
+.assembly .asm-progress-carousel:focus-visible {
+  box-shadow: 0 0 0 3px var(--asm-accent),
+    0 20px 50px color-mix(in srgb, var(--asm-c-black) 15%, transparent);
+}
+
+.assembly .asm-progress-slide {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(340px, 0.75fr);
+  min-height: clamp(430px, 48vw, 590px);
+}
+
+.assembly .asm-progress-visual {
   position: relative;
-  padding-left: 18px;
+  min-height: 100%;
+  overflow: hidden;
 }
 
-.assembly .asm-progress-highlights li::before,
-.assembly .asm-past-highlights li::before {
-  content: "↗";
+.assembly .asm-progress-visual::after {
+  content: "";
   position: absolute;
-  left: 0;
-  color: var(--asm-ink-3);
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--asm-accent) 8%, transparent),
+    color-mix(in srgb, var(--asm-card-deep) 30%, transparent)
+  );
 }
 
-.assembly .asm-progress-stats {
+.assembly .asm-progress-image-label {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  z-index: 2;
+  margin: 0;
+  padding: 7px 10px;
+  border-radius: var(--asm-radius-pill);
+  background: color-mix(in srgb, var(--asm-card-deep) 86%, transparent);
+  color: var(--asm-on-deep);
+  font-family: var(--asm-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.assembly .asm-progress-copy {
+  display: grid;
+  gap: clamp(18px, 2vw, 28px);
+  align-content: start;
+  padding: clamp(24px, 3.4vw, 50px);
+  background: var(--asm-card-deep);
+  color: var(--asm-on-deep);
+}
+
+.assembly .asm-progress-slide-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--asm-pad-tight);
-  padding-top: var(--asm-pad-tight);
-  border-top: 1px solid var(--asm-hair);
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
 }
 
-.assembly .asm-progress-stats > div {
+.assembly .asm-progress-slide-meta .asm-meta,
+.assembly .asm-progress-copy > .asm-body,
+.assembly .asm-progress-metrics .asm-meta {
+  color: var(--asm-ink-inv-2);
+}
+
+.assembly .asm-progress-mock-label {
+  margin: 0;
+  padding: 7px 10px;
+  border-radius: var(--asm-radius-pill);
+  background: var(--asm-card-accent);
+  color: var(--asm-on-accent);
+  font-family: var(--asm-mono);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.assembly .asm-progress-copy > .asm-d2 {
+  max-width: 12ch;
+  color: var(--asm-on-deep);
+}
+
+.assembly .asm-progress-copy > .asm-body {
+  max-width: 46ch;
+}
+
+.assembly .asm-progress-metrics {
   display: grid;
-  gap: 4px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  padding-top: clamp(18px, 2vw, 28px);
+  border-top: 1px solid var(--asm-hair-inv);
+}
+
+.assembly .asm-progress-metrics > div {
+  display: grid;
+  gap: 7px;
+  min-width: 0;
+}
+
+.assembly .asm-progress-metrics .asm-d3 {
+  color: var(--asm-on-deep);
+}
+
+.assembly .asm-progress-controls {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 18px;
+  padding: 14px 18px;
+  border-top: 1px solid var(--asm-hair-inv);
+  background: var(--asm-card-deep);
+  color: var(--asm-on-deep);
+}
+
+.assembly .asm-progress-arrows {
+  display: flex;
+  gap: 8px;
+}
+
+.assembly .asm-progress-arrows button {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--asm-hair-inv);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--asm-on-deep);
+  cursor: pointer;
+  font-size: 1.15rem;
+  transition: background 0.16s ease, color 0.16s ease;
+}
+
+.assembly .asm-progress-arrows button:hover,
+.assembly .asm-progress-arrows button:focus-visible {
+  background: var(--asm-card-accent);
+  color: var(--asm-on-accent);
+  outline: none;
+}
+
+.assembly .asm-progress-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.assembly .asm-progress-dots button {
+  width: 30px;
+  height: 6px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--asm-radius-pill);
+  background: color-mix(in srgb, var(--asm-on-deep) 28%, transparent);
+  cursor: pointer;
+  transition: width 0.16s ease, background 0.16s ease;
+}
+
+.assembly .asm-progress-dots button[aria-current="true"] {
+  width: 52px;
+  background: var(--asm-card-accent);
+}
+
+.assembly .asm-progress-dots button:focus-visible {
+  outline: 2px solid var(--asm-on-deep);
+  outline-offset: 3px;
+}
+
+.assembly .asm-progress-counter {
+  color: var(--asm-ink-inv-2);
+  white-space: nowrap;
 }
 
 .assembly .asm-progress-action {
   display: flex;
-  justify-content: flex-start;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.assembly .asm-progress-action > .asm-meta {
+  color: var(--asm-ink-2);
 }
 
 .assembly .asm-past-mockup {
@@ -3519,8 +3685,12 @@
   .assembly .asm-split {
     grid-template-columns: minmax(0, 1fr);
   }
-  .assembly .asm-progress-grid {
+  .assembly .asm-progress-slide {
     grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+  }
+  .assembly .asm-progress-visual {
+    min-height: 420px;
   }
   .assembly .asm-footer-cols {
     grid-template-columns: 1fr 1fr;
@@ -3560,9 +3730,25 @@
     grid-template-columns: minmax(0, 1fr);
   }
   .assembly .asm-progress-intro,
-  .assembly .asm-progress-card,
   .assembly .asm-interview-detail {
     grid-template-columns: minmax(0, 1fr);
+  }
+  .assembly .asm-progress-surface {
+    padding: 14px;
+  }
+  .assembly .asm-progress-visual {
+    min-height: 280px;
+  }
+  .assembly .asm-progress-copy {
+    padding: 24px 20px;
+  }
+  .assembly .asm-progress-controls {
+    grid-template-columns: auto auto;
+    justify-content: space-between;
+  }
+  .assembly .asm-progress-dots {
+    grid-column: 1 / -1;
+    grid-row: 2;
   }
   .assembly .asm-tracklist {
     grid-template-columns: repeat(2, minmax(0, 1fr));
