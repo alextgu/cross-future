@@ -141,6 +141,7 @@ export const documents = sqliteTable("documents", {
 
 export const interviews = sqliteTable("interviews", {
   code: text("code").primaryKey(),
+  slug: text("slug").notNull().unique(),
   title: text("title").notNull(),
   personSlug: text("person_slug")
     .notNull()
@@ -150,6 +151,8 @@ export const interviews = sqliteTable("interviews", {
   pullQuote: text("pull_quote"),
   image: text("image", { mode: "json" }).$type<{ sourceUrl: string; alt: string }>(),
   url: text("url"),
+  editionYear: integer("edition_year"),
+  topics: text("topics", { mode: "json" }).$type<string[]>(),
 });
 
 export const siteContent = sqliteTable("site_content", {

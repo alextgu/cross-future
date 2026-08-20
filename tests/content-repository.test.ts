@@ -17,6 +17,19 @@ it("reconstructs the Assembly domain shape", async () => {
   expect(content.editions).toEqual(seedAssembly.editions);
   expect(content.people).toHaveLength(seedAssembly.people.length);
   expect(content.assembly?.heroLines).toEqual(seedAssembly.assembly.heroLines);
+  expect(
+    content.interviews?.map(({ slug, editionYear, topics }) => ({
+      slug,
+      editionYear,
+      topics,
+    }))
+  ).toEqual(
+    seedAssembly.interviews.map(({ slug, topics }) => ({
+      slug,
+      editionYear: undefined,
+      topics,
+    }))
+  );
 
   await db
     .update(people)

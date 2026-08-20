@@ -126,6 +126,8 @@ export function createSqliteContentRepository(db: Database): ContentRepository {
           pullQuote: interview.pullQuote ?? undefined,
           image: interview.image ?? undefined,
           url: interview.url ?? undefined,
+          editionYear: interview.editionYear ?? undefined,
+          topics: interview.topics ?? undefined,
         })
       ) as Interview[];
 
