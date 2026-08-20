@@ -54,6 +54,9 @@ describe("festival progress", () => {
     expect(screen.getByText(/illustrative placeholder image/i)).toBeTruthy();
     expect(screen.getByRole("region", { name: "Mock accomplishments slideshow" })).toBeTruthy();
     expect(screen.getByRole("heading", { name: "A growing room for Canadian AI" })).toBeTruthy();
+    expect(
+      screen.getByRole("figure", { name: "A growing room for Canadian AI" })
+    ).toBeTruthy();
     expect(screen.getByRole("status").textContent).toContain("Slide 1 of 3");
     expect(screen.getAllByRole("link", { name: /past events/i })).toHaveLength(1);
     expect(

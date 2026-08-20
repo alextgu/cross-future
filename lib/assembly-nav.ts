@@ -23,8 +23,6 @@ export interface AssemblySection {
   label: string;
   /** Element id on the home page. */
   section: string;
-  /** Marks the most useful review stop without changing its nav behavior. */
-  recommended?: boolean;
   /** Ids this section absorbed, so old links still land somewhere real. */
   alsoAnchors?: string[];
 }
@@ -51,7 +49,6 @@ export const ASSEMBLY_SECTIONS: AssemblySection[] = [
     num: "04",
     label: "So Far",
     section: "progress",
-    recommended: true,
   },
   {
     num: "05",

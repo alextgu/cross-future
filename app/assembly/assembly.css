@@ -603,19 +603,6 @@
   letter-spacing: 0.08em;
 }
 
-.assembly .asm-nav-recommended {
-  display: inline-flex;
-  align-items: center;
-  padding: 3px 6px;
-  border-radius: var(--asm-radius-pill);
-  background: color-mix(in srgb, var(--asm-accent) 14%, var(--asm-card-plain));
-  color: var(--asm-accent);
-  font-size: 0.48rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  line-height: 1;
-}
-
 .assembly .asm-navlinks a:hover {
   background: var(--asm-card-mist);
   color: var(--asm-ink);
@@ -807,16 +794,6 @@
   font-weight: 400;
   letter-spacing: 0.1em;
   color: var(--asm-ink-2);
-}
-
-.assembly .asm-drawer a .asm-nav-recommended {
-  margin-left: auto;
-  padding: 5px 8px;
-  background: color-mix(in srgb, var(--asm-accent) 24%, transparent);
-  color: var(--asm-on-deep);
-  font-family: var(--asm-mono);
-  font-size: 0.56rem;
-  font-weight: 600;
 }
 
 .assembly .asm-drawer-divider {

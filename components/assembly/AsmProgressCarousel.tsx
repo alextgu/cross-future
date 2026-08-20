@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type KeyboardEvent } from "react";
+import { useId, useState, type KeyboardEvent } from "react";
 import type { MediaAsset } from "@/lib/content";
 import AsmMedia from "./AsmMedia";
 
@@ -75,6 +75,7 @@ export default function AsmProgressCarousel({
   slides?: ProgressSlide[];
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const titleId = useId();
   const active = slides[activeIndex];
 
   if (!active) return null;
@@ -104,7 +105,11 @@ export default function AsmProgressCarousel({
       tabIndex={0}
       onKeyDown={onKeyDown}
     >
-      <div className="asm-progress-slide">
+      <article
+        className="asm-progress-slide"
+        role="figure"
+        aria-labelledby={titleId}
+      >
         <div className="asm-progress-visual">
           <AsmMedia
             media={active.media}
@@ -112,28 +117,32 @@ export default function AsmProgressCarousel({
             duotone={false}
             sizes="(max-width: 760px) 100vw, 58vw"
           />
-          <p className="asm-progress-image-label">
-            Illustrative placeholder image
-          </p>
         </div>
 
-        <article className="asm-progress-copy" aria-live="polite">
-          <div className="asm-progress-slide-meta">
-            <p className="asm-progress-mock-label">Mock data — not factual</p>
-            <p className="asm-meta">{active.kicker}</p>
+        <footer className="asm-progress-copy" aria-live="polite">
+          <div className="asm-progress-caption">
+            <div className="asm-progress-slide-meta">
+              <p className="asm-meta">{active.kicker}</p>
+              <p className="asm-progress-image-label">
+                Illustrative placeholder image
+              </p>
+            </div>
+            <h3 className="asm-d2" id={titleId}>{active.title}</h3>
+            <p className="asm-body">{active.body}</p>
           </div>
-          <h3 className="asm-d2">{active.title}</h3>
-          <p className="asm-body">{active.body}</p>
-          <dl className="asm-progress-metrics">
-            {active.metrics.map((metric) => (
-              <div key={metric.label}>
-                <dd className="asm-d3">{metric.value}</dd>
-                <dt className="asm-meta">{metric.label}</dt>
-              </div>
-            ))}
-          </dl>
-        </article>
-      </div>
+          <div className="asm-progress-facts">
+            <p className="asm-progress-mock-label">Mock data — not factual</p>
+            <dl className="asm-progress-metrics">
+              {active.metrics.map((metric) => (
+                <div key={metric.label}>
+                  <dd className="asm-d3">{metric.value}</dd>
+                  <dt className="asm-meta">{metric.label}</dt>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </footer>
+      </article>
 
       <div className="asm-progress-controls">
         <div className="asm-progress-arrows">

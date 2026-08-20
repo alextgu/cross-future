@@ -12,9 +12,6 @@ import {
   isThemeId,
 } from "@/lib/themes";
 import {
-  REVIEW_COLLECTION_DEFAULT,
-  REVIEW_COLLECTION_DEPTHS,
-  REVIEW_COLLECTION_STORAGE_KEY,
   REVIEW_DENSITIES,
   REVIEW_DENSITY_DEFAULT,
   REVIEW_DENSITY_STORAGE_KEY,
@@ -23,9 +20,7 @@ import {
   REVIEW_RADIUS_MIN,
   REVIEW_RADIUS_STORAGE_KEY,
   clampReviewRadius,
-  isReviewCollectionDepth,
   isReviewDensity,
-  type ReviewCollectionDepth,
   type ReviewDensity,
 } from "@/lib/review-settings";
 
@@ -42,9 +37,6 @@ export default function AsmThemeLab() {
   const [mediaTint, setMediaTint] = useState(THEME_MEDIA_TINT_DEFAULT);
   const [radius, setRadius] = useState(REVIEW_RADIUS_DEFAULT);
   const [density, setDensity] = useState<ReviewDensity>(REVIEW_DENSITY_DEFAULT);
-  const [collection, setCollection] = useState<ReviewCollectionDepth>(
-    REVIEW_COLLECTION_DEFAULT
-  );
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -52,9 +44,6 @@ export default function AsmThemeLab() {
     if (isThemeId(root.dataset.theme)) setTheme(root.dataset.theme!);
     if (isReviewDensity(root.dataset.reviewDensity)) {
       setDensity(root.dataset.reviewDensity);
-    }
-    if (isReviewCollectionDepth(root.dataset.reviewCollection)) {
-      setCollection(root.dataset.reviewCollection);
     }
 
     const appliedTint = Number(
@@ -94,18 +83,11 @@ export default function AsmThemeLab() {
     store(REVIEW_DENSITY_STORAGE_KEY, value);
   }
 
-  function chooseCollection(value: ReviewCollectionDepth) {
-    setCollection(value);
-    document.documentElement.dataset.reviewCollection = value;
-    store(REVIEW_COLLECTION_STORAGE_KEY, value);
-  }
-
   function reset() {
     chooseTheme(THEME_DEFAULT);
     chooseMediaTint(THEME_MEDIA_TINT_DEFAULT);
     chooseRadius(REVIEW_RADIUS_DEFAULT);
     chooseDensity(REVIEW_DENSITY_DEFAULT);
-    chooseCollection(REVIEW_COLLECTION_DEFAULT);
   }
 
   const current =
@@ -199,22 +181,6 @@ export default function AsmThemeLab() {
                 type="button"
                 aria-pressed={density === value}
                 onClick={() => chooseDensity(value)}
-                key={value}
-              >
-                {value}
-              </button>
-            ))}
-          </div>
-        </section>
-
-        <section className="asm-lab-group" aria-labelledby="review-collection-label">
-          <span className="asm-lab-label" id="review-collection-label">Homepage collections</span>
-          <div className="asm-lab-options">
-            {REVIEW_COLLECTION_DEPTHS.map((value) => (
-              <button
-                type="button"
-                aria-pressed={collection === value}
-                onClick={() => chooseCollection(value)}
                 key={value}
               >
                 {value}

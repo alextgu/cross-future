@@ -67,14 +67,6 @@ describe("the bar as a table of contents", () => {
     ]);
   });
 
-  it("identifies the progress destination as the recommended stop", () => {
-    expect(
-      ASSEMBLY_SECTIONS.filter((item) => item.recommended).map(
-        (item) => item.section
-      )
-    ).toEqual(["progress"]);
-  });
-
   it("keeps every id a merged section absorbed", () => {
     /* Links to #interviews, #agenda and #partners were published before the
        merge; they still have to land somewhere real. */

@@ -38,14 +38,8 @@ export default function AsmAboutIntro() {
 
           <section
             className="asm-about-systems"
-            aria-labelledby="asm-about-systems-title"
+            aria-label="Systems in scope"
           >
-            <header className="asm-about-systems-head">
-              <h3 id="asm-about-systems-title">Systems in scope</h3>
-              <p>
-                <span>03</span> priorities
-              </p>
-            </header>
             <ol className="asm-about-systems-list">
               {ABOUT_SYSTEMS.map((system) => (
                 <li key={system.number}>

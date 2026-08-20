@@ -11,11 +11,11 @@ it("presents the summit priorities as one structured systems brief", () => {
 
   const brief = screen.getByRole("region", { name: "Systems in scope" });
   expect(
-    within(brief).getByText(
+    within(brief).queryByText(
       (_, element) =>
         element?.tagName === "P" && element.textContent === "03 priorities"
     )
-  ).toBeTruthy();
+  ).toBeNull();
 
   const priorities = within(brief).getAllByRole("listitem");
   expect(priorities).toHaveLength(3);
