@@ -15,7 +15,7 @@
  *    is coming soon, and the repo's designed empty state depends on it.
  *  - Media is placeholder-marked so real assets can be audited in.
  */
-import { writeFileSync, mkdirSync } from "node:fs";
+import { existsSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -568,6 +568,9 @@ const assembly = {
         { value: "01", label: "Day" },
         { value: "TO", label: "City" },
       ],
+      highlights: [
+        "The first Cross Future convening brought academia and industry into one room.",
+      ],
       media: img(
         "/summit/media/past-2024.svg",
         "Edition 01 plenary, Toronto",
@@ -582,6 +585,9 @@ const assembly = {
       stats: [
         { value: "02", label: "Letters of support" },
         { value: "TO", label: "City" },
+      ],
+      highlights: [
+        "Formal recognition from the Province of Ontario and the City of Toronto.",
       ],
       media: img(
         "/summit/media/past-2025.svg",
@@ -598,6 +604,7 @@ const assembly = {
         { value: "04", label: "Tracks" },
         { value: "YUL", label: "City" },
       ],
+      highlights: [],
       media: img(
         "/summit/media/past-2026.svg",
         "Montréal venue exterior",
@@ -790,21 +797,36 @@ const INTERVIEWS = [
   ["manling-li", "Embodied agents and grounded language", 11, false, ""],
 ];
 
-const interviews = INTERVIEWS.map(([person, title, durationMin, featured, pullQuote], i) => ({
-  code: `IV.${String(i + 1).padStart(2, "0")}`,
-  title,
-  person,
-  durationMin,
-  featured,
-  ...(pullQuote ? { pullQuote } : {}),
-  image: {
-    sourceUrl: `/summit/interviews/${person}.svg`,
-    alt: `Still from the recorded interview with ${person
-      .split("-")
-      .map((s) => s[0].toUpperCase() + s.slice(1))
-      .join(" ")}`,
-  },
-}));
+const interviews = INTERVIEWS.map(
+  ([person, title, durationMin, featured, pullQuote], i) => {
+    const code = `IV.${String(i + 1).padStart(2, "0")}`;
+    const jpg = resolve(
+      here,
+      "..",
+      "public",
+      "summit",
+      "interviews",
+      `${person}.jpg`
+    );
+    return {
+      code,
+      slug: `${person}-${code.toLowerCase().replace(".", "-")}`,
+      title,
+      person,
+      durationMin,
+      featured,
+      topics: [],
+      ...(pullQuote ? { pullQuote } : {}),
+      image: {
+        sourceUrl: `/summit/interviews/${person}.${existsSync(jpg) ? "jpg" : "svg"}`,
+        alt: `Still from the recorded interview with ${person
+          .split("-")
+          .map((s) => s[0].toUpperCase() + s.slice(1))
+          .join(" ")}`,
+      },
+    };
+  }
+);
 
 /* ------------------------------------------------------------------ write */
 

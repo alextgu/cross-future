@@ -147,10 +147,13 @@ export interface ManifestoBlock {
 
 export interface Interview {
   code: string;
+  slug: string;
   title: string;
   person: string; // person slug
   durationMin: number;
   featured: boolean;
+  editionYear?: number;
+  topics?: string[];
   pullQuote?: string;
   image?: { sourceUrl: string; alt: string; placeholder?: boolean };
   url?: string;
@@ -251,6 +254,7 @@ export interface PastEdition {
   city: string;
   headline: string;
   stats: StatItem[];
+  highlights: string[];
   media: MediaAsset;
 }
 
@@ -543,6 +547,49 @@ export function getPartnersByType(
     groups.set(partner.type, list);
   }
   return [...groups].map(([type, partners]) => ({ type, partners }));
+}
+
+/** Completed festival summaries, newest first. The current edition is never
+ * allowed to describe itself as history while it is still upcoming. */
+export function getCompletedPastEditions(
+  content: SummitContent
+): PastEdition[] {
+  const current = getCurrentEdition(content);
+  return [...getAssembly(content).pastEditions]
+    .filter((edition) => edition.year < current.year)
+    .sort((left, right) => right.year - left.year);
+}
+
+export function getInterviewCardBySlug(
+  content: SummitContent,
+  faculty: FacultyMember[],
+  slug: string
+): InterviewCard | null {
+  return (
+    getInterviewCards(content, faculty).find(
+      ({ interview }) => interview.slug === slug
+    ) ?? null
+  );
+}
+
+export function getInterviewYears(content: SummitContent): number[] {
+  return [
+    ...new Set(
+      (content.interviews ?? [])
+        .map((interview) => interview.editionYear)
+        .filter((year): year is number => year !== undefined)
+    ),
+  ].sort((left, right) => right - left);
+}
+
+export function getInterviewCardsForEditionYear(
+  content: SummitContent,
+  faculty: FacultyMember[],
+  year: number
+): InterviewCard[] {
+  return getInterviewCards(content, faculty).filter(
+    ({ interview }) => interview.editionYear === year
+  );
 }
 
 /* ---------- Formatting (single source of truth for dates) ---------- */

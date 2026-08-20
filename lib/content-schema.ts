@@ -148,6 +148,7 @@ export const assemblyContentSchema = z
           city: z.string(),
           headline: z.string(),
           stats: z.array(statItemSchema),
+          highlights: z.array(z.string()),
           media: mediaAssetSchema,
         })
         .strict()
@@ -320,10 +321,13 @@ const documentSchema = z
 const interviewSchema = z
   .object({
     code: z.string(),
+    slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
     title: z.string(),
     person: z.string(),
     durationMin: z.number(),
     featured: z.boolean(),
+    editionYear: z.number().int().optional(),
+    topics: z.array(z.string()).optional(),
     pullQuote: z.string().optional(),
     image: z
       .object({
@@ -382,7 +386,21 @@ export const summitContentSchema = z
       .optional(),
     assembly: assemblyContentSchema.optional(),
   })
-  .strict();
+  .strict()
+  .superRefine((content, context) => {
+    const firstIndexBySlug = new Map<string, number>();
+    for (const [index, interview] of (content.interviews ?? []).entries()) {
+      if (firstIndexBySlug.has(interview.slug)) {
+        context.addIssue({
+          code: "custom",
+          message: `Duplicate interview slug "${interview.slug}"`,
+          path: ["interviews", index, "slug"],
+        });
+      } else {
+        firstIndexBySlug.set(interview.slug, index);
+      }
+    }
+  });
 
 export type ValidatedAssemblyContent = z.infer<typeof assemblyContentSchema>;
 export type ValidatedSummitContent = z.infer<typeof summitContentSchema>;

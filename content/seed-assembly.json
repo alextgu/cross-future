@@ -1532,10 +1532,12 @@
   "interviews": [
     {
       "code": "IV.01",
+      "slug": "shaun-vanweelden-iv-01",
       "title": "Shaun VanWeelden",
       "person": "shaun-vanweelden",
       "durationMin": 17,
       "featured": true,
+      "topics": [],
       "image": {
         "sourceUrl": "/summit/interviews/shaun-vanweelden.jpg",
         "alt": "Still from the recorded interview with Shaun VanWeelden at the Cross Future AI Summit"
@@ -1543,10 +1545,12 @@
     },
     {
       "code": "IV.02",
+      "slug": "shyam-gollakota-iv-02",
       "title": "Shyam Gollakota",
       "person": "shyam-gollakota",
       "durationMin": 5,
       "featured": true,
+      "topics": [],
       "image": {
         "sourceUrl": "/summit/interviews/shyam-gollakota.jpg",
         "alt": "Still from the recorded interview with Shyam Gollakota at the Cross Future AI Summit"
@@ -1554,10 +1558,12 @@
     },
     {
       "code": "IV.03",
+      "slug": "yu-su-iv-03",
       "title": "Yu Su",
       "person": "yu-su",
       "durationMin": 3,
       "featured": true,
+      "topics": [],
       "image": {
         "sourceUrl": "/summit/interviews/yu-su.jpg",
         "alt": "Still from the recorded interview with Yu Su at the Cross Future AI Summit"
@@ -1565,10 +1571,12 @@
     },
     {
       "code": "IV.04",
+      "slug": "wenhu-chen-iv-04",
       "title": "Wenhu Chen",
       "person": "wenhu-chen",
       "durationMin": 3,
       "featured": true,
+      "topics": [],
       "image": {
         "sourceUrl": "/summit/interviews/wenhu-chen.jpg",
         "alt": "Still from the recorded interview with Wenhu Chen at the Cross Future AI Summit"
@@ -1576,10 +1584,12 @@
     },
     {
       "code": "IV.05",
+      "slug": "nouha-dziri-iv-05",
       "title": "Nouha Dziri",
       "person": "nouha-dziri",
       "durationMin": 4,
       "featured": true,
+      "topics": [],
       "image": {
         "sourceUrl": "/summit/interviews/nouha-dziri.jpg",
         "alt": "Still from the recorded interview with Nouha Dziri at the Cross Future AI Summit"
@@ -1587,10 +1597,12 @@
     },
     {
       "code": "IV.06",
+      "slug": "ken-perlin-iv-06",
       "title": "Ken Perlin",
       "person": "ken-perlin",
       "durationMin": 3,
       "featured": false,
+      "topics": [],
       "image": {
         "sourceUrl": "/summit/interviews/ken-perlin.jpg",
         "alt": "Still from the recorded interview with Ken Perlin at the Cross Future AI Summit"
@@ -1598,10 +1610,12 @@
     },
     {
       "code": "IV.07",
+      "slug": "natasha-jaques-iv-07",
       "title": "Natasha Jaques",
       "person": "natasha-jaques",
       "durationMin": 4,
       "featured": false,
+      "topics": [],
       "image": {
         "sourceUrl": "/summit/interviews/natasha-jaques.jpg",
         "alt": "Still from the recorded interview with Natasha Jaques at the Cross Future AI Summit"
@@ -1609,10 +1623,12 @@
     },
     {
       "code": "IV.08",
+      "slug": "james-elder-iv-08",
       "title": "James Elder",
       "person": "james-elder",
       "durationMin": 5,
       "featured": false,
+      "topics": [],
       "image": {
         "sourceUrl": "/summit/interviews/james-elder.jpg",
         "alt": "Still from the recorded interview with James Elder at the Cross Future AI Summit"
@@ -1620,10 +1636,12 @@
     },
     {
       "code": "IV.09",
+      "slug": "sercan-arik-iv-09",
       "title": "Sercan Arik",
       "person": "sercan-arik",
       "durationMin": 4,
       "featured": false,
+      "topics": [],
       "image": {
         "sourceUrl": "/summit/interviews/sercan-arik.jpg",
         "alt": "Still from the recorded interview with Sercan Arik at the Cross Future AI Summit"
@@ -1631,10 +1649,12 @@
     },
     {
       "code": "IV.10",
+      "slug": "chris-smith-iv-10",
       "title": "Chris Smith",
       "person": "chris-smith",
       "durationMin": 1,
       "featured": false,
+      "topics": [],
       "image": {
         "sourceUrl": "/summit/interviews/chris-smith.jpg",
         "alt": "Still from the recorded interview with Chris Smith at the Cross Future AI Summit"
@@ -1642,10 +1662,12 @@
     },
     {
       "code": "IV.11",
+      "slug": "james-elder-iv-11",
       "title": "James Elder",
       "person": "james-elder",
       "durationMin": 2,
       "featured": false,
+      "topics": [],
       "image": {
         "sourceUrl": "/summit/interviews/james-elder-2.jpg",
         "alt": "Still from the recorded interview with James Elder at the Cross Future AI Summit"
@@ -1653,10 +1675,12 @@
     },
     {
       "code": "IV.12",
+      "slug": "miryam-lazarte-iv-12",
       "title": "Miryam Lazarte",
       "person": "miryam-lazarte",
       "durationMin": 2,
       "featured": false,
+      "topics": [],
       "image": {
         "sourceUrl": "/summit/interviews/miryam-lazarte.jpg",
         "alt": "Still from the recorded interview with Miryam Lazarte at the Cross Future AI Summit"
@@ -1664,10 +1688,12 @@
     },
     {
       "code": "IV.13",
+      "slug": "maria-parysz-iv-13",
       "title": "Maria Parysz",
       "person": "maria-parysz",
       "durationMin": 2,
       "featured": false,
+      "topics": [],
       "image": {
         "sourceUrl": "/summit/interviews/maria-parysz.jpg",
         "alt": "Still from the recorded interview with Maria Parysz at the Cross Future AI Summit"
@@ -1675,10 +1701,12 @@
     },
     {
       "code": "IV.14",
+      "slug": "nicole-troster-iv-14",
       "title": "Nicole Troster",
       "person": "nicole-troster",
       "durationMin": 2,
       "featured": false,
+      "topics": [],
       "image": {
         "sourceUrl": "/summit/interviews/nicole-troster.jpg",
         "alt": "Still from the recorded interview with Nicole Troster at the Cross Future AI Summit"
@@ -1686,10 +1714,12 @@
     },
     {
       "code": "IV.15",
+      "slug": "joseph-turcotte-iv-15",
       "title": "Joseph Turcotte",
       "person": "joseph-turcotte",
       "durationMin": 1,
       "featured": false,
+      "topics": [],
       "image": {
         "sourceUrl": "/summit/interviews/joseph-turcotte.jpg",
         "alt": "Still from the recorded interview with Joseph Turcotte at the Cross Future AI Summit"
@@ -1697,10 +1727,12 @@
     },
     {
       "code": "IV.16",
+      "slug": "pui-sai-lau-iv-16",
       "title": "Pui Sai Lau",
       "person": "pui-sai-lau",
       "durationMin": 1,
       "featured": false,
+      "topics": [],
       "image": {
         "sourceUrl": "/summit/interviews/pui-sai-lau.jpg",
         "alt": "Still from the recorded interview with Pui Sai Lau at the Cross Future AI Summit"
@@ -1708,10 +1740,12 @@
     },
     {
       "code": "IV.17",
+      "slug": "yang-wang-iv-17",
       "title": "Yang Wang",
       "person": "yang-wang",
       "durationMin": 2,
       "featured": false,
+      "topics": [],
       "image": {
         "sourceUrl": "/summit/interviews/yang-wang.jpg",
         "alt": "Still from the recorded interview with Yang Wang at the Cross Future AI Summit"
@@ -1719,10 +1753,12 @@
     },
     {
       "code": "IV.18",
+      "slug": "rasoul-yousef-iv-18",
       "title": "Rasoul Yousef",
       "person": "rasoul-yousef",
       "durationMin": 1,
       "featured": false,
+      "topics": [],
       "image": {
         "sourceUrl": "/summit/interviews/rasoul-yousef.jpg",
         "alt": "Still from the recorded interview with Rasoul Yousef at the Cross Future AI Summit"
@@ -2048,6 +2084,9 @@
             "label": "City"
           }
         ],
+        "highlights": [
+          "The first Cross Future convening brought academia and industry into one room."
+        ],
         "media": {
           "kind": "image",
           "src": "/summit/media/past-2024.svg",
@@ -2070,6 +2109,9 @@
             "value": "TO",
             "label": "City"
           }
+        ],
+        "highlights": [
+          "Formal recognition from the Province of Ontario and the City of Toronto."
         ],
         "media": {
           "kind": "image",
@@ -2094,6 +2136,7 @@
             "label": "City"
           }
         ],
+        "highlights": [],
         "media": {
           "kind": "image",
           "src": "/summit/media/past-2026.svg",
