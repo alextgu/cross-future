@@ -31,3 +31,6 @@ yarn-error.log*
 # local database
 /data/*.db
 /data/*.db-*
+
+# isolated agent worktrees
+/.worktrees/
