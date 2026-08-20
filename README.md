@@ -2,8 +2,9 @@
 
 Site for the Cross Future AI Summit — a one-day event in Montréal on AI data
 center power and energy resilience, hosted by Cross Future Hub. The canonical
-site uses the Assembly tiled-card system at `/`, with pages at `/about`,
-`/speakers`, `/agenda`, `/media`, `/partners`, `/register`, and `/contact`.
+site uses the Assembly tiled-card system at `/`, with durable archives at
+`/past-events`, `/interviews`, and `/interviews/[slug]`. The primary navbar is
+unchanged: About, Speakers, Program, Supporters, Contact, Past Events, Register.
 
 The previous design explorations remain in the repository as references:
 
@@ -16,11 +17,11 @@ The previous design explorations remain in the repository as references:
   with horizontal snap agenda, faculty pillars, interviews, countdown
   footer — plus photo-forward innovations (portrait reveals, interview
   thumbnails, and the § 06 Archives photo wall the reference never renders).
-- **`/` — Design C, "Assembly"**: the canonical tiled card system with a sticky
-  ticket rail, taking its structure from the IT/CONF reference and its type
-  family (Barlow) from the live cross-future.com. Eight routes — home, about,
-  speakers, agenda, media, partners, register, contact — plus an in-design
-  404. Built media-forward: 30+ image slots and a video hero, all routed
+- **`/` — Design C, "Assembly"**: the canonical tiled card system, taking its
+  structure from the IT/CONF reference and its type family (Barlow) from the
+  live cross-future.com. The homepage, completed-festival archive, interview
+  library, and permanent interview detail routes share one content model.
+  Built media-forward: 30+ image slots and a video hero, all routed
   through one `AsmMedia` component. Approved in greyscale, then coloured by a
   Tier-1 token swap — see **Design system** below.
 
@@ -93,6 +94,12 @@ grep -rn "seed.json" app components   # must return nothing
   (`components/FigureOne.tsx`), so curriculum and diagram cannot drift.
 - **sessions** — currently empty. See derived behaviours below.
 - **partners**, **documents** — logo wall and recognition cards.
+- **interviews** — permanent slug, speaker, duration, optional recording URL,
+  optional topics, and optional `editionYear`. A missing year means ungrouped,
+  not guessed.
+- **assembly.pastEditions** — progress summaries with stats, supplied
+  highlights, and media. The completed-edition selector excludes the current
+  festival and orders the archive newest first.
 
 ## Derived behaviours (do not hardcode around them)
 
@@ -107,6 +114,13 @@ grep -rn "seed.json" app components   # must return nothing
 3. **Curriculum ↔ diagram** — both render from `tracks[]`. Adding a track
    updates the ruled rows and pins its code to the diagram node for its
    `chainStage`.
+4. **Festival progress** — `getCompletedPastEditions()` includes only years
+   before the current edition. The homepage and `/past-events` consume that
+   same view, so a future edition cannot accidentally present itself as past.
+5. **Interview ownership** — every interview card links to
+   `/interviews/[slug]`; that detail page owns the external recording handoff.
+   `/interviews` always shows the complete library. Past Events cross-links a
+   recording only when `editionYear` explicitly matches that edition.
 
 ## How to add a variation
 
@@ -135,6 +149,20 @@ curriculum row appears and the diagram pins the code under the matching node.
 New chain stage? Extend the `ChainStage` union in `lib/content.ts` and the
 `STAGE_TO_NODE` map in `components/FigureOne.tsx` — the compiler will point
 at the map if you forget.
+
+### A completed festival highlight
+
+Add or update the matching record in `assembly.pastEditions`, including
+authoritative `stats`, `highlights`, and media. Once a later edition becomes
+current, the completed selector automatically moves the earlier year into the
+homepage progress chapter and `/past-events`.
+
+### A recorded interview
+
+Add one interview with a unique, permanent `slug`. `topics` and `editionYear`
+are optional. Leave `editionYear` absent until the source edition is known;
+the conversation remains available in the complete `/interviews` library and
+is not placed under a festival year on inference alone.
 
 ### A new design variation
 
@@ -200,9 +228,13 @@ Tier 1 and nothing else:
 The scheme is one attribute — `data-theme` on `<html>` — set before first
 paint by the boot script in `app/layout.tsx` and stored in `localStorage`.
 
-**Theme lab.** `components/assembly/AsmThemeLab.tsx` renders the on-screen
-switcher (bottom bar) used in review sessions; the choice survives navigation
-and reload. Turn it off for a deploy with `NEXT_PUBLIC_THEME_LAB=off`.
+**CEO Review panel.** `components/assembly/AsmThemeLab.tsx` renders a compact,
+bottom-right preview panel, closed by default. It controls theme, media tint,
+card radius (8–28px), compact/balanced/airy density, and curated/full homepage
+speaker and interview collections. Reset restores Hub blue, full tint, 22px
+radius, balanced spacing, and curated rails. Choices survive navigation and
+reload and are applied before first paint. Turn the panel off with
+`NEXT_PUBLIC_THEME_LAB=off`.
 
 `tests/theme-tokens.test.ts` enforces the discipline: a literal colour outside
 a Tier-1 token fails the suite, and every scheme must restate the full ramp.
