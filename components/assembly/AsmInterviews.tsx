@@ -1,14 +1,15 @@
  "use client";
 
 import type { InterviewCard } from "@/lib/content";
+import Link from "next/link";
 import { useHorizontalRailScroll } from "@/lib/use-horizontal-rail-scroll";
 import AsmEmpty from "./AsmEmpty";
 
 /**
  * Recorded-interview cards. Every entry is a video slot: the thumbnail is the
  * still, the duration chip sets the expectation, and the whole card becomes a
- * link the moment an interview carries a url. Until then it is a static card
- * rather than a dead link.
+ * link to its permanent detail page. The detail page owns any external video
+ * handoff, so each recording keeps one stable home as the archive grows.
  *
  * Two layouts. `grid` wraps into rows and is what the media archive wants,
  * where the interviews are the page. `rail` is the home page: two rows deep,
@@ -91,15 +92,13 @@ export default function AsmInterviews({
     );
 
     return (
-      <article key={interview.code} className="asm-card t-deep">
-        {interview.url ? (
-          <a href={interview.url} target="_blank" rel="noreferrer">
-            {inner}
-          </a>
-        ) : (
-          inner
-        )}
-      </article>
+      <Link
+        key={interview.code}
+        className="asm-interview-link"
+        href={`/interviews/${interview.slug}`}
+      >
+        <article className="asm-card t-deep">{inner}</article>
+      </Link>
     );
   });
 

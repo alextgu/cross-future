@@ -350,7 +350,7 @@ const assembly = {
     feature: {
       title: "Agenda at a glance",
       ctaLabel: "View agenda",
-      ctaHref: "/#agenda",
+      ctaHref: "/interviews",
       media: img(
         "/summit/media/rail-agenda.svg",
         "Delegates in conversation between sessions",

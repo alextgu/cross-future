@@ -4,6 +4,7 @@ import { expect, it } from "vitest";
 const routes = [
   ["app/page.tsx", "/"],
   ["app/past-events/page.tsx", "/past-events"],
+  ["app/interviews/page.tsx", "/interviews"],
 ] as const;
 
 it("publishes an absolute base and a route-specific canonical URL", () => {

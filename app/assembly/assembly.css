@@ -2133,6 +2133,123 @@
   );
 }
 
+.assembly .asm-interview-link {
+  display: block;
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
+  border-radius: var(--asm-radius);
+}
+
+.assembly .asm-interview-link .asm-card {
+  height: 100%;
+  transition: transform 0.18s ease;
+}
+
+.assembly .asm-interview-link:hover .asm-card {
+  transform: translateY(-3px);
+}
+
+.assembly .asm-interview-link:focus-visible {
+  outline: var(--asm-focus);
+  outline-offset: 4px;
+}
+
+.assembly .asm-interview-library {
+  display: grid;
+  gap: var(--asm-pad);
+}
+
+.assembly .asm-interview-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.assembly .asm-interview-filter {
+  padding: 8px 13px;
+  border: 1px solid var(--asm-hair);
+  border-radius: var(--asm-radius-pill);
+  background: transparent;
+  color: var(--asm-ink-2);
+  font-family: var(--asm-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.assembly .asm-interview-filter[aria-pressed="true"] {
+  border-color: var(--asm-card-deep);
+  background: var(--asm-card-deep);
+  color: var(--asm-on-deep);
+}
+
+.assembly .asm-interview-back {
+  width: fit-content;
+  color: var(--asm-ink-2);
+  text-decoration: none;
+}
+
+.assembly .asm-interview-detail {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: var(--asm-space-item);
+}
+
+.assembly .asm-interview-detail-copy {
+  display: grid;
+  align-content: start;
+  gap: var(--asm-pad-tight);
+}
+
+.assembly .asm-interview-person {
+  font-size: 1.25rem;
+  line-height: 1;
+  margin-bottom: 7px;
+}
+
+.assembly .asm-interview-quote {
+  padding-left: var(--asm-pad-tight);
+  margin: 0;
+  border-left: 1px solid var(--asm-hair);
+  color: var(--asm-ink-2);
+  font-family: var(--asm-display);
+  font-size: clamp(1.25rem, 2.2vw, 2rem);
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.assembly .asm-interview-topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.assembly .asm-interview-topics li {
+  padding: 6px 9px;
+  border: 1px solid var(--asm-hair);
+  border-radius: var(--asm-radius-pill);
+}
+
+.assembly .asm-interview-recording-status {
+  display: grid;
+  gap: 8px;
+  align-content: end;
+  min-height: 150px;
+  padding: var(--asm-pad-tight);
+  border-radius: var(--asm-radius-sm);
+  border: 1px solid var(--asm-hair);
+}
+
+.assembly .asm-interview-detail-media .asm-interview-recording-status {
+  min-height: 100%;
+  border-color: var(--asm-hair-inv);
+}
+
 @media (max-width: 1024px) {
   .assembly .asm-rail.is-interviews {
     grid-auto-columns: clamp(230px, 68vw, 300px);
@@ -2672,6 +2789,12 @@
   padding-top: var(--asm-pad-tight);
   margin-top: var(--asm-pad-tight);
   border-top: 1px solid var(--asm-hair);
+}
+
+.assembly .asm-past-interviews {
+  display: grid;
+  gap: var(--asm-pad-tight);
+  padding-top: var(--asm-pad-tight);
 }
 
 /* ============================================================
@@ -3387,7 +3510,8 @@
     grid-template-columns: minmax(0, 1fr);
   }
   .assembly .asm-progress-intro,
-  .assembly .asm-progress-card {
+  .assembly .asm-progress-card,
+  .assembly .asm-interview-detail {
     grid-template-columns: minmax(0, 1fr);
   }
   .assembly .asm-tracklist {

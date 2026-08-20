@@ -1,13 +1,16 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import type { PastEdition } from "@/lib/content";
+import type { InterviewCard, PastEdition } from "@/lib/content";
 import AsmMedia from "./AsmMedia";
+import AsmInterviews from "./AsmInterviews";
 
 export default function AsmPastEventsMockup({
   editions,
+  interviewsByYear,
 }: {
   editions: PastEdition[];
+  interviewsByYear: Record<number, InterviewCard[]>;
 }) {
   const sorted = useMemo(
     () => [...editions].sort((a, b) => b.year - a.year),
@@ -76,6 +79,17 @@ export default function AsmPastEventsMockup({
         <div className="asm-card t-plain">
           <AsmMedia media={active.media} aspect="21 / 9" />
         </div>
+
+        {(interviewsByYear[active.year] ?? []).length > 0 ? (
+          <div className="asm-past-interviews">
+            <p className="asm-meta">Recorded at this edition</p>
+            <AsmInterviews
+              cards={interviewsByYear[active.year]}
+              columns={3}
+              layout="grid"
+            />
+          </div>
+        ) : null}
 
       </div>
     </section>

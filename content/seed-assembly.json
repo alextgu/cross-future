@@ -1814,7 +1814,7 @@
       "feature": {
         "title": "Interviews on record",
         "ctaLabel": "Watch interviews",
-        "ctaHref": "/#interviews",
+        "ctaHref": "/interviews",
         "media": {
           "kind": "image",
           "src": "/summit/media/rail-interviews.jpg",

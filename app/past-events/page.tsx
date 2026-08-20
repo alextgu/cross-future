@@ -1,5 +1,12 @@
 import type { Metadata } from "next";
-import { getCompletedPastEditions, getSummitContent } from "@/lib/content";
+import {
+  getCompletedPastEditions,
+  getCurrentEdition,
+  getFaculty,
+  getInterviewCardsForEditionYear,
+  getSummitContent,
+  type InterviewCard,
+} from "@/lib/content";
 import AsmShell from "@/components/assembly/AsmShell";
 import AsmSectionHead from "@/components/assembly/AsmSectionHead";
 import AsmPastEventsMockup from "@/components/assembly/AsmPastEventsMockup";
@@ -13,6 +20,14 @@ export const metadata: Metadata = {
 export default async function PastEventsPage() {
   const content = await getSummitContent("assembly");
   const editions = getCompletedPastEditions(content);
+  const current = getCurrentEdition(content);
+  const faculty = getFaculty(content, current.slug);
+  const interviewsByYear = Object.fromEntries(
+    editions.map((edition) => [
+      edition.year,
+      getInterviewCardsForEditionYear(content, faculty, edition.year),
+    ])
+  ) as Record<number, InterviewCard[]>;
 
   return (
     <AsmShell>
@@ -22,7 +37,10 @@ export default async function PastEventsPage() {
         lede="The completed Cross Future editions, and the concrete progress each gathering carried forward."
         tone="plain"
       />
-      <AsmPastEventsMockup editions={editions} />
+      <AsmPastEventsMockup
+        editions={editions}
+        interviewsByYear={interviewsByYear}
+      />
     </AsmShell>
   );
 }

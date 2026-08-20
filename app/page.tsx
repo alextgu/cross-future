@@ -45,9 +45,9 @@ export default async function AssemblyHome() {
     /* The page follows the live site's own running order — intro, interviews,
        speakers, focus areas, agenda, letters, partners, contact — rather than
        the longer editorial sequence this design started with. Sections that
-       had no real material behind them (the field notes, the past-edition
-       cards, the stats row) are not invented here; they live on /about and
-       /media, where they are what the page is for.
+       had no real material behind them are not invented here; completed
+       editions and full recordings now have durable homes on /past-events
+       and /interviews.
 
        One register call, not four. The hero ticket tile carries it above the
        fold, the nav carries it everywhere, and the footer closes with it —
