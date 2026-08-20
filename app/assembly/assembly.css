@@ -845,22 +845,6 @@
   min-width: 0;
 }
 
-/* Optional review mode: subtle alternating section surfaces to test whether
-   long-page scanability improves with section contrast. Toggled by the
-   "Sections" button in the dev lab. */
-[data-section-contrast="on"] .assembly .asm-main > .asm-section:nth-of-type(n + 2) {
-  padding: clamp(12px, 1.2vw, 18px);
-  border-radius: var(--asm-radius-sm);
-}
-
-[data-section-contrast="on"] .assembly .asm-main > .asm-section:nth-of-type(odd) {
-  background: color-mix(in srgb, var(--asm-card-mist) 78%, transparent);
-}
-
-[data-section-contrast="on"] .assembly .asm-main > .asm-section:nth-of-type(even) {
-  background: color-mix(in srgb, var(--asm-card-plain) 92%, transparent);
-}
-
 /* The opening tiles rather than stacks: hero, fact cards and ticker are one
    mosaic, so they sit at the same distance from each other as the tiles
    inside the hero do. Any other gap here reads as three separate blocks. */

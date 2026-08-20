@@ -31,11 +31,11 @@ const THEME_BOOT = `(function(){try{var ids=${JSON.stringify(
   THEME_DEFAULT,
 )};var s=Number(localStorage.getItem(${JSON.stringify(
   THEME_MEDIA_TINT_KEY,
-)}));if(!Number.isFinite(s))s=${THEME_MEDIA_TINT_DEFAULT};if(s<0)s=0;if(s>1)s=1;document.documentElement.style.setProperty('--asm-media-tint',String(s));var sc=localStorage.getItem('cf-section-contrast');if(sc==='on'){document.documentElement.dataset.sectionContrast='on';}else{delete document.documentElement.dataset.sectionContrast;}}catch(e){document.documentElement.dataset.theme=${JSON.stringify(
+)}));if(!Number.isFinite(s))s=${THEME_MEDIA_TINT_DEFAULT};if(s<0)s=0;if(s>1)s=1;document.documentElement.style.setProperty('--asm-media-tint',String(s));}catch(e){document.documentElement.dataset.theme=${JSON.stringify(
   THEME_DEFAULT,
 )};document.documentElement.style.setProperty('--asm-media-tint',${JSON.stringify(
   String(THEME_MEDIA_TINT_DEFAULT),
-)});delete document.documentElement.dataset.sectionContrast;}})();`;
+)});}})();`;
 
 /* Dev colour/saturation bar — on by default; set NEXT_PUBLIC_THEME_LAB=off to hide. */
 const THEME_LAB_ENABLED = process.env.NEXT_PUBLIC_THEME_LAB !== "off";

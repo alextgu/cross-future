@@ -193,8 +193,7 @@ Tier 1 and nothing else:
 | id | what it is |
 | --- | --- |
 | `hub` | default — the real mark's blue, `#215f9a` |
-| `signal` | navy ground, amber accent |
-| `verdant` | forest ground, green accent |
+| `hub-soft` | lighter hub blues — soft deep card `#1e568a`, accent `#3d84c0` |
 | `midnight` | the ramp inverted — a dark scheme with no dark-mode code |
 | `mono` | the greyscale study the layout was approved in |
 

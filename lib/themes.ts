@@ -24,16 +24,10 @@ export const THEME_SCHEMES: ThemeScheme[] = [
     swatch: ["#eef2f7", "#215f9a", "#0d1723"],
   },
   {
-    id: "signal",
-    label: "Signal",
-    note: "Navy ground, amber accent",
-    swatch: ["#f3efe8", "#a4560c", "#16233a"],
-  },
-  {
-    id: "verdant",
-    label: "Verdant",
-    note: "Forest ground, green accent",
-    swatch: ["#eef3ee", "#1f7a4d", "#0e1a13"],
+    id: "hub-soft",
+    label: "Hub soft",
+    note: "Lighter blues, soft deep card",
+    swatch: ["#f3f7fb", "#3d84c0", "#1e568a"],
   },
   {
     id: "midnight",

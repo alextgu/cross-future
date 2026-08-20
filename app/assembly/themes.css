@@ -36,44 +36,26 @@
   --asm-c-blue: #1d1d1d;
 }
 
-/* ---------- signal — navy ground, amber accent ---------- */
-[data-theme="signal"] .assembly {
+/* ---------- hub-soft — lighter hub blues, soft deep card ----------
+   Same cool cast as Hub blue, but the accent and especially the deep
+   "inner" card sit higher on the value scale so the page reads airier. */
+[data-theme="hub-soft"] .assembly {
   --asm-n-000: #ffffff;
-  --asm-n-025: #faf8f4;
-  --asm-n-050: #f3efe8;
-  --asm-n-100: #eae3d8;
-  --asm-n-150: #ddd4c5;
-  --asm-n-200: #cabfab;
-  --asm-n-300: #ac9f89;
-  --asm-n-400: #8c7e67;
-  --asm-n-500: #726550;
-  --asm-n-600: #5c5040;
-  --asm-n-700: #423a2e;
-  --asm-n-800: #24211b;
-  --asm-n-900: #16233a;
+  --asm-n-025: #f9fbfd;
+  --asm-n-050: #f3f7fb;
+  --asm-n-100: #e6eef7;
+  --asm-n-150: #d8e5f2;
+  --asm-n-200: #c4d6ea;
+  --asm-n-300: #a6bdd9;
+  --asm-n-400: #849fbf;
+  --asm-n-500: #6885a8;
+  --asm-n-600: #516d8f;
+  --asm-n-700: #3c5878;
+  --asm-n-800: #2b4a6e;
+  --asm-n-900: #1e568a;
 
-  --asm-c-sky: #efdcbb;
-  --asm-c-blue: #a4560c;
-}
-
-/* ---------- verdant — forest ground, green accent ---------- */
-[data-theme="verdant"] .assembly {
-  --asm-n-000: #ffffff;
-  --asm-n-025: #f7faf7;
-  --asm-n-050: #eef3ee;
-  --asm-n-100: #e0eae1;
-  --asm-n-150: #d0ded2;
-  --asm-n-200: #bacdbd;
-  --asm-n-300: #9bb3a0;
-  --asm-n-400: #7c957f;
-  --asm-n-500: #627a66;
-  --asm-n-600: #4d6351;
-  --asm-n-700: #37483a;
-  --asm-n-800: #1c2a20;
-  --asm-n-900: #0e1a13;
-
-  --asm-c-sky: #cfe6d5;
-  --asm-c-blue: #1f7a4d;
+  --asm-c-sky: #d9e8f6;
+  --asm-c-blue: #3d84c0;
 }
 
 /* ---------- midnight — the ramp inverted ----------
@@ -117,11 +99,8 @@ body {
 [data-theme="mono"] body {
   background: #f4f4f4;
 }
-[data-theme="signal"] body {
-  background: #f3efe8;
-}
-[data-theme="verdant"] body {
-  background: #eef3ee;
+[data-theme="hub-soft"] body {
+  background: #f3f7fb;
 }
 [data-theme="midnight"] body {
   background: #0a0f15;
@@ -210,30 +189,10 @@ body {
   white-space: nowrap;
 }
 
-.asm-lab-toggle {
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.05);
-  color: #cfdae6;
-  font: inherit;
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 7px 12px;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.asm-lab-toggle[aria-pressed="true"] {
-  background: rgba(159, 208, 255, 0.2);
-  border-color: rgba(159, 208, 255, 0.55);
-  color: #e9f5ff;
-}
-
 /* The lab is outside .assembly and so inherits none of its focus handling.
-   Keyboard reach matters here as much as anywhere: tab order is the five
-   schemes then the close button, and the ring is drawn light because the
-   panel is always dark. */
+   Keyboard reach matters here as much as anywhere: tab order is the schemes
+   then the close button, and the ring is drawn light because the panel is
+   always dark. */
 .asm-lab button:focus-visible {
   outline: 2px solid #9fd0ff;
   outline-offset: 2px;
