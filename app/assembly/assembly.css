@@ -1114,50 +1114,25 @@
   color: var(--asm-on-deep);
 }
 
-.assembly .asm-about-systems-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 18px;
-  padding: 13px 16px;
-  border-bottom: 1px solid var(--asm-hair-inv);
-}
-
-.assembly .asm-about-systems-head h3,
-.assembly .asm-about-systems-head p {
-  margin: 0;
-  font-family: var(--asm-mono);
-  font-size: 0.62rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  line-height: 1;
-  text-transform: uppercase;
-  color: var(--asm-ink-inv-2);
-}
-
-.assembly .asm-about-systems-head p span {
-  color: var(--asm-on-deep);
-  font-weight: 700;
-}
-
 .assembly .asm-about-systems-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .assembly .asm-about-systems-list li {
-  min-height: 64px;
+  min-height: 72px;
   display: grid;
-  grid-template-columns: 84px minmax(0, 1fr);
-  align-items: center;
-  gap: clamp(12px, 1.6vw, 22px);
-  padding: 13px 16px;
-  border-top: 1px solid var(--asm-hair-inv);
+  align-content: center;
+  gap: 8px;
+  padding: 14px 16px;
+  border-left: 1px solid var(--asm-hair-inv);
 }
 
 .assembly .asm-about-systems-list li:first-child {
-  border-top: 0;
+  border-left: 0;
 }
 
 .assembly .asm-about-system-code {
@@ -1170,12 +1145,32 @@
 
 .assembly .asm-about-system-label {
   font-family: var(--asm-display);
-  font-size: clamp(1rem, 1.35vw, 1.3rem);
+  font-size: clamp(0.9rem, 1.05vw, 1.05rem);
   font-weight: 700;
   letter-spacing: 0.01em;
-  line-height: 1;
+  line-height: 1.08;
   text-transform: uppercase;
   color: var(--asm-on-deep);
+}
+
+@media (max-width: 620px) {
+  .assembly .asm-about-systems-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .assembly .asm-about-systems-list li {
+    min-height: 50px;
+    grid-template-columns: 54px minmax(0, 1fr);
+    align-items: center;
+    gap: 10px;
+    padding-block: 10px;
+    border-left: 0;
+    border-top: 1px solid var(--asm-hair-inv);
+  }
+
+  .assembly .asm-about-systems-list li:first-child {
+    border-top: 0;
+  }
 }
 
 .assembly .asm-about-figure {
@@ -2730,16 +2725,15 @@
    ============================================================ */
 .assembly .asm-progress-surface {
   display: grid;
-  gap: clamp(18px, 2vw, 30px);
-  padding: clamp(18px, 2.6vw, 38px);
-  border-radius: calc(var(--asm-radius) * 1.35);
+  gap: clamp(16px, 1.8vw, 24px);
+  padding: clamp(16px, 2vw, 28px);
+  border: 1px solid color-mix(in srgb, var(--asm-accent) 12%, var(--asm-hair));
+  border-radius: 4px;
   background: color-mix(
     in srgb,
-    var(--asm-card-mist) 82%,
-    var(--asm-accent) 18%
+    var(--asm-card-mist) 93%,
+    var(--asm-accent) 7%
   );
-  box-shadow: inset 0 0 0 1px
-    color-mix(in srgb, var(--asm-accent) 14%, var(--asm-hair));
 }
 
 .assembly .asm-progress-intro {
@@ -2761,10 +2755,10 @@
 
 .assembly .asm-progress-disclaimer {
   margin: 0;
-  padding: 12px 16px;
-  border: 1px solid color-mix(in srgb, var(--asm-accent) 28%, var(--asm-hair));
-  border-radius: var(--asm-radius-sm);
-  background: color-mix(in srgb, var(--asm-card-plain) 76%, transparent);
+  padding: 9px 12px;
+  border: 0;
+  border-left: 2px solid var(--asm-accent);
+  background: color-mix(in srgb, var(--asm-card-plain) 82%, transparent);
   color: var(--asm-ink-2);
   font-family: var(--asm-mono);
   font-size: 0.7rem;
@@ -2779,26 +2773,25 @@
 
 .assembly .asm-progress-carousel {
   overflow: hidden;
-  border-radius: var(--asm-radius);
+  border: 1px solid var(--asm-hair-inv);
+  border-radius: 3px;
   background: var(--asm-card-deep);
-  box-shadow: 0 20px 50px color-mix(in srgb, var(--asm-c-black) 15%, transparent);
   outline: none;
 }
 
 .assembly .asm-progress-carousel:focus-visible {
-  box-shadow: 0 0 0 3px var(--asm-accent),
-    0 20px 50px color-mix(in srgb, var(--asm-c-black) 15%, transparent);
+  box-shadow: 0 0 0 3px var(--asm-accent);
 }
 
 .assembly .asm-progress-slide {
   display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(340px, 0.75fr);
-  min-height: clamp(430px, 48vw, 590px);
+  grid-template-rows: auto auto;
 }
 
 .assembly .asm-progress-visual {
   position: relative;
-  min-height: 100%;
+  min-height: 0;
+  aspect-ratio: 16 / 7;
   overflow: hidden;
 }
 
@@ -2810,21 +2803,14 @@
   pointer-events: none;
   background: linear-gradient(
     180deg,
-    color-mix(in srgb, var(--asm-accent) 8%, transparent),
-    color-mix(in srgb, var(--asm-card-deep) 30%, transparent)
+    transparent 72%,
+    color-mix(in srgb, var(--asm-card-deep) 22%, transparent)
   );
 }
 
 .assembly .asm-progress-image-label {
-  position: absolute;
-  left: 16px;
-  bottom: 16px;
-  z-index: 2;
   margin: 0;
-  padding: 7px 10px;
-  border-radius: var(--asm-radius-pill);
-  background: color-mix(in srgb, var(--asm-card-deep) 86%, transparent);
-  color: var(--asm-on-deep);
+  color: var(--asm-ink-inv-2);
   font-family: var(--asm-mono);
   font-size: 0.58rem;
   letter-spacing: 0.08em;
@@ -2834,33 +2820,37 @@
 
 .assembly .asm-progress-copy {
   display: grid;
-  gap: clamp(18px, 2vw, 28px);
-  align-content: start;
-  padding: clamp(24px, 3.4vw, 50px);
+  grid-template-columns: minmax(0, 1.3fr) minmax(360px, 0.7fr);
+  gap: clamp(24px, 3vw, 48px);
+  align-items: center;
+  padding: clamp(18px, 2.2vw, 28px);
+  border-top: 1px solid var(--asm-hair-inv);
   background: var(--asm-card-deep);
   color: var(--asm-on-deep);
+}
+
+.assembly .asm-progress-caption {
+  display: grid;
+  gap: 9px;
+  min-width: 0;
 }
 
 .assembly .asm-progress-slide-meta {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
-  gap: 10px;
+  gap: 8px 16px;
 }
 
 .assembly .asm-progress-slide-meta .asm-meta,
-.assembly .asm-progress-copy > .asm-body,
+.assembly .asm-progress-caption > .asm-body,
 .assembly .asm-progress-metrics .asm-meta {
   color: var(--asm-ink-inv-2);
 }
 
 .assembly .asm-progress-mock-label {
   margin: 0;
-  padding: 7px 10px;
-  border-radius: var(--asm-radius-pill);
-  background: var(--asm-card-accent);
-  color: var(--asm-on-accent);
+  color: var(--asm-accent);
   font-family: var(--asm-mono);
   font-size: 0.58rem;
   font-weight: 700;
@@ -2869,27 +2859,41 @@
   text-transform: uppercase;
 }
 
-.assembly .asm-progress-copy > .asm-d2 {
-  max-width: 12ch;
+.assembly .asm-progress-caption > .asm-d2 {
+  max-width: 22ch;
   color: var(--asm-on-deep);
+  font-size: clamp(1.65rem, 2.7vw, 2.8rem);
 }
 
-.assembly .asm-progress-copy > .asm-body {
-  max-width: 46ch;
+.assembly .asm-progress-caption > .asm-body {
+  max-width: 58ch;
+}
+
+.assembly .asm-progress-facts {
+  display: grid;
+  gap: 13px;
+  min-width: 0;
 }
 
 .assembly .asm-progress-metrics {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
-  padding-top: clamp(18px, 2vw, 28px);
-  border-top: 1px solid var(--asm-hair-inv);
+  gap: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .assembly .asm-progress-metrics > div {
   display: grid;
-  gap: 7px;
+  gap: 5px;
   min-width: 0;
+  padding-inline: 14px;
+  border-left: 1px solid var(--asm-hair-inv);
+}
+
+.assembly .asm-progress-metrics > div:first-child {
+  padding-left: 0;
+  border-left: 0;
 }
 
 .assembly .asm-progress-metrics .asm-d3 {
@@ -2913,12 +2917,12 @@
 }
 
 .assembly .asm-progress-arrows button {
-  width: 42px;
-  height: 42px;
+  width: 38px;
+  height: 34px;
   display: grid;
   place-items: center;
   border: 1px solid var(--asm-hair-inv);
-  border-radius: 50%;
+  border-radius: 2px;
   background: transparent;
   color: var(--asm-on-deep);
   cursor: pointer;
@@ -3709,11 +3713,14 @@
     grid-template-columns: minmax(0, 1fr);
   }
   .assembly .asm-progress-slide {
-    grid-template-columns: minmax(0, 1fr);
-    min-height: 0;
+    grid-template-rows: auto auto;
   }
   .assembly .asm-progress-visual {
-    min-height: 420px;
+    min-height: 0;
+    aspect-ratio: 16 / 8.5;
+  }
+  .assembly .asm-progress-copy {
+    grid-template-columns: minmax(0, 1fr);
   }
   .assembly .asm-footer-cols {
     grid-template-columns: 1fr 1fr;
@@ -3760,7 +3767,8 @@
     padding: 14px;
   }
   .assembly .asm-progress-visual {
-    min-height: 280px;
+    min-height: 0;
+    aspect-ratio: 4 / 3;
   }
   .assembly .asm-progress-copy {
     padding: 24px 20px;
