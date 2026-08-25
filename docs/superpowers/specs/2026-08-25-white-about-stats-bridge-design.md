@@ -1,7 +1,7 @@
 # Cross Future White About and Stats Bridge
 
 **Date:** 2026-08-25  
-**Status:** Approved in conversation; awaiting written-spec review
+**Status:** Approved
 
 ## Purpose
 
