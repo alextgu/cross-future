@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ASSEMBLY_BASE,
   ASSEMBLY_HOME,
@@ -14,9 +14,13 @@ import {
 import AsmButton from "./AsmButton";
 import { AsmMark } from "./AsmLogo";
 
+const NAV_IDLE_DELAY = 1500;
+
 export default function AsmNav(_props: { year: number }) {
   const pathname = usePathname() ?? ASSEMBLY_BASE;
   const [open, setOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const navbarRef = useRef<HTMLDivElement>(null);
 
   /* Close the drawer on navigation and on Escape — a drawer that survives a
      route change is the classic mobile-nav bug. */
@@ -33,8 +37,100 @@ export default function AsmNav(_props: { year: number }) {
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
+  useEffect(() => {
+    const finePointer = window.matchMedia?.(
+      "(hover: hover) and (pointer: fine)"
+    );
+
+    // Touch users have no cursor movement with which to recover the nav.
+    if (!finePointer?.matches) {
+      setHidden(false);
+      return;
+    }
+
+    const navbar = navbarRef.current;
+    const hero = document.querySelector<HTMLElement>(".asm-future-hero");
+    let idleTimer: ReturnType<typeof setTimeout> | undefined;
+    let pastHero = true;
+
+    const clearIdleTimer = () => {
+      if (idleTimer !== undefined) clearTimeout(idleTimer);
+      idleTimer = undefined;
+    };
+
+    const navHasFocus = () =>
+      navbar !== null && navbar.contains(document.activeElement);
+
+    const measurePastHero = () => {
+      if (!hero) return true;
+      const navbarHeight = navbar?.getBoundingClientRect().height ?? 0;
+      return hero.getBoundingClientRect().bottom <= navbarHeight;
+    };
+
+    const scheduleHide = () => {
+      clearIdleTimer();
+      if (!pastHero || open || navHasFocus()) {
+        setHidden(false);
+        return;
+      }
+
+      idleTimer = setTimeout(() => {
+        if (pastHero && !open && !navHasFocus()) setHidden(true);
+      }, NAV_IDLE_DELAY);
+    };
+
+    const onScroll = () => {
+      pastHero = measurePastHero();
+      clearIdleTimer();
+
+      if (!pastHero || open || navHasFocus()) {
+        setHidden(false);
+        return;
+      }
+
+      setHidden(true);
+    };
+
+    const onPointerMove = () => {
+      pastHero = measurePastHero();
+      setHidden(false);
+      scheduleHide();
+    };
+
+    const onFocusIn = (event: FocusEvent) => {
+      if (!navbar?.contains(event.target as Node)) return;
+      clearIdleTimer();
+      setHidden(false);
+    };
+
+    const onFocusOut = () => {
+      pastHero = measurePastHero();
+      scheduleHide();
+    };
+
+    pastHero = measurePastHero();
+    setHidden(false);
+    if (pastHero) scheduleHide();
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("pointermove", onPointerMove, { passive: true });
+    navbar?.addEventListener("focusin", onFocusIn);
+    navbar?.addEventListener("focusout", onFocusOut);
+
+    return () => {
+      clearIdleTimer();
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("pointermove", onPointerMove);
+      navbar?.removeEventListener("focusin", onFocusIn);
+      navbar?.removeEventListener("focusout", onFocusOut);
+    };
+  }, [open, pathname]);
+
   return (
-    <div className="asm-navbar">
+    <div
+      ref={navbarRef}
+      className={`asm-navbar${hidden ? " is-hidden" : ""}`}
+    >
       <nav className="asm-navbar-inner" aria-label="Primary">
         <Link className="asm-wordmark" href={ASSEMBLY_HOME}>
           <AsmMark />
