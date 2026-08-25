@@ -3327,9 +3327,38 @@
 }
 
 .assembly .asm-partner-cta .asm-btn.is-large {
-  margin-top: 8px;
-  font-size: 0.82rem;
-  padding: 14px 24px;
+  width: min(100%, 340px);
+  min-height: 64px;
+  margin-top: 18px;
+  justify-content: space-between;
+  padding: 0 26px;
+  border-radius: 6px;
+  background: var(--asm-card-accent);
+  box-shadow: none;
+  font-size: clamp(1rem, 1.3vw, 1.12rem);
+  font-weight: 700;
+  letter-spacing: 0.005em;
+  opacity: 1;
+  transition: background-color 180ms ease;
+}
+
+.assembly .asm-partner-cta .asm-btn.is-large:hover {
+  background: color-mix(
+    in srgb,
+    var(--asm-card-accent) 84%,
+    var(--asm-card-deep)
+  );
+  opacity: 1;
+  transform: none;
+}
+
+.assembly .asm-partner-cta .asm-btn.is-large .arrow {
+  font-size: 1.35rem;
+  transition: transform 180ms ease;
+}
+
+.assembly .asm-partner-cta .asm-btn.is-large:hover .arrow {
+  transform: translate(3px, -3px);
 }
 
 /* ============================================================

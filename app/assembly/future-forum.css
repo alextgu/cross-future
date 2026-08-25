@@ -776,10 +776,10 @@
 
 .assembly .asm-about-collage {
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(180px, 0.85fr);
-  grid-template-rows: repeat(2, minmax(190px, 1fr));
+  grid-template-columns: minmax(0, 1.4fr) minmax(210px, 0.8fr);
+  grid-template-rows: repeat(2, minmax(0, 1fr));
   gap: clamp(10px, 1.1vw, 16px);
-  min-height: clamp(520px, 45vw, 690px);
+  height: clamp(460px, 36vw, 560px);
 }
 
 .assembly .asm-about-moment {
@@ -799,37 +799,27 @@
   width: 100%;
   height: 100%;
   max-height: none;
+  display: block;
   object-fit: cover;
   filter: saturate(0.82) contrast(1.04);
   transition: filter 180ms ease, transform 350ms ease;
 }
 
 .assembly .asm-about-moment.is-primary img {
-  object-position: 52% center;
+  object-position: 52% 48%;
+}
+
+.assembly .asm-about-moment.is-dialogue img {
+  object-position: 56% center;
 }
 
 .assembly .asm-about-moment.is-perspective img {
-  object-position: 72% center;
+  object-position: 74% center;
 }
 
 .assembly .asm-about-moment:hover img {
   filter: saturate(1) contrast(1.02);
   transform: scale(1.015);
-}
-
-.assembly .asm-about-moment figcaption {
-  position: absolute;
-  left: 12px;
-  bottom: 12px;
-  padding: 7px 9px;
-  border-left: 2px solid #4db6ff;
-  background: rgb(5 31 58 / 0.82);
-  font-family: var(--asm-mono);
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #ffffff;
 }
 
 @media (max-width: 960px) {
@@ -846,7 +836,7 @@
   }
 
   .assembly .asm-about-collage {
-    min-height: clamp(480px, 72vw, 650px);
+    height: clamp(480px, 68vw, 620px);
   }
 }
 
@@ -956,7 +946,7 @@
   .assembly .asm-about-collage {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-template-rows: minmax(280px, 62vw) minmax(170px, 38vw);
-    min-height: 0;
+    height: auto;
   }
 
   .assembly .asm-about-moment.is-primary {

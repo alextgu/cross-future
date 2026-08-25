@@ -6,19 +6,16 @@ const EVENT_MOMENTS = [
   {
     src: "/summit/media/hero-poster.jpg",
     alt: "Audience members gathered in front of the Cross Future stage",
-    label: "Stage / 01",
     className: "is-primary",
   },
   {
     src: "/summit/media/rail-interviews.jpg",
     alt: "Two Cross Future guests discussing AI on stage",
-    label: "Dialogue / 02",
     className: "is-dialogue",
   },
   {
     src: "/summit/media/intro-media.jpg",
     alt: "A Cross Future guest sharing her perspective in an interview",
-    label: "Perspective / 03",
     className: "is-perspective",
   },
 ] as const;
@@ -71,7 +68,6 @@ export default function AsmAboutIntro() {
               loading="lazy"
               decoding="async"
             />
-            <figcaption>{moment.label}</figcaption>
           </figure>
         ))}
       </div>

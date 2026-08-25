@@ -20,6 +20,9 @@ it("introduces Cross Future with concise copy and three event moments", () => {
     )
   ).toBeTruthy();
   expect(screen.getAllByRole("img")).toHaveLength(3);
+  expect(screen.queryByText("Stage / 01")).toBeNull();
+  expect(screen.queryByText("Dialogue / 02")).toBeNull();
+  expect(screen.queryByText("Perspective / 03")).toBeNull();
   expect(screen.queryByText(/^Professors$/)).toBeNull();
   expect(screen.queryByText(/^Researchers$/)).toBeNull();
   expect(screen.queryByText(/^Industry builders$/)).toBeNull();
