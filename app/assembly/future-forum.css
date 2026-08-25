@@ -21,11 +21,11 @@
 
 .assembly .asm-navbar-inner {
   min-height: 66px;
-  padding: 8px 10px 8px 18px;
+  padding: 7px 9px 7px 18px;
   border: 1px solid var(--asm-hair);
-  border-radius: 22px;
+  border-radius: 4px;
   background: color-mix(in srgb, var(--asm-card-plain) 88%, transparent);
-  box-shadow: 0 18px 48px color-mix(in srgb, var(--asm-card-deep) 16%, transparent);
+  box-shadow: 0 10px 30px color-mix(in srgb, var(--asm-card-deep) 10%, transparent);
 }
 
 .assembly .asm-wordmark {
@@ -41,27 +41,51 @@
 }
 
 .assembly .asm-navlinks {
-  gap: 6px;
+  gap: clamp(12px, 1.5vw, 24px);
 }
 
 .assembly .asm-navlinks a,
 .assembly .asm-navpage {
-  padding: 10px 14px;
+  padding: 11px 2px;
   border: 0;
+  border-radius: 0;
   font-family: var(--asm-body);
   font-size: 0.88rem;
   font-weight: 500;
   letter-spacing: 0;
   text-transform: none;
   color: var(--asm-ink-2);
+  box-shadow: inset 0 -2px transparent;
+  transition: color 0.16s ease, box-shadow 0.16s ease;
 }
 
 .assembly .asm-navlinks a:hover,
 .assembly .asm-navlinks a[aria-current="true"],
+.assembly .asm-navlinks a[aria-current="page"],
 .assembly .asm-navpage:hover,
 .assembly .asm-navpage[aria-current="page"] {
-  background: var(--asm-card-mist);
+  background: transparent;
   color: var(--asm-ink);
+  box-shadow: inset 0 -2px color-mix(in srgb, var(--asm-accent) 62%, transparent);
+}
+
+.assembly .asm-navlinks a[aria-current="true"],
+.assembly .asm-navlinks a[aria-current="page"],
+.assembly .asm-navpage[aria-current="page"] {
+  font-weight: 650;
+  box-shadow: inset 0 -2px var(--asm-accent);
+}
+
+.assembly .asm-navaux .asm-btn {
+  min-height: 42px;
+  padding: 10px 18px;
+  border-radius: 4px;
+  box-shadow: none;
+}
+
+.assembly .asm-burger,
+.assembly .asm-drawer {
+  border-radius: 4px;
 }
 
 .assembly .asm-btn {
