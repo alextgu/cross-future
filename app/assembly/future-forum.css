@@ -232,7 +232,7 @@
   position: relative;
   z-index: 4;
   width: calc(100% - clamp(24px, 8vw, 120px));
-  margin: clamp(-76px, -5vw, -58px) auto 0;
+  margin: 2px auto 0;
   border: 1px solid rgb(118 203 255 / 0.72);
   border-radius: 4px;
   background:
@@ -615,27 +615,22 @@
 .assembly #about::before {
   content: "";
   position: absolute;
-  inset: clamp(-78px, -5vw, -56px) calc(50% - 50vw) 0;
+  inset: clamp(-154px, -10vw, -126px) calc(50% - 50vw) 0;
   z-index: -2;
   background-color: #f8fbfe;
   background-image:
     linear-gradient(rgb(22 101 171 / 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(22 101 171 / 0.06) 1px, transparent 1px);
-  background-size: 72px 72px;
-}
-
-.assembly #about::after {
-  content: "CF / 43.65N / 79.38W";
-  position: absolute;
-  top: 42px;
-  right: 0;
-  font-family: var(--asm-mono);
-  font-size: 0.66rem;
-  letter-spacing: 0.12em;
-  color: #5d7c9a;
+    linear-gradient(90deg, rgb(22 101 171 / 0.06) 1px, transparent 1px),
+    linear-gradient(rgb(22 101 171 / 0.075) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(22 101 171 / 0.075) 1px, transparent 1px),
+    radial-gradient(circle at 78% 22%, rgb(35 137 215 / 0.1), transparent 32%);
+  background-position: 0 0, 0 0, 36px 36px, 36px 36px, 0 0;
+  background-size: 72px 72px, 72px 72px, 288px 288px, 288px 288px, 100% 100%;
 }
 
 .assembly .asm-about-intro {
+  position: relative;
+  isolation: isolate;
   display: grid;
   grid-template-columns: minmax(280px, 0.72fr) minmax(0, 1.28fr);
   align-items: center;
@@ -644,6 +639,28 @@
   border: 0;
   border-radius: 0;
   background: transparent;
+}
+
+@media (min-width: 721px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .assembly .asm-about-intro::before {
+    content: "";
+    position: absolute;
+    inset: -72px calc(50% - 50vw);
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0;
+    background: radial-gradient(
+      circle 280px at var(--asm-glow-x, 50vw) calc(var(--asm-glow-y, 50%) + 72px),
+      rgb(49 157 236 / 0.18),
+      rgb(49 157 236 / 0.07) 38%,
+      transparent 72%
+    );
+    transition: opacity 180ms ease;
+  }
+
+  .assembly .asm-about-intro[data-glow-active="true"]::before {
+    opacity: 1;
+  }
 }
 
 .assembly .asm-about-copy {
@@ -874,11 +891,6 @@
   .assembly #about::before {
     inset-block-start: -60px;
     background-size: 44px 44px;
-  }
-
-  .assembly #about::after {
-    top: 30px;
-    right: 8px;
   }
 
   .assembly .asm-about-title {

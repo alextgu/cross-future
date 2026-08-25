@@ -1,3 +1,7 @@
+"use client";
+
+import type { MouseEvent } from "react";
+
 const EVENT_MOMENTS = [
   {
     src: "/summit/media/hero-poster.jpg",
@@ -20,8 +24,28 @@ const EVENT_MOMENTS = [
 ] as const;
 
 export default function AsmAboutIntro() {
+  function moveGlow(event: MouseEvent<HTMLDivElement>) {
+    const intro = event.currentTarget;
+    const bounds = intro.getBoundingClientRect();
+
+    intro.dataset.glowActive = "true";
+    intro.style.setProperty("--asm-glow-x", `${event.clientX}px`);
+    intro.style.setProperty(
+      "--asm-glow-y",
+      `${event.clientY - bounds.top}px`
+    );
+  }
+
+  function clearGlow(event: MouseEvent<HTMLDivElement>) {
+    delete event.currentTarget.dataset.glowActive;
+  }
+
   return (
-    <div className="asm-about-intro">
+    <div
+      className="asm-about-intro"
+      onMouseMove={moveGlow}
+      onMouseLeave={clearGlow}
+    >
       <div className="asm-about-copy">
         <p className="asm-about-kicker">Cross Future / AI Forum</p>
         <h2 className="asm-about-title">
