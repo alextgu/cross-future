@@ -8,7 +8,6 @@ import {
   getPartnersByType,
   getConfirmedSessions,
   getProposedSessions,
-  getCompletedPastEditions,
 } from "@/lib/content";
 import AsmShell from "@/components/assembly/AsmShell";
 import AsmHero from "@/components/assembly/AsmHero";
@@ -22,7 +21,6 @@ import AsmInterviews from "@/components/assembly/AsmInterviews";
 import AsmAgenda from "@/components/assembly/AsmAgenda";
 import AsmLetters from "@/components/assembly/AsmLetters";
 import AsmContact from "@/components/assembly/AsmContact";
-import AsmProgress from "@/components/assembly/AsmProgress";
 import AsmButton from "@/components/assembly/AsmButton";
 
 export const metadata: Metadata = {
@@ -38,15 +36,13 @@ export default async function AssemblyHome() {
   const partnerGroups = getPartnersByType(content);
   const confirmed = getConfirmedSessions(content, edition.slug);
   const proposed = getProposedSessions(content, edition.slug);
-  const completedEditions = getCompletedPastEditions(content);
 
   return (
     /* The page follows the live site's own running order — intro, interviews,
        speakers, focus areas, agenda, letters, partners, contact — rather than
-       the longer editorial sequence this design started with. Sections that
-       had no real material behind them are not invented here; completed
-       editions and full recordings now have durable homes on /past-events
-       and /interviews.
+       the longer editorial sequence this design started with. Detailed
+       editions and recordings have durable homes on /past-events and
+       /speakers rather than becoming duplicate homepage sections.
 
        One register call, not four. The hero ticket tile carries it above the
        fold, the nav carries it everywhere, and the footer closes with it —
@@ -66,6 +62,10 @@ export default async function AssemblyHome() {
         <AsmHero edition={edition} assembly={assembly} />
       </AsmSection>
 
+      <AsmSection id="about" flow="tile">
+        <AsmAboutIntro />
+      </AsmSection>
+
       <AsmSection id="faculty" labelledBy="faculty-heading">
         <header className="asm-speaker-lead">
           <h2 id="faculty-heading">Previous Speakers</h2>
@@ -82,8 +82,7 @@ export default async function AssemblyHome() {
         <div className="asm-speaker-interview-preview">
           <span className="asm-anchor" id="interviews" aria-hidden="true" />
           <AsmSectionHead
-            eyebrow="From the archive"
-            title="Recorded interviews"
+            title="Interviews"
             tone="plain"
           />
           <AsmInterviews cards={interviews.slice(0, 3)} columns={3} />
@@ -93,10 +92,6 @@ export default async function AssemblyHome() {
             View all speakers &amp; interviews
           </AsmButton>
         </div>
-      </AsmSection>
-
-      <AsmSection id="about" flow="tile">
-        <AsmAboutIntro />
       </AsmSection>
 
       {/* Program placeholder until schedule publication. */}
@@ -116,8 +111,6 @@ export default async function AssemblyHome() {
           variant="status"
         />
       </AsmSection>
-
-      <AsmProgress editions={completedEditions} />
 
       {/* Supporters: everyone vouching for the summit, in order of weight.
           The letters are a government and a city on paper; the logos are the

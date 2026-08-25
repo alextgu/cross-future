@@ -6,7 +6,7 @@ import AssemblyHome from "../app/page";
 
 afterEach(cleanup);
 
-it("moves directly from the event hero into a two-row speaker gallery", async () => {
+it("moves from the event hero through About into speakers and interviews", async () => {
   vi.stubGlobal("matchMedia", () => ({
     matches: false,
     addEventListener: () => undefined,
@@ -27,10 +27,11 @@ it("moves directly from the event hero into a two-row speaker gallery", async ()
   render(await AssemblyHome());
 
   const sections = document.querySelectorAll("main#main > section");
-  expect(sections[1]?.id).toBe("faculty");
+  expect(sections[1]?.id).toBe("about");
+  expect(sections[2]?.id).toBe("faculty");
   expect(screen.queryByRole("region", { name: "Summit at a glance" })).toBeNull();
 
-  const speakerSection = sections[1] as HTMLElement;
+  const speakerSection = sections[2] as HTMLElement;
   expect(
     within(speakerSection).getByRole("heading", {
       name: "Previous Speakers",
@@ -66,9 +67,10 @@ it("moves directly from the event hero into a two-row speaker gallery", async ()
   expect(
     within(speakerSection).getByRole("heading", {
       level: 2,
-      name: "Recorded interviews",
+      name: "Interviews",
     })
   ).toBeTruthy();
+  expect(within(speakerSection).queryByText("From the archive")).toBeNull();
   const interviewLinks = Array.from(
     speakerSection.querySelectorAll<HTMLAnchorElement>(
       'a[href^="/interviews/"]'
@@ -84,6 +86,9 @@ it("moves directly from the event hero into a two-row speaker gallery", async ()
       Node.DOCUMENT_POSITION_FOLLOWING
   ).toBeTruthy();
   expect(document.querySelector("main#main > section#interviews")).toBeNull();
+  expect(
+    screen.queryByRole("region", { name: "Festival progress" })
+  ).toBeNull();
   expect(
     screen.getByRole("link", { name: "View full program" }).getAttribute("href")
   ).toBe("/program");
