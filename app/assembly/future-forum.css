@@ -3,10 +3,10 @@
 .assembly {
   --asm-max: 1440px;
   --asm-gap: clamp(10px, 1.2vw, 18px);
-  --asm-space-section: clamp(84px, 10vw, 150px);
-  --asm-space-section-tight: clamp(60px, 7vw, 100px);
-  --asm-space-section-major: clamp(100px, 12vw, 180px);
-  --asm-space-head: clamp(28px, 4vw, 56px);
+  --asm-space-section: clamp(64px, 7.5vw, 96px);
+  --asm-space-section-tight: clamp(48px, 5vw, 72px);
+  --asm-space-section-major: clamp(80px, 9vw, 120px);
+  --asm-space-head: clamp(24px, 2.8vw, 36px);
 }
 
 .assembly .asm-navbar {
@@ -349,7 +349,7 @@
   position: relative;
   isolation: isolate;
   margin-top: 0;
-  padding-block: clamp(100px, 10vw, 150px) clamp(72px, 8vw, 116px);
+  padding-block: var(--asm-space-section) 0;
   color: #0d1723;
 }
 
@@ -667,7 +667,7 @@
   position: relative;
   isolation: isolate;
   margin-top: 0;
-  padding-block: clamp(128px, 12vw, 190px) clamp(104px, 10vw, 150px);
+  padding-block: var(--asm-space-section) 0;
   color: #0d2c4d;
 }
 
@@ -943,10 +943,6 @@
     font-size: clamp(2.7rem, 15vw, 4rem);
   }
 
-  .assembly .asm-main > #about {
-    padding-block: 112px 80px;
-  }
-
   .assembly #about::before {
     inset-block-start: -60px;
     background-size: 44px 44px;
@@ -965,10 +961,6 @@
   .assembly .asm-about-moment.is-primary {
     grid-column: 1 / -1;
     grid-row: auto;
-  }
-
-  .assembly #faculty {
-    padding-block: 54px 72px;
   }
 
   .assembly .asm-speaker-lead h2 {

@@ -102,7 +102,7 @@ export default async function AssemblyHome() {
       </AsmSection>
 
       {/* Program placeholder until schedule publication. */}
-      <AsmSection id="focus" flow="tile">
+      <AsmSection id="focus">
         <AsmSectionHead
           section="focus"
           title="Program"
@@ -122,11 +122,10 @@ export default async function AssemblyHome() {
       {/* Supporters: everyone vouching for the summit, in order of weight.
           The letters are a government and a city on paper; the logos are the
           companies in the room. Same kind of claim, one section. */}
-      <AsmSection id="recognition" space="major">
+      <AsmSection id="recognition">
         <AsmSectionHead
           section="recognition"
           title="Backed by institutions that build this city"
-          lede="Our first two editions received formal recognition from the Province of Ontario and the City of Toronto."
           tone="tint"
         />
         <AsmLetters letters={assembly.letters} />

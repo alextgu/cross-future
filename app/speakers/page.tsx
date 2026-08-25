@@ -41,7 +41,6 @@ export default async function SpeakersAndInterviewsPage() {
           id="speaker-library-heading"
           eyebrow={`${faculty.length} voices`}
           title="Previous Speakers"
-          lede="A growing record of the people bringing research and industry into the same room."
           tone="plain"
         />
         <AsmFacultyGrid members={faculty} columns={4} aspect="4 / 5" />
@@ -52,7 +51,6 @@ export default async function SpeakersAndInterviewsPage() {
           id="interview-library-heading"
           eyebrow="On the record"
           title="Recorded Interviews"
-          lede="Watch conversations captured across Cross Future editions."
           tone="plain"
         />
         <AsmInterviews cards={interviews} columns={3} />

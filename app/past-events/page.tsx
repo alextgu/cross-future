@@ -34,7 +34,6 @@ export default async function PastEventsPage() {
       <AsmSectionHead
         eyebrow="Progress archive"
         title="Past Events"
-        lede="The completed Cross Future editions, and the concrete progress each gathering carried forward."
         tone="plain"
       />
       <AsmPastEventsMockup

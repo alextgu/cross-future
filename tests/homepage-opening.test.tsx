@@ -50,6 +50,11 @@ it("moves from the event hero through About into speakers and interviews", async
       "Where AI ideas meet the people who move them forward."
     )
   ).toBeNull();
+  expect(
+    screen.queryByText(
+      "Our first two editions received formal recognition from the Province of Ontario and the City of Toronto."
+    )
+  ).toBeNull();
 
   const gallery = within(speakerSection).getByRole("group", {
     name: /previous speakers.*scroll horizontally/i,
