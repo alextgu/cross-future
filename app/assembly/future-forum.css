@@ -278,9 +278,9 @@
 .assembly .asm-speaker-subtitle {
   max-width: 48ch;
   margin: 0;
-  font-size: clamp(1rem, 1.5vw, 1.35rem);
-  font-weight: 500;
-  line-height: 1.45;
+  font-size: clamp(1.35rem, 2vw, 1.85rem);
+  font-weight: 600;
+  line-height: 1.3;
   color: #3a495c;
   text-wrap: balance;
 }
