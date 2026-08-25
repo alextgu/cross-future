@@ -1,13 +1,13 @@
 /**
  * Canonical route table.
  *
- * The site is one page. The bar, the drawer and the footer are a table of
- * contents for it, not a site map: every label is an anchor into a section of
- * the home page. Past Events is the only other route — a placeholder for
- * editions behind the current summit.
+ * The primary bar is route-first. Homepage anchor metadata remains available
+ * for old links, but the desktop and mobile navigation share page routes.
  */
 export const ASSEMBLY_BASE = "";
 export const ASSEMBLY_HOME = "/";
+export const ASSEMBLY_SPEAKERS = "/speakers";
+export const ASSEMBLY_PROGRAM = "/program";
 export const ASSEMBLY_PAST_EVENTS = "/past-events";
 
 export interface AssemblyRoute {
@@ -18,8 +18,8 @@ export interface AssemblyRoute {
 }
 
 export interface AssemblySection {
-  /** Display number shown in nav and drawer. */
-  num: string;
+  /** Optional legacy display number. The primary navigation is unnumbered. */
+  num?: string;
   label: string;
   /** Element id on the home page. */
   section: string;
@@ -37,27 +37,24 @@ export interface AssemblySection {
  * and the interview archive belongs to the speakers who are in it.
  */
 export const ASSEMBLY_SECTIONS: AssemblySection[] = [
-  { num: "01", label: "About", section: "about" },
-  {
-    num: "02",
-    label: "Speakers",
-    section: "faculty",
-    alsoAnchors: ["interviews"],
-  },
-  { num: "03", label: "Program", section: "focus", alsoAnchors: ["agenda"] },
-  {
-    num: "04",
-    label: "So Far",
-    section: "progress",
-  },
-  {
-    num: "05",
-    label: "Supporters",
-    section: "recognition",
-    alsoAnchors: ["partners"],
-  },
-  { num: "06", label: "Contact", section: "contact" },
+  { label: "About", section: "about" },
+  { label: "Program", section: "focus", alsoAnchors: ["agenda"] },
 ];
+
+export const ASSEMBLY_HOME_ROUTE: AssemblyRoute = {
+  label: "Home",
+  href: ASSEMBLY_HOME,
+};
+
+export const ASSEMBLY_SPEAKERS_ROUTE: AssemblyRoute = {
+  label: "Speakers & Interviews",
+  href: ASSEMBLY_SPEAKERS,
+};
+
+export const ASSEMBLY_PROGRAM_ROUTE: AssemblyRoute = {
+  label: "Program",
+  href: ASSEMBLY_PROGRAM,
+};
 
 /** Past editions — a separate page, not part of the home scroll. */
 export const ASSEMBLY_PAST_EVENTS_ROUTE: AssemblyRoute = {
@@ -65,31 +62,49 @@ export const ASSEMBLY_PAST_EVENTS_ROUTE: AssemblyRoute = {
   href: ASSEMBLY_PAST_EVENTS,
 };
 
-/** Every routable page — home plus Past Events. */
-export const ASSEMBLY_SITE_ROUTES: AssemblyRoute[] = [
-  { num: "00", label: "Home", href: ASSEMBLY_HOME },
+/** One canonical route table powers desktop and mobile navigation. */
+export const ASSEMBLY_PRIMARY_NAV: AssemblyRoute[] = [
+  ASSEMBLY_HOME_ROUTE,
+  ASSEMBLY_SPEAKERS_ROUTE,
+  ASSEMBLY_PROGRAM_ROUTE,
   ASSEMBLY_PAST_EVENTS_ROUTE,
 ];
 
+/** Every routable page exposed by the site chrome. */
+export const ASSEMBLY_SITE_ROUTES: AssemblyRoute[] = ASSEMBLY_PRIMARY_NAV;
+
 /** Every id the page answers to, merged-away anchors included. */
-export const ASSEMBLY_ANCHORS: string[] = ASSEMBLY_SECTIONS.flatMap((item) => [
-  item.section,
-  ...(item.alsoAnchors ?? []),
-]);
+export const ASSEMBLY_ANCHORS: string[] = [
+  "about",
+  "faculty",
+  "interviews",
+  "focus",
+  "agenda",
+  "progress",
+  "recognition",
+  "partners",
+  "contact",
+];
 
 /**
  * Section number by anchor id. Absorbed anchors (e.g. interviews, agenda)
  * intentionally resolve to the same number as their parent section.
  */
 const SECTION_NUM_BY_ANCHOR = new Map(
-  ASSEMBLY_SECTIONS.flatMap((item) => [
-    [item.section, item.num] as const,
-    ...(item.alsoAnchors ?? []).map((anchor) => [anchor, item.num] as const),
-  ])
+  ASSEMBLY_SECTIONS.flatMap((item) =>
+    item.num
+      ? [
+          [item.section, item.num] as const,
+          ...(item.alsoAnchors ?? []).map(
+            (anchor) => [anchor, item.num] as const
+          ),
+        ]
+      : []
+  )
 );
 
 export function sectionNumber(anchor: string): string {
-  return SECTION_NUM_BY_ANCHOR.get(anchor) ?? "00";
+  return SECTION_NUM_BY_ANCHOR.get(anchor) ?? "";
 }
 
 /**

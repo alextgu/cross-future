@@ -3,7 +3,9 @@ import {
   ASSEMBLY_BASE,
   ASSEMBLY_HOME,
   ASSEMBLY_PAST_EVENTS,
+  ASSEMBLY_PRIMARY_NAV,
   ASSEMBLY_PAST_EVENTS_ROUTE,
+  ASSEMBLY_SITE_ROUTES,
   ASSEMBLY_REGISTER,
   ASSEMBLY_SECTIONS,
   ASSEMBLY_ANCHORS,
@@ -14,13 +16,23 @@ import {
 } from "../lib/assembly-nav";
 
 describe("canonical navigation", () => {
-  it("keeps the site at two routes: the page, and past events", () => {
+  it("publishes every primary destination as a first-class route", () => {
     expect(ASSEMBLY_BASE).toBe("");
     expect(ASSEMBLY_HOME).toBe("/");
     expect(ASSEMBLY_PAST_EVENTS).toBe("/past-events");
     expect(ASSEMBLY_PAST_EVENTS_ROUTE.href).toBe("/past-events");
     expect(ASSEMBLY_PAST_EVENTS_ROUTE.label).toBe("Past Events");
     expect(ASSEMBLY_PAST_EVENTS_ROUTE.num).toBeUndefined();
+    expect(ASSEMBLY_PRIMARY_NAV).toEqual([
+      { label: "Home", href: "/" },
+      { label: "Speakers & Interviews", href: "/speakers" },
+      { label: "Program", href: "/program" },
+      { label: "Past Events", href: "/past-events" },
+    ]);
+    expect(ASSEMBLY_SITE_ROUTES).toEqual(ASSEMBLY_PRIMARY_NAV);
+    expect(ASSEMBLY_PRIMARY_NAV.every(({ href }) => !href.includes("#"))).toBe(
+      true
+    );
   });
 
   it("sends the chrome call-to-action straight to the ticketing host", () => {
@@ -39,35 +51,20 @@ describe("canonical navigation", () => {
   });
 });
 
-describe("the bar as a table of contents", () => {
-  it("offers six numbered destinations with progress in the page sequence", () => {
+describe("the bar as a short set of visitor choices", () => {
+  it("keeps only the true in-page destinations in the section list", () => {
     expect(ASSEMBLY_SECTIONS.map((item) => item.label)).toEqual([
       "About",
-      "Speakers",
       "Program",
-      "So Far",
-      "Supporters",
-      "Contact",
-    ]);
-    expect(ASSEMBLY_SECTIONS.map((item) => item.num)).toEqual([
-      "01",
-      "02",
-      "03",
-      "04",
-      "05",
-      "06",
     ]);
     expect(ASSEMBLY_SECTIONS.map((item) => item.section)).toEqual([
       "about",
-      "faculty",
       "focus",
-      "progress",
-      "recognition",
-      "contact",
     ]);
+    expect(ASSEMBLY_SECTIONS.every((item) => item.num === undefined)).toBe(true);
   });
 
-  it("keeps every id a merged section absorbed", () => {
+  it("keeps every published anchor available even when it is not in the bar", () => {
     /* Links to #interviews, #agenda and #partners were published before the
        merge; they still have to land somewhere real. */
     expect(ASSEMBLY_ANCHORS).toEqual([
@@ -81,10 +78,10 @@ describe("the bar as a table of contents", () => {
       "partners",
       "contact",
     ]);
-    expect(sectionNumber("faculty")).toBe("02");
-    expect(sectionNumber("interviews")).toBe("02");
-    expect(sectionNumber("focus")).toBe("03");
-    expect(sectionNumber("agenda")).toBe("03");
+    expect(sectionNumber("faculty")).toBe("");
+    expect(sectionNumber("interviews")).toBe("");
+    expect(sectionNumber("focus")).toBe("");
+    expect(sectionNumber("agenda")).toBe("");
   });
 
   it("keeps the same anchor working from past events", () => {
