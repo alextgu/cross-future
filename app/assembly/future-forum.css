@@ -112,6 +112,20 @@
   gap: clamp(14px, 1.5vw, 22px);
 }
 
+.assembly .asm-main > .asm-section:first-child {
+  position: relative;
+  isolation: isolate;
+  padding-bottom: clamp(48px, 5vw, 72px);
+}
+
+.assembly .asm-main > .asm-section:first-child::before {
+  content: "";
+  position: absolute;
+  inset: calc(-1 * var(--asm-gap)) calc(50% - 50vw) 0;
+  z-index: -1;
+  background: #050b14;
+}
+
 .assembly .asm-future-hero {
   position: relative;
   isolation: isolate;
