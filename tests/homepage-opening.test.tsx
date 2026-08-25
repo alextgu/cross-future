@@ -46,10 +46,10 @@ it("moves from the event hero through About into speakers and interviews", async
     })
   ).toBeTruthy();
   expect(
-    within(speakerSection).getByText(
+    within(speakerSection).queryByText(
       "Where AI ideas meet the people who move them forward."
     )
-  ).toBeTruthy();
+  ).toBeNull();
 
   const gallery = within(speakerSection).getByRole("group", {
     name: /previous speakers.*scroll horizontally/i,

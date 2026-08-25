@@ -79,9 +79,6 @@ export default async function AssemblyHome() {
       <AsmSection id="faculty" labelledBy="faculty-heading">
         <header className="asm-speaker-lead">
           <h2 id="faculty-heading">Previous Speakers</h2>
-          <p className="asm-speaker-subtitle">
-            Where AI ideas meet the people who move them forward.
-          </p>
         </header>
         <AsmFacultyGrid
           members={faculty}
