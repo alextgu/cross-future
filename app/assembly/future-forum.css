@@ -389,7 +389,7 @@
   letter-spacing: -0.045em;
   text-transform: none;
   text-wrap: balance;
-  color: #0d1723;
+  color: var(--asm-ink);
 }
 
 .assembly #faculty > .asm-railwrap {
@@ -513,8 +513,8 @@
   height: 0;
 }
 
-.assembly .asm-speaker-interview-preview .asm-sechead-title {
-  color: #0d1723;
+.assembly .asm-home-section-lead .asm-btn {
+  margin-top: 8px;
 }
 
 .assembly .asm-speaker-archive-cta {
@@ -668,7 +668,7 @@
   position: relative;
   isolation: isolate;
   margin-top: 0;
-  padding-block: var(--asm-space-section) 0;
+  padding-block: var(--asm-space-section) 32px;
   color: #0d2c4d;
 }
 
@@ -937,6 +937,10 @@
   .assembly #about::before {
     inset-block-start: -60px;
     background-size: 44px 44px;
+  }
+
+  .assembly .asm-main > #about {
+    padding-bottom: 20px;
   }
 
   .assembly .asm-about-title {

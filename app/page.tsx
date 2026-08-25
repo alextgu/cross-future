@@ -88,10 +88,9 @@ export default async function AssemblyHome() {
         />
         <div className="asm-speaker-interview-preview">
           <span className="asm-anchor" id="interviews" aria-hidden="true" />
-          <AsmSectionHead
-            title="Interviews"
-            tone="plain"
-          />
+          <header className="asm-speaker-lead asm-home-section-lead">
+            <h2>Interviews</h2>
+          </header>
           <AsmInterviews cards={interviews.slice(0, 3)} columns={3} />
         </div>
         <div className="asm-speaker-archive-cta">
@@ -102,13 +101,13 @@ export default async function AssemblyHome() {
       </AsmSection>
 
       {/* Program placeholder until schedule publication. */}
-      <AsmSection id="focus">
-        <AsmSectionHead
-          section="focus"
-          title="Program"
-          tone="plain"
-          action={{ label: "View full program", href: "/program" }}
-        />
+      <AsmSection id="focus" labelledBy="program-heading">
+        <header className="asm-speaker-lead asm-home-section-lead">
+          <h2 id="program-heading">Program</h2>
+          <AsmButton href="/program" tone="ghost">
+            View full program
+          </AsmButton>
+        </header>
         <span className="asm-anchor" id="agenda" aria-hidden="true" />
         <AsmAgenda
           edition={edition}

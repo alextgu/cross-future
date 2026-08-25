@@ -83,6 +83,10 @@ it("moves from the event hero through About into speakers and interviews", async
       name: "Interviews",
     })
   ).toBeTruthy();
+  for (const title of ["Previous Speakers", "Interviews", "Program"]) {
+    const heading = screen.getByRole("heading", { level: 2, name: title });
+    expect(heading.closest(".asm-speaker-lead")).not.toBeNull();
+  }
   expect(within(speakerSection).queryByText("From the archive")).toBeNull();
   const interviewLinks = Array.from(
     speakerSection.querySelectorAll<HTMLAnchorElement>(
@@ -102,7 +106,7 @@ it("moves from the event hero through About into speakers and interviews", async
   expect(
     screen.queryByRole("region", { name: "Festival progress" })
   ).toBeNull();
-  expect(
-    screen.getByRole("link", { name: "View full program" }).getAttribute("href")
-  ).toBe("/program");
+  const programLink = screen.getByRole("link", { name: "View full program" });
+  expect(programLink.getAttribute("href")).toBe("/program");
+  expect(programLink.closest(".asm-speaker-lead")).not.toBeNull();
 });
