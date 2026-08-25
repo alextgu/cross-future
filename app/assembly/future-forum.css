@@ -392,6 +392,19 @@
   right: -10px;
 }
 
+.assembly .asm-speaker-interview-preview {
+  display: grid;
+  gap: clamp(20px, 2.5vw, 34px);
+}
+
+.assembly .asm-speaker-interview-preview .asm-anchor {
+  height: 0;
+}
+
+.assembly .asm-speaker-interview-preview .asm-sechead-title {
+  color: #0d1723;
+}
+
 .assembly .asm-speaker-archive-cta {
   display: flex;
   justify-content: center;

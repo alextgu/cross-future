@@ -62,6 +62,28 @@ it("moves directly from the event hero into a two-row speaker gallery", async ()
       .getByRole("link", { name: "View all speakers & interviews" })
       .getAttribute("href")
   ).toBe("/speakers");
+
+  expect(
+    within(speakerSection).getByRole("heading", {
+      level: 2,
+      name: "Recorded interviews",
+    })
+  ).toBeTruthy();
+  const interviewLinks = Array.from(
+    speakerSection.querySelectorAll<HTMLAnchorElement>(
+      'a[href^="/interviews/"]'
+    )
+  );
+  expect(interviewLinks).toHaveLength(3);
+
+  const archiveCta = within(speakerSection).getByRole("link", {
+    name: "View all speakers & interviews",
+  });
+  expect(
+    interviewLinks[2].compareDocumentPosition(archiveCta) &
+      Node.DOCUMENT_POSITION_FOLLOWING
+  ).toBeTruthy();
+  expect(document.querySelector("main#main > section#interviews")).toBeNull();
   expect(
     screen.getByRole("link", { name: "View full program" }).getAttribute("href")
   ).toBe("/program");

@@ -79,6 +79,15 @@ export default async function AssemblyHome() {
           rows={2}
           aspect="4 / 5"
         />
+        <div className="asm-speaker-interview-preview">
+          <span className="asm-anchor" id="interviews" aria-hidden="true" />
+          <AsmSectionHead
+            eyebrow="From the archive"
+            title="Recorded interviews"
+            tone="plain"
+          />
+          <AsmInterviews cards={interviews.slice(0, 3)} columns={3} />
+        </div>
         <div className="asm-speaker-archive-cta">
           <AsmButton href="/speakers">
             View all speakers &amp; interviews
@@ -88,15 +97,6 @@ export default async function AssemblyHome() {
 
       <AsmSection id="about" flow="tile">
         <AsmAboutIntro />
-      </AsmSection>
-
-      <AsmSection id="interviews">
-        <AsmSectionHead
-          section="interviews"
-          title="Recorded interviews"
-          tone="plain"
-        />
-        <AsmInterviews cards={interviews} layout="rail" />
       </AsmSection>
 
       {/* Program placeholder until schedule publication. */}
