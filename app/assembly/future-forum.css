@@ -27,7 +27,7 @@
 .assembly .asm-wordmark {
   font-family: var(--asm-body);
   font-size: 1.22rem;
-  font-weight: 750;
+  font-weight: 800;
   text-transform: none;
   letter-spacing: -0.01em;
   color: var(--asm-ink);

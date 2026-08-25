@@ -30,7 +30,7 @@ it("renders the canonical page routes in the desktop navigation", () => {
     .map((link) => link.textContent?.replace(/\s+/g, " ").trim());
 
   expect(labels).toEqual([
-    "Cross Future",
+    "Cross Future Hub",
     "Home",
     "Speakers & Interviews",
     "Program",

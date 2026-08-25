@@ -38,7 +38,7 @@ export default function AsmNav(_props: { year: number }) {
       <nav className="asm-navbar-inner" aria-label="Primary">
         <Link className="asm-wordmark" href={ASSEMBLY_HOME}>
           <AsmMark />
-          <span>Cross Future</span>
+          <span>Cross Future Hub</span>
         </Link>
 
         <div className="asm-navlinks">
