@@ -225,16 +225,9 @@ Tier 1 and nothing else:
 | `midnight` | the ramp inverted — a dark scheme with no dark-mode code |
 | `mono` | the greyscale study the layout was approved in |
 
-The scheme is one attribute — `data-theme` on `<html>` — set before first
-paint by the boot script in `app/layout.tsx` and stored in `localStorage`.
-
-**CEO Review panel.** `components/assembly/AsmThemeLab.tsx` renders a compact,
-bottom-right preview panel, closed by default. It controls theme, media tint,
-card radius (8–28px), compact/balanced/airy density, and curated/full homepage
-speaker and interview collections. Reset restores Hub blue, full tint, 22px
-radius, balanced spacing, and curated rails. Choices survive navigation and
-reload and are applied before first paint. Turn the panel off with
-`NEXT_PUBLIC_THEME_LAB=off`.
+The production layout fixes `data-theme="hub"` on `<html>`. Alternate token
+ramps remain documented design references, but the final site has no runtime
+theme or presentation controls and does not read stored preview settings.
 
 `tests/theme-tokens.test.ts` enforces the discipline: a literal colour outside
 a Tier-1 token fails the suite, and every scheme must restate the full ramp.

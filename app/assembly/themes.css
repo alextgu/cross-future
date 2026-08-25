@@ -1,19 +1,12 @@
 /* ============================================================
    Colour schemes
    ============================================================
-   The design system keeps every literal colour in Tier 1 (see the token
-   header in assembly.css). A scheme is therefore nothing but a restatement
-   of those same names — no component, no layout rule and no tone class
-   changes between schemes.
+   The production site is fixed to Hub blue by app/layout.tsx. The alternate
+   token ramps remain as design references, but there is no runtime theme
+   switcher and stored preview choices are never applied.
 
-   Selector shape: the attribute sits on <html> so the inline boot script in
-   app/layout.tsx can set it before first paint, while the styles stay scoped
-   under .assembly so nothing leaks.
-
-   Default (no attribute) = "hub", the real Cross Future blue, defined in
-   assembly.css. Every scheme below is a full replacement of the ramp; the
-   value structure (which step is light, which is dark) is identical across
-   schemes, which is what keeps the approved layout intact.
+   Every scheme is a Tier-1 restatement, so none of the component or layout
+   rules need theme-specific branches.
    ============================================================ */
 
 /* ---------- mono — the approved greyscale study ---------- */
@@ -36,9 +29,7 @@
   --asm-c-blue: #1d1d1d;
 }
 
-/* ---------- hub-soft — lighter hub blues, soft deep card ----------
-   Same cool cast as Hub blue, but the accent and especially the deep
-   "inner" card sit higher on the value scale so the page reads airier. */
+/* ---------- hub-soft — lighter hub blues, soft deep card ---------- */
 [data-theme="hub-soft"] .assembly {
   --asm-n-000: #ffffff;
   --asm-n-025: #f9fbfd;
@@ -58,12 +49,7 @@
   --asm-c-blue: #3d84c0;
 }
 
-/* ---------- midnight — the ramp inverted ----------
-   Nothing else in the system knows this is a dark scheme. The ramp runs the
-   other way, so "plain" becomes the darkest reading surface and "deep" — the
-   emphasis card — flips to light. Tier 2 does the rest unaided, including the
-   hairlines and the media duotone, because both are colour-mixes of the ramp
-   ends rather than fixed values. */
+/* ---------- midnight — archived dark design reference ---------- */
 [data-theme="midnight"] .assembly {
   --asm-n-000: #10161d;
   --asm-n-025: #141c25;
@@ -81,27 +67,24 @@
 
   --asm-c-sky: #1d2f42;
   --asm-c-blue: #63aae8;
-
-  /* The two places an inverted ramp cannot infer the answer: text on the
-     bright accent needs to go dark, and the duotone needs a real shadow
-     rather than the ramp's now-light n-900. */
   --asm-h-accent-ink: #0a0f15;
   --asm-duo-shadow: #060b11;
   --asm-duo-light: #4d84b5;
   --asm-duo-strength: 0.72;
 }
 
-/* The page ground lives outside .assembly, on <body>, so it has to be told
-   about the scheme separately or the viewport edges stay light. */
 body {
   background: #eef2f7;
 }
+
 [data-theme="mono"] body {
   background: #f4f4f4;
 }
+
 [data-theme="hub-soft"] body {
   background: #f3f7fb;
 }
+
 [data-theme="midnight"] body {
   background: #0a0f15;
   color-scheme: dark;
@@ -109,247 +92,5 @@ body {
 
 :root {
   --asm-radius: 22px;
-}
-
-/* ============================================================
-   CEO review panel — on-screen presentation controls
-   ============================================================
-   A review tool, not site chrome: it is fixed to the corner, mono-typed and
-   deliberately unstyled by the design system so nobody mistakes it for part
-   of the page. Hidden when NEXT_PUBLIC_THEME_LAB=off.
-   ============================================================ */
-
-.asm-lab {
-  position: fixed;
-  right: 10px;
-  bottom: 10px;
-  z-index: 400;
-  width: min(420px, calc(100vw - 20px));
-  font-family: var(--font-asm-mono, ui-monospace, Menlo, monospace);
-  color: #f2f6fa;
-}
-
-.asm-lab-panel {
-  display: grid;
-  gap: 16px;
-  max-height: min(720px, calc(100dvh - 20px));
-  padding: 14px;
-  border-radius: 18px;
-  background: rgba(12, 16, 22, 0.93);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.32);
-  overflow-y: auto;
-  backdrop-filter: blur(18px);
-}
-
-.asm-lab-header {
-  position: sticky;
-  top: -14px;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 2px 0 12px;
-  background: #0c1016;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-}
-
-.asm-lab-header div {
-  display: grid;
-  gap: 3px;
-}
-
-.asm-lab-header strong {
-  font-size: 12px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.asm-lab-header span,
-.asm-lab-label {
-  color: #8fa2b6;
-  font-size: 9px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.asm-lab-list {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 4px;
-}
-
-.asm-lab-group {
-  display: grid;
-  gap: 8px;
-}
-
-.asm-lab-range {
-  display: grid;
-  gap: 8px;
-  color: #cfdae6;
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.asm-lab-range span {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.asm-lab-range b {
-  color: #ffffff;
-  font-weight: 500;
-}
-
-.asm-lab-range input[type="range"] {
-  width: 100%;
-  accent-color: #9fd0ff;
-}
-
-.asm-lab-swatch {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  padding: 9px;
-  border-radius: 10px;
-  border: 1px solid transparent;
-  background: rgba(255, 255, 255, 0.05);
-  color: #cfdae6;
-  font: inherit;
-  font-size: 10px;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-/* The lab is outside .assembly and so inherits none of its focus handling.
-   Keyboard reach matters here as much as anywhere: tab order is the schemes
-   then the close button, and the ring is drawn light because the panel is
-   always dark. */
-.asm-lab button:focus-visible {
-  outline: 2px solid #9fd0ff;
-  outline-offset: 2px;
-}
-
-.asm-lab-options {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: 1fr;
-  gap: 4px;
-}
-
-.asm-lab-options button,
-.asm-lab-reset {
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 9px;
-  background: rgba(255, 255, 255, 0.05);
-  color: #cfdae6;
-  font: inherit;
-  font-size: 9px;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  padding: 9px 10px;
-  cursor: pointer;
-}
-
-.asm-lab-options button:hover,
-.asm-lab-reset:hover,
-.asm-lab-options button[aria-pressed="true"] {
-  background: rgba(255, 255, 255, 0.16);
-  border-color: rgba(255, 255, 255, 0.4);
-  color: #ffffff;
-}
-
-.asm-lab-swatch:hover {
-  background: rgba(255, 255, 255, 0.13);
-  color: #ffffff;
-}
-
-.asm-lab-swatch[aria-pressed="true"] {
-  background: rgba(255, 255, 255, 0.17);
-  border-color: rgba(255, 255, 255, 0.42);
-  color: #ffffff;
-}
-
-.asm-lab-chips {
-  display: flex;
-  flex: none;
-  border-radius: 999px;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.asm-lab-chips i {
-  width: 8px;
-  height: 15px;
-  display: block;
-}
-
-.asm-lab-close {
-  background: none;
-  border: 0;
-  color: #7f92a6;
-  cursor: pointer;
-  font: inherit;
-  font-size: 13px;
-  line-height: 1;
-  padding: 6px 8px;
-}
-
-.asm-lab-close:hover {
-  color: #ffffff;
-}
-
-.asm-lab-open {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  padding: 8px 14px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  background: rgba(12, 16, 22, 0.93);
-  color: #cfdae6;
-  font: inherit;
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  cursor: pointer;
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.3);
-  margin-left: auto;
-}
-
-.asm-lab-open:hover {
-  color: #ffffff;
-}
-
-.asm-lab-dot {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  display: block;
-}
-
-.asm-lab-reset {
-  position: sticky;
-  bottom: -14px;
-  width: 100%;
-  padding-block: 11px;
-  background: #1b2632;
-}
-
-@media (max-width: 390px) {
-  .asm-lab-list {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
-
-@media print {
-  .asm-lab {
-    display: none;
-  }
+  --asm-media-tint: 0.4;
 }

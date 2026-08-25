@@ -7,9 +7,7 @@ const strip = (css: string) => css.replace(/\/\*[\s\S]*?\*\//g, "");
 const activeCss = strip(readFileSync("app/assembly/assembly.css", "utf8"));
 const themeCss = strip(readFileSync("app/assembly/themes.css", "utf8"));
 
-/* The switcher's own chrome is deliberately outside the design system — it is
-   a review tool, not a surface — so the token rules stop where it starts. */
-const schemeCss = themeCss.slice(0, themeCss.indexOf(".asm-lab"));
+const schemeCss = themeCss;
 
 const RAMP = [
   "000",

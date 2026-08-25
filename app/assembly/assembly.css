@@ -160,35 +160,6 @@
   -webkit-font-smoothing: antialiased;
 }
 
-[data-review-density="compact"] .assembly {
-  --asm-space-item: 14px;
-  --asm-space-head: clamp(18px, 2.4vw, 32px);
-  --asm-space-section: clamp(38px, 5vw, 76px);
-  --asm-space-section-tight: clamp(28px, 3vw, 52px);
-  --asm-space-section-major: clamp(50px, 6.5vw, 94px);
-  --asm-pad: clamp(16px, 2vw, 32px);
-  --asm-pad-tight: clamp(13px, 1.4vw, 22px);
-}
-
-[data-review-density="airy"] .assembly {
-  --asm-space-item: 26px;
-  --asm-space-head: clamp(32px, 4vw, 56px);
-  --asm-space-section: clamp(62px, 7.5vw, 120px);
-  --asm-space-section-tight: clamp(46px, 5vw, 84px);
-  --asm-space-section-major: clamp(80px, 9.5vw, 154px);
-  --asm-pad: clamp(26px, 3.2vw, 54px);
-  --asm-pad-tight: clamp(20px, 2.2vw, 34px);
-}
-
-[data-review-collection="curated"]
-  .asm-facultystrip[data-review-collection="speakers"]
-  > :nth-child(n + 17),
-[data-review-collection="curated"]
-  .asm-rail[data-review-collection="interviews"]
-  > :nth-child(n + 9) {
-  display: none;
-}
-
 /* ============================================================
    Reset within the scope
    ============================================================ */

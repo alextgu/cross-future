@@ -43,12 +43,6 @@ export const THEME_SCHEMES: ThemeScheme[] = [
   },
 ];
 
-export const THEME_STORAGE_KEY = "cf-theme";
-export const THEME_MEDIA_TINT_KEY = "cf-theme-media-tint";
-export const THEME_MEDIA_TINT_MIN = 0;
-export const THEME_MEDIA_TINT_MAX = 1;
-export const THEME_MEDIA_TINT_DEFAULT = 0.4;
-
 export function isThemeId(value: string | null | undefined): boolean {
   return THEME_SCHEMES.some((scheme) => scheme.id === value);
 }
