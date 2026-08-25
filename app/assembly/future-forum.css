@@ -228,6 +228,58 @@
   font-weight: 800;
 }
 
+.assembly .asm-main > .asm-stats-bridge {
+  position: relative;
+  z-index: 4;
+  width: calc(100% - clamp(24px, 8vw, 120px));
+  margin: clamp(-76px, -5vw, -58px) auto 0;
+  border: 1px solid rgb(118 203 255 / 0.72);
+  border-radius: 4px;
+  background:
+    linear-gradient(90deg, rgb(24 105 190 / 0.22) 1px, transparent 1px),
+    linear-gradient(180deg, #0759a8, #064985);
+  background-size: 72px 100%, 100% 100%;
+  color: #ffffff;
+  box-shadow: 0 20px 55px rgb(1 25 54 / 0.28);
+}
+
+.assembly .asm-stats-bridge ul {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  min-height: clamp(126px, 10vw, 154px);
+}
+
+.assembly .asm-stats-bridge li {
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 3px;
+  min-width: 0;
+  padding: 22px 16px;
+  text-align: center;
+}
+
+.assembly .asm-stats-bridge li + li {
+  border-left: 1px solid rgb(151 218 255 / 0.45);
+}
+
+.assembly .asm-stats-bridge strong {
+  font-family: var(--asm-display);
+  font-size: clamp(2.6rem, 5vw, 5.1rem);
+  font-weight: 650;
+  line-height: 0.9;
+  letter-spacing: -0.055em;
+}
+
+.assembly .asm-stats-bridge span {
+  font-family: var(--asm-mono);
+  font-size: clamp(0.66rem, 0.9vw, 0.82rem);
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgb(220 241 255 / 0.86);
+}
+
 .assembly #faculty {
   --speaker-accent: #2878b9;
   position: relative;
@@ -552,116 +604,172 @@
   text-transform: none;
 }
 
+.assembly .asm-main > #about {
+  position: relative;
+  isolation: isolate;
+  margin-top: 0;
+  padding-block: clamp(128px, 12vw, 190px) clamp(104px, 10vw, 150px);
+  color: #0d2c4d;
+}
+
+.assembly #about::before {
+  content: "";
+  position: absolute;
+  inset: clamp(-78px, -5vw, -56px) calc(50% - 50vw) 0;
+  z-index: -2;
+  background-color: #f8fbfe;
+  background-image:
+    linear-gradient(rgb(22 101 171 / 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(22 101 171 / 0.06) 1px, transparent 1px);
+  background-size: 72px 72px;
+}
+
+.assembly #about::after {
+  content: "CF / 43.65N / 79.38W";
+  position: absolute;
+  top: 42px;
+  right: 0;
+  font-family: var(--asm-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  color: #5d7c9a;
+}
+
 .assembly .asm-about-intro {
-  padding: clamp(28px, 4vw, 56px);
-  border: 1px solid var(--asm-hair);
-  border-radius: clamp(24px, 3vw, 38px);
-  background: linear-gradient(
-    135deg,
-    var(--asm-card-plain),
-    color-mix(in srgb, var(--asm-card-mist) 74%, var(--asm-card-plain))
-  );
-}
-
-.assembly .asm-about-intro-grid {
-  grid-template-columns: minmax(0, 1.08fr) minmax(340px, 0.72fr);
-  align-items: stretch;
-}
-
-.assembly .asm-about-copy {
-  align-content: center;
-  gap: 24px;
-}
-
-.assembly .asm-about-title {
-  max-width: 11ch;
-  font-size: clamp(2.8rem, 5.2vw, 5.8rem);
-  font-weight: 600;
-  line-height: 0.98;
-  letter-spacing: -0.035em;
-  text-transform: none;
-}
-
-.assembly .asm-about-lead {
-  max-width: 58ch;
-  margin: 0;
-  font-size: clamp(1rem, 1.35vw, 1.22rem);
-  font-weight: 400;
-  line-height: 1.65;
-  color: var(--asm-ink-2);
-}
-
-.assembly .asm-about-systems {
-  overflow: visible;
+  display: grid;
+  grid-template-columns: minmax(280px, 0.72fr) minmax(0, 1.28fr);
+  align-items: center;
+  gap: clamp(48px, 7vw, 110px);
+  padding: 0;
   border: 0;
   border-radius: 0;
   background: transparent;
 }
 
-.assembly .asm-about-systems-list {
-  gap: 10px;
+.assembly .asm-about-copy {
+  display: grid;
+  align-content: center;
+  gap: clamp(22px, 2.5vw, 34px);
 }
 
-.assembly .asm-about-systems-list li {
-  min-height: 0;
-  gap: 8px;
-  padding: 18px;
-  border: 1px solid var(--asm-hair);
-  border-radius: 18px;
-  background: color-mix(in srgb, var(--asm-card-mist) 70%, transparent);
+.assembly .asm-about-kicker {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--asm-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #2878b9;
 }
 
-.assembly .asm-about-systems-list li strong {
-  font-size: 0.98rem;
-  color: var(--asm-ink);
+.assembly .asm-about-kicker::before {
+  content: "";
+  width: 38px;
+  height: 2px;
+  background: #2878b9;
 }
 
-.assembly .asm-about-systems-list li span {
-  font-size: 0.82rem;
-  line-height: 1.45;
-  color: var(--asm-ink-2);
-}
-
-.assembly .asm-about-figure {
-  overflow: hidden;
-  border: 0;
-  border-radius: 26px;
-  background: var(--asm-card-deep);
-}
-
-.assembly .asm-about-media {
-  height: 100%;
-  min-height: 520px;
-  aspect-ratio: auto;
-}
-
-.assembly .asm-about-media img {
-  filter: saturate(0.8) contrast(1.04);
-}
-
-.assembly .asm-about-caption {
-  position: absolute;
-  align-self: end;
-  margin: 18px;
-  padding: 10px 14px;
-  border: 1px solid var(--asm-hair-inv);
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--asm-scrim) 72%, transparent);
-  backdrop-filter: blur(12px);
-  font-family: var(--asm-body);
-  font-size: 0.78rem;
-  letter-spacing: 0;
+.assembly .asm-about-title {
+  max-width: 10.5ch;
+  font-family: var(--asm-display);
+  font-size: clamp(3.5rem, 6.4vw, 7.2rem);
+  font-weight: 620;
+  line-height: 0.9;
+  letter-spacing: -0.055em;
   text-transform: none;
-  color: var(--asm-ink-media-2);
+  color: #0d3f70;
+  text-wrap: balance;
+}
+
+.assembly .asm-about-title span {
+  color: #2389d7;
+}
+
+.assembly .asm-about-lead {
+  max-width: 42ch;
+  padding-top: 20px;
+  border-top: 1px solid rgb(33 95 154 / 0.28);
+  font-size: clamp(1.02rem, 1.35vw, 1.25rem);
+  font-weight: 450;
+  line-height: 1.65;
+  color: #476680;
+}
+
+.assembly .asm-about-collage {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(180px, 0.85fr);
+  grid-template-rows: repeat(2, minmax(190px, 1fr));
+  gap: clamp(10px, 1.1vw, 16px);
+  min-height: clamp(520px, 45vw, 690px);
+}
+
+.assembly .asm-about-moment {
+  position: relative;
+  overflow: hidden;
+  min-width: 0;
+  border: 1px solid rgb(33 95 154 / 0.2);
+  border-radius: 6px;
+  background: #dfeaf4;
+}
+
+.assembly .asm-about-moment.is-primary {
+  grid-row: 1 / -1;
+}
+
+.assembly .asm-about-moment img {
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  object-fit: cover;
+  filter: saturate(0.82) contrast(1.04);
+  transition: filter 180ms ease, transform 350ms ease;
+}
+
+.assembly .asm-about-moment.is-primary img {
+  object-position: 52% center;
+}
+
+.assembly .asm-about-moment.is-perspective img {
+  object-position: 72% center;
+}
+
+.assembly .asm-about-moment:hover img {
+  filter: saturate(1) contrast(1.02);
+  transform: scale(1.015);
+}
+
+.assembly .asm-about-moment figcaption {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  padding: 7px 9px;
+  border-left: 2px solid #4db6ff;
+  background: rgb(5 31 58 / 0.82);
+  font-family: var(--asm-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #ffffff;
 }
 
 @media (max-width: 960px) {
-  .assembly .asm-about-intro-grid {
+  .assembly .asm-about-intro {
     grid-template-columns: 1fr;
   }
 
-  .assembly .asm-about-media {
-    min-height: 360px;
+  .assembly .asm-about-title {
+    max-width: 12ch;
+  }
+
+  .assembly .asm-about-lead {
+    max-width: 58ch;
+  }
+
+  .assembly .asm-about-collage {
+    min-height: clamp(480px, 72vw, 650px);
   }
 }
 
@@ -728,6 +836,66 @@
     font-size: 0.9rem;
   }
 
+  .assembly .asm-main > .asm-stats-bridge {
+    width: calc(100% - 20px);
+    margin-top: -42px;
+  }
+
+  .assembly .asm-stats-bridge ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    min-height: 0;
+  }
+
+  .assembly .asm-stats-bridge li {
+    min-height: 98px;
+    padding: 16px 10px;
+  }
+
+  .assembly .asm-stats-bridge li + li {
+    border-left: 0;
+  }
+
+  .assembly .asm-stats-bridge li:nth-child(even) {
+    border-left: 1px solid rgb(151 218 255 / 0.45);
+  }
+
+  .assembly .asm-stats-bridge li:nth-child(n + 3) {
+    border-top: 1px solid rgb(151 218 255 / 0.45);
+  }
+
+  .assembly .asm-stats-bridge strong {
+    font-size: clamp(2.7rem, 15vw, 4rem);
+  }
+
+  .assembly .asm-main > #about {
+    padding-block: 112px 80px;
+  }
+
+  .assembly #about::before {
+    inset-block-start: -60px;
+    background-size: 44px 44px;
+  }
+
+  .assembly #about::after {
+    top: 30px;
+    right: 8px;
+  }
+
+  .assembly .asm-about-title {
+    font-size: clamp(3.2rem, 16vw, 5.4rem);
+  }
+
+  .assembly .asm-about-collage {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: minmax(280px, 62vw) minmax(170px, 38vw);
+    min-height: 0;
+  }
+
+  .assembly .asm-about-moment.is-primary {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+
   .assembly #faculty {
     padding-block: 54px 72px;
   }
@@ -765,8 +933,7 @@
     min-height: 82vw;
   }
 
-  .assembly .asm-section:first-child > .asm-row,
-  .assembly .asm-about-systems-list {
+  .assembly .asm-section:first-child > .asm-row {
     grid-template-columns: 1fr;
   }
 
