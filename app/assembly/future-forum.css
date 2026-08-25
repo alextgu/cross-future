@@ -127,7 +127,7 @@
 .assembly .asm-main > .asm-section:first-child::before {
   content: "";
   position: absolute;
-  inset: calc(-1 * var(--asm-gap)) calc(50% - 50vw) 0;
+  inset: calc(-1 * var(--asm-navclear)) calc(50% - 50vw) 0;
   z-index: -1;
   background: #050b14;
 }
