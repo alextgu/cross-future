@@ -11,7 +11,7 @@
 
 .assembly .asm-navbar {
   padding: 14px clamp(14px, 2vw, 28px) 0;
-  background: #050b14;
+  background: transparent;
   backdrop-filter: none;
 }
 
