@@ -284,7 +284,9 @@
     linear-gradient(180deg, #0759a8, #064985);
   background-size: 72px 100%, 100% 100%;
   color: #ffffff;
-  box-shadow: 0 20px 55px rgb(1 25 54 / 0.28);
+  box-shadow:
+    0 -6px 0 #050b14,
+    0 20px 55px rgb(1 25 54 / 0.28);
 }
 
 .assembly .asm-main > .asm-stats-bridge::before,
