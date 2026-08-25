@@ -221,11 +221,11 @@
   color: var(--asm-ink-media-2);
 }
 
-.assembly .asm-future-actions[data-cta-size="compact"] .asm-btn {
-  min-height: 48px;
-  padding: 13px clamp(14px, 1.6vw, 20px);
-  font-size: clamp(0.82rem, 1vw, 0.94rem);
-  font-weight: 700;
+.assembly .asm-future-actions[data-cta-size="slim"] .asm-btn {
+  min-height: 42px;
+  padding: 8px clamp(16px, 1.7vw, 22px);
+  font-size: clamp(1rem, 1.25vw, 1.12rem);
+  font-weight: 800;
 }
 
 .assembly #faculty {
@@ -709,10 +709,10 @@
     letter-spacing: 0.06em;
   }
 
-  .assembly .asm-future-actions[data-cta-size="compact"] .asm-btn {
-    min-height: 44px;
-    padding: 12px 14px;
-    font-size: 0.78rem;
+  .assembly .asm-future-actions[data-cta-size="slim"] .asm-btn {
+    min-height: 38px;
+    padding: 7px 12px;
+    font-size: 0.9rem;
   }
 
   .assembly #faculty {

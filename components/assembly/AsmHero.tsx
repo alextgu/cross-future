@@ -32,7 +32,7 @@ export default function AsmHero({ assembly }: {
           className="asm-future-actions"
           role="group"
           aria-label="Event registration"
-          data-cta-size="compact"
+          data-cta-size="slim"
           data-layout="headline"
         >
           <span className="asm-future-event-details">

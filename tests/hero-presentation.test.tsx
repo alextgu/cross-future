@@ -51,7 +51,7 @@ it("keeps the event identity readable over one uninterrupted video canvas", asyn
   const registration = screen.getByRole("group", {
     name: "Event registration",
   });
-  expect(registration.getAttribute("data-cta-size")).toBe("compact");
+  expect(registration.getAttribute("data-cta-size")).toBe("slim");
   expect(registration.getAttribute("data-layout")).toBe("headline");
   expect(within(registration).getByText("Montréal, Canada")).toBeTruthy();
   expect(
