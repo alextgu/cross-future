@@ -371,25 +371,66 @@
   background: var(--speaker-accent);
 }
 
-.assembly .asm-speaker-lead {
+.assembly .asm-section-rail {
   display: grid;
-  justify-items: center;
-  gap: 16px;
+  grid-template-columns: auto minmax(80px, 1fr) auto;
+  align-items: end;
+  gap: clamp(18px, 2.5vw, 38px);
+  width: 100%;
   max-width: 1260px;
   margin-inline: auto;
-  text-align: center;
 }
 
-.assembly .asm-speaker-lead h2 {
-  max-width: 22ch;
+.assembly .asm-section-rail-copy {
+  display: grid;
+  gap: 8px;
+}
+
+.assembly .asm-section-rail-label {
+  font-family: var(--asm-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--speaker-accent);
+}
+
+.assembly .asm-section-rail h2 {
+  max-width: 18ch;
   font-family: var(--asm-display);
-  font-size: clamp(3rem, 5.7vw, 6.5rem);
-  font-weight: 600;
-  line-height: 0.92;
-  letter-spacing: -0.045em;
+  font-size: clamp(2.8rem, 4.6vw, 5.3rem);
+  font-weight: 700;
+  line-height: 0.94;
+  letter-spacing: -0.04em;
   text-transform: none;
-  text-wrap: balance;
   color: var(--asm-ink);
+}
+
+.assembly .asm-section-rail-line {
+  position: relative;
+  align-self: end;
+  height: 1px;
+  margin-bottom: clamp(10px, 1vw, 16px);
+  background: linear-gradient(90deg, var(--speaker-accent), rgb(42 143 221 / 0.18));
+}
+
+.assembly .asm-section-rail-line::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--speaker-accent);
+  box-shadow: 0 0 18px rgb(42 143 221 / 0.58);
+  transform: translate(-1px, -50%);
+}
+
+.assembly .asm-section-rail > .asm-btn {
+  align-self: end;
+  margin-bottom: 0;
 }
 
 .assembly #faculty > .asm-railwrap {
@@ -513,17 +554,17 @@
   height: 0;
 }
 
-.assembly .asm-home-section-lead .asm-btn {
-  margin-top: 8px;
-}
-
 .assembly .asm-speaker-archive-cta {
   display: flex;
   justify-content: center;
 }
 
 .assembly .asm-speaker-archive-cta .asm-btn {
-  min-width: min(100%, 270px);
+  min-width: min(100%, 380px);
+  min-height: 64px;
+  padding: 18px 32px;
+  font-size: 1.05rem;
+  font-weight: 700;
 }
 
 .assembly .asm-credibility {
@@ -958,8 +999,27 @@
     grid-row: auto;
   }
 
-  .assembly .asm-speaker-lead h2 {
+  .assembly .asm-section-rail {
+    grid-template-columns: 1fr auto;
+    gap: 14px 18px;
+  }
+
+  .assembly .asm-section-rail-copy {
+    grid-column: 1;
+  }
+
+  .assembly .asm-section-rail h2 {
     font-size: clamp(2.8rem, 13vw, 4.8rem);
+  }
+
+  .assembly .asm-section-rail-line {
+    grid-column: 2;
+    min-width: 52px;
+  }
+
+  .assembly .asm-section-rail > .asm-btn {
+    grid-column: 1 / -1;
+    justify-self: start;
   }
 
   .assembly #faculty .asm-facultystrip[data-rows="2"] {

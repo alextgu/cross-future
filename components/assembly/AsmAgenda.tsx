@@ -75,9 +75,6 @@ export default function AsmAgenda({
             <div className="asm-agenda-coming-frame">
               <AsmMedia media={comingSoonMedia} className="asm-agenda-coming-art" bleed />
             </div>
-            <AsmButton href={ASSEMBLY_REGISTER} tone="inverse">
-              Get updates
-            </AsmButton>
           </div>
         </div>
       </div>

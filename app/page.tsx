@@ -77,8 +77,12 @@ export default async function AssemblyHome() {
       </AsmSection>
 
       <AsmSection id="faculty" labelledBy="faculty-heading">
-        <header className="asm-speaker-lead">
-          <h2 id="faculty-heading">Previous Speakers</h2>
+        <header className="asm-section-rail">
+          <div className="asm-section-rail-copy">
+            <p className="asm-section-rail-label">Speakers</p>
+            <h2 id="faculty-heading">Previous Speakers</h2>
+          </div>
+          <span className="asm-section-rail-line" aria-hidden="true" />
         </header>
         <AsmFacultyGrid
           members={faculty}
@@ -88,8 +92,12 @@ export default async function AssemblyHome() {
         />
         <div className="asm-speaker-interview-preview">
           <span className="asm-anchor" id="interviews" aria-hidden="true" />
-          <header className="asm-speaker-lead asm-home-section-lead">
-            <h2>Interviews</h2>
+          <header className="asm-section-rail">
+            <div className="asm-section-rail-copy">
+              <p className="asm-section-rail-label">Media</p>
+              <h2>Interviews</h2>
+            </div>
+            <span className="asm-section-rail-line" aria-hidden="true" />
           </header>
           <AsmInterviews cards={interviews.slice(0, 3)} columns={3} />
         </div>
@@ -102,8 +110,12 @@ export default async function AssemblyHome() {
 
       {/* Program placeholder until schedule publication. */}
       <AsmSection id="focus" labelledBy="program-heading">
-        <header className="asm-speaker-lead asm-home-section-lead">
-          <h2 id="program-heading">Program</h2>
+        <header className="asm-section-rail">
+          <div className="asm-section-rail-copy">
+            <p className="asm-section-rail-label">Agenda</p>
+            <h2 id="program-heading">Program</h2>
+          </div>
+          <span className="asm-section-rail-line" aria-hidden="true" />
           <AsmButton href="/program" tone="ghost">
             View full program
           </AsmButton>

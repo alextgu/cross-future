@@ -83,9 +83,15 @@ it("moves from the event hero through About into speakers and interviews", async
       name: "Interviews",
     })
   ).toBeTruthy();
-  for (const title of ["Previous Speakers", "Interviews", "Program"]) {
+  for (const [title, label] of [
+    ["Previous Speakers", "Speakers"],
+    ["Interviews", "Media"],
+    ["Program", "Agenda"],
+  ]) {
     const heading = screen.getByRole("heading", { level: 2, name: title });
-    expect(heading.closest(".asm-speaker-lead")).not.toBeNull();
+    const rail = heading.closest(".asm-section-rail");
+    expect(rail).not.toBeNull();
+    expect(within(rail as HTMLElement).getByText(label)).toBeTruthy();
   }
   expect(within(speakerSection).queryByText("From the archive")).toBeNull();
   const interviewLinks = Array.from(
@@ -108,5 +114,5 @@ it("moves from the event hero through About into speakers and interviews", async
   ).toBeNull();
   const programLink = screen.getByRole("link", { name: "View full program" });
   expect(programLink.getAttribute("href")).toBe("/program");
-  expect(programLink.closest(".asm-speaker-lead")).not.toBeNull();
+  expect(programLink.closest(".asm-section-rail")).not.toBeNull();
 });
