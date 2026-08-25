@@ -52,7 +52,7 @@ export default function AsmFacultyGrid({
         data-review-collection="speakers"
         tabIndex={0}
         role="group"
-        aria-label={`${members.length} confirmed speakers — scroll sideways for more`}
+        aria-label={`Previous speakers — ${members.length} profiles, scroll horizontally`}
       >
         {members.map((member) => (
           <AsmPersonCard
@@ -73,7 +73,7 @@ export default function AsmFacultyGrid({
           className="asm-railcue is-start"
           onClick={() => scrollStrip(-1)}
           disabled={!canScrollBack}
-          aria-label="Scroll faculty to the left"
+          aria-label="Previous speakers"
         >
           ‹
         </button>
@@ -83,7 +83,7 @@ export default function AsmFacultyGrid({
           className="asm-railcue is-end"
           onClick={() => scrollStrip(1)}
           disabled={!canScrollForward}
-          aria-label="Scroll faculty to the right"
+          aria-label="Next speakers"
         >
           ›
         </button>

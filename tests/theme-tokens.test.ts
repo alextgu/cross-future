@@ -88,9 +88,9 @@ describe("the design system's colour discipline", () => {
     );
     expect(keyframes).toEqual(["asm-marquee"]);
 
-    /* One component may watch the scroll position, and only this one: the
-       nav, to say which section you are in. Anything else reaching for an
-       observer is the reveal-on-scroll pattern coming back. */
+    /* Primary navigation is page-based, so no component should watch scroll
+       position. Anything reaching for an observer would either restore the
+       retired section tracker or bring reveal-on-scroll back. */
     const observing = readdirSync("components/assembly")
       .filter((file) => file.endsWith(".tsx"))
       .filter((file) =>
@@ -98,6 +98,6 @@ describe("the design system's colour discipline", () => {
           "IntersectionObserver",
         ),
       );
-    expect(observing).toEqual(["AsmNav.tsx"]);
+    expect(observing).toEqual([]);
   });
 });

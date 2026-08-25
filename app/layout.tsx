@@ -31,6 +31,7 @@ import {
 import "./globals.css";
 import "./assembly/assembly.css";
 import "./assembly/themes.css";
+import "./assembly/future-forum.css";
 
 /* Applied before first paint so a stored scheme never flashes through the
    default one. Kept to a single attribute write and wrapped in try/catch:

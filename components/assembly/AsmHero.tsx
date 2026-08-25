@@ -1,68 +1,48 @@
 import type { AssemblyContent, Edition } from "@/lib/content";
 import AsmButton from "./AsmButton";
+import { AsmMark } from "./AsmLogo";
 import AsmMedia from "./AsmMedia";
 
-/**
- * The home hero, laid out as the reference mosaic: one oversized type card
- * carrying the name and the date, and a stacked pair of media tiles beside it
- * pointing at the two things the site wants — watch the interviews, register.
- *
- * The type card carries the summit's own venue footage, bled to the card edge
- * and scrimmed. Display type sits straight on top, so the card runs on the
- * inverse ink ramp rather than the sky tint it used while the slot was empty.
- *
- * The side tiles are the secondary slots. Both are duotoned and scrimmed by
- * AsmMedia, so the headline weight of the card next to them never has to
- * compete with raw footage.
- */
-export default function AsmHero({
-  edition,
-  assembly,
-}: {
+export default function AsmHero({ assembly }: {
   edition: Edition;
   assembly: AssemblyContent;
 }) {
-  const { feature, ticket } = assembly.rail;
+  const { ticket } = assembly.rail;
 
   return (
-    <header className="asm-heromosaic" id="top">
-      <div className="asm-card is-padded asm-heromain">
-        <AsmMedia media={assembly.heroMedia} bleed scrim priority />
+    <header className="asm-future-hero" id="top" data-tone="neutral">
+      <AsmMedia
+        media={assembly.heroMedia}
+        bleed
+        duotone={false}
+        scrim={false}
+        priority
+      />
 
-        <p className="asm-eyebrow">{assembly.heroKicker}</p>
-
-        <h1 className="asm-d0 asm-heromain-title">
-          {assembly.heroLines.map((line) => (
-            <span key={line}>{line}</span>
-          ))}
-        </h1>
-
-        <p className="asm-lede asm-heromain-lede">
-          {edition.heroStatement ?? edition.tagline}
-        </p>
-      </div>
-
-      <div className="asm-heroside">
-        <article className="asm-card asm-herotile">
-          <AsmMedia media={feature.media} bleed scrim />
-          <div className="asm-herotile-inner">
-            <h2 className="asm-herotile-title">{feature.title}</h2>
-            <AsmButton href={feature.ctaHref} tone="ghost" arrow={false}>
-              {feature.ctaLabel}
-            </AsmButton>
-          </div>
-        </article>
-
-        <article className="asm-card asm-herotile is-tall">
-          <AsmMedia media={ticket.media} bleed scrim />
-          <div className="asm-herotile-inner">
-            <h2 className="asm-herotile-title">{ticket.title}</h2>
-            <p className="asm-herotile-text">{ticket.text}</p>
-            <AsmButton href={ticket.ctaHref} tone="inverse">
-              {ticket.ctaLabel}
-            </AsmButton>
-          </div>
-        </article>
+      <div className="asm-future-copy is-minimal">
+        <div className="asm-future-brand">
+          <AsmMark />
+          <h1>Cross Future</h1>
+        </div>
+        <h2 aria-label="Shaping the future of AI, innovating for tomorrow.">
+          Shaping the future of <mark className="asm-future-highlight">AI</mark>,
+          {" "}innovating for <u className="asm-future-underline">tomorrow</u>.
+        </h2>
+        <div
+          className="asm-future-actions"
+          role="group"
+          aria-label="Event registration"
+          data-cta-size="compact"
+          data-layout="headline"
+        >
+          <span className="asm-future-event-details">
+            <strong>Montréal, Canada</strong>
+            <span>October 8, 2026 · 9 AM–5 PM</span>
+          </span>
+          <AsmButton href={ticket.ctaHref} arrow={false}>
+            Register Now
+          </AsmButton>
+        </div>
       </div>
     </header>
   );

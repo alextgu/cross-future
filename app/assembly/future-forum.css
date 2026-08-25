@@ -1,0 +1,784 @@
+/* Presentation direction: an innovation forum, not an editorial broadsheet. */
+
+.assembly {
+  --asm-max: 1440px;
+  --asm-gap: clamp(10px, 1.2vw, 18px);
+  --asm-space-section: clamp(84px, 10vw, 150px);
+  --asm-space-section-tight: clamp(60px, 7vw, 100px);
+  --asm-space-section-major: clamp(100px, 12vw, 180px);
+  --asm-space-head: clamp(28px, 4vw, 56px);
+}
+
+.assembly .asm-navbar {
+  padding: 14px clamp(14px, 2vw, 28px) 0;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--asm-page) 94%, transparent),
+    transparent
+  );
+  backdrop-filter: blur(18px);
+}
+
+.assembly .asm-navbar-inner {
+  min-height: 66px;
+  padding: 8px 10px 8px 18px;
+  border: 1px solid var(--asm-hair);
+  border-radius: 22px;
+  background: color-mix(in srgb, var(--asm-card-plain) 88%, transparent);
+  box-shadow: 0 18px 48px color-mix(in srgb, var(--asm-card-deep) 16%, transparent);
+}
+
+.assembly .asm-wordmark {
+  font-family: var(--asm-body);
+  font-size: 0.98rem;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: -0.01em;
+}
+
+.assembly .asm-wordmark .asm-brand-mark {
+  color: var(--asm-accent);
+}
+
+.assembly .asm-navlinks {
+  gap: 6px;
+}
+
+.assembly .asm-navlinks a,
+.assembly .asm-navpage {
+  padding: 10px 14px;
+  border: 0;
+  font-family: var(--asm-body);
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--asm-ink-2);
+}
+
+.assembly .asm-navlinks a:hover,
+.assembly .asm-navlinks a[aria-current="true"],
+.assembly .asm-navpage:hover,
+.assembly .asm-navpage[aria-current="page"] {
+  background: var(--asm-card-mist);
+  color: var(--asm-ink);
+}
+
+.assembly .asm-btn {
+  min-height: 44px;
+  padding: 12px 20px;
+  font-family: var(--asm-body);
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  box-shadow: 0 10px 28px color-mix(in srgb, var(--asm-accent) 24%, transparent);
+}
+
+.assembly .asm-future-hero .asm-btn.is-ghost {
+  color: var(--asm-ink-media);
+  box-shadow: inset 0 0 0 1px var(--asm-hair-inv);
+}
+
+.assembly .asm-shell {
+  padding: var(--asm-gap) clamp(14px, 2vw, 28px) clamp(60px, 8vw, 120px);
+}
+
+.assembly .asm-section[data-flow="tile"] {
+  gap: clamp(14px, 1.5vw, 22px);
+}
+
+.assembly .asm-future-hero {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  height: calc(100svh - 98px);
+  min-height: 0;
+  display: grid;
+  grid-template-rows: 1fr;
+  align-items: end;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: var(--asm-c-black);
+  color: var(--asm-ink-media);
+  box-shadow: none;
+}
+
+.assembly .asm-future-hero[data-tone="neutral"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--asm-c-black) 72%, transparent) 0%, color-mix(in srgb, var(--asm-c-black) 28%, transparent) 52%, transparent 78%),
+    linear-gradient(0deg, color-mix(in srgb, var(--asm-c-black) 64%, transparent) 0%, transparent 58%);
+}
+
+.assembly .asm-future-hero > .asm-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  border-radius: 0;
+  --asm-fp: 50% 42%;
+}
+
+.assembly .asm-future-copy {
+  position: relative;
+  z-index: 2;
+  align-self: center;
+  display: grid;
+  justify-items: start;
+  gap: clamp(18px, 2.2vw, 30px);
+  width: min(1120px, 100%);
+  padding: clamp(38px, 6vw, 96px);
+}
+
+.assembly .asm-future-brand {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 1.5vw, 24px);
+}
+
+.assembly .asm-future-brand .asm-brand-mark {
+  width: clamp(62px, 6vw, 104px);
+  height: clamp(62px, 6vw, 104px);
+  flex: none;
+  color: var(--asm-ink-media);
+}
+
+.assembly .asm-future-brand h1 {
+  font-family: var(--asm-display);
+  font-size: clamp(4rem, 7.2vw, 7.8rem);
+  font-weight: 700;
+  line-height: 0.86;
+  letter-spacing: -0.05em;
+  text-transform: none;
+  color: var(--asm-ink-media);
+  white-space: nowrap;
+}
+
+.assembly .asm-future-copy h2 {
+  max-width: 13ch;
+  font-family: var(--asm-display);
+  font-size: clamp(3.4rem, 6.4vw, 7.4rem);
+  font-weight: 700;
+  line-height: 0.88;
+  letter-spacing: -0.045em;
+  color: var(--asm-ink-media);
+  text-wrap: balance;
+}
+
+.assembly .asm-future-highlight {
+  padding: 0;
+  background: transparent;
+  color: var(--asm-accent);
+}
+
+.assembly .asm-future-underline {
+  text-decoration-line: underline;
+  text-decoration-color: var(--asm-accent);
+  text-decoration-thickness: 0.07em;
+  text-underline-offset: 0.13em;
+}
+
+.assembly .asm-future-actions[data-layout="headline"] {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 18px;
+  margin-top: clamp(18px, 2.4vw, 34px);
+  width: min(620px, 100%);
+  padding: 10px;
+  padding-left: clamp(22px, 3vw, 42px);
+  border: 2px solid var(--asm-accent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--asm-c-black) 58%, transparent);
+  backdrop-filter: blur(12px);
+}
+
+.assembly .asm-future-event-details {
+  display: grid;
+  gap: 4px;
+  font-size: clamp(0.78rem, 1vw, 0.96rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--asm-ink-media);
+}
+
+.assembly .asm-future-event-details strong {
+  font-size: clamp(0.9rem, 1.25vw, 1.08rem);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.assembly .asm-future-event-details span {
+  color: var(--asm-ink-media-2);
+}
+
+.assembly .asm-future-actions[data-cta-size="compact"] .asm-btn {
+  min-height: 48px;
+  padding: 13px clamp(14px, 1.6vw, 20px);
+  font-size: clamp(0.82rem, 1vw, 0.94rem);
+  font-weight: 700;
+}
+
+.assembly #faculty {
+  --speaker-accent: #2878b9;
+  position: relative;
+  isolation: isolate;
+  margin-top: 0;
+  padding-block: clamp(100px, 10vw, 150px) clamp(72px, 8vw, 116px);
+  color: #0d1723;
+}
+
+.assembly #faculty::before {
+  content: "";
+  position: absolute;
+  inset: 0 calc(50% - 50vw);
+  z-index: -1;
+  background: #eef3f8;
+}
+
+.assembly #faculty::after {
+  content: "";
+  position: absolute;
+  inset: 0 calc(50% - 50vw) auto;
+  height: 4px;
+  z-index: 2;
+  background: var(--speaker-accent);
+}
+
+.assembly .asm-speaker-lead {
+  display: grid;
+  justify-items: center;
+  gap: 16px;
+  max-width: 1260px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.assembly .asm-speaker-lead h2 {
+  max-width: 22ch;
+  font-family: var(--asm-display);
+  font-size: clamp(3rem, 5.7vw, 6.5rem);
+  font-weight: 600;
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+  text-transform: none;
+  text-wrap: balance;
+  color: #0d1723;
+}
+
+.assembly .asm-speaker-subtitle {
+  max-width: 48ch;
+  margin: 0;
+  font-size: clamp(1rem, 1.5vw, 1.35rem);
+  font-weight: 500;
+  line-height: 1.45;
+  color: #3a495c;
+  text-wrap: balance;
+}
+
+.assembly #faculty > .asm-railwrap {
+  margin-top: clamp(8px, 1vw, 18px);
+  margin-inline: clamp(-4px, -0.5vw, -10px);
+  padding-inline: clamp(4px, 0.5vw, 10px);
+}
+
+.assembly #faculty .asm-facultystrip[data-rows="2"] {
+  grid-auto-columns: clamp(
+    206px,
+    calc((100% - 4 * var(--asm-space-item)) / 5),
+    270px
+  );
+  column-gap: clamp(12px, 1.4vw, 20px);
+  row-gap: clamp(16px, 1.8vw, 26px);
+  padding: 8px 3px 18px;
+}
+
+.assembly #faculty
+  .asm-facultystrip[data-rows="2"]
+  > *:nth-child(n) {
+  scroll-snap-align: none;
+}
+
+.assembly #faculty
+  .asm-facultystrip[data-rows="2"]
+  > *:nth-child(10n + 1) {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.assembly #faculty .asm-person {
+  overflow: hidden;
+  grid-template-rows: auto 1fr;
+  min-height: 100%;
+  padding: 10px;
+  border: 1px solid rgb(13 23 35 / 0.12);
+  border-radius: 18px;
+  background: #f9fbfd;
+  color: #0d1723;
+  box-shadow: 0 16px 36px rgb(13 23 35 / 0.12);
+}
+
+.assembly #faculty .asm-person .asm-media {
+  overflow: hidden;
+  border: 1px solid rgb(13 23 35 / 0.1);
+  border-radius: 12px;
+}
+
+.assembly #faculty .asm-person .asm-media.is-duo > img {
+  filter: none;
+}
+
+.assembly #faculty .asm-person .asm-media.is-duo::after {
+  display: none;
+}
+
+.assembly #faculty .asm-person-plate {
+  align-content: start;
+  gap: 7px;
+  padding: 16px 8px 10px;
+}
+
+.assembly #faculty .asm-person-name {
+  font-family: var(--asm-body);
+  font-size: clamp(1.08rem, 1.35vw, 1.35rem);
+  font-weight: 750;
+  line-height: 1.06;
+  text-transform: none;
+  color: var(--speaker-accent);
+}
+
+.assembly #faculty .asm-person-org {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #0d1723;
+}
+
+.assembly #faculty .asm-person-role {
+  display: block;
+  font-family: var(--asm-body);
+  font-size: 0.82rem;
+  line-height: 1.35;
+  letter-spacing: 0;
+  text-transform: none;
+  color: #536377;
+}
+
+.assembly #faculty .asm-railcue {
+  top: calc(50% - 29px);
+  z-index: 3;
+  width: 58px;
+  height: 58px;
+  border: 1px solid rgb(40 120 185 / 0.38);
+  background: #ffffff;
+  color: var(--speaker-accent);
+  font-size: 2.15rem;
+  box-shadow: 0 12px 34px color-mix(in srgb, var(--asm-c-black) 32%, transparent);
+}
+
+.assembly #faculty .asm-railcue.is-start {
+  left: -10px;
+}
+
+.assembly #faculty .asm-railcue.is-end {
+  right: -10px;
+}
+
+.assembly .asm-speaker-archive-cta {
+  display: flex;
+  justify-content: center;
+}
+
+.assembly .asm-speaker-archive-cta .asm-btn {
+  min-width: min(100%, 270px);
+}
+
+.assembly .asm-credibility {
+  display: block;
+}
+
+.assembly .asm-credibility-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(220px, 28vw));
+  gap: var(--asm-gap);
+}
+
+.assembly .asm-credibility-tile {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 0;
+  border-radius: clamp(20px, 2vw, 30px);
+  background: var(--asm-card-deep);
+  color: var(--asm-ink-media);
+}
+
+.assembly .asm-credibility-tile.is-event {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.assembly .asm-credibility-tile.is-record {
+  grid-column: span 2;
+}
+
+.assembly .asm-credibility-tile > img,
+.assembly .asm-credibility-portraits img {
+  object-fit: cover;
+  transition: transform 0.45s ease;
+}
+
+.assembly .asm-credibility-tile:hover > img,
+.assembly .asm-credibility-tile:hover .asm-credibility-portraits img {
+  transform: scale(1.025);
+}
+
+.assembly .asm-credibility-tile::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    180deg,
+    transparent 28%,
+    color-mix(in srgb, var(--asm-scrim) 84%, transparent) 100%
+  );
+}
+
+.assembly .asm-credibility-copy {
+  position: absolute;
+  z-index: 2;
+  inset: auto clamp(18px, 2.4vw, 34px) clamp(18px, 2.4vw, 34px);
+  display: grid;
+  gap: 8px;
+}
+
+.assembly .asm-credibility-copy span {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--asm-ink-media-2);
+}
+
+.assembly .asm-credibility-copy strong {
+  max-width: 22ch;
+  font-family: var(--asm-display);
+  font-size: clamp(1.35rem, 2.4vw, 2.7rem);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.assembly .asm-credibility-tile.is-event .asm-credibility-copy strong {
+  max-width: 12ch;
+  font-size: clamp(2.8rem, 5.8vw, 6.4rem);
+  line-height: 0.92;
+}
+
+.assembly .asm-credibility-portraits {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.assembly .asm-credibility-portraits > span {
+  position: relative !important;
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.assembly .asm-credibility-portraits img {
+  position: relative !important;
+  width: 100% !important;
+  height: 100% !important;
+  filter: saturate(0.75);
+}
+
+.assembly .asm-section:first-child > .asm-row {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  overflow: hidden;
+  border: 1px solid var(--asm-hair);
+  border-radius: 24px;
+  background: var(--asm-hair);
+}
+
+.assembly .asm-section:first-child .asm-fact {
+  min-height: 112px;
+  border: 0;
+  border-radius: 0;
+  background: var(--asm-card-plain);
+}
+
+.assembly .asm-section:first-child .asm-fact dt {
+  font-family: var(--asm-body);
+  font-size: 0.76rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--asm-accent);
+}
+
+.assembly .asm-section:first-child .asm-fact dd {
+  font-family: var(--asm-body);
+  font-size: 0.98rem;
+  font-weight: 500;
+  line-height: 1.4;
+  text-transform: none;
+}
+
+.assembly .asm-about-intro {
+  padding: clamp(28px, 4vw, 56px);
+  border: 1px solid var(--asm-hair);
+  border-radius: clamp(24px, 3vw, 38px);
+  background: linear-gradient(
+    135deg,
+    var(--asm-card-plain),
+    color-mix(in srgb, var(--asm-card-mist) 74%, var(--asm-card-plain))
+  );
+}
+
+.assembly .asm-about-intro-grid {
+  grid-template-columns: minmax(0, 1.08fr) minmax(340px, 0.72fr);
+  align-items: stretch;
+}
+
+.assembly .asm-about-copy {
+  align-content: center;
+  gap: 24px;
+}
+
+.assembly .asm-about-title {
+  max-width: 11ch;
+  font-size: clamp(2.8rem, 5.2vw, 5.8rem);
+  font-weight: 600;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  text-transform: none;
+}
+
+.assembly .asm-about-lead {
+  max-width: 58ch;
+  margin: 0;
+  font-size: clamp(1rem, 1.35vw, 1.22rem);
+  font-weight: 400;
+  line-height: 1.65;
+  color: var(--asm-ink-2);
+}
+
+.assembly .asm-about-systems {
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.assembly .asm-about-systems-list {
+  gap: 10px;
+}
+
+.assembly .asm-about-systems-list li {
+  min-height: 0;
+  gap: 8px;
+  padding: 18px;
+  border: 1px solid var(--asm-hair);
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--asm-card-mist) 70%, transparent);
+}
+
+.assembly .asm-about-systems-list li strong {
+  font-size: 0.98rem;
+  color: var(--asm-ink);
+}
+
+.assembly .asm-about-systems-list li span {
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--asm-ink-2);
+}
+
+.assembly .asm-about-figure {
+  overflow: hidden;
+  border: 0;
+  border-radius: 26px;
+  background: var(--asm-card-deep);
+}
+
+.assembly .asm-about-media {
+  height: 100%;
+  min-height: 520px;
+  aspect-ratio: auto;
+}
+
+.assembly .asm-about-media img {
+  filter: saturate(0.8) contrast(1.04);
+}
+
+.assembly .asm-about-caption {
+  position: absolute;
+  align-self: end;
+  margin: 18px;
+  padding: 10px 14px;
+  border: 1px solid var(--asm-hair-inv);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--asm-scrim) 72%, transparent);
+  backdrop-filter: blur(12px);
+  font-family: var(--asm-body);
+  font-size: 0.78rem;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--asm-ink-media-2);
+}
+
+@media (max-width: 960px) {
+  .assembly .asm-about-intro-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .assembly .asm-about-media {
+    min-height: 360px;
+  }
+}
+
+@media (max-width: 720px) {
+  .assembly .asm-navbar {
+    padding-inline: 10px;
+  }
+
+  .assembly .asm-future-hero {
+    height: calc(100svh - 90px);
+    min-height: 0;
+    padding: 0;
+  }
+
+  .assembly .asm-future-hero[data-tone="neutral"]::after {
+    background:
+      linear-gradient(90deg, color-mix(in srgb, var(--asm-c-black) 70%, transparent), transparent 100%),
+      linear-gradient(0deg, color-mix(in srgb, var(--asm-c-black) 76%, transparent) 0%, transparent 70%);
+  }
+
+  .assembly .asm-future-copy {
+    gap: 18px;
+    padding: clamp(24px, 6vw, 34px);
+  }
+
+  .assembly .asm-future-brand {
+    gap: 10px;
+  }
+
+  .assembly .asm-future-brand .asm-brand-mark {
+    width: 48px;
+    height: 48px;
+  }
+
+  .assembly .asm-future-brand h1 {
+    font-size: clamp(2.7rem, 12vw, 4.4rem);
+  }
+
+  .assembly .asm-future-copy h2 {
+    max-width: 13ch;
+    font-size: clamp(2.6rem, 11.5vw, 4.4rem);
+  }
+
+  .assembly .asm-future-actions {
+    gap: 10px;
+    padding: 7px;
+    padding-left: 18px;
+  }
+
+  .assembly .asm-future-event-details {
+    gap: 2px;
+    font-size: clamp(0.56rem, 2.2vw, 0.68rem);
+    letter-spacing: 0.04em;
+  }
+
+  .assembly .asm-future-event-details strong {
+    font-size: clamp(0.65rem, 2.7vw, 0.78rem);
+    letter-spacing: 0.06em;
+  }
+
+  .assembly .asm-future-actions[data-cta-size="compact"] .asm-btn {
+    min-height: 44px;
+    padding: 12px 14px;
+    font-size: 0.78rem;
+  }
+
+  .assembly #faculty {
+    padding-block: 54px 72px;
+  }
+
+  .assembly .asm-speaker-lead h2 {
+    font-size: clamp(2.8rem, 13vw, 4.8rem);
+  }
+
+  .assembly #faculty .asm-facultystrip[data-rows="2"] {
+    grid-auto-columns: clamp(178px, 72vw, 220px);
+    row-gap: 14px;
+  }
+
+  .assembly #faculty .asm-railcue {
+    width: 46px;
+    height: 46px;
+    top: calc(50% - 23px);
+    font-size: 1.75rem;
+  }
+
+  .assembly .asm-credibility-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+  }
+
+  .assembly .asm-credibility-tile,
+  .assembly .asm-credibility-tile.is-event,
+  .assembly .asm-credibility-tile.is-record {
+    grid-column: auto;
+    grid-row: auto;
+    min-height: 54vw;
+  }
+
+  .assembly .asm-credibility-tile.is-event {
+    min-height: 82vw;
+  }
+
+  .assembly .asm-section:first-child > .asm-row,
+  .assembly .asm-about-systems-list {
+    grid-template-columns: 1fr;
+  }
+
+  .assembly .asm-section:first-child .asm-fact {
+    min-height: 90px;
+  }
+}
+
+@media (min-width: 721px) and (max-height: 760px) {
+  .assembly .asm-future-copy {
+    gap: 14px;
+    padding-block: 28px;
+  }
+
+  .assembly .asm-future-brand h1 {
+    font-size: clamp(3.2rem, 5vw, 5rem);
+  }
+
+  .assembly .asm-future-copy h2 {
+    font-size: clamp(2.5rem, 4.5vw, 4.6rem);
+  }
+}
+
+@media (min-width: 721px) and (max-width: 1100px) {
+  .assembly #faculty .asm-facultystrip[data-rows="2"] {
+    grid-auto-columns: clamp(190px, 34vw, 232px);
+  }
+}

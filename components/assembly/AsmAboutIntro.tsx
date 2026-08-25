@@ -1,9 +1,16 @@
-import { sectionNumber } from "@/lib/assembly-nav";
-
-const ABOUT_SYSTEMS = [
-  { number: "01", label: "GRID RESILIENCE" },
-  { number: "02", label: "HIGH-DENSITY COMPUTE" },
-  { number: "03", label: "LOW-CARBON DISPATCH" },
+const AUDIENCES = [
+  {
+    title: "Professors",
+    description: "New research, explained by the people behind it.",
+  },
+  {
+    title: "Researchers",
+    description: "Open questions, methods and discoveries worth sharing.",
+  },
+  {
+    title: "Industry builders",
+    description: "Real applications, lessons and paths to impact.",
+  },
 ] as const;
 
 /**
@@ -15,57 +22,42 @@ export default function AsmAboutIntro() {
     <div className="asm-about-intro">
       <div className="asm-about-intro-grid">
         <div className="asm-about-copy">
-          <header className="asm-about-head">
-            <span className="asm-sechead-num">{sectionNumber("about")}</span>
-            <h2 className="asm-about-title">Why this summit exists</h2>
-          </header>
+          <p className="asm-future-kicker">Why Cross Future</p>
+          <h2 className="asm-about-title">About Cross Future</h2>
 
           <p className="asm-about-lead">
-            Cross Future Hub is a non-profit guiding tech leaders through
-            systemic architectural shifts. The summit exists to put the
-            engineers planning power grids in the same room as the researchers
-            training frontier models — bridging the physical constraints of
-            energy with the exponential demands of compute before both
-            industries collide under pressure.
-          </p>
-
-          <p className="asm-about-body">
-            As ultra-high-density AI clusters reshape digital infrastructure,
-            energy resilience, backup generation, and grid dispatch have become
-            critical bottlenecks. We convene academia, cloud providers, and
-            utility operators to establish actionable technical pathways.
+            Cross Future is a recurring forum for the people expanding what AI
+            can do. We create the room for rigorous ideas, useful friction and
+            the collaborations that continue after the stage goes dark.
           </p>
 
           <section
             className="asm-about-systems"
-            aria-label="Systems in scope"
+            aria-label="Who meets here"
           >
-            <ol className="asm-about-systems-list">
-              {ABOUT_SYSTEMS.map((system) => (
-                <li key={system.number}>
-                  <span className="asm-about-system-code">
-                    {system.number} //{" "}
-                  </span>
-                  <span className="asm-about-system-label">{system.label}</span>
+            <ul className="asm-about-systems-list">
+              {AUDIENCES.map((audience) => (
+                <li key={audience.title}>
+                  <strong>{audience.title}</strong>
+                  <span>{audience.description}</span>
                 </li>
               ))}
-            </ol>
+            </ul>
           </section>
         </div>
 
         <figure className="asm-about-figure">
-          <p className="asm-about-figlabel">FIG 01 // INFRASTRUCTURE & DISPATCH</p>
           <div className="asm-about-media">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/summit/media/focus-hero.svg"
-              alt="Placeholder: data center server racks in a high-density compute hall"
+              src="/summit/media/hero-poster.jpg"
+              alt="Cross Future speakers and attendees sharing ideas at the summit"
               loading="lazy"
               decoding="async"
             />
           </div>
           <figcaption className="asm-about-caption">
-            CAPTION: AI data center power architecture &amp; grid integration /
-            Montreal Session
+            One room. New perspectives. Conversations that keep moving.
           </figcaption>
         </figure>
       </div>

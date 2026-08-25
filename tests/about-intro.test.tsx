@@ -6,20 +6,20 @@ import AsmAboutIntro from "../components/assembly/AsmAboutIntro";
 
 afterEach(cleanup);
 
-it("presents the summit priorities as one structured systems brief", () => {
+it("introduces the event through people and ideas instead of a technical brief", () => {
   render(<AsmAboutIntro />);
 
-  const brief = screen.getByRole("region", { name: "Systems in scope" });
   expect(
-    within(brief).queryByText(
-      (_, element) =>
-        element?.tagName === "P" && element.textContent === "03 priorities"
-    )
-  ).toBeNull();
+    screen.getByRole("heading", {
+      name: "About Cross Future",
+    })
+  ).toBeTruthy();
 
-  const priorities = within(brief).getAllByRole("listitem");
-  expect(priorities).toHaveLength(3);
-  expect(priorities[0].textContent).toContain("01 // GRID RESILIENCE");
-  expect(priorities[1].textContent).toContain("02 // HIGH-DENSITY COMPUTE");
-  expect(priorities[2].textContent).toContain("03 // LOW-CARBON DISPATCH");
+  const audience = screen.getByRole("region", { name: "Who meets here" });
+  const groups = within(audience).getAllByRole("listitem");
+  expect(groups.map((group) => group.textContent)).toEqual([
+    "ProfessorsNew research, explained by the people behind it.",
+    "ResearchersOpen questions, methods and discoveries worth sharing.",
+    "Industry buildersReal applications, lessons and paths to impact.",
+  ]);
 });
