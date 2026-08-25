@@ -286,6 +286,25 @@
   box-shadow: 0 20px 55px rgb(1 25 54 / 0.28);
 }
 
+.assembly .asm-main > .asm-stats-bridge::before,
+.assembly .asm-main > .asm-stats-bridge::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 50%;
+  width: 50vw;
+  z-index: -1;
+  background: #050b14;
+}
+
+.assembly .asm-main > .asm-stats-bridge::before {
+  right: 100%;
+}
+
+.assembly .asm-main > .asm-stats-bridge::after {
+  left: 100%;
+}
+
 .assembly .asm-stats-bridge ul {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
