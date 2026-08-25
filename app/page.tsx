@@ -13,6 +13,7 @@ import AsmShell from "@/components/assembly/AsmShell";
 import AsmHero from "@/components/assembly/AsmHero";
 import AsmSection from "@/components/assembly/AsmSection";
 import AsmAboutIntro from "@/components/assembly/AsmAboutIntro";
+import AsmStatsBridge from "@/components/assembly/AsmStatsBridge";
 import AsmSectionHead from "@/components/assembly/AsmSectionHead";
 import AsmFacultyGrid from "@/components/assembly/AsmFacultyGrid";
 import AsmPartners from "@/components/assembly/AsmPartners";
@@ -26,6 +27,13 @@ import AsmButton from "@/components/assembly/AsmButton";
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
+
+const PLACEHOLDER_STATS = [
+  { value: "XX", label: "Events" },
+  { value: "XX", label: "Speakers" },
+  { value: "YY", label: "Interviews" },
+  { value: "YY", label: "Partners" },
+] as const;
 
 export default async function AssemblyHome() {
   const content = await getSummitContent("assembly");
@@ -61,6 +69,8 @@ export default async function AssemblyHome() {
       <AsmSection flow="tile" label="Cross Future AI Summit 2026">
         <AsmHero edition={edition} assembly={assembly} />
       </AsmSection>
+
+      <AsmStatsBridge items={PLACEHOLDER_STATS} />
 
       <AsmSection id="about" flow="tile">
         <AsmAboutIntro />

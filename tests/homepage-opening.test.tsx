@@ -26,12 +26,20 @@ it("moves from the event hero through About into speakers and interviews", async
 
   render(await AssemblyHome());
 
-  const sections = document.querySelectorAll("main#main > section");
-  expect(sections[1]?.id).toBe("about");
-  expect(sections[2]?.id).toBe("faculty");
-  expect(screen.queryByRole("region", { name: "Summit at a glance" })).toBeNull();
+  const mainChildren = Array.from(
+    document.querySelectorAll<HTMLElement>("main#main > *")
+  );
+  expect(mainChildren.slice(0, 4).map((child) => [child.tagName, child.id])).toEqual([
+    ["SECTION", ""],
+    ["ASIDE", ""],
+    ["SECTION", "about"],
+    ["SECTION", "faculty"],
+  ]);
+  expect(
+    screen.getByRole("complementary", { name: "Cross Future at a glance" })
+  ).toBeTruthy();
 
-  const speakerSection = sections[2] as HTMLElement;
+  const speakerSection = mainChildren[3] as HTMLElement;
   expect(
     within(speakerSection).getByRole("heading", {
       name: "Previous Speakers",
