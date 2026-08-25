@@ -12,8 +12,6 @@ import {
 } from "@/lib/content";
 import AsmShell from "@/components/assembly/AsmShell";
 import AsmHero from "@/components/assembly/AsmHero";
-import AsmFacts from "@/components/assembly/AsmFacts";
-import AsmMarquee from "@/components/assembly/AsmMarquee";
 import AsmSection from "@/components/assembly/AsmSection";
 import AsmAboutIntro from "@/components/assembly/AsmAboutIntro";
 import AsmSectionHead from "@/components/assembly/AsmSectionHead";
@@ -25,6 +23,7 @@ import AsmAgenda from "@/components/assembly/AsmAgenda";
 import AsmLetters from "@/components/assembly/AsmLetters";
 import AsmContact from "@/components/assembly/AsmContact";
 import AsmProgress from "@/components/assembly/AsmProgress";
+import AsmButton from "@/components/assembly/AsmButton";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -65,35 +64,49 @@ export default async function AssemblyHome() {
     <AsmShell>
       <AsmSection flow="tile" label="Cross Future AI Summit 2026">
         <AsmHero edition={edition} assembly={assembly} />
-        <AsmFacts facts={assembly.facts} />
-        <AsmMarquee items={assembly.marquee} />
       </AsmSection>
 
-      {/* The non-profit's own statement of purpose — the paragraph the live
-          site opens with, in its own words. */}
+      <AsmSection id="faculty" labelledBy="faculty-heading">
+        <header className="asm-speaker-lead">
+          <h2 id="faculty-heading">Previous Speakers</h2>
+          <p className="asm-speaker-subtitle">
+            Where AI ideas meet the people who move them forward.
+          </p>
+        </header>
+        <AsmFacultyGrid
+          members={faculty}
+          layout="strip"
+          rows={2}
+          aspect="4 / 5"
+        />
+        <div className="asm-speaker-archive-cta">
+          <AsmButton href="/speakers">
+            View all speakers &amp; interviews
+          </AsmButton>
+        </div>
+      </AsmSection>
+
       <AsmSection id="about" flow="tile">
         <AsmAboutIntro />
       </AsmSection>
 
-      {/* Speakers, with the interviews under them. The interview wall is an
-          archive of people who have already spoken here — it belongs to the
-          faculty rather than standing beside them as a peer subject. */}
-      <AsmSection id="faculty">
-        <AsmSectionHead section="faculty" title="Meet the faculty" />
-        <AsmFacultyGrid members={faculty} layout="strip" rows={2} />
-        <span className="asm-anchor" id="interviews" aria-hidden="true" />
+      <AsmSection id="interviews">
         <AsmSectionHead
           section="interviews"
           title="Recorded interviews"
           tone="plain"
-          space="tight"
         />
         <AsmInterviews cards={interviews} layout="rail" />
       </AsmSection>
 
       {/* Program placeholder until schedule publication. */}
       <AsmSection id="focus" flow="tile">
-        <AsmSectionHead section="focus" title="Program" tone="plain" />
+        <AsmSectionHead
+          section="focus"
+          title="Program"
+          tone="plain"
+          action={{ label: "View full program", href: "/program" }}
+        />
         <span className="asm-anchor" id="agenda" aria-hidden="true" />
         <AsmAgenda
           edition={edition}
