@@ -7,6 +7,7 @@ import seed from "@/content/seed.json";
 import seedNexus from "@/content/seed-nexus.json";
 import seedAssembly from "@/content/seed-assembly.json";
 import type { ContentRepository } from "@/lib/repositories/content-repository";
+import { assemblyContentSchema } from "@/lib/content-schema";
 
 /* ---------- Types ---------- */
 
@@ -353,6 +354,29 @@ export type ContentVariant = "default" | "nexus" | "assembly";
 
 let databaseContentRepository: Promise<ContentRepository> | undefined;
 
+/**
+ * Task 1's Sanity model does not yet expose the full presentation-only
+ * AssemblyContent block. Keep assembly routes usable during the migration by
+ * using the existing validated presentation template and overlaying fields
+ * that are owned by the Sanity edition document.
+ */
+function withSanityAssemblyFallback(content: SummitContent): SummitContent {
+  if (content.assembly) return content;
+  const current = content.editions.find((edition) => edition.isCurrent);
+  const assembly = structuredClone(seedAssembly.assembly) as AssemblyContent;
+  if (current) {
+    assembly.heroKicker = current.tagline;
+    assembly.heroLines = current.name.split(/\s+/).filter(Boolean);
+    if (current.contactEmail) assembly.contact.email = current.contactEmail;
+    if (current.socialLinks) assembly.contact.social = current.socialLinks;
+  }
+  const parsed = assemblyContentSchema.safeParse(assembly);
+  if (!parsed.success) {
+    throw new Error(`Sanity assembly fallback is invalid: ${parsed.error.issues[0]?.message}`);
+  }
+  return { ...content, assembly: parsed.data };
+}
+
 async function getDatabaseContentRepository() {
   if (!databaseContentRepository) {
     databaseContentRepository = Promise.all([
@@ -383,7 +407,8 @@ export async function getSummitContent(
       import("@/lib/sanity/client"),
       import("@/lib/repositories/sanity-content-repository"),
     ]);
-    return createSanityContentRepository(createSanityClient()).getSummitContent();
+    const content = await createSanityContentRepository(createSanityClient()).getSummitContent();
+    return withSanityAssemblyFallback(content);
   }
 
   switch (variant) {

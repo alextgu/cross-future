@@ -96,7 +96,10 @@ describe("Sanity content repository", () => {
 
     const { getSummitContent } = await import("../lib/content");
     const result = await getSummitContent("assembly");
-    expect(result).toBe(sanityContent);
+    expect(result).not.toBe(sanityContent);
+    expect(result.assembly).toBeDefined();
+    const { getAssembly } = await import("../lib/content");
+    expect(() => getAssembly(result)).not.toThrow();
     expect(createClient).toHaveBeenCalledOnce();
     expect(createRepository).toHaveBeenCalledWith(expect.anything());
     expect(getContent).toHaveBeenCalledOnce();

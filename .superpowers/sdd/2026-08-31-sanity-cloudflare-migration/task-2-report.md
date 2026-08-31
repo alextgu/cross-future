@@ -51,3 +51,24 @@ Concerns:
 - `studio/sanity.config.ts` and `studio/schemaTypes/schema.test.ts` retain
   pre-existing Task 1 typecheck diagnostics; they are outside this task's
   files and do not affect the focused or full Vitest runs.
+
+## Review fix round 1
+
+The Sanity branch initially returned no `assembly` block because Task 1's
+schema models the domain records but not the complete presentation-only
+`AssemblyContent` object. That caused `getAssembly()` to throw on every
+assembly route when `CONTENT_SOURCE=sanity` was enabled.
+
+`withSanityAssemblyFallback()` now keeps the existing validated assembly
+template as a migration-safe fallback, overlays the current Sanity edition's
+tagline/name/contact/social fields, validates the resulting block with
+`assemblyContentSchema.safeParse`, and returns it through the Sanity content
+door. Seed and database branches are unchanged. The source-switch regression
+test now calls `getAssembly()` on the Sanity result and asserts it does not
+throw.
+
+Fix validation:
+
+- `PATH=/Users/agu/.nvm/versions/node/v22.23.2/bin:$PATH npm test -- tests/sanity-content-repository.test.ts tests/content-schema.test.ts` — PASS (`10/10`).
+- `PATH=/Users/agu/.nvm/versions/node/v22.23.2/bin:$PATH npm test` — PASS (`30/30` files, `87/87` tests).
+- `git diff --check` — PASS.
