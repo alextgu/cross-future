@@ -10,8 +10,15 @@ const { revalidateTag, revalidatePath, enableDraftMode } = vi.hoisted(() => ({
 vi.mock("next/cache", () => ({ revalidateTag, revalidatePath }));
 vi.mock("server-only", () => ({}));
 vi.mock("next/headers", () => ({
-  draftMode: vi.fn(async () => ({ enable: enableDraftMode })),
+  draftMode: vi.fn(async () => ({ enable: enableDraftMode, isEnabled: true })),
 }));
+vi.mock("next/font/google", () => ({
+  Barlow: () => ({ variable: "font-body" }),
+  Barlow_Semi_Condensed: () => ({ variable: "font-display" }),
+  IBM_Plex_Mono: () => ({ variable: "font-mono" }),
+}));
+vi.mock("@/components/assembly/AsmNav", () => ({ default: () => null }));
+vi.mock("@/components/assembly/AsmFooter", () => ({ default: () => null }));
 
 import { POST as revalidateSanity } from "../app/api/revalidate/sanity/route";
 import { GET as enableDraft } from "../app/api/draft-mode/enable/route";
@@ -100,12 +107,22 @@ describe("draft preview", () => {
   });
 
   it("rejects cross-origin and backslash preview destinations", async () => {
-    for (const destination of ["//evil.example", "/%5C%5Cevil.example"]) {
+    for (const destination of ["//evil.example", "/%5C%5Cevil.example", "/%252f%252fevil.example"]) {
       const response = await enableDraft(new Request(
         `http://localhost/api/draft-mode/enable?secret=preview-secret&slug=${destination}`,
       ));
       expect(response.status).toBe(400);
     }
+  });
+
+  it("fails closed when only the Sanity read token is configured", async () => {
+    vi.stubEnv("SANITY_PREVIEW_SECRET", "");
+    vi.stubEnv("SANITY_API_READ_TOKEN", "server-token");
+    const response = await enableDraft(
+      new Request("http://localhost/api/draft-mode/enable?secret=server-token&slug=/interviews")
+    );
+    expect(response.status).toBe(401);
+    expect(enableDraftMode).not.toHaveBeenCalled();
   });
 });
 
@@ -125,4 +142,24 @@ it("uses draft perspective only for opt-in Sanity reads", async () => {
   const draft = createSanityClient({ draft: true });
   expect(published.config()).toMatchObject({ perspective: "published", useCdn: true });
   expect(draft.config()).toMatchObject({ perspective: "drafts", useCdn: false, token: "server-token" });
+});
+
+it("keeps layout metadata on the published Sanity read during draft preview", async () => {
+  const getSummitContent = vi.fn(async () => ({
+    editions: [{
+      isCurrent: true,
+      seo: { title: "Published title", description: "Published description" },
+      name: "Published edition",
+    }],
+  }));
+  vi.doMock("@/lib/content", () => ({
+    getSummitContent,
+    getCurrentEdition: (content: { editions: unknown[] }) => content.editions[0],
+    getHostOrganization: () => undefined,
+    getAssembly: () => ({}),
+  }));
+  const { generateMetadata } = await import("../app/layout");
+  const metadata = await generateMetadata();
+  expect(metadata.title).toEqual({ default: "Published title", template: "%s — Published edition" });
+  expect(getSummitContent).toHaveBeenCalledWith("assembly");
 });

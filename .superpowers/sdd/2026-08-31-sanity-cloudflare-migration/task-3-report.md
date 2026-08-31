@@ -44,3 +44,14 @@ Addressed all review findings:
 Verification: focused tests 9/9 pass; full Vitest suite 31 files/95 tests pass.
 Typecheck/build remain blocked only by the pre-existing Studio schema diagnostics
 recorded above.
+
+## Review fix round 2
+
+- Preview destination validation now recursively decodes path escapes and
+  rejects normalized protocol-relative paths and backslashes before redirecting.
+- Draft enablement requires `SANITY_PREVIEW_SECRET`; `SANITY_API_READ_TOKEN` is
+  never accepted as a URL credential.
+- Added a real `generateMetadata()` regression test proving draft-mode request
+  state still performs a published Sanity read.
+
+Verification: focused tests 11/11 pass; full Vitest suite 31 files/97 tests pass.
