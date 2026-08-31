@@ -46,4 +46,3 @@ export function preflightResponse(request: Request): Response {
   }
   return response;
 }
-
