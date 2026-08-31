@@ -63,3 +63,29 @@ into the draft.
 Fix-round verification:
 
 - Focused upload/input tests — PASS (2 files, 14 tests)
+
+## Review fix round 2
+
+- The registered Sanity input now receives its configured API origin and
+  dedicated Studio upload bearer (`SANITY_STUDIO_VIDEO_UPLOAD_API_ORIGIN` /
+  `SANITY_STUDIO_UPLOAD_TOKEN`). The Cloudflare Stream API token remains
+  server-only; the route accepts either configured Studio credential while
+  remaining fail-closed when none is set.
+- Direct Stream transfer and exponential polling backoff are both tied to the
+  active AbortController. Unmounts and file replacement invalidate the upload
+  generation, preventing stale completion or error state from mutating the
+  replacement draft.
+- `wrangler.jsonc` declares the `VIDEO_UPLOAD_KV` namespace binding, and the
+  state adapter resolves that binding from the OpenNext Cloudflare runtime
+  context (while retaining the local in-memory test seam). Replace the
+  documented namespace ID placeholder with the provisioned production KV ID.
+
+Fix-round-2 verification:
+
+- `PATH=/Users/agu/.nvm/versions/node/v22.23.2/bin:$PATH npm test -- tests/video-upload.test.ts studio/components/CloudflareVideoInput.test.tsx` — PASS (2 files, 17 tests)
+- `PATH=/Users/agu/.nvm/versions/node/v22.23.2/bin:$PATH npm --prefix studio test` — PASS (1 file, 6 tests)
+- `SANITY_STUDIO_PROJECT_ID=test-project SANITY_STUDIO_DATASET=production PATH=/Users/agu/.nvm/versions/node/v22.23.2/bin:$PATH npm --prefix studio run build` — PASS
+- `PATH=/Users/agu/.nvm/versions/node/v22.23.2/bin:$PATH npm test` — PASS (33 files, 113 tests)
+- `PATH=/Users/agu/.nvm/versions/node/v22.23.2/bin:$PATH npx wrangler deploy --dry-run --outdir /tmp/cross-future-open-next-dry-run` — PASS (reports `VIDEO_UPLOAD_KV` binding)
+- `npm run typecheck` — existing unrelated readonly schema diagnostics only
+- Commit: `83cd12e fix: harden Stream upload runtime wiring`
