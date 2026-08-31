@@ -351,6 +351,7 @@ export interface SummitContent {
 /* ---------- The adapter ---------- */
 
 export type ContentVariant = "default" | "nexus" | "assembly";
+export type ContentOptions = { draft?: boolean };
 
 let databaseContentRepository: Promise<ContentRepository> | undefined;
 
@@ -397,7 +398,8 @@ async function getDatabaseContentRepository() {
  * different document set behind the same shape.
  */
 export async function getSummitContent(
-  variant: ContentVariant = "default"
+  variant: ContentVariant = "default",
+  options: ContentOptions = {},
 ): Promise<SummitContent> {
   if (variant === "assembly" && process.env.CONTENT_SOURCE === "database") {
     return (await getDatabaseContentRepository()).getSummitContent();
@@ -407,7 +409,7 @@ export async function getSummitContent(
       import("@/lib/sanity/client"),
       import("@/lib/repositories/sanity-content-repository"),
     ]);
-    const content = await createSanityContentRepository(createSanityClient()).getSummitContent();
+    const content = await createSanityContentRepository(createSanityClient(options)).getSummitContent();
     return withSanityAssemblyFallback(content);
   }
 

@@ -22,3 +22,25 @@ fetches remain published and Stega-free; Sanity Live is not a dependency.
 
 - The webhook expects Sanity to send explicit `tags`/`paths` (or their singular/route aliases); it does not query Sanity during invalidation, so CDN reads remain deferred until the next published request.
 - Draft preview uses `SANITY_PREVIEW_SECRET` when set, falling back to the server-only `SANITY_API_READ_TOKEN`; no token is exposed to client bundles.
+
+## Review fix round 1
+
+Addressed all review findings:
+
+- Draft-enabled page reads now use Sanity's `drafts` perspective with the
+  server-only read token and CDN disabled; metadata generation remains on the
+  published perspective.
+- Preview redirects normalize and validate same-origin paths, rejecting
+  protocol-relative, encoded/backslash, and cross-origin destinations. A
+  distinct `SANITY_PREVIEW_SECRET` is required; the read token is never accepted
+  in a URL.
+- Webhook verification supports Sanity's timestamped
+  `sanity-webhook-signature: t=...,v1=...` format with bounded replay tolerance,
+  while retaining the legacy header as a fallback. Revalidation waits for a
+  bounded `SANITY_REVALIDATE_DELAY_MS` propagation delay (250 ms default).
+- Added regression tests for current signatures, redirect hardening, draft
+  perspective, and published metadata isolation.
+
+Verification: focused tests 9/9 pass; full Vitest suite 31 files/95 tests pass.
+Typecheck/build remain blocked only by the pre-existing Studio schema diagnostics
+recorded above.

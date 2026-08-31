@@ -8,6 +8,7 @@ const { revalidateTag, revalidatePath, enableDraftMode } = vi.hoisted(() => ({
 }));
 
 vi.mock("next/cache", () => ({ revalidateTag, revalidatePath }));
+vi.mock("server-only", () => ({}));
 vi.mock("next/headers", () => ({
   draftMode: vi.fn(async () => ({ enable: enableDraftMode })),
 }));
@@ -34,6 +35,7 @@ describe("Sanity publish webhook", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     vi.stubEnv("SANITY_REVALIDATE_SECRET", secret);
+    vi.stubEnv("SANITY_REVALIDATE_DELAY_MS", "0");
   });
 
   it("rejects an invalid signature", async () => {
@@ -60,6 +62,20 @@ describe("Sanity publish webhook", () => {
     expect(revalidatePath).toHaveBeenCalledWith("/");
     expect(revalidatePath).toHaveBeenCalledWith("/interviews");
   });
+
+  it("accepts the current timestamped Sanity signature", async () => {
+    const payload = JSON.stringify({ tags: ["sanity:content"] });
+    const timestamp = Math.floor(Date.now() / 1000).toString();
+    const signature = createHmac("sha256", secret)
+      .update(`${timestamp}.${payload}`)
+      .digest("base64url");
+    const response = await revalidateSanity(new Request("http://localhost/api/revalidate/sanity", {
+      method: "POST",
+      headers: { "sanity-webhook-signature": `t=${timestamp},v1=${signature}` },
+      body: payload,
+    }));
+    expect(response.status).toBe(200);
+  });
 });
 
 describe("draft preview", () => {
@@ -82,10 +98,31 @@ describe("draft preview", () => {
     expect(response.headers.get("location")).toBe("http://localhost/interviews");
     expect(enableDraftMode).toHaveBeenCalledOnce();
   });
+
+  it("rejects cross-origin and backslash preview destinations", async () => {
+    for (const destination of ["//evil.example", "/%5C%5Cevil.example"]) {
+      const response = await enableDraft(new Request(
+        `http://localhost/api/draft-mode/enable?secret=preview-secret&slug=${destination}`,
+      ));
+      expect(response.status).toBe(400);
+    }
+  });
 });
 
 it("keeps metadata fetches published and Stega-free", async () => {
   const queries = await import("../lib/sanity/queries");
   expect(queries.SANITY_FETCH_OPTIONS).toMatchObject({ stega: false });
   expect(JSON.stringify(queries.SANITY_FETCH_OPTIONS)).not.toContain("draft");
+});
+
+it("uses draft perspective only for opt-in Sanity reads", async () => {
+  vi.stubEnv("SANITY_PROJECT_ID", "project");
+  vi.stubEnv("SANITY_DATASET", "production");
+  vi.stubEnv("SANITY_API_READ_TOKEN", "server-token");
+  vi.stubEnv("NODE_ENV", "production");
+  const { createSanityClient } = await import("../lib/sanity/client");
+  const published = createSanityClient();
+  const draft = createSanityClient({ draft: true });
+  expect(published.config()).toMatchObject({ perspective: "published", useCdn: true });
+  expect(draft.config()).toMatchObject({ perspective: "drafts", useCdn: false, token: "server-token" });
 });

@@ -12,10 +12,26 @@ export async function GET(request: Request): Promise<Response> {
 
   const destination =
     url.searchParams.get("slug") ?? url.searchParams.get("path") ?? url.searchParams.get("redirect");
-  if (!destination || !destination.startsWith("/") || destination.startsWith("//")) {
+  let destinationUrl: URL | null = null;
+  let pathname = "";
+  try {
+    destinationUrl = new URL(destination ?? "", url);
+    pathname = decodeURIComponent(destinationUrl.pathname);
+  } catch {
+    destinationUrl = null;
+  }
+  if (
+    !destination ||
+    !destination.startsWith("/") ||
+    destination.startsWith("//") ||
+    destination.includes("\\") ||
+    pathname.includes("\\") ||
+    !destinationUrl ||
+    destinationUrl.origin !== url.origin
+  ) {
     return new Response("Missing preview path", { status: 400 });
   }
 
   (await draftMode()).enable();
-  return NextResponse.redirect(new URL(destination, request.url));
+  return NextResponse.redirect(new URL(`${pathname}${destinationUrl.search}${destinationUrl.hash}`, url));
 }

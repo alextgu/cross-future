@@ -12,11 +12,29 @@ function decodeSignature(value: string): Uint8Array | null {
     return bytes;
   }
   try {
-    const binary = atob(normalized);
+    const binary = atob(normalized.replace(/-/g, "+").replace(/_/g, "/").padEnd(Math.ceil(normalized.length / 4) * 4, "="));
     return Uint8Array.from(binary, (character) => character.charCodeAt(0));
   } catch {
     return null;
   }
+}
+
+function currentSanitySignature(value: string | null, body: string, secret: string): Promise<boolean> {
+  if (!value) return Promise.resolve(false);
+  const fields = new Map(value.split(",").map((part) => part.trim().split("=", 2) as [string, string]));
+  const timestamp = fields.get("t");
+  const signature = fields.get("v1");
+  if (!timestamp || !signature || !/^\d+$/.test(timestamp)) return Promise.resolve(false);
+  const now = Math.floor(Date.now() / 1000);
+  const configuredTolerance = Number(process.env.SANITY_WEBHOOK_TOLERANCE_SECONDS ?? 300);
+  const tolerance = Number.isFinite(configuredTolerance)
+    ? Math.min(Math.max(configuredTolerance, 0), 3600)
+    : 300;
+  if (Math.abs(now - Number(timestamp)) > tolerance) return Promise.resolve(false);
+  const bytes = decodeSignature(signature);
+  if (!bytes) return Promise.resolve(false);
+  return crypto.subtle.importKey("raw", encoder.encode(secret), { name: "HMAC", hash: "SHA-256" }, false, ["verify"])
+    .then((key) => crypto.subtle.verify("HMAC", key, bytes as unknown as BufferSource, encoder.encode(`${timestamp}.${body}`) as unknown as BufferSource));
 }
 
 async function isValidSignature(body: string, signature: string | null, secret: string): Promise<boolean> {
@@ -54,7 +72,11 @@ export async function POST(request: Request): Promise<Response> {
   if (!secret) return Response.json({ error: "Revalidation is not configured" }, { status: 500 });
 
   const body = await request.text();
-  if (!(await isValidSignature(body, request.headers.get("x-sanity-signature"), secret))) {
+  const currentSignature = request.headers.get("sanity-webhook-signature");
+  const valid = currentSignature
+    ? await currentSanitySignature(currentSignature, body, secret)
+    : await isValidSignature(body, request.headers.get("x-sanity-signature"), secret);
+  if (!valid) {
     return Response.json({ error: "Invalid signature" }, { status: 401 });
   }
 
@@ -79,6 +101,10 @@ export async function POST(request: Request): Promise<Response> {
   if (uniqueTags.length === 0 && uniquePaths.length === 0) {
     return Response.json({ error: "Payload must include tags or paths" }, { status: 400 });
   }
+
+  const configuredDelay = Number.parseInt(process.env.SANITY_REVALIDATE_DELAY_MS ?? "250", 10);
+  const delayMs = Number.isFinite(configuredDelay) ? Math.min(Math.max(configuredDelay, 0), 10_000) : 250;
+  if (delayMs > 0) await new Promise((resolve) => setTimeout(resolve, delayMs));
 
   for (const tag of uniqueTags) revalidateTag(tag);
   for (const path of uniquePaths) revalidatePath(path);

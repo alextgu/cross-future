@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { draftMode } from "next/headers";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
@@ -18,8 +19,8 @@ type InterviewPageProps = { params: Promise<{ slug: string }> };
 export const dynamicParams = true;
 export const revalidate = 3600;
 
-async function getCard(slug: string) {
-  const content = await getSummitContent("assembly");
+async function getCard(slug: string, draft = false) {
+  const content = await getSummitContent("assembly", { draft });
   const edition = getCurrentEdition(content);
   const faculty = getFaculty(content, edition.slug);
   return getInterviewCardBySlug(content, faculty, slug);
@@ -47,7 +48,7 @@ export async function generateMetadata({ params }: InterviewPageProps): Promise<
 
 export default async function InterviewPage({ params }: InterviewPageProps) {
   const { slug } = await params;
-  const card = await getCard(slug);
+  const card = await getCard(slug, (await draftMode()).isEnabled);
   if (!card) notFound();
 
   const { interview, person, orgLine } = card;

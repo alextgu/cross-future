@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { draftMode } from "next/headers";
 import { Barlow, Barlow_Semi_Condensed, IBM_Plex_Mono } from "next/font/google";
 import {
   getAssembly,
@@ -39,6 +40,8 @@ const mono = IBM_Plex_Mono({
 export const revalidate = 3600;
 
 export async function generateMetadata(): Promise<Metadata> {
+  // Metadata is intentionally always generated from published content, even
+  // while a draft preview is being rendered.
   const content = await getSummitContent("assembly");
   const edition = getCurrentEdition(content);
 
@@ -58,7 +61,13 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const content = await getSummitContent("assembly");
+  let draft = false;
+  try {
+    draft = (await draftMode()).isEnabled;
+  } catch {
+    // Static generation has no request context and is always published.
+  }
+  const content = await getSummitContent("assembly", { draft });
   const edition = getCurrentEdition(content);
   const host = getHostOrganization(content);
   const assembly = getAssembly(content);
