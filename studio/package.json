@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "test": "vitest run --config ./vitest.config.ts",
-    "build": "sanity build"
+    "build": "node ./scripts/require-env.mjs && sanity build"
   },
   "dependencies": {
     "react": "18.3.1",

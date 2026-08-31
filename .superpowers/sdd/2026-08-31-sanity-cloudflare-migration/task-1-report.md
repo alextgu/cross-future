@@ -33,7 +33,7 @@ Concerns:
 ## Review fixes (2026-08-31)
 
 - `migrationKey` remains hidden/read-only for imported records but is now optional, so editors can create and save documents without an importer-supplied key.
-- `sanity.config.ts` and `sanity.cli.ts` now require `SANITY_STUDIO_PROJECT_ID` (or `SANITY_PROJECT_ID`) and `SANITY_STUDIO_DATASET` (or `SANITY_DATASET`); no project or dataset fallback is hardcoded.
+- `sanity.config.ts` and `sanity.cli.ts` now require `SANITY_STUDIO_PROJECT_ID` (or `SANITY_PROJECT_ID`) and `SANITY_STUDIO_DATASET` (or `SANITY_DATASET`); no project or dataset fallback is hardcoded. The Studio build script runs `scripts/require-env.mjs` first so missing variables fail with a non-zero status before invoking Sanity.
 
 Fix validation (commands run from `/Users/agu/Desktop/cross-future`):
 
@@ -42,8 +42,8 @@ Fix validation (commands run from `/Users/agu/Desktop/cross-future`):
 - Command: `SANITY_STUDIO_PROJECT_ID=test-project SANITY_STUDIO_DATASET=production npm --prefix studio run build`
   Output: `✅ Clean output folder` / `✅ Build Sanity Studio`
 - Command: `env -u SANITY_STUDIO_PROJECT_ID -u SANITY_PROJECT_ID -u SANITY_STUDIO_DATASET -u SANITY_DATASET npm --prefix studio run build`
-  Output: `Error reading .../studio/sanity.cli.ts: Missing SANITY_STUDIO_PROJECT_ID (or SANITY_PROJECT_ID) environment variable` (the Sanity CLI still exits zero after reporting this config error; explicit env is required for a usable build).
+  Output: `Missing required Sanity environment variable(s): SANITY_STUDIO_PROJECT_ID (or SANITY_PROJECT_ID), SANITY_STUDIO_DATASET (or SANITY_DATASET)` / `NO_ENV_STATUS=1`.
 
 Fix concern:
 
-- Sanity's CLI reports a missing config environment variable but does not propagate a non-zero exit status; CI/deployment must provide the required variables explicitly as shown above.
+- CI/deployment must provide the required project and dataset variables explicitly as shown above; no defaults are available.
