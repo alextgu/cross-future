@@ -13,6 +13,11 @@ import AsmShell from "@/components/assembly/AsmShell";
 
 type InterviewPageProps = { params: Promise<{ slug: string }> };
 
+// Newly published interviews are rendered on demand and can be evicted by the
+// Sanity publish webhook without requiring a rebuild.
+export const dynamicParams = true;
+export const revalidate = 3600;
+
 async function getCard(slug: string) {
   const content = await getSummitContent("assembly");
   const edition = getCurrentEdition(content);

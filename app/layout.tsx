@@ -34,6 +34,10 @@ const mono = IBM_Plex_Mono({
   display: "swap",
 });
 
+// Keep the shell cacheable while allowing the signed Sanity webhook to evict
+// the layout tag when published edition metadata changes.
+export const revalidate = 3600;
+
 export async function generateMetadata(): Promise<Metadata> {
   const content = await getSummitContent("assembly");
   const edition = getCurrentEdition(content);

@@ -40,6 +40,12 @@ export const legacyRedirects = [
 ] as const;
 
 const nextConfig: NextConfig = {
+  images: {
+    remotePatterns: [
+      { protocol: "https", hostname: "cdn.sanity.io" },
+      { protocol: "https", hostname: "image.sanity.io" },
+    ],
+  },
   outputFileTracingIncludes: {
     "/*": [
       "./node_modules/@libsql/client/lib-esm/web.js",
