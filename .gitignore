@@ -1,6 +1,11 @@
 # dependencies
 /node_modules
 
+# standalone Sanity Studio generated files
+/studio/node_modules/
+/studio/.sanity/
+/studio/dist/
+
 # next.js
 /.next/
 /out/
