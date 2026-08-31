@@ -8,17 +8,23 @@ import {
 const MAX_VIDEO_BYTES = 200 * 1024 * 1024;
 const SESSION_TTL_SECONDS = 30 * 60;
 
-function configuredUploadSecret(): string | undefined {
-  return process.env.SANITY_STUDIO_UPLOAD_SECRET ?? process.env.SANITY_STUDIO_UPLOAD_TOKEN ?? process.env.SANITY_STUDIO_API_TOKEN ?? process.env.SANITY_STUDIO_TOKEN ?? process.env.SANITY_API_WRITE_TOKEN;
+function configuredUploadSecrets(): string[] {
+  return [
+    process.env.SANITY_STUDIO_UPLOAD_TOKEN,
+    process.env.SANITY_STUDIO_UPLOAD_SECRET,
+    process.env.SANITY_STUDIO_API_TOKEN,
+    process.env.SANITY_STUDIO_TOKEN,
+    process.env.SANITY_API_WRITE_TOKEN,
+  ].filter((value): value is string => Boolean(value));
 }
 
 export function isStudioRequestAuthenticated(request: Request): boolean {
-  const configured = configuredUploadSecret();
-  if (!configured) return false;
+  const configured = configuredUploadSecrets();
+  if (configured.length === 0) return false;
   const authorization = request.headers.get("authorization") ?? "";
   const bearer = authorization.match(/^Bearer\s+(.+)$/i)?.[1];
   const supplied = bearer ?? request.headers.get("x-sanity-upload-token") ?? request.headers.get("x-sanity-studio-token") ?? "";
-  return supplied.length > 0 && supplied === configured;
+  return supplied.length > 0 && configured.includes(supplied);
 }
 
 function jsonError(error: string, status: number): Response {

@@ -36,7 +36,13 @@ export default function CloudflareVideoInput(
   const idempotencyKey = useRef<string | null>(null);
   const valueRef = useRef(value);
   const activeRequest = useRef<AbortController | null>(null);
-  useEffect(() => () => activeRequest.current?.abort(), []);
+  const operationRef = useRef(0);
+  const mountedRef = useRef(true);
+  useEffect(() => () => {
+    mountedRef.current = false;
+    operationRef.current += 1;
+    activeRequest.current?.abort();
+  }, []);
   useEffect(() => {
     const next = (props.value ?? {}) as CloudflareVideoValue;
     valueRef.current = next;
@@ -50,21 +56,46 @@ export default function CloudflareVideoInput(
     props.onChange(set(next));
   };
 
-  const upload = async (file: File) => {
+  const sleepWithAbort = (delayMs: number, signal: AbortSignal) => new Promise<void>((resolve, reject) => {
+    if (signal.aborted) {
+      const aborted = new Error("Upload aborted");
+      aborted.name = "AbortError";
+      reject(aborted);
+      return;
+    }
+    const timer = setTimeout(() => {
+      signal.removeEventListener("abort", abort);
+      resolve();
+    }, delayMs);
+    function abort() {
+      clearTimeout(timer);
+      signal.removeEventListener("abort", abort);
+      const aborted = new Error("Upload aborted");
+      aborted.name = "AbortError";
+      reject(aborted);
+    }
+    signal.addEventListener("abort", abort, { once: true });
+  });
+
+  const upload = async (file: File, options: { reuseIdempotency?: boolean } = {}) => {
     selectedFile.current = file;
+    activeRequest.current?.abort();
+    const operation = ++operationRef.current;
+    const controller = new AbortController();
+    activeRequest.current = controller;
+    const isCurrent = () => mountedRef.current && operationRef.current === operation && !controller.signal.aborted;
     setError(null);
     setStatus("uploading");
     setProgress(5);
     const maxBytes = 200 * 1024 * 1024;
     if (!file.type.startsWith("video/") || file.size <= 0 || file.size > maxBytes) {
-      setStatus("failed");
-      setError("Choose a video file smaller than 200 MB.");
+      if (isCurrent()) {
+        setStatus("failed");
+        setError("Choose a video file smaller than 200 MB.");
+      }
       return;
     }
-    if (!idempotencyKey.current) idempotencyKey.current = crypto.randomUUID();
-    activeRequest.current?.abort();
-    const controller = new AbortController();
-    activeRequest.current = controller;
+    if (!options.reuseIdempotency || !idempotencyKey.current) idempotencyKey.current = crypto.randomUUID();
     try {
       const origin = props.apiOrigin ?? (typeof process !== "undefined" ? process.env.NEXT_PUBLIC_VIDEO_UPLOAD_API_ORIGIN : undefined) ?? "";
       const authHeaders: Record<string, string> = props.authToken ? { Authorization: `Bearer ${props.authToken}` } : {};
@@ -76,13 +107,15 @@ export default function CloudflareVideoInput(
       });
       if (!sessionResponse.ok) throw new Error("Unable to create upload session");
       const session = await sessionResponse.json() as { uploadId?: string; uploadUrl?: string; uploadURL?: string };
+      if (!isCurrent()) return;
       if (!session.uploadId || !(session.uploadUrl ?? session.uploadURL)) throw new Error("Upload session was incomplete");
       const uploadUrl = session.uploadUrl ?? session.uploadURL!;
       setProgress(15);
       const form = new FormData();
       form.append("file", file, file.name);
-      const directResponse = await fetch(uploadUrl, { method: "POST", body: form });
+      const directResponse = await fetch(uploadUrl, { method: "POST", body: form, signal: controller.signal });
       if (!directResponse.ok) throw new Error("Video transfer failed");
+      if (!isCurrent()) return;
       setProgress(75);
       let completion: {
         streamUid?: string;
@@ -98,10 +131,12 @@ export default function CloudflareVideoInput(
         });
         if (!completionResponse.ok) throw new Error("Unable to read processing status");
         completion = await completionResponse.json() as typeof completion;
+        if (!isCurrent()) return;
         if (completion?.status === "ready" || completion?.status === "failed") break;
         setStatus(completion?.status ?? "processing");
-        await new Promise((resolve) => setTimeout(resolve, 200 * 2 ** attempt));
+        await sleepWithAbort(200 * 2 ** attempt, controller.signal);
       }
+      if (!isCurrent()) return;
       if (!completion) throw new Error("Unable to read processing status");
       const nextStatus = completion.status ?? "processing";
       setStatus(nextStatus);
@@ -113,8 +148,11 @@ export default function CloudflareVideoInput(
         ...(completion.metadata?.posterUrl ? { posterUrl: completion.metadata.posterUrl } : {}),
       });
     } catch (uploadError) {
+      if (!isCurrent()) return;
       setStatus("failed");
       setError(uploadError instanceof Error ? uploadError.message : "Upload failed");
+    } finally {
+      if (activeRequest.current === controller) activeRequest.current = null;
     }
   };
 
@@ -137,7 +175,7 @@ export default function CloudflareVideoInput(
       {value.streamUid && <div>Stream UID: <code>{value.streamUid}</code></div>}
       {error && <p role="alert">{error}</p>}
       {status === "failed" && selectedFile.current && (
-        <button type="button" onClick={() => void upload(selectedFile.current!)}>Retry upload</button>
+        <button type="button" onClick={() => void upload(selectedFile.current!, { reuseIdempotency: true })}>Retry upload</button>
       )}
       <label>
         Poster URL

@@ -7,5 +7,13 @@
   "assets": {
     "directory": ".open-next/assets",
     "binding": "ASSETS"
-  }
+  },
+  // Provision a KV namespace and replace this value before deploying. The
+  // binding name is consumed by app/api/video-upload/state.ts at runtime.
+  "kv_namespaces": [
+    {
+      "binding": "VIDEO_UPLOAD_KV",
+      "id": "00000000000000000000000000000000"
+    }
+  ]
 }

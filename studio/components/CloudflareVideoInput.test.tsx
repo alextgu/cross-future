@@ -80,3 +80,37 @@ it("shows a retry action after an upload failure", async () => {
   await waitFor(() => expect(screen.getByRole("button", { name: /retry/i })).toBeTruthy());
   expect(screen.getByText(/upload failed/i)).toBeTruthy();
 });
+
+it("aborts a direct transfer when the selected file is replaced", async () => {
+  let finishFirstTransfer!: (response: Response) => void;
+  const firstTransfer = new Promise<Response>((resolve) => { finishFirstTransfer = resolve; });
+  vi.stubGlobal("fetch", vi.fn()
+    .mockResolvedValueOnce(new Response(JSON.stringify({ uploadId: "upload-first", uploadUrl: "https://upload.example/first" }), { status: 201 }))
+    .mockReturnValueOnce(firstTransfer)
+    .mockResolvedValueOnce(new Response(JSON.stringify({ uploadId: "upload-second", uploadUrl: "https://upload.example/second" }), { status: 201 }))
+    .mockResolvedValueOnce(new Response("", { status: 200 }))
+    .mockResolvedValueOnce(new Response(JSON.stringify({ streamUid: "stream-second", status: "ready", metadata: {} }), { status: 200 })));
+  render(<CloudflareVideoInput {...props()} />);
+  const chooser = screen.getByLabelText(/choose video/i);
+  fireEvent.change(chooser, { target: { files: [new File(["first"], "first.mp4", { type: "video/mp4" })] } });
+  await waitFor(() => expect(fetch).toHaveBeenCalledTimes(2));
+  const firstSignal = (vi.mocked(fetch).mock.calls[1][1] as RequestInit).signal as AbortSignal;
+  fireEvent.change(chooser, { target: { files: [new File(["second"], "second.mp4", { type: "video/mp4" })] } });
+  expect(firstSignal.aborted).toBe(true);
+  finishFirstTransfer(new Response("", { status: 200 }));
+  await waitFor(() => expect(screen.getByText(/ready/i)).toBeTruthy());
+  expect(fetch).toHaveBeenCalledTimes(5);
+});
+
+it("cancels a polling backoff on unmount", async () => {
+  vi.stubGlobal("fetch", vi.fn()
+    .mockResolvedValueOnce(new Response(JSON.stringify({ uploadId: "upload-backoff", uploadUrl: "https://upload.example/session" }), { status: 201 }))
+    .mockResolvedValueOnce(new Response("", { status: 200 }))
+    .mockResolvedValueOnce(new Response(JSON.stringify({ streamUid: "stream-backoff", status: "processing", metadata: {} }), { status: 200 })));
+  const view = render(<CloudflareVideoInput {...props()} />);
+  fireEvent.change(screen.getByLabelText(/choose video/i), { target: { files: [new File(["video"], "clip.mp4", { type: "video/mp4" })] } });
+  await waitFor(() => expect(fetch).toHaveBeenCalledTimes(3));
+  view.unmount();
+  await new Promise((resolve) => setTimeout(resolve, 250));
+  expect(fetch).toHaveBeenCalledTimes(3);
+});

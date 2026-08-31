@@ -1,3 +1,5 @@
+import { getCloudflareContext } from "@opennextjs/cloudflare";
+
 export type VideoUploadStatus = "queued" | "processing" | "ready" | "failed";
 
 export interface VideoUploadSession {
@@ -21,7 +23,17 @@ interface KvLike {
 }
 
 function durableStore(): KvLike | null {
-  const value = (globalThis as Record<string, unknown>).VIDEO_UPLOAD_KV;
+  // OpenNext exposes Worker bindings through its request-scoped Cloudflare
+  // context. Keep the global seam for local Vitest fixtures and older worker
+  // adapters, but prefer the real binding when running in production.
+  let value = (globalThis as Record<string, unknown>).VIDEO_UPLOAD_KV;
+  if (!value) {
+    try {
+      value = (getCloudflareContext().env as CloudflareEnv & { VIDEO_UPLOAD_KV?: unknown }).VIDEO_UPLOAD_KV;
+    } catch {
+      // next dev/tests may not have an initialized Cloudflare context.
+    }
+  }
   return value && typeof (value as KvLike).get === "function" && typeof (value as KvLike).put === "function"
     ? value as KvLike
     : null;

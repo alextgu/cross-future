@@ -79,6 +79,27 @@ describe("POST /api/video-upload", () => {
     expect(fetch).toHaveBeenCalledTimes(1);
   });
 
+  it("resolves the KV binding from the OpenNext Cloudflare runtime context in production", async () => {
+    const values = new Map<string, string>();
+    const binding = {
+      get: async (key: string) => values.get(key) ?? null,
+      put: async (key: string, value: string) => { values.set(key, value); },
+    };
+    const contextSymbol = Symbol.for("__cloudflare-context__");
+    Object.defineProperty(globalThis, contextSymbol, { configurable: true, writable: true, value: { env: { VIDEO_UPLOAD_KV: binding } } });
+    vi.stubEnv("NODE_ENV", "production");
+    vi.mocked(fetch).mockResolvedValue(new Response(JSON.stringify({ success: true, result: { uid: "stream-context", uploadURL: "https://upload.example/context" } }), { status: 200 }));
+    try {
+      const first = await createUpload(request("/api/video-upload", { filename: "clip.mp4", size: 100, mimeType: "video/mp4" }, { "Idempotency-Key": "context-key" }));
+      const second = await createUpload(request("/api/video-upload", { filename: "clip.mp4", size: 100, mimeType: "video/mp4" }, { "Idempotency-Key": "context-key" }));
+      expect(first.status).toBe(201);
+      expect(await first.json()).toEqual(await second.json());
+      expect(fetch).toHaveBeenCalledTimes(1);
+    } finally {
+      delete (globalThis as Record<PropertyKey, unknown>)[contextSymbol];
+    }
+  });
+
   it("accepts the common MIME alias used by browser clients", async () => {
     vi.mocked(fetch).mockResolvedValue(new Response(JSON.stringify({ success: true, result: { uid: "stream-uid-alias", uploadURL: "https://upload.example/session-alias" } }), { status: 200 }));
     const response = await createUpload(request("/api/video-upload", { name: "clip.mp4", size: 100, type: "video/mp4" }));
