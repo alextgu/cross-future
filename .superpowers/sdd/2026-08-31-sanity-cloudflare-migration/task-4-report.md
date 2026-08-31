@@ -89,3 +89,23 @@ Fix-round-2 verification:
 - `PATH=/Users/agu/.nvm/versions/node/v22.23.2/bin:$PATH npx wrangler deploy --dry-run --outdir /tmp/cross-future-open-next-dry-run` — PASS (reports `VIDEO_UPLOAD_KV` binding)
 - `npm run typecheck` — existing unrelated readonly schema diagnostics only
 - Commit: `83cd12e fix: harden Stream upload runtime wiring`
+
+## Review fix round 3
+
+- Both upload endpoints now expose strict CORS preflight (`OPTIONS`) and
+  response headers only for the configured Studio origin
+  (`SANITY_STUDIO_ORIGIN`, with explicit compatibility aliases). Other origins
+  receive `403` and no allow-origin header.
+- Upload effects restore their mounted state during setup, so React StrictMode
+  effect replay does not permanently invalidate a newly mounted input.
+- `wrangler.jsonc` retains the all-zero KV namespace ID as an explicit
+  unprovisioned placeholder; production upload remains intentionally blocked
+  with `503` until the owner provisions a real namespace and replaces that ID.
+
+Fix-round-3 verification:
+
+- Focused upload/input tests — PASS (2 files, 21 tests)
+- `PATH=/Users/agu/.nvm/versions/node/v22.23.2/bin:$PATH npm --prefix studio test` — PASS (1 file, 6 tests)
+- `SANITY_STUDIO_PROJECT_ID=test-project SANITY_STUDIO_DATASET=production PATH=/Users/agu/.nvm/versions/node/v22.23.2/bin:$PATH npm --prefix studio run build` — PASS
+- `PATH=/Users/agu/.nvm/versions/node/v22.23.2/bin:$PATH npm test` — PASS (33 files, 118 tests)
+- `npm run typecheck` — existing unrelated readonly schema diagnostics only
