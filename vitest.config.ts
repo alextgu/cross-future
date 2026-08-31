@@ -12,6 +12,9 @@ export default defineConfig({
      build; the test runner has to be told to do it itself. */
   esbuild: { jsx: "automatic" },
   resolve: {
+    /* The standalone Studio owns React 18 for its browser build while the
+       Next.js app owns React 19. Component tests must use one test renderer. */
+    dedupe: ["react", "react-dom"],
     alias: {
       "@": fileURLToPath(new URL(".", import.meta.url)),
     },

@@ -13,6 +13,8 @@ import track from "./documents/track";
 import cloudflareVideo from "./objects/cloudflareVideo";
 import mediaAsset from "./objects/mediaAsset";
 
+export { default as CloudflareVideoInput } from "../components/CloudflareVideoInput";
+
 export const singletonDocumentIds = {
   siteSettings: "siteSettings",
   homePage: "homePage",

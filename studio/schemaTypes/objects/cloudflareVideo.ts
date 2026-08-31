@@ -1,4 +1,5 @@
 import { defineField, defineType } from "sanity";
+import CloudflareVideoInput from "../../components/CloudflareVideoInput";
 
 const statusValues = [
   { title: "Queued", value: "queued" },
@@ -11,6 +12,7 @@ export default defineType({
   name: "cloudflareVideo",
   title: "Cloudflare video",
   type: "object",
+  components: { input: CloudflareVideoInput },
   fields: [
     defineField({
       name: "streamUid",

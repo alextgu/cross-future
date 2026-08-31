@@ -26,6 +26,7 @@ describe("studio schema", () => {
   it("defines the cloudflareVideo object with the approved fields", () => {
     const cloudflareVideo = getSchemaType("cloudflareVideo");
     expect(cloudflareVideo?.type).toBe("object");
+    expect(cloudflareVideo?.components?.input).toBeTypeOf("function");
     expect(cloudflareVideo?.fields?.map((field) => field.name)).toEqual([
       "streamUid",
       "status",
