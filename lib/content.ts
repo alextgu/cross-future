@@ -156,6 +156,7 @@ export interface Interview {
   topics?: string[];
   pullQuote?: string;
   image?: { sourceUrl: string; alt: string; placeholder?: boolean };
+  video?: MediaAsset;
   url?: string;
 }
 
@@ -376,6 +377,13 @@ export async function getSummitContent(
 ): Promise<SummitContent> {
   if (variant === "assembly" && process.env.CONTENT_SOURCE === "database") {
     return (await getDatabaseContentRepository()).getSummitContent();
+  }
+  if (variant === "assembly" && process.env.CONTENT_SOURCE === "sanity") {
+    const [{ createSanityClient }, { createSanityContentRepository }] = await Promise.all([
+      import("@/lib/sanity/client"),
+      import("@/lib/repositories/sanity-content-repository"),
+    ]);
+    return createSanityContentRepository(createSanityClient()).getSummitContent();
   }
 
   switch (variant) {

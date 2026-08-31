@@ -337,6 +337,7 @@ const interviewSchema = z
       })
       .strict()
       .optional(),
+    video: mediaAssetSchema.optional(),
     url: z.string().optional(),
   })
   .strict();
