@@ -1,6 +1,7 @@
 // @vitest-environment jsdom
 
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { StrictMode } from "react";
 import { afterEach, expect, it, vi } from "vitest";
 import CloudflareVideoInput from "./CloudflareVideoInput";
 
@@ -113,4 +114,15 @@ it("cancels a polling backoff on unmount", async () => {
   view.unmount();
   await new Promise((resolve) => setTimeout(resolve, 250));
   expect(fetch).toHaveBeenCalledTimes(3);
+});
+
+it("remains active after React StrictMode effect replay", async () => {
+  vi.stubGlobal("fetch", vi.fn()
+    .mockResolvedValueOnce(new Response(JSON.stringify({ uploadId: "upload-strict", uploadUrl: "https://upload.example/session" }), { status: 201 }))
+    .mockResolvedValueOnce(new Response("", { status: 200 }))
+    .mockResolvedValueOnce(new Response(JSON.stringify({ streamUid: "stream-strict", status: "ready", metadata: {} }), { status: 200 })));
+  render(<StrictMode><CloudflareVideoInput {...props()} /></StrictMode>);
+  fireEvent.change(screen.getByLabelText(/choose video/i), { target: { files: [new File(["video"], "clip.mp4", { type: "video/mp4" })] } });
+  await waitFor(() => expect(screen.getByText(/ready/i)).toBeTruthy());
+  expect(screen.getByText("stream-strict")).toBeTruthy();
 });

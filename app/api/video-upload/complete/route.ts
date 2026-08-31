@@ -1,5 +1,6 @@
 import { getSession, hasDurableVideoUploadStore, saveSession } from "../state";
 import { isStudioRequestAuthenticated } from "../route";
+import { isAllowedStudioOrigin, preflightResponse, withCors } from "../cors";
 
 function jsonError(error: string, status: number): Response {
   return Response.json({ error }, { status });
@@ -24,7 +25,7 @@ function statusOf(result: any): "queued" | "processing" | "ready" | "failed" {
   return "processing";
 }
 
-export async function POST(request: Request): Promise<Response> {
+async function post(request: Request): Promise<Response> {
   if (!isStudioRequestAuthenticated(request)) return jsonError("Unauthorized", 401);
   if (process.env.NODE_ENV === "production" && !hasDurableVideoUploadStore()) return jsonError("Durable video upload state is not configured", 503);
   const body = await bodyOf(request);
@@ -74,6 +75,17 @@ export async function POST(request: Request): Promise<Response> {
   if (idempotencyKey) session.completionResponses.set(idempotencyKey, responseBody);
   await saveSession(session);
   return Response.json(responseBody);
+}
+
+export function OPTIONS(request: Request): Response {
+  return preflightResponse(request);
+}
+
+export async function POST(request: Request): Promise<Response> {
+  if (!isAllowedStudioOrigin(request)) {
+    return withCors(Response.json({ error: "Origin not allowed" }, { status: 403 }), request);
+  }
+  return withCors(await post(request), request);
 }
 
 export { statusOf };

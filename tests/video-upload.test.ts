@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { POST as createUpload } from "../app/api/video-upload/route";
-import { POST as completeUpload } from "../app/api/video-upload/complete/route";
+import { OPTIONS as createUploadOptions, POST as createUpload } from "../app/api/video-upload/route";
+import { OPTIONS as completeUploadOptions, POST as completeUpload } from "../app/api/video-upload/complete/route";
 
 const auth = { Authorization: "Bearer studio-secret", "Content-Type": "application/json" };
 
@@ -25,6 +25,28 @@ afterEach(() => {
 });
 
 describe("POST /api/video-upload", () => {
+  it("allows only the configured Studio origin for CORS preflight", () => {
+    vi.stubEnv("SANITY_STUDIO_ORIGIN", "https://studio.example");
+    const allowed = createUploadOptions(new Request("http://localhost/api/video-upload", { method: "OPTIONS", headers: { Origin: "https://studio.example" } }));
+    expect(allowed.status).toBe(204);
+    expect(allowed.headers.get("Access-Control-Allow-Origin")).toBe("https://studio.example");
+    expect(allowed.headers.get("Access-Control-Allow-Methods")).toContain("POST");
+    const denied = createUploadOptions(new Request("http://localhost/api/video-upload", { method: "OPTIONS", headers: { Origin: "https://evil.example" } }));
+    expect(denied.status).toBe(403);
+  });
+
+  it("adds CORS headers to an authenticated Studio response", async () => {
+    vi.stubEnv("SANITY_STUDIO_ORIGIN", "https://studio.example");
+    vi.mocked(fetch).mockResolvedValue(new Response(JSON.stringify({ success: true, result: { uid: "stream-cors", uploadURL: "https://upload.example/cors" } }), { status: 200 }));
+    const response = await createUpload(new Request("http://localhost/api/video-upload", {
+      method: "POST",
+      headers: { ...auth, Origin: "https://studio.example" },
+      body: JSON.stringify({ filename: "clip.mp4", size: 100, mimeType: "video/mp4" }),
+    }));
+    expect(response.status).toBe(201);
+    expect(response.headers.get("Access-Control-Allow-Origin")).toBe("https://studio.example");
+  });
+
   it("rejects requests without Studio authentication", async () => {
     const response = await createUpload(request("/api/video-upload", { filename: "clip.mp4", size: 100, mimeType: "video/mp4" }, { Authorization: "" }));
     expect(response.status).toBe(401);
@@ -108,6 +130,15 @@ describe("POST /api/video-upload", () => {
 });
 
 describe("POST /api/video-upload/complete", () => {
+  it("supports the same strict CORS preflight on completion", () => {
+    vi.stubEnv("SANITY_STUDIO_ORIGIN", "https://studio.example");
+    const allowed = completeUploadOptions(new Request("http://localhost/api/video-upload/complete", { method: "OPTIONS", headers: { Origin: "https://studio.example" } }));
+    expect(allowed.status).toBe(204);
+    expect(allowed.headers.get("Access-Control-Allow-Origin")).toBe("https://studio.example");
+    const denied = completeUploadOptions(new Request("http://localhost/api/video-upload/complete", { method: "OPTIONS", headers: { Origin: "https://evil.example" } }));
+    expect(denied.status).toBe(403);
+  });
+
   it("returns explicit processing states and metadata", async () => {
     vi.mocked(fetch)
       .mockResolvedValueOnce(new Response(JSON.stringify({ success: true, result: { uid: "stream-uid-789", uploadURL: "https://upload.example/session" } }), { status: 200 }))

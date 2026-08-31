@@ -4,6 +4,7 @@ import {
   saveSession,
   type VideoUploadSession,
 } from "./state";
+import { isAllowedStudioOrigin, preflightResponse, withCors } from "./cors";
 
 const MAX_VIDEO_BYTES = 200 * 1024 * 1024;
 const SESSION_TTL_SECONDS = 30 * 60;
@@ -52,7 +53,7 @@ function validatedInput(body: Record<string, unknown>): { filename: string; size
   return { filename, size, mimeType };
 }
 
-export async function POST(request: Request): Promise<Response> {
+async function post(request: Request): Promise<Response> {
   if (!isStudioRequestAuthenticated(request)) return jsonError("Unauthorized", 401);
   if (process.env.NODE_ENV === "production" && !hasDurableVideoUploadStore()) return jsonError("Durable video upload state is not configured", 503);
   const body = await bodyOf(request);
@@ -111,6 +112,17 @@ export async function POST(request: Request): Promise<Response> {
   };
   await saveSession(session, idempotencyKey, responseBody);
   return Response.json(responseBody, { status: 201 });
+}
+
+export function OPTIONS(request: Request): Response {
+  return preflightResponse(request);
+}
+
+export async function POST(request: Request): Promise<Response> {
+  if (!isAllowedStudioOrigin(request)) {
+    return withCors(Response.json({ error: "Origin not allowed" }, { status: 403 }), request);
+  }
+  return withCors(await post(request), request);
 }
 
 export { MAX_VIDEO_BYTES };

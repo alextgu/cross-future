@@ -38,10 +38,13 @@ export default function CloudflareVideoInput(
   const activeRequest = useRef<AbortController | null>(null);
   const operationRef = useRef(0);
   const mountedRef = useRef(true);
-  useEffect(() => () => {
-    mountedRef.current = false;
-    operationRef.current += 1;
-    activeRequest.current?.abort();
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+      operationRef.current += 1;
+      activeRequest.current?.abort();
+    };
   }, []);
   useEffect(() => {
     const next = (props.value ?? {}) as CloudflareVideoValue;
