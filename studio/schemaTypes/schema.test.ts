@@ -68,4 +68,16 @@ describe("studio schema", () => {
     expect(interview?.fields?.find((field) => field.name === "slug")?.validation).toBeTypeOf("function");
     expect(video?.fields?.find((field) => field.name === "streamUid")?.validation).toBeTypeOf("function");
   });
+
+  it("leaves migration keys optional for editor-created documents", () => {
+    for (const typeName of documentTypeNames) {
+      const migrationKey = getSchemaType(typeName)?.fields?.find(
+        (field) => field.name === "migrationKey"
+      );
+
+      expect(migrationKey?.validation, typeName).toBeUndefined();
+      expect(migrationKey?.hidden, typeName).toBe(true);
+      expect(migrationKey?.readOnly, typeName).toBe(true);
+    }
+  });
 });

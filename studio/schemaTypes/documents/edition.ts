@@ -25,7 +25,6 @@ export default defineType({
       type: "string",
       readOnly: true,
       hidden: true,
-      validation: (Rule: any) => Rule.required(),
     }),
     defineField({
       name: "slug",

@@ -11,7 +11,6 @@ export default defineType({
       type: "string",
       readOnly: true,
       hidden: true,
-      validation: (Rule: any) => Rule.required(),
     }),
     defineField({ name: "siteTitle", title: "Site title", type: "string", validation: (Rule: any) => Rule.required() }),
     defineField({ name: "description", title: "Description", type: "text", rows: 3 }),

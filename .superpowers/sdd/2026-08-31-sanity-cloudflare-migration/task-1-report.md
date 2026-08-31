@@ -29,3 +29,21 @@ Concerns:
 
 - The schema type in `summitDocument.ts` is named `summitDocument`, matching the current Task 1 tests and structure references; the approved prose calls the domain concept “document.”
 - Sanity build emits generated files under `studio/dist`, `.sanity`, and `node_modules`; these remain local and intentionally untracked.
+
+## Review fixes (2026-08-31)
+
+- `migrationKey` remains hidden/read-only for imported records but is now optional, so editors can create and save documents without an importer-supplied key.
+- `sanity.config.ts` and `sanity.cli.ts` now require `SANITY_STUDIO_PROJECT_ID` (or `SANITY_PROJECT_ID`) and `SANITY_STUDIO_DATASET` (or `SANITY_DATASET`); no project or dataset fallback is hardcoded.
+
+Fix validation (commands run from `/Users/agu/Desktop/cross-future`):
+
+- Command: `npm --prefix studio test`
+  Output: `Test Files 1 passed (1)` / `Tests 6 passed (6)`
+- Command: `SANITY_STUDIO_PROJECT_ID=test-project SANITY_STUDIO_DATASET=production npm --prefix studio run build`
+  Output: `✅ Clean output folder` / `✅ Build Sanity Studio`
+- Command: `env -u SANITY_STUDIO_PROJECT_ID -u SANITY_PROJECT_ID -u SANITY_STUDIO_DATASET -u SANITY_DATASET npm --prefix studio run build`
+  Output: `Error reading .../studio/sanity.cli.ts: Missing SANITY_STUDIO_PROJECT_ID (or SANITY_PROJECT_ID) environment variable` (the Sanity CLI still exits zero after reporting this config error; explicit env is required for a usable build).
+
+Fix concern:
+
+- Sanity's CLI reports a missing config environment variable but does not propagate a non-zero exit status; CI/deployment must provide the required variables explicitly as shown above.

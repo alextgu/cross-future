@@ -17,7 +17,6 @@ export default defineType({
       type: "string",
       readOnly: true,
       hidden: true,
-      validation: (Rule: any) => Rule.required(),
     }),
     defineField({ name: "person", title: "Person", type: "reference", to: [{ type: "person" }], validation: (Rule: any) => Rule.required() }),
     defineField({ name: "edition", title: "Edition", type: "reference", to: [{ type: "edition" }], validation: (Rule: any) => Rule.required() }),
