@@ -10,10 +10,16 @@ What was delivered:
 - Schema tests covering the required fields, enums, references, and singleton IDs
 - Studio-local Vitest configuration so `npm --prefix studio test` does not load the parent app's config
 
-Validation:
+Validation (commands run from `/Users/agu/Desktop/cross-future`):
 
-- `npm --prefix studio test` — PASS (5 tests)
-- `npm --prefix studio run build` — PASS
+- Command: `npm --prefix studio test`
+  Output: `Test Files 1 passed (1)` / `Tests 5 passed (5)`
+- Command: `npm --prefix studio run build`
+  Output: `✅ Clean output folder` / `✅ Build Sanity Studio`
+- Command: `npm test`
+  Output: `Test Files 29 passed (29)` / `Tests 80 passed (80)`
+- Command: `git check-ignore -v studio/node_modules studio/.sanity studio/dist`
+  Output: each path is ignored by the corresponding `/studio/.../` rule in `.gitignore`.
 
 Notes:
 
@@ -22,3 +28,4 @@ Notes:
 Concerns:
 
 - The schema type in `summitDocument.ts` is named `summitDocument`, matching the current Task 1 tests and structure references; the approved prose calls the domain concept “document.”
+- Sanity build emits generated files under `studio/dist`, `.sanity`, and `node_modules`; these remain local and intentionally untracked.
