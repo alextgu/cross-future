@@ -8,6 +8,15 @@
     "directory": ".open-next/assets",
     "binding": "ASSETS"
   },
+  // Logical binding only; the D1 database is created and attached by the
+  // hosting owner. Local/tests continue to use the SQLite adapter.
+  "d1_databases": [
+    {
+      "binding": "SUBMISSIONS_DB",
+      "database_name": "cross-future-submissions",
+      "migrations_dir": "drizzle"
+    }
+  ],
   // Provision a KV namespace and replace this value before deploying. The
   // binding name is consumed by app/api/video-upload/state.ts at runtime.
   "kv_namespaces": [
