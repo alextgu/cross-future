@@ -70,6 +70,22 @@ describe("seed to Sanity migration", () => {
     expect(normalized.validationErrors).toEqual([]);
   });
 
+  it("keeps sessions whose code normalizations collide with source-derived suffixes", () => {
+    const colliding = structuredClone(sources);
+    colliding.default.tracks = [{ code: "T1", name: "Track", description: "Track", chainStage: "network" }];
+    colliding.default.sessions = [
+      { code: "S.01", title: "Opening", edition: "2026", track: "T1", startsAt: "2026-01-01T00:00:00Z", endsAt: "2026-01-01T01:00:00Z", room: null, speakers: ["ada"], status: "confirmed" },
+      { code: "S 01", title: "Opening", edition: "2026", track: "T1", startsAt: "2026-01-01T01:00:00Z", endsAt: "2026-01-01T02:00:00Z", room: null, speakers: ["ada"], status: "confirmed" },
+    ];
+
+    const sessions = normalizeSeedContent(colliding).documents.filter((document) => document.type === "session");
+    expect(sessions.map((document) => document.migrationKey)).toEqual(["session:s-01", "session:s-01-default-2"]);
+    expect(sessions.map((document) => document.payload.slug)).toEqual([
+      { _type: "slug", current: "s-01-opening" },
+      { _type: "slug", current: "s-01-opening-default-2" },
+    ]);
+  });
+
   it("reports dry-run counts without reading images or mutating Sanity", async () => {
     const fake = client();
     const readImage = vi.fn();
@@ -81,6 +97,15 @@ describe("seed to Sanity migration", () => {
     expect(fake.assets.upload).not.toHaveBeenCalled();
     expect(fake.create).not.toHaveBeenCalled();
     expect(fake.patch).not.toHaveBeenCalled();
+  });
+
+  it("scopes --only validation errors to the selected document type", async () => {
+    const scoped = structuredClone(sources);
+    scoped.assembly.partners = [{ name: "Invalid partner", slug: "invalid-partner", type: "community", logo: { sourceUrl: "/invalid.svg", alt: "" } }];
+
+    const result = await migrateSeedContent({ sources: scoped, dryRun: true, only: "session" });
+    expect(result.validationErrors).toEqual([]);
+    expect(result.counts).toEqual({ session: 1 });
   });
 
   it("uploads images before upserting documents and resolves references from returned IDs", async () => {

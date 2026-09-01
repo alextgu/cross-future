@@ -101,11 +101,15 @@ function slugify(value: string): string {
     .replace(/^-+|-+$/g, "") || "seed";
 }
 
-function sourceSlug(row: RawRow, type: DocumentType): string {
-  if (typeof row.slug === "string" && row.slug) return slugify(row.slug);
-  if (type === "session") return slugify(`${row.code ?? "session"}-${row.title ?? ""}`);
-  if (type === "interview") return slugify(`${row.person ?? "interview"}-${row.code ?? row.title ?? ""}`);
-  return slugify(String(row.code ?? row.title ?? row.name ?? row.label ?? "seed"));
+function sourceSlug(row: RawRow, type: DocumentType, suffix = ""): string {
+  const slug = typeof row.slug === "string" && row.slug
+    ? slugify(row.slug)
+    : type === "session"
+      ? slugify(`${row.code ?? "session"}-${row.title ?? ""}`)
+      : type === "interview"
+        ? slugify(`${row.person ?? "interview"}-${row.code ?? row.title ?? ""}`)
+        : slugify(String(row.code ?? row.title ?? row.name ?? row.label ?? "seed"));
+  return `${slug}${suffix}`;
 }
 
 function migrationKeyFor(type: DocumentType, row: RawRow): string {
@@ -138,9 +142,9 @@ function media(field: string, value: unknown): Media[] {
   }];
 }
 
-function normalized(type: DocumentType, row: RawRow): NormalizedDocument {
-  const migrationKey = migrationKeyFor(type, row);
+function normalized(type: DocumentType, row: RawRow, migrationKey = migrationKeyFor(type, row)): NormalizedDocument {
   const base = { _type: type, migrationKey };
+  const sessionSuffix = type === "session" ? migrationKey.slice(migrationKeyFor(type, row).length) : "";
   switch (type) {
     case "edition":
       return { type, migrationKey, payload: { ...base, ...fields(row, ["year", "name", "tagline", "thesis", "theme", "startsAt", "endsAt", "timezone", "venue", "registrationUrl", "status", "isCurrent", "seo", "editionNumber", "format", "coordinates", "contactEmail", "socialLinks", "heroFigure", "heroStatement"]), slug: asSlug(sourceSlug(row, type)) }, references: [], media: [] };
@@ -157,7 +161,7 @@ function normalized(type: DocumentType, row: RawRow): NormalizedDocument {
     case "track":
       return { type, migrationKey, payload: { ...base, ...fields(row, ["code", "name", "description", "chainStage"]) }, references: [], media: [] };
     case "session":
-      return { type, migrationKey, payload: { ...base, ...fields(row, ["title", "startsAt", "endsAt", "room", "status", "code", "categoryLabel", "speakerLabel", "description", "outcomes"]), slug: asSlug(sourceSlug(row, type)) }, references: [
+      return { type, migrationKey, payload: { ...base, ...fields(row, ["title", "startsAt", "endsAt", "room", "status", "code", "categoryLabel", "speakerLabel", "description", "outcomes"]), slug: asSlug(sourceSlug(row, type, sessionSuffix)) }, references: [
         { field: "edition", type: "edition", migrationKey: `edition:${slugify(row.edition)}` },
         { field: "track", type: "track", migrationKey: `track:${slugify(row.track)}` },
         { field: "speakers", type: "person", migrationKey: "", many: true },
@@ -178,27 +182,38 @@ function collectionFor(type: DocumentType): string {
   return type === "summitDocument" ? "documents" : `${type}s`;
 }
 
-function mergedRows(sources: SeedSources): Map<DocumentType, RawRow[]> {
+function mergedRows(sources: SeedSources): Map<DocumentType, Map<string, RawRow>> {
   const result = new Map<DocumentType, Map<string, RawRow>>();
+  const sessionKeyBySourceIdentity = new Map<string, string>();
   for (const source of sourceNames) {
     for (const type of documentTypes) {
       const rows = sources[source][collectionFor(type)] ?? [];
       const records = result.get(type) ?? new Map<string, RawRow>();
-      for (const row of rows) {
-        const key = migrationKeyFor(type, row);
+      for (const [index, row] of rows.entries()) {
+        const baseKey = migrationKeyFor(type, row);
+        let key = baseKey;
+        if (type === "session") {
+          const sourceIdentity = String(row.code ?? row.slug ?? row.title ?? "session");
+          const knownKey = sessionKeyBySourceIdentity.get(sourceIdentity);
+          if (knownKey) key = knownKey;
+          else {
+            if (records.has(baseKey)) key = `${baseKey}-${source}-${index + 1}`;
+            sessionKeyBySourceIdentity.set(sourceIdentity, key);
+          }
+        }
         records.set(key, mergeValues(records.get(key) ?? {}, row) as RawRow);
       }
       result.set(type, records);
     }
   }
-  return new Map([...result].map(([type, rows]) => [type, [...rows.values()]]));
+  return result;
 }
 
-function validationErrors(documents: NormalizedDocument[], rows: Map<DocumentType, RawRow[]>): string[] {
+function validationErrors(documents: NormalizedDocument[], rows: Map<DocumentType, Map<string, RawRow>>): string[] {
   const errors: string[] = [];
   const known = new Set(documents.map((document) => document.migrationKey));
   for (const document of documents) {
-    const row = rows.get(document.type)?.find((candidate) => migrationKeyFor(document.type, candidate) === document.migrationKey) ?? {};
+    const row = rows.get(document.type)?.get(document.migrationKey) ?? {};
     for (const reference of document.references) {
       const keys = reference.many
         ? (reference.field === "organizations" ? row.organizations ?? [] : row.speakers ?? []).map((value: string) => `${reference.type}:${slugify(value)}`)
@@ -212,7 +227,8 @@ function validationErrors(documents: NormalizedDocument[], rows: Map<DocumentTyp
 
 export function normalizeSeedContent(sources: SeedSources): { documents: NormalizedDocument[]; validationErrors: string[] } {
   const rows = mergedRows(sources);
-  const documents = documentTypes.flatMap((type) => (rows.get(type) ?? []).map((row) => normalized(type, row)));
+  const documents = documentTypes.flatMap((type) => [...(rows.get(type) ?? new Map<string, RawRow>())]
+    .map(([migrationKey, row]) => normalized(type, row, migrationKey)));
   return { documents, validationErrors: validationErrors(documents, rows) };
 }
 
@@ -291,11 +307,14 @@ export async function migrateSeedContent(options: MigrationOptions = {}): Promis
   const source = options.sources ?? await readSeedSources();
   const normalized = normalizeSeedContent(source);
   const documents = options.only ? normalized.documents.filter((document) => document.type === options.only) : normalized.documents;
+  const scopedValidationErrors = options.only
+    ? normalized.validationErrors.filter((error) => error.startsWith(`${options.only}:`))
+    : normalized.validationErrors;
   const imageSources = [...new Set(documents.flatMap((document) => document.media.map((entry) => entry.sourceUrl)))];
   const counts = countDocuments(documents);
-  if (options.dryRun) return { counts, imageCount: imageSources.length, validationErrors: normalized.validationErrors, created: 0, updated: 0 };
+  if (options.dryRun) return { counts, imageCount: imageSources.length, validationErrors: scopedValidationErrors, created: 0, updated: 0 };
   if (!options.client) throw new Error("A Sanity migration client is required for writes");
-  if (normalized.validationErrors.length) throw new Error(`Seed validation failed: ${normalized.validationErrors.join(", ")}`);
+  if (scopedValidationErrors.length) throw new Error(`Seed validation failed: ${scopedValidationErrors.join(", ")}`);
 
   const readImage = options.readImage ?? defaultReadImage;
   const assetIds = new Map<string, string>();
@@ -305,11 +324,12 @@ export async function migrateSeedContent(options: MigrationOptions = {}): Promis
   }
 
   const ids = new Map<string, string>();
+  const rows = mergedRows(source);
   let created = 0;
   let updated = 0;
   for (const type of importOrder) {
     for (const document of documents.filter((candidate) => candidate.type === type)) {
-      const sourceRow: RawRow = mergedRows(source).get(type)?.find((row) => migrationKeyFor(type, row) === document.migrationKey) ?? {};
+      const sourceRow: RawRow = rows.get(type)?.get(document.migrationKey) ?? {};
       const payload: Record<string, unknown> = { ...document.payload };
       for (const reference of document.references) {
         const keys: string[] = reference.many
