@@ -86,6 +86,44 @@ approval:
 npm run sanity:migrate:seed
 ```
 
+### Importing local videos into Cloudflare Stream
+
+The video migrator inventories the 18 local MP4 sources in
+`/Users/agu/Downloads/cross_future`; it never copies video binaries into this
+repository. Start with the safe, credential-free inventory:
+
+```bash
+npm run sanity:migrate:videos -- --dry-run
+```
+
+Nine person-named files map automatically to Assembly interview codes IV.10
+through IV.18. The other nine files deliberately remain unresolved. Before a
+live run, the owner must provide a JSON object mapping each unresolved source
+filename (or its displayed `video:` migration key) to an existing interview
+code or migration key, for example:
+
+```json
+{
+  "Interview US.mp4": "IV.01",
+  "Ai van.mp4": "interview:ken-perlin-iv-06"
+}
+```
+
+Run the live migration only after those mappings are complete and external
+upload authorization has been granted:
+
+```bash
+npm run sanity:migrate:videos -- --mapping /absolute/path/video-targets.json
+```
+
+The local checkpoint defaults to
+`/Users/agu/Downloads/cross_future/.cross-future-stream-migration.json`, outside
+Git. It records the file identity, TUS upload URL, Stream UID, retry state, and
+whether the real Sanity document ID has been patched. Do not move it into the
+repository. The script uses Cloudflare Stream's authenticated TUS endpoint for
+files over 200 MB, keeps credentials server-side, resumes interrupted uploads,
+and patches `interview.video` only after it receives Stream's stable UID.
+
 `npm run db:setup` applies the SQL migrations and deterministically refreshes
 event content. It never deletes registration or contact submissions. The local
 database lives at `data/cross-future.db` and is ignored by Git.

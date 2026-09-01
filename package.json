@@ -16,6 +16,7 @@
     "db:setup": "npm run db:migrate && npm run db:seed",
     "db:health": "tsx scripts/db-health.ts",
     "sanity:migrate:seed": "tsx scripts/migrate-seed-to-sanity.ts",
+    "sanity:migrate:videos": "tsx scripts/migrate-videos-to-stream.ts",
     "seed:assembly": "node scripts/build-seed-assembly.mjs",
     "placeholders:assembly": "node scripts/build-assembly-placeholders.mjs",
     "generate:assembly": "npm run seed:assembly && npm run placeholders:assembly"
@@ -28,6 +29,7 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "server-only": "^0.0.1",
+    "tus-js-client": "^4.3.1",
     "zod": "^4.4.3"
   },
   "devDependencies": {
