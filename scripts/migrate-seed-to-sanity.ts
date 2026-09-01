@@ -185,6 +185,9 @@ function collectionFor(type: DocumentType): string {
 function mergedRows(sources: SeedSources): Map<DocumentType, Map<string, RawRow>> {
   const result = new Map<DocumentType, Map<string, RawRow>>();
   const sessionKeyBySourceIdentity = new Map<string, string>();
+  const sessionBaseKeys = new Set(sourceNames.flatMap((source) =>
+    (sources[source].sessions ?? []).map((row) => migrationKeyFor("session", row)),
+  ));
   for (const source of sourceNames) {
     for (const type of documentTypes) {
       const rows = sources[source][collectionFor(type)] ?? [];
@@ -197,7 +200,15 @@ function mergedRows(sources: SeedSources): Map<DocumentType, Map<string, RawRow>
           const knownKey = sessionKeyBySourceIdentity.get(sourceIdentity);
           if (knownKey) key = knownKey;
           else {
-            if (records.has(baseKey)) key = `${baseKey}-${source}-${index + 1}`;
+            if (records.has(baseKey)) {
+              const suffix = `${source}-${index + 1}`;
+              key = `${baseKey}-${suffix}`;
+              let sequence = 2;
+              while (records.has(key) || sessionBaseKeys.has(key)) {
+                key = `${baseKey}-${suffix}-${sequence}`;
+                sequence += 1;
+              }
+            }
             sessionKeyBySourceIdentity.set(sourceIdentity, key);
           }
         }
