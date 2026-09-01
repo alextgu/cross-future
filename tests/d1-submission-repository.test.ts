@@ -6,6 +6,8 @@ import {
   type D1PreparedStatement,
 } from "../lib/repositories/d1-submission-repository";
 import { POST as postRegistration } from "../app/api/registrations/route";
+import { createDatabase } from "../db/client";
+import { migrateDatabase } from "../db/migrate";
 
 type Row = Record<string, unknown>;
 
@@ -128,20 +130,102 @@ it("commits registration and contact rows with the existing submission columns",
   expect(db.statements).toHaveLength(4);
 });
 
-it("keeps the schema's indexed email behavior without deduplicating submissions", async () => {
-  const db = new FakeD1();
-  const repository = createD1SubmissionRepository(db);
+it("migrates non-unique email indexes that accept repeat submissions", async () => {
+  const { client, db } = createDatabase(":memory:");
 
-  await repository.createRegistration(registration);
-  await repository.createRegistration({ ...registration, firstName: "Grace" });
+  try {
+    await migrateDatabase(db);
+    await client.execute({
+      sql: `INSERT INTO editions
+        (slug, year, name, tagline, thesis, theme, starts_at, ends_at, timezone, venue, registration_url, status, is_current, seo)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      args: [
+        "2026-assembly",
+        2026,
+        "Assembly",
+        "Future conference",
+        "Building the future",
+        "Future",
+        "2026-08-31T09:00:00.000Z",
+        "2026-08-31T17:00:00.000Z",
+        "UTC",
+        "{}",
+        "https://example.com/register",
+        "published",
+        1,
+        "{}",
+      ],
+    });
 
-  expect(db.registrations).toHaveLength(2);
-  expect(db.registrations.map((row) => row.id)).toEqual([1, 2]);
-  expect(db.registrations.map((row) => row.email)).toEqual([
-    "ada@example.com",
-    "ada@example.com",
-  ]);
-  expect(db.statements.some((sql) => /unique|on conflict/i.test(sql))).toBe(false);
+    await client.execute({
+      sql: `INSERT INTO registrations
+        (edition_slug, first_name, last_name, email, organization, closest, access, status, created_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      args: [
+        "2026-assembly",
+        "Ada",
+        "Lovelace",
+        "ada@example.com",
+        "Analytical Engine Lab",
+        "Research",
+        "",
+        "new",
+        1,
+        "2026-assembly",
+        "Grace",
+        "Hopper",
+        "ada@example.com",
+        "Compiler Lab",
+        "Research",
+        "",
+        "new",
+        2,
+      ],
+    });
+    await client.execute({
+      sql: `INSERT INTO contact_inquiries
+        (edition_slug, first_name, last_name, email, inquiry, message, status, created_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?, ?, ?)`,
+      args: [
+        "2026-assembly",
+        "Ada",
+        "Lovelace",
+        "ada@example.com",
+        "General information",
+        "Please send the programme.",
+        "new",
+        1,
+        "2026-assembly",
+        "Grace",
+        "Hopper",
+        "ada@example.com",
+        "General information",
+        "Please send the programme.",
+        "new",
+        2,
+      ],
+    });
+
+    const registrationIndexes = await client.execute("PRAGMA index_list('registrations')");
+    const contactIndexes = await client.execute("PRAGMA index_list('contact_inquiries')");
+    const registrationCount = await client.execute(
+      "SELECT COUNT(*) AS count FROM registrations WHERE email = 'ada@example.com'"
+    );
+    const contactCount = await client.execute(
+      "SELECT COUNT(*) AS count FROM contact_inquiries WHERE email = 'ada@example.com'"
+    );
+
+    expect(registrationIndexes.rows).toContainEqual(
+      expect.objectContaining({ name: "registrations_email_idx", unique: 0 })
+    );
+    expect(contactIndexes.rows).toContainEqual(
+      expect.objectContaining({ name: "contact_email_idx", unique: 0 })
+    );
+    expect(registrationCount.rows).toEqual([{ count: 2 }]);
+    expect(contactCount.rows).toEqual([{ count: 2 }]);
+  } finally {
+    client.close();
+  }
 });
 
 it("rejects an edition that is not current before inserting", async () => {

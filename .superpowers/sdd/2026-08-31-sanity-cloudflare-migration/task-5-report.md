@@ -34,3 +34,16 @@ records were provisioned or changed.
   succeed.
 - If a production runtime is started without `SUBMISSIONS_DB`, both routes fail
   closed with HTTP 503 rather than attempting a local filesystem write.
+
+## Review fix round 1
+
+Replaced the fake-D1 duplicate-email assertion with a migration-backed test.
+The test applies the checked-in migrations to an in-memory SQLite database,
+verifies both email indexes are non-unique, and proves duplicate-email
+registration and contact rows are accepted by those migrated tables.
+
+- Test file: `tests/d1-submission-repository.test.ts`
+- Command: `npx --yes node@22 node_modules/vitest/vitest.mjs run tests/d1-submission-repository.test.ts`
+- Result: PASS — 1 test file, 6 tests passed. The repository's default Node
+  20.17 runtime cannot load its checked-in Vitest/Vite dependency
+  (`ERR_REQUIRE_ESM`), so Node 22 was used only for this verification command.
