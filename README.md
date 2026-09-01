@@ -59,6 +59,33 @@ the same `SummitContent` shape. Page components do not change.
 
 ## Local backend and production transfer
 
+### Importing checked-in seed content into Sanity
+
+Preview the deterministic import locally before authorizing any Sanity writes:
+
+```bash
+npm run sanity:migrate:seed -- --dry-run
+```
+
+The dry run reads all three checked-in seeds, merges equivalent domain records
+with `assembly > nexus > default` non-empty-field precedence, reports document
+and image counts, and does not read image files or contact Sanity. It excludes
+presentation-only seed blocks. To import one document type, add `--only person`
+(or another supported type) to either command.
+
+An authorized live import requires server-only `SANITY_PROJECT_ID`,
+`SANITY_DATASET`, and `SANITY_API_WRITE_TOKEN`. The write token must have
+content write and asset upload access; never expose it in browser variables or
+commit it. The importer uploads seed images to Sanity assets first, then looks
+up each ordinary document by `migrationKey`, creates it when absent, or patches
+the returned real Sanity ID when present. It never deletes documents and never
+assigns document `_id` values. Run the live command only after explicit owner
+approval:
+
+```bash
+npm run sanity:migrate:seed
+```
+
 `npm run db:setup` applies the SQL migrations and deterministically refreshes
 event content. It never deletes registration or contact submissions. The local
 database lives at `data/cross-future.db` and is ignored by Git.

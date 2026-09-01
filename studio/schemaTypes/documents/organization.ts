@@ -42,7 +42,7 @@ export default defineType({
       options: { list: organizationTypes },
       validation: (Rule: any) => Rule.required().valid(...organizationTypes.map((item) => item.value)),
     }),
-    defineField({ name: "url", title: "URL", type: "url", validation: (Rule: any) => Rule.required() }),
+    defineField({ name: "url", title: "URL", type: "url" }),
     defineField({ name: "country", title: "Country", type: "string", validation: (Rule: any) => Rule.required() }),
   ],
 });

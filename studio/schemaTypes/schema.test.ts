@@ -65,7 +65,7 @@ describe("studio schema", () => {
     const video = getSchemaType("cloudflareVideo");
 
     expect(edition?.fields?.find((field) => field.name === "slug")?.validation).toBeTypeOf("function");
-    expect(edition?.fields?.find((field) => field.name === "status")?.options?.list).toBeTruthy();
+    expect((edition?.fields?.find((field) => field.name === "status")?.options as { list?: unknown[] } | undefined)?.list).toBeTruthy();
     expect(interview?.fields?.find((field) => field.name === "slug")?.validation).toBeTypeOf("function");
     expect(video?.fields?.find((field) => field.name === "streamUid")?.validation).toBeTypeOf("function");
   });
@@ -80,5 +80,16 @@ describe("studio schema", () => {
       expect(migrationKey?.hidden, typeName).toBe(true);
       expect(migrationKey?.readOnly, typeName).toBe(true);
     }
+  });
+
+  it("allows the source partner categories and optional organization and partner URLs", () => {
+    const partner = getSchemaType("partner");
+    const organization = getSchemaType("organization");
+    const partnerOptions = partner?.fields?.find((field) => field.name === "type")?.options as { list?: { value: string }[] } | undefined;
+    const partnerValues = partnerOptions?.list?.map((item) => item.value);
+
+    expect(partnerValues).toEqual(["community", "energy", "infrastructure", "academic", "ecosystem", "industry"]);
+    expect(partner?.fields?.find((field) => field.name === "url")?.validation).toBeUndefined();
+    expect(organization?.fields?.find((field) => field.name === "url")?.validation).toBeUndefined();
   });
 });

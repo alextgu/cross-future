@@ -66,6 +66,16 @@ describe("Sanity content repository", () => {
     expect(content.appearances).toHaveLength(1);
   });
 
+  it("maps absent optional organization and partner URLs to the frontend empty-string contract", async () => {
+    const fixture = structuredClone(sanityContentFixture) as unknown as SanityContentDocument;
+    delete (fixture.organizations![0] as Record<string, unknown>).url;
+    delete (fixture.partners![0] as Record<string, unknown>).url;
+
+    const content = await createSanityContentRepository(fetcher(fixture)).getSummitContent();
+    expect(content.organizations[0].url).toBe("");
+    expect(content.partners[0].url).toBe("");
+  });
+
   it("rejects invalid mapped content at the Zod boundary", async () => {
     const fixture = structuredClone(sanityContentFixture);
     (fixture.editions[0] as unknown as Record<string, unknown>).year = "not-a-year";

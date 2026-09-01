@@ -264,7 +264,7 @@ export function createSanityContentRepository(client: SanityClientLike): Content
         shortName: row.shortName,
         slug: slugOf(row.slug),
         type: row.type,
-        url: row.url,
+        url: row.url ?? "",
         country: row.country,
       } as unknown as Organization));
       const people = (source.people ?? []).map(mapPerson);
@@ -287,7 +287,7 @@ export function createSanityContentRepository(client: SanityClientLike): Content
           name: row.name,
           slug: slugOf(row.slug),
           logo: logo ? { sourceUrl: logo.src, alt: logo.alt } : undefined,
-          url: row.url,
+          url: row.url ?? "",
           type: row.type,
         } as unknown as Partner;
       });

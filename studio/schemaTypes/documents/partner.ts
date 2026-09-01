@@ -4,6 +4,9 @@ const partnerTypes = [
   { title: "Community", value: "community" },
   { title: "Energy", value: "energy" },
   { title: "Infrastructure", value: "infrastructure" },
+  { title: "Academic", value: "academic" },
+  { title: "Ecosystem", value: "ecosystem" },
+  { title: "Industry", value: "industry" },
 ];
 
 const slugValidation = (Rule: any) =>
@@ -27,7 +30,7 @@ export default defineType({
     defineField({ name: "name", title: "Name", type: "string" }),
     defineField({ name: "slug", title: "Slug", type: "slug", options: { source: "name" }, validation: slugValidation }),
     defineField({ name: "logo", title: "Logo", type: "mediaAsset", validation: (Rule: any) => Rule.required() }),
-    defineField({ name: "url", title: "URL", type: "url", validation: (Rule: any) => Rule.required() }),
+    defineField({ name: "url", title: "URL", type: "url" }),
     defineField({
       name: "type",
       title: "Type",
