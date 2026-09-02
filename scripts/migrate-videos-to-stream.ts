@@ -11,17 +11,17 @@ export const TUS_CHUNK_SIZE = 52_428_800;
 const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const defaultCheckpointPath = path.join(LOCAL_VIDEO_DIRECTORY, ".cross-future-stream-migration.json");
 
-const namedInterviewTargets = [
-  { person: "Chris Smith", code: "IV.10" },
-  { person: "James Elder", code: "IV.11" },
-  { person: "Miryam Lazarte", code: "IV.12" },
-  { person: "Maria Parysz", code: "IV.13" },
-  { person: "Nicole Troster", code: "IV.14" },
-  { person: "Joseph Turcotte", code: "IV.15" },
-  { person: "Pui Sai Lau", code: "IV.16" },
-  { person: "Yang Wang", code: "IV.17" },
-  { person: "Rasoul Yousef", code: "IV.18" },
-] as const;
+const fixedVideoTargets: Record<string, { code: string; person: string }> = {
+  "01_SHORT_YangWang_Horizontal.mp4": { code: "IV.17", person: "Yang Wang" },
+  "02_SHORT_ChrisSmith_AMD_Horizontal.mp4": { code: "IV.10", person: "Chris Smith" },
+  "02_SHORT_MariaParysz_Horizontal.mp4": { code: "IV.13", person: "Maria Parysz" },
+  "02_SHORT_NicoleTroster_Horizontal.mp4": { code: "IV.14", person: "Nicole Troster" },
+  "02_SHORT_PuiSaiLau_Horizontal.mp4": { code: "IV.16", person: "Pui Sai Lau" },
+  "03_SHORT_RasoulYousef_Horizontal.mp4": { code: "IV.18", person: "Rasoul Yousef" },
+  "04_SHORT_JamesElder_Horizontal.mp4": { code: "IV.11", person: "James Elder" },
+  "04_SHORT_JosephTurcotte_Horizontal.mp4": { code: "IV.15", person: "Joseph Turcotte" },
+  "05_SHORT_MiryamLazarte_Horizontal.mp4": { code: "IV.12", person: "Miryam Lazarte" },
+};
 
 export type VideoSource = {
   fileName: string;
@@ -81,7 +81,7 @@ export type VideoMigrationOptions = {
   client?: SanityVideoClient;
 };
 
-type TusCredentials = { accountId: string; apiToken: string };
+export type TusCredentials = { accountId: string; apiToken: string };
 
 function normalize(value: string): string {
   return value.normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "");
@@ -124,13 +124,50 @@ export async function discoverRepositoryVideoFixtures(root = repositoryRoot): Pr
 
 export function mapVideoTargets(videos: VideoSource[], externalMappings: Record<string, string> = {}): VideoTarget[] {
   return videos.map((source) => {
+    const fixed = fixedVideoTargets[source.fileName];
+    const hasOverride = Object.hasOwn(externalMappings, source.fileName) || Object.hasOwn(externalMappings, source.migrationKey);
     const override = externalMappings[source.fileName] ?? externalMappings[source.migrationKey];
-    if (override) return { source, target: override };
-    const fileIdentity = normalize(path.parse(source.fileName).name);
-    const matched = namedInterviewTargets.filter((candidate) => fileIdentity.includes(normalize(candidate.person)));
-    if (matched.length !== 1) return { source };
-    return { source, target: matched[0].code, person: matched[0].person };
+    if (fixed) {
+      if (hasOverride) throw new Error(`External mapping cannot override fixed target for ${source.fileName}`);
+      return { source, target: fixed.code, person: fixed.person };
+    }
+    return override ? { source, target: override } : { source };
   });
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return Boolean(value) && typeof value === "object" && !Array.isArray(value);
+}
+
+function isNonEmptyString(value: unknown): value is string {
+  return typeof value === "string" && value.trim().length > 0;
+}
+
+function hasOnlyKeys(value: Record<string, unknown>, allowed: string[]): boolean {
+  return Object.keys(value).every((key) => allowed.includes(key));
+}
+
+function validCheckpointEntry(value: unknown): value is CheckpointEntry {
+  if (!isRecord(value) || !isRecord(value.source)) return false;
+  const source = value.source;
+  if (!hasOnlyKeys(value, ["source", "target", "status", "attempts", "tusUploadUrl", "streamUid", "sanityId", "sanityPatched", "error"])
+    || !hasOnlyKeys(source, ["fileName", "filePath", "bytes", "mtimeMs"])
+    || !isNonEmptyString(source.fileName) || !isNonEmptyString(source.filePath)
+    || typeof source.bytes !== "number" || !Number.isSafeInteger(source.bytes) || source.bytes <= 0
+    || typeof source.mtimeMs !== "number" || !Number.isFinite(source.mtimeMs) || source.mtimeMs < 0
+    || !isNonEmptyString(value.target)
+    || !["uploading", "uploaded", "failed", "completed"].includes(String(value.status))
+    || typeof value.attempts !== "number" || !Number.isSafeInteger(value.attempts) || value.attempts < 0) return false;
+  if (value.tusUploadUrl !== undefined && !isNonEmptyString(value.tusUploadUrl)) return false;
+  if (value.streamUid !== undefined && !isNonEmptyString(value.streamUid)) return false;
+  if (value.sanityId !== undefined && !isNonEmptyString(value.sanityId)) return false;
+  if (value.sanityPatched !== undefined && typeof value.sanityPatched !== "boolean") return false;
+  if (value.error !== undefined && typeof value.error !== "string") return false;
+  if (value.tusUploadUrl && !value.streamUid) return false;
+  if (value.sanityPatched && !value.streamUid) return false;
+  if (value.status === "uploaded" && !value.streamUid) return false;
+  if (value.status === "completed" && (!value.streamUid || value.sanityPatched !== true)) return false;
+  return true;
 }
 
 async function readCheckpoint(checkpointPath: string): Promise<Checkpoint> {
@@ -143,10 +180,11 @@ async function readCheckpoint(checkpointPath: string): Promise<Checkpoint> {
   }
   try {
     const parsed: unknown = JSON.parse(raw);
-    if (!parsed || typeof parsed !== "object" || (parsed as any).version !== 1 || !(parsed as any).entries || typeof (parsed as any).entries !== "object") {
+    if (!isRecord(parsed) || parsed.version !== 1 || !isRecord(parsed.entries)
+      || !Object.entries(parsed.entries).every(([key, entry]) => isNonEmptyString(key) && validCheckpointEntry(entry))) {
       throw new Error("invalid checkpoint shape");
     }
-    return parsed as Checkpoint;
+    return { version: 1, entries: parsed.entries as Record<string, CheckpointEntry> };
   } catch (error) {
     throw new Error(`Migration checkpoint is corrupt at ${checkpointPath}: ${error instanceof Error ? error.message : "invalid JSON"}`);
   }
@@ -169,12 +207,14 @@ function altFor(target: VideoTarget): string {
 }
 
 async function resolveSanityId(client: SanityVideoClient, target: string): Promise<string> {
-  const document = await client.fetch<{ _id?: string } | null>(
-    '*[_type == "interview" && (migrationKey == $target || code == $target)][0]{_id}',
+  const documents = await client.fetch<Array<{ _id?: string }>>(
+    '*[_type == "interview" && (migrationKey == $target || code == $target)]{_id}',
     { target },
   );
-  if (!document?._id) throw new Error(`No Sanity interview found for target ${target}`);
-  return document._id;
+  if (!Array.isArray(documents) || documents.length !== 1 || !documents[0]?._id) {
+    throw new Error(`Expected exactly one Sanity interview for target ${target}`);
+  }
+  return documents[0]._id;
 }
 
 function checkpointOutsideRepository(checkpointPath: string): void {
@@ -213,7 +253,13 @@ export async function migrateVideos(options: VideoMigrationOptions = {}): Promis
 
   for (const target of targets) {
     const existing = checkpoint.entries[target.source.migrationKey];
-    const entry = existing && sameSource(existing, target.source) && existing.target === target.target ? existing : entryFor(target);
+    if (existing && !sameSource(existing, target.source)) {
+      throw new Error(`Checkpoint source identity changed for ${target.source.migrationKey}; reconcile or reset the local checkpoint explicitly`);
+    }
+    if (existing && existing.target !== target.target) {
+      throw new Error(`Checkpoint target changed for ${target.source.migrationKey}; reconcile or reset the local checkpoint explicitly`);
+    }
+    const entry = existing ?? entryFor(target);
     checkpoint.entries[target.source.migrationKey] = entry;
     entries.set(target, entry);
   }
@@ -264,30 +310,31 @@ export async function migrateVideos(options: VideoMigrationOptions = {}): Promis
   return result;
 }
 
-export function createTusUploader(credentials: TusCredentials): StreamUploader {
-  const endpoint = `https://api.cloudflare.com/client/v4/accounts/${encodeURIComponent(credentials.accountId)}/stream?direct_user=true`;
+export function createTusUploader(credentials: TusCredentials, options: { endpoint?: string } = {}): StreamUploader {
+  const endpoint = options.endpoint ?? `https://api.cloudflare.com/client/v4/accounts/${encodeURIComponent(credentials.accountId)}/stream?direct_user=true`;
   return async (source, checkpoint, persist) => new Promise<string>((resolve, reject) => {
     let streamUid = checkpoint.streamUid;
-    const recordUid = async (response: { getHeader(name: string): string | undefined }) => {
+    const recordCreation = async (request: { getMethod(): string; getURL(): string }, response: { getHeader(name: string): string | undefined }) => {
+      if (request.getMethod() !== "POST") return;
+      const location = response.getHeader("Location");
       const candidate = response.getHeader("stream-media-id") ?? response.getHeader("Stream-Media-Id");
-      if (candidate && candidate !== streamUid) {
-        streamUid = candidate;
-        await persist({ ...(checkpoint.tusUploadUrl ? { tusUploadUrl: checkpoint.tusUploadUrl } : {}), streamUid });
-      }
+      if (!location) return;
+      if (!isNonEmptyString(candidate)) throw new Error("Stream creation did not return the required stream-media-id header");
+      const tusUploadUrl = new URL(location, request.getURL()).toString();
+      await persist({ tusUploadUrl, streamUid: candidate });
+      streamUid = candidate;
     };
     const upload = new Upload(createReadStream(source.filePath), {
       ...(checkpoint.tusUploadUrl ? { uploadUrl: checkpoint.tusUploadUrl } : { endpoint }),
       uploadSize: source.bytes,
       chunkSize: TUS_CHUNK_SIZE,
       retryDelays: [0, 1_000, 3_000, 10_000],
+      onShouldRetry: (error) => !error.causingError?.message.includes("stream-media-id"),
       headers: { Authorization: `Bearer ${credentials.apiToken}` },
       metadata: { filename: source.fileName, filetype: "video/mp4" },
       storeFingerprintForResuming: false,
       removeFingerprintOnSuccess: true,
-      onUploadUrlAvailable: () => {
-        if (upload.url) void persist({ tusUploadUrl: upload.url, ...(streamUid ? { streamUid } : {}) });
-      },
-      onAfterResponse: async (_request, response) => recordUid(response),
+      onAfterResponse: async (request, response) => recordCreation(request, response),
       onSuccess: () => streamUid ? resolve(streamUid) : reject(new Error("Stream did not return the required stream-media-id header")),
       onError: reject,
     });

@@ -1,9 +1,11 @@
 import { mkdtemp, readFile, stat, writeFile } from "node:fs/promises";
+import { createServer } from "node:http";
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it, vi } from "vitest";
 import {
   discoverVideoSources,
+  createTusUploader,
   mapVideoTargets,
   migrateVideos,
   type SanityVideoClient,
@@ -31,7 +33,7 @@ async function fixtureSources(names: readonly string[] = namedFiles): Promise<Vi
 
 function sanityClient(ids: Record<string, string> = {}): SanityVideoClient & { patches: Array<{ id: string; value: Record<string, unknown> }> } {
   const patches: Array<{ id: string; value: Record<string, unknown> }> = [];
-  const fetch = vi.fn(async (_query: string, params?: Record<string, string>) => ({ _id: ids[params?.target ?? ""] }));
+  const fetch = vi.fn(async (_query: string, params?: Record<string, string>) => [{ _id: ids[params?.target ?? ""] }]);
   return {
     patches,
     fetch: fetch as unknown as SanityVideoClient["fetch"],
@@ -56,7 +58,7 @@ describe("video to Stream migration", () => {
     expect(videos.reduce((total, video) => total + video.bytes, 0)).toBe(10);
   });
 
-  it("maps only exact normalized person-name filenames to the approved Assembly interview codes", async () => {
+  it("maps only the nine exact approved filenames to the Assembly interview codes", async () => {
     const targets = mapVideoTargets(await fixtureSources());
 
     expect(Object.fromEntries(targets.map((target) => [target.source.fileName, target.target]))).toEqual({
@@ -72,17 +74,20 @@ describe("video to Stream migration", () => {
     });
   });
 
+  it("does not infer targets from a person-name substring and rejects overrides of a fixed file", async () => {
+    const sources = await fixtureSources(["Chris Smith outtake.mp4", "02_SHORT_ChrisSmith_AMD_Horizontal.mp4"]);
+    const nearMatch = sources.find((source) => source.fileName === "Chris Smith outtake.mp4")!;
+    const fixed = sources.find((source) => source.fileName === "02_SHORT_ChrisSmith_AMD_Horizontal.mp4")!;
+
+    expect(mapVideoTargets([nearMatch])[0].target).toBeUndefined();
+    expect(() => mapVideoTargets([fixed], { [fixed.migrationKey]: "IV.99" })).toThrow("cannot override fixed target");
+  });
+
   it("leaves generic filenames unresolved unless an explicit external mapping supplies a real target", async () => {
     const [generic] = await fixtureSources(["Interview US.mp4"]);
 
     expect(mapVideoTargets([generic])[0].target).toBeUndefined();
     expect(mapVideoTargets([generic], { "Interview US.mp4": "IV.10" })[0].target).toBe("IV.10");
-  });
-
-  it("lets an explicit mapping override an automatic person-name target", async () => {
-    const [named] = await fixtureSources(["02_SHORT_ChrisSmith_AMD_Horizontal.mp4"]);
-
-    expect(mapVideoTargets([named], { [named.migrationKey]: "interview:another-real-target" })[0].target).toBe("interview:another-real-target");
   });
 
   it("reports unresolved targets in dry run without checkpoints, uploads, or Sanity reads", async () => {
@@ -164,5 +169,194 @@ describe("video to Stream migration", () => {
 
     expect(client.fetch).toHaveBeenCalledWith(expect.stringContaining("migrationKey == $target || code == $target"), { target: "IV.10" });
     expect(client.patches[0]?.id).toBe("actual-document-id");
+  });
+
+  it("rejects a corrupt checkpoint entry before any upload", async () => {
+    const [video] = await fixtureSources(["02_SHORT_ChrisSmith_AMD_Horizontal.mp4"]);
+    const checkpointPath = path.join(os.tmpdir(), `video-migration-${crypto.randomUUID()}.json`);
+    await writeFile(checkpointPath, JSON.stringify({ version: 1, entries: { [video.migrationKey]: { source: {}, target: "IV.10", status: "bad" } } }));
+    const uploader = vi.fn<StreamUploader>();
+
+    await expect(migrateVideos({ videos: [video], checkpointPath, upload: uploader, client: sanityClient({ "IV.10": "real-id" }) }))
+      .rejects.toThrow("Migration checkpoint is corrupt");
+    expect(uploader).not.toHaveBeenCalled();
+  });
+
+  it("rejects an otherwise-valid checkpoint entry with an unknown field", async () => {
+    const [video] = await fixtureSources(["02_SHORT_ChrisSmith_AMD_Horizontal.mp4"]);
+    const checkpointPath = path.join(os.tmpdir(), `video-migration-${crypto.randomUUID()}.json`);
+    await writeFile(checkpointPath, JSON.stringify({
+      version: 1,
+      entries: {
+        [video.migrationKey]: {
+          source: { fileName: video.fileName, filePath: video.filePath, bytes: video.bytes, mtimeMs: video.mtimeMs },
+          target: "IV.10", status: "failed", attempts: 1, unexpected: true,
+        },
+      },
+    }));
+
+    await expect(migrateVideos({ videos: [video], checkpointPath, upload: vi.fn<StreamUploader>(), client: sanityClient({ "IV.10": "real-id" }) }))
+      .rejects.toThrow("Migration checkpoint is corrupt");
+  });
+
+  it("fails closed when a checkpointed migration key has a changed source identity", async () => {
+    const [video] = await fixtureSources(["02_SHORT_ChrisSmith_AMD_Horizontal.mp4"]);
+    const checkpointPath = path.join(os.tmpdir(), `video-migration-${crypto.randomUUID()}.json`);
+    await writeFile(checkpointPath, JSON.stringify({
+      version: 1,
+      entries: {
+        [video.migrationKey]: {
+          source: { fileName: video.fileName, filePath: video.filePath, bytes: video.bytes + 1, mtimeMs: video.mtimeMs },
+          target: "IV.10", status: "failed", attempts: 1, tusUploadUrl: "https://uploads.example/resume", streamUid: "uid-kept-safe",
+        },
+      },
+    }));
+    const uploader = vi.fn<StreamUploader>();
+
+    await expect(migrateVideos({ videos: [video], checkpointPath, upload: uploader, client: sanityClient({ "IV.10": "real-id" }) }))
+      .rejects.toThrow(`Checkpoint source identity changed for ${video.migrationKey}`);
+    expect(uploader).not.toHaveBeenCalled();
+  });
+
+  it("requires exactly one real Sanity interview target before upload", async () => {
+    const [video] = await fixtureSources(["02_SHORT_ChrisSmith_AMD_Horizontal.mp4"]);
+    const client: SanityVideoClient = {
+      fetch: async () => [{ _id: "first" }, { _id: "second" }] as any,
+      patch: () => ({ set: () => ({ commit: async () => undefined }) }),
+    };
+    const uploader = vi.fn<StreamUploader>();
+
+    await expect(migrateVideos({ videos: [video], checkpointPath: path.join(os.tmpdir(), `video-migration-${crypto.randomUUID()}.json`), upload: uploader, client }))
+      .rejects.toThrow("Expected exactly one Sanity interview for target IV.10");
+    expect(uploader).not.toHaveBeenCalled();
+  });
+
+  it("resumes a failed Sanity patch from its persisted Stream UID without re-uploading", async () => {
+    const [video] = await fixtureSources(["02_SHORT_ChrisSmith_AMD_Horizontal.mp4"]);
+    const checkpointPath = path.join(os.tmpdir(), `video-migration-${crypto.randomUUID()}.json`);
+    const client = sanityClient({ "IV.10": "real-sanity-id" });
+    let patchAttempt = 0;
+    client.patch = vi.fn((id: string) => ({
+      set: (value: Record<string, unknown>) => ({
+        commit: async () => {
+          patchAttempt += 1;
+          if (patchAttempt === 1) throw new Error("Sanity temporarily unavailable");
+          client.patches.push({ id, value });
+        },
+      }),
+    }));
+    const uploader = vi.fn<StreamUploader>(async () => "uid-after-upload");
+
+    await expect(migrateVideos({ videos: [video], checkpointPath, upload: uploader, client })).rejects.toThrow("Sanity temporarily unavailable");
+    await migrateVideos({ videos: [video], checkpointPath, upload: uploader, client });
+
+    expect(uploader).toHaveBeenCalledTimes(1);
+    expect(client.patches).toHaveLength(1);
+  });
+
+  it("persists the TUS creation URL and Stream UID before the real client sends a chunk", async () => {
+    const [video] = await fixtureSources(["02_SHORT_ChrisSmith_AMD_Horizontal.mp4"]);
+    let patchRequests = 0;
+    const server = createServer((request, response) => {
+      request.resume();
+      if (request.method === "POST" && request.url === "/stream?direct_user=true") {
+        response.writeHead(201, { Location: "/uploads/one", "stream-media-id": "stable-stream-uid", "Tus-Resumable": "1.0.0" });
+        response.end();
+        return;
+      }
+      if (request.method === "PATCH" && request.url === "/uploads/one") {
+        patchRequests += 1;
+        response.writeHead(204, { "Upload-Offset": String(video.bytes), "Tus-Resumable": "1.0.0" });
+        response.end();
+        return;
+      }
+      response.writeHead(404).end();
+    });
+    await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", resolve));
+    const address = server.address();
+    if (!address || typeof address === "string") throw new Error("Test TUS server did not bind a TCP port");
+    const uploader = createTusUploader({ accountId: "account", apiToken: "secret" }, { endpoint: `http://127.0.0.1:${address.port}/stream?direct_user=true` });
+    let releasePersistence!: () => void;
+    const persistenceReleased = new Promise<void>((resolve) => { releasePersistence = resolve; });
+    let notifyPersistence!: () => void;
+    const persistenceStarted = new Promise<void>((resolve) => { notifyPersistence = resolve; });
+    const saved: Record<string, string> = {};
+
+    try {
+      const upload = uploader(video, {}, async (update) => {
+        Object.assign(saved, update);
+        notifyPersistence();
+        await persistenceReleased;
+      });
+      await persistenceStarted;
+      expect(saved).toEqual({ tusUploadUrl: `http://127.0.0.1:${address.port}/uploads/one`, streamUid: "stable-stream-uid" });
+      expect(patchRequests).toBe(0);
+
+      releasePersistence();
+      await expect(upload).resolves.toBe("stable-stream-uid");
+      expect(patchRequests).toBe(1);
+    } finally {
+      await new Promise<void>((resolve, reject) => server.close((error) => error ? reject(error) : resolve()));
+    }
+  });
+
+  it("uses the persisted TUS URL and UID to resume without creating another Stream upload", async () => {
+    const [video] = await fixtureSources(["02_SHORT_ChrisSmith_AMD_Horizontal.mp4"]);
+    const requests: string[] = [];
+    const server = createServer((request, response) => {
+      request.resume();
+      requests.push(`${request.method} ${request.url}`);
+      if (request.method === "HEAD" && request.url === "/uploads/resume") {
+        response.writeHead(200, { "Upload-Offset": "0", "Upload-Length": String(video.bytes), "Tus-Resumable": "1.0.0" });
+        response.end();
+        return;
+      }
+      if (request.method === "PATCH" && request.url === "/uploads/resume") {
+        response.writeHead(204, { "Upload-Offset": String(video.bytes), "Tus-Resumable": "1.0.0" });
+        response.end();
+        return;
+      }
+      response.writeHead(500).end();
+    });
+    await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", resolve));
+    const address = server.address();
+    if (!address || typeof address === "string") throw new Error("Test TUS server did not bind a TCP port");
+    const baseUrl = `http://127.0.0.1:${address.port}`;
+    const uploader = createTusUploader({ accountId: "account", apiToken: "secret" }, { endpoint: `${baseUrl}/stream?direct_user=true` });
+
+    try {
+      await expect(uploader(video, { tusUploadUrl: `${baseUrl}/uploads/resume`, streamUid: "stable-stream-uid" }, async () => {
+        throw new Error("A resumed upload must not rewrite its already durable creation URL");
+      })).resolves.toBe("stable-stream-uid");
+      expect(requests).toEqual(["HEAD /uploads/resume", "PATCH /uploads/resume"]);
+    } finally {
+      await new Promise<void>((resolve, reject) => server.close((error) => error ? reject(error) : resolve()));
+    }
+  });
+
+  it("rejects a creation response without a stable Stream UID before sending a chunk", async () => {
+    const [video] = await fixtureSources(["02_SHORT_ChrisSmith_AMD_Horizontal.mp4"]);
+    let patchRequests = 0;
+    const server = createServer((request, response) => {
+      request.resume();
+      if (request.method === "POST") {
+        response.writeHead(201, { Location: "/uploads/missing-uid", "Tus-Resumable": "1.0.0" });
+        response.end();
+        return;
+      }
+      if (request.method === "PATCH") patchRequests += 1;
+      response.writeHead(500).end();
+    });
+    await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", resolve));
+    const address = server.address();
+    if (!address || typeof address === "string") throw new Error("Test TUS server did not bind a TCP port");
+    const uploader = createTusUploader({ accountId: "account", apiToken: "secret" }, { endpoint: `http://127.0.0.1:${address.port}/stream?direct_user=true` });
+
+    try {
+      await expect(uploader(video, {}, async () => undefined)).rejects.toThrow("stream-media-id");
+      expect(patchRequests).toBe(0);
+    } finally {
+      await new Promise<void>((resolve, reject) => server.close((error) => error ? reject(error) : resolve()));
+    }
   });
 });
