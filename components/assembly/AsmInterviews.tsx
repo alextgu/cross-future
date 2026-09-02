@@ -5,6 +5,21 @@ import Link from "next/link";
 import { useHorizontalRailScroll } from "@/lib/use-horizontal-rail-scroll";
 import AsmEmpty from "./AsmEmpty";
 
+/* These stills come from source videos whose filenames explicitly name the
+   interviewee. Earlier generic source files are not identity evidence, so a
+   placeholder portrait is safer than attaching the wrong face to a name. */
+const VERIFIED_INTERVIEW_STILL_CODES = new Set([
+  "IV.10",
+  "IV.11",
+  "IV.12",
+  "IV.13",
+  "IV.14",
+  "IV.15",
+  "IV.16",
+  "IV.17",
+  "IV.18",
+]);
+
 /**
  * Recorded-interview cards. Every entry is a video slot: the thumbnail is the
  * still, the duration chip sets the expectation, and the whole card becomes a
@@ -21,10 +36,12 @@ export default function AsmInterviews({
   cards,
   columns = 4,
   layout = "grid",
+  mediaVariant = "interview",
 }: {
   cards: InterviewCard[];
   columns?: number;
   layout?: "grid" | "rail";
+  mediaVariant?: "interview" | "portrait";
 }) {
   const { ref: railRef, scroll: scrollRail, canScrollBack, canScrollForward } =
     useHorizontalRailScroll();
@@ -47,30 +64,51 @@ export default function AsmInterviews({
        says it once. */
     const hasDistinctTitle =
       interview.title.trim().toLowerCase() !== name.trim().toLowerCase();
+    const portrait = mediaVariant === "portrait" ? person?.headshot : undefined;
+    const canUseInterviewStill =
+      portrait?.placeholder &&
+      interview.image &&
+      VERIFIED_INTERVIEW_STILL_CODES.has(interview.code);
+    const image =
+      canUseInterviewStill
+        ? interview.image
+        : portrait ?? interview.image;
+    const focalPoint = image === portrait ? portrait?.focalPoint : undefined;
 
     const inner = (
       <>
         <figure
-          className="asm-media is-duo is-scrim"
-          style={{ ["--asm-aspect" as string]: "16 / 10" }}
-          data-placeholder={interview.image?.placeholder ? "true" : undefined}
+          className={`asm-media is-duo${
+            mediaVariant === "interview" ? " is-scrim" : ""
+          }`}
+          style={
+            {
+              "--asm-aspect": mediaVariant === "portrait" ? "4 / 5" : "16 / 10",
+              ...(focalPoint
+                ? { "--asm-fp": `${focalPoint.x}% ${focalPoint.y}%` }
+                : {}),
+            } as React.CSSProperties
+          }
+          data-placeholder={image?.placeholder ? "true" : undefined}
         >
-          {interview.image ? (
+          {image ? (
             /* eslint-disable-next-line @next/next/no-img-element */
             <img
-              src={interview.image.sourceUrl}
-              alt={interview.image.alt}
+              src={image.sourceUrl}
+              alt={image.alt}
               loading="lazy"
               decoding="async"
             />
           ) : null}
-          <figcaption>
-            {interview.code} · {interview.durationMin} min
-          </figcaption>
+          {mediaVariant === "interview" ? (
+            <figcaption>
+              {interview.code} · {interview.durationMin} min
+            </figcaption>
+          ) : null}
         </figure>
 
-        <div style={{ padding: "var(--asm-pad-tight)", display: "grid", gap: 8 }}>
-          <h3 className="asm-d3" style={{ fontSize: "1.1rem" }}>
+        <div className="asm-interview-copy">
+          <h3 className="asm-d3 asm-interview-name">
             {hasDistinctTitle ? interview.title : name}
           </h3>
           {hasDistinctTitle ? (

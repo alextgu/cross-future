@@ -2186,6 +2186,16 @@
   transition: transform 0.18s ease;
 }
 
+.assembly .asm-interview-copy {
+  display: grid;
+  gap: 8px;
+  padding: var(--asm-pad-tight);
+}
+
+.assembly .asm-interview-name {
+  font-size: 1.1rem;
+}
+
 .assembly .asm-interview-link:hover .asm-card {
   transform: translateY(-3px);
 }
@@ -3010,6 +3020,48 @@
   display: grid;
   gap: var(--asm-pad-tight);
   padding-top: var(--asm-pad-tight);
+}
+
+.assembly .asm-past-candidates {
+  display: grid;
+  gap: var(--asm-pad);
+  padding-top: clamp(36px, 6vw, 84px);
+  border-top: 1px solid var(--asm-hair);
+}
+
+.assembly .asm-past-candidates-head {
+  display: grid;
+  gap: 12px;
+  max-width: 720px;
+}
+
+.assembly .asm-past-candidates-head .asm-body {
+  max-width: 58ch;
+  color: var(--asm-ink-2);
+}
+
+.assembly .asm-past-candidates .asm-row {
+  align-items: start;
+}
+
+.assembly .asm-past-candidates .asm-interview-link,
+.assembly .asm-past-candidates .asm-interview-link .asm-card {
+  height: auto;
+}
+
+.assembly .asm-past-candidates .asm-media {
+  width: 100%;
+  max-height: none;
+}
+
+.assembly .asm-past-candidates .asm-interview-copy {
+  gap: 6px;
+  padding: 16px 18px 18px;
+}
+
+.assembly .asm-past-candidates .asm-interview-name {
+  font-size: clamp(1.4rem, 2.2vw, 1.8rem);
+  line-height: 0.95;
 }
 
 /* ============================================================

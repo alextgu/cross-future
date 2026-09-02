@@ -3,6 +3,7 @@ import {
   getCompletedPastEditions,
   getCurrentEdition,
   getFaculty,
+  getInterviewCards,
   getInterviewCardsForEditionYear,
   getSummitContent,
   type InterviewCard,
@@ -22,6 +23,7 @@ export default async function PastEventsPage() {
   const editions = getCompletedPastEditions(content);
   const current = getCurrentEdition(content);
   const faculty = getFaculty(content, current.slug);
+  const interviewCandidates = getInterviewCards(content, faculty);
   const interviewsByYear = Object.fromEntries(
     editions.map((edition) => [
       edition.year,
@@ -39,6 +41,7 @@ export default async function PastEventsPage() {
       <AsmPastEventsMockup
         editions={editions}
         interviewsByYear={interviewsByYear}
+        interviewCandidates={interviewCandidates}
       />
     </AsmShell>
   );

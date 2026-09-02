@@ -8,9 +8,11 @@ import AsmInterviews from "./AsmInterviews";
 export default function AsmPastEventsMockup({
   editions,
   interviewsByYear,
+  interviewCandidates,
 }: {
   editions: PastEdition[];
   interviewsByYear: Record<number, InterviewCard[]>;
+  interviewCandidates: InterviewCard[];
 }) {
   const sorted = useMemo(
     () => [...editions].sort((a, b) => b.year - a.year),
@@ -90,8 +92,33 @@ export default function AsmPastEventsMockup({
             />
           </div>
         ) : null}
-
       </div>
+
+      {interviewCandidates.length > 0 ? (
+        <section
+          className="asm-past-candidates"
+          aria-labelledby="interview-candidates-heading"
+        >
+          <header className="asm-past-candidates-head">
+            <p className="asm-meta">
+              {interviewCandidates.length} people · media index
+            </p>
+            <h2 className="asm-d2" id="interview-candidates-heading">
+              Interview candidates
+            </h2>
+            <p className="asm-body">
+              The people behind the conversations, paired only with
+              identity-checked media.
+            </p>
+          </header>
+          <AsmInterviews
+            cards={interviewCandidates}
+            columns={3}
+            layout="grid"
+            mediaVariant="portrait"
+          />
+        </section>
+      ) : null}
     </section>
   );
 }
